@@ -1,4 +1,4 @@
-import { SET_ACTIVE_FORM, ADD_NOTE } from '../types';
+import { SET_ACTIVE_FORM, ADD_NOTE, DELETE_NOTE } from '../types';
 
 const setActiveForm = (payload) => (dispatch) =>
   dispatch({
@@ -12,4 +12,10 @@ const addNote = (payload) => (dispatch) =>
     payload,
   });
 
-export { setActiveForm, addNote };
+const deleteNote = (payload) => (dispatch) =>
+  dispatch({
+    type: DELETE_NOTE,
+    payload,
+  });
+
+export { setActiveForm, addNote, deleteNote };

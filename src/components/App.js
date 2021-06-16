@@ -23,7 +23,7 @@ export class App extends Component {
     lang: PropTypes.string,
     mode: PropTypes.string,
     view: PropTypes.string,
-    headerVisible: PropTypes.bool.isRequired,
+    // headerVisible: PropTypes.bool.isRequired,
     ready: PropTypes.bool.isRequired,
     standalone: PropTypes.bool.isRequired,
   };
@@ -67,7 +67,7 @@ export class App extends Component {
   };
 
   render() {
-    const { mode, view, headerVisible, ready, standalone } = this.props;
+    const { mode, view, ready, standalone } = this.props;
 
     if (!standalone && !ready) {
       return <Loader />;
@@ -93,7 +93,7 @@ export class App extends Component {
       default:
         return (
           <>
-            {headerVisible || standalone ? <Header /> : null}
+            {/* {headerVisible || standalone ? <Header /> : null} */}
             <StudentView />
           </>
         );

@@ -1,11 +1,13 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
-import Typography from '@material-ui/core/Typography';
+import NoteHeader from './NoteHeader';
+import NoteDescription from './NoteDescription';
+import NoteFooter from './NoteFooter';
 
 const useStyles = makeStyles(() => ({
-  note: {
+  noteContainer: {
     width: '15%',
     height: '20%',
     position: 'absolute',
@@ -16,13 +18,6 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     cursor: 'default',
   },
-  title: {
-    fontSize: '1.2vw',
-    fontWeight: 600,
-  },
-  description: { fontSize: '1vw', overflow: 'auto' },
-  addedBy: { fontSize: '0.8vw', color: '#383838', textAlign: 'right' },
-  author: { fontWeight: 600 },
 }));
 
 const Note = ({ note }) => {
@@ -33,16 +28,19 @@ const Note = ({ note }) => {
     title,
     description,
     rotation,
+    id,
   } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
   const classes = useStyles();
-  const { t } = useTranslation();
+  const [showActions, setShowActions] = useState(false);
 
   return (
     <div
-      className={classes.note}
+      className={classes.noteContainer}
       onClick={(event) => event.stopPropagation()}
+      onMouseOver={() => setShowActions(true)}
+      onMouseLeave={() => setShowActions(false)}
       style={{
         top: `${(pageY / innerHeight) * 100}%`,
         left: `${(pageX / innerWidth) * 100}%`,
@@ -50,12 +48,9 @@ const Note = ({ note }) => {
         transform: `rotate(${rotation}deg)`,
       }}
     >
-      <Typography className={classes.title}>{title}</Typography>
-      <Typography className={classes.description}>{description}</Typography>
-      <Typography className={classes.addedBy}>
-        {t('Added by ')}
-        <span className={classes.author}>Anon</span>
-      </Typography>
+      <NoteHeader title={title} showActions={showActions} id={id} />
+      <NoteDescription description={description} />
+      <NoteFooter />
     </div>
   );
 };
@@ -74,6 +69,7 @@ Note.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
 };
 

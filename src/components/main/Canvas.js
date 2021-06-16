@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import ObjectID from 'bson-objectid';
 import Form from './form/Form';
 import Note from './note/Note';
 import { setActiveForm, addNote } from '../../actions';
@@ -30,7 +31,11 @@ const Canvas = () => {
       );
     } else if (activeFormExists && activeForm.title) {
       dispatch(
-        addNote({ ...activeForm, rotation: generateRandomRotationAngle() }),
+        addNote({
+          ...activeForm,
+          rotation: generateRandomRotationAngle(),
+          id: ObjectID(),
+        }),
       );
       dispatch(
         setActiveForm({

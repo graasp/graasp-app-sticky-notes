@@ -7,7 +7,7 @@ import FormActions from './FormActions';
 
 const useStyles = makeStyles(() => ({
   form: {
-    width: '15%',
+    width: '17.5%',
     height: '25%',
     position: 'absolute',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',

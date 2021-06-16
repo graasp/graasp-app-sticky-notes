@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import ObjectID from 'bson-objectid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CheckIcon from '@material-ui/icons/Check';
 import { addNote, setActiveForm } from '../../../actions';
@@ -41,7 +42,11 @@ const FormActions = ({ height }) => {
   const handleConfirm = () => {
     if (activeForm.title) {
       dispatch(
-        addNote({ ...activeForm, rotation: generateRandomRotationAngle() }),
+        addNote({
+          ...activeForm,
+          rotation: generateRandomRotationAngle(),
+          id: ObjectID(),
+        }),
       );
       dispatch(
         setActiveForm({

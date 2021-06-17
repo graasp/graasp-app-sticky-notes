@@ -1,4 +1,9 @@
-import { SET_ACTIVE_FORM, ADD_NOTE, DELETE_NOTE } from '../types';
+import {
+  SET_ACTIVE_FORM,
+  ADD_NOTE,
+  DELETE_NOTE,
+  UPDATE_NOTE_POSITION,
+} from '../types';
 import { DEFAULT_NOTE_COLOR } from '../constants/constants';
 
 const INITIAL_STATE = {
@@ -28,6 +33,14 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         notes: state.notes.filter((note) => note.id !== payload),
+      };
+    case UPDATE_NOTE_POSITION:
+      return {
+        ...state,
+        notes: [
+          ...state.notes.filter((note) => note.id !== payload.id),
+          payload,
+        ],
       };
     default:
       return state;

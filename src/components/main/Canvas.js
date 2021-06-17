@@ -9,7 +9,7 @@ import { generateRandomRotationAngle } from '../../utils/canvas';
 
 const useStyles = makeStyles(() => ({
   mainContainer: { width: '100%', height: '100%', cursor: 'pointer' },
-  image: { width: '100%', height: '100%' },
+  image: { width: '100%', height: '100%', display: 'block' },
 }));
 
 const Canvas = () => {
@@ -50,7 +50,14 @@ const Canvas = () => {
   };
 
   return (
-    <div className={classes.mainContainer} onClick={handleCanvasClick}>
+    <div
+      className={classes.mainContainer}
+      onClick={handleCanvasClick}
+      onDragOver={(event) => {
+        event.stopPropagation();
+        event.preventDefault();
+      }}
+    >
       {notes.map((note, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <Note note={note} key={index} />

@@ -5,7 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import ObjectID from 'bson-objectid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CheckIcon from '@material-ui/icons/Check';
-import { addNote, setActiveForm } from '../../../actions';
+import {
+  addNote,
+  postAppInstanceResource,
+  setActiveForm,
+} from '../../../actions';
 import { generateRandomRotationAngle } from '../../../utils/canvas';
 
 const useStyles = makeStyles(() => ({
@@ -41,13 +45,12 @@ const FormActions = ({ height }) => {
 
   const handleConfirm = () => {
     if (activeForm.title) {
-      dispatch(
-        addNote({
-          ...activeForm,
-          rotation: generateRandomRotationAngle(),
-          id: ObjectID(),
-        }),
-      );
+      const note = {
+        ...activeForm,
+        rotation: generateRandomRotationAngle(),
+      };
+      dispatch(addNote({ data: note, _id: ObjectID() }));
+      dispatch(postAppInstanceResource({ data: note }));
       dispatch(
         setActiveForm({
           ...activeForm,

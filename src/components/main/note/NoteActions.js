@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteNote, setActiveForm } from '../../../actions';
+import {
+  deleteAppInstanceResource,
+  deleteNote,
+  setActiveForm,
+} from '../../../actions';
 
 const useStyles = makeStyles(() => ({
   actionContainer: { display: 'flex', alignItems: 'center' },
@@ -17,18 +21,26 @@ const useStyles = makeStyles(() => ({
 }));
 
 const NoteActions = ({ id }) => {
-  const notes = useSelector(({ canvas }) => canvas.notes);
-  const [currentNote] = notes.filter((note) => note.id === id);
+  const standalone = useSelector(({ context }) => context.standalone);
+  const { notes: sessionNotes } = useSelector(({ canvas }) => canvas);
+  const savedNotes = useSelector(
+    ({ appInstanceResources }) => appInstanceResources.content,
+  );
+  const notesToDisplay = standalone ? sessionNotes : savedNotes;
+
+  const [currentNote] = notesToDisplay.filter((note) => note._id === id);
 
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const handleDelete = () => {
+    dispatch(deleteAppInstanceResource(id));
     dispatch(deleteNote(id));
   };
 
   const handleEdit = () => {
-    dispatch(setActiveForm({ ...currentNote }));
+    dispatch(setActiveForm({ ...currentNote.data }));
+    dispatch(deleteAppInstanceResource(id));
     dispatch(deleteNote(id));
   };
 

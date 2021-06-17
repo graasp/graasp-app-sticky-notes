@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import ObjectID from 'bson-objectid';
 import Form from './form/Form';
 import Note from './note/Note';
-import { setActiveForm, addNote } from '../../actions';
+import {
+  setActiveForm,
+  addNote,
+  postAppInstanceResource,
+  getAppInstanceResources,
+} from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 
 const useStyles = makeStyles(() => ({
@@ -15,8 +20,19 @@ const useStyles = makeStyles(() => ({
 const Canvas = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { activeForm, notes } = useSelector(({ canvas }) => canvas);
+  const standalone = useSelector(({ context }) => context.standalone);
+  const { activeForm, notes: sessionNotes } = useSelector(
+    ({ canvas }) => canvas,
+  );
+  const savedNotes = useSelector(
+    ({ appInstanceResources }) => appInstanceResources.content,
+  );
+  const notesToDisplay = standalone ? sessionNotes : savedNotes;
   const activeFormExists = !!activeForm.position.pageX;
+
+  useEffect(() => {
+    dispatch(getAppInstanceResources());
+  }, []);
 
   const handleCanvasClick = (event) => {
     const { innerHeight, innerWidth } = window;
@@ -30,13 +46,12 @@ const Canvas = () => {
         }),
       );
     } else if (activeFormExists && activeForm.title) {
-      dispatch(
-        addNote({
-          ...activeForm,
-          rotation: generateRandomRotationAngle(),
-          id: ObjectID(),
-        }),
-      );
+      const note = {
+        ...activeForm,
+        rotation: generateRandomRotationAngle(),
+      };
+      dispatch(addNote({ data: note, _id: ObjectID() }));
+      dispatch(postAppInstanceResource({ data: note }));
       dispatch(
         setActiveForm({
           ...activeForm,
@@ -58,9 +73,8 @@ const Canvas = () => {
         event.preventDefault();
       }}
     >
-      {notes.map((note, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Note note={note} key={index} />
+      {notesToDisplay.map((note) => (
+        <Note note={note.data} id={note._id} key={note._id} />
       ))}
       {activeFormExists && <Form />}
       <img

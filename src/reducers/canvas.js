@@ -32,13 +32,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case DELETE_NOTE:
       return {
         ...state,
-        notes: state.notes.filter((note) => note.id !== payload),
+        notes: state.notes.filter((note) => note._id !== payload),
       };
     case UPDATE_NOTE_POSITION:
       return {
         ...state,
         notes: [
-          ...state.notes.filter((note) => note.id !== payload.id),
+          ...state.notes.filter((note) => note._id !== payload._id),
           payload,
         ],
       };

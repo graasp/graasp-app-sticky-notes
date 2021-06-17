@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import NoteHeader from './NoteHeader';
 import NoteDescription from './NoteDescription';
 import NoteFooter from './NoteFooter';
-import { updateNotePosition } from '../../../actions';
+import { patchAppInstanceResource, updateNotePosition } from '../../../actions';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Note = ({ note }) => {
+const Note = ({ note, id }) => {
   // destructure note properties
   const {
     windowDimensions,
@@ -30,7 +30,6 @@ const Note = ({ note }) => {
     title,
     description,
     rotation,
-    id,
   } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
@@ -69,9 +68,10 @@ const Note = ({ note }) => {
   // hence, we update coordinates in the onDrag event, which doesn't have the same misbehavior
   const onDragEnd = () => {
     const updatedNote = {
-      ...note,
-      position: { pageX: newPageX, pageY: newPageY },
+      data: { ...note, position: { pageX: newPageX, pageY: newPageY } },
+      _id: id,
     };
+    dispatch(patchAppInstanceResource({ id, data: updatedNote.data }));
     dispatch(updateNotePosition(updatedNote));
   };
 
@@ -113,8 +113,8 @@ Note.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
   }).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Note;

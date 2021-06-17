@@ -27,6 +27,7 @@ const Canvas = () => {
   const savedNotes = useSelector(
     ({ appInstanceResources }) => appInstanceResources.content,
   );
+  const userId = useSelector(({ context }) => context.userId);
   const notesToDisplay = standalone ? sessionNotes : savedNotes;
   const activeFormExists = !!activeForm.position.pageX;
 
@@ -51,7 +52,7 @@ const Canvas = () => {
         rotation: generateRandomRotationAngle(),
       };
       dispatch(addNote({ data: note, _id: ObjectID() }));
-      dispatch(postAppInstanceResource({ data: note }));
+      dispatch(postAppInstanceResource({ data: note, userId }));
       dispatch(
         setActiveForm({
           ...activeForm,
@@ -74,7 +75,12 @@ const Canvas = () => {
       }}
     >
       {notesToDisplay.map((note) => (
-        <Note note={note.data} id={note._id} key={note._id} />
+        <Note
+          note={note.data}
+          id={note._id}
+          key={note._id}
+          userId={note.user}
+        />
       ))}
       {activeFormExists && <Form />}
       <img

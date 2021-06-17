@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Note = ({ note, id }) => {
+const Note = ({ note, id, userId }) => {
   // destructure note properties
   const {
     windowDimensions,
@@ -94,7 +94,7 @@ const Note = ({ note, id }) => {
     >
       <NoteHeader title={title} showActions={showActions} id={id} />
       <NoteDescription description={description} />
-      <NoteFooter />
+      <NoteFooter userId={userId} />
     </div>
   );
 };
@@ -114,7 +114,12 @@ Note.propTypes = {
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
   }).isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  userId: PropTypes.string,
+};
+
+Note.defaultProps = {
+  userId: null,
 };
 
 export default Note;

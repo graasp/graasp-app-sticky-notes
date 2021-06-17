@@ -30,7 +30,7 @@ const NoteHeader = ({ title, showActions, id }) => {
 NoteHeader.propTypes = {
   title: PropTypes.string.isRequired,
   showActions: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default NoteHeader;

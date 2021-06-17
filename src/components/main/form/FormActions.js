@@ -30,6 +30,7 @@ const FormActions = ({ height }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const activeForm = useSelector(({ canvas }) => canvas.activeForm);
+  const userId = useSelector(({ context }) => context.userId);
 
   const handleDelete = () => {
     dispatch(
@@ -50,7 +51,7 @@ const FormActions = ({ height }) => {
         rotation: generateRandomRotationAngle(),
       };
       dispatch(addNote({ data: note, _id: ObjectID() }));
-      dispatch(postAppInstanceResource({ data: note }));
+      dispatch(postAppInstanceResource({ data: note, userId }));
       dispatch(
         setActiveForm({
           ...activeForm,

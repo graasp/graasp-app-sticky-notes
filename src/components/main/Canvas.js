@@ -11,6 +11,7 @@ import {
   getAppInstanceResources,
 } from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
+import { RE_FETCH_INTERVAL } from '../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   mainContainer: { width: '100%', height: '100%', cursor: 'pointer' },
@@ -32,7 +33,12 @@ const Canvas = () => {
   const activeFormExists = !!activeForm.position.pageX;
 
   useEffect(() => {
+    // fetch app instance resources once on app initialization
     dispatch(getAppInstanceResources());
+    // subsequently fetch them every RE_FETCH_INTERVAL, so that different clients remain in sync
+    setInterval(() => {
+      dispatch(getAppInstanceResources());
+    }, RE_FETCH_INTERVAL);
   }, []);
 
   const handleCanvasClick = (event) => {

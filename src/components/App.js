@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import StudentView from './modes/student/StudentView';
 import { getContext } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE, MODES } from '../config/settings';
-import { DEFAULT_VIEW } from '../config/views';
 import { getAppInstance } from '../actions/appInstance';
-import TeacherMode from './modes/teacher/TeacherMode';
-import Header from './layout/Header';
 import Loader from './common/Loader';
+import TeacherView from './modes/teacher/TeacherView';
 
 export class App extends Component {
   static propTypes = {
@@ -22,8 +20,6 @@ export class App extends Component {
     appInstanceId: PropTypes.string,
     lang: PropTypes.string,
     mode: PropTypes.string,
-    view: PropTypes.string,
-    // headerVisible: PropTypes.bool.isRequired,
     ready: PropTypes.bool.isRequired,
     standalone: PropTypes.bool.isRequired,
   };
@@ -31,7 +27,6 @@ export class App extends Component {
   static defaultProps = {
     lang: DEFAULT_LANG,
     mode: DEFAULT_MODE,
-    view: DEFAULT_VIEW,
     appInstanceId: null,
   };
 
@@ -67,7 +62,7 @@ export class App extends Component {
   };
 
   render() {
-    const { mode, view, ready, standalone } = this.props;
+    const { mode, ready, standalone } = this.props;
 
     if (!standalone && !ready) {
       return <Loader />;
@@ -79,33 +74,21 @@ export class App extends Component {
       case MODES.PRODUCER:
       case MODES.EDUCATOR:
       case MODES.ADMIN:
-        return (
-          <>
-            <Header />
-            <TeacherMode view={view} />
-          </>
-        );
+        return <TeacherView />;
 
       // by default go with the consumer (learner) mode
       case MODES.STUDENT:
       case MODES.CONSUMER:
       case MODES.LEARNER:
       default:
-        return (
-          <>
-            {/* {headerVisible || standalone ? <Header /> : null} */}
-            <StudentView />
-          </>
-        );
+        return <StudentView />;
     }
   }
 }
 
 const mapStateToProps = ({ context, appInstance }) => ({
-  headerVisible: appInstance.content.settings.headerVisible,
   lang: context.lang,
   mode: context.mode,
-  view: context.view,
   appInstanceId: context.appInstanceId,
   ready: appInstance.ready,
   standalone: context.standalone,

@@ -11,24 +11,52 @@ import {
   getAppInstanceResources,
 } from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
-import { RE_FETCH_INTERVAL } from '../../constants/constants';
+import Settings from '../modes/teacher/Settings';
+import {
+  NOTE_STRING,
+  IMAGE_STRING,
+  RE_FETCH_INTERVAL,
+} from '../../constants/constants';
+import { TEACHER_MODE } from '../../config/settings';
 
 const useStyles = makeStyles(() => ({
-  mainContainer: { width: '100%', height: '100%', cursor: 'pointer' },
+  mainContainer: {
+    width: '100%',
+    height: '100%',
+    cursor: 'pointer',
+    background: '#FFE4E1',
+  },
   image: { width: '100%', height: '100%', display: 'block' },
 }));
 
 const Canvas = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const standalone = useSelector(({ context }) => context.standalone);
+
+  // extract required state from redux store
+  const { mode, standalone } = useSelector(({ context }) => context);
   const { activeForm, notes: sessionNotes } = useSelector(
     ({ canvas }) => canvas,
   );
-  const savedNotes = useSelector(
-    ({ appInstanceResources }) => appInstanceResources.content,
+  // in this app, appInstanceResources can be of different types (note or background image)
+  // hence, filter retrieved appInstanceResources by type
+  const savedNotes = useSelector(({ appInstanceResources }) =>
+    appInstanceResources.content.filter(
+      (content) => content.data.type === NOTE_STRING,
+    ),
+  );
+  const backgroundImages = useSelector(({ appInstanceResources }) =>
+    appInstanceResources.content.filter(
+      (content) => content.data.type === IMAGE_STRING,
+    ),
   );
   const userId = useSelector(({ context }) => context.userId);
+
+  // sort retrieved background images by date, and then take the most recent one
+  const mostRecentImage = backgroundImages.sort(
+    (imageA, imageB) => imageA.data.date > imageB.data.date,
+  )[0];
+  // if session is standalone, show sessionNotes; if not, show notes retrieved from API
   const notesToDisplay = standalone ? sessionNotes : savedNotes;
   const activeFormExists = !!activeForm.position.pageX;
 
@@ -41,6 +69,7 @@ const Canvas = () => {
     }, RE_FETCH_INTERVAL);
   }, []);
 
+  // main click handler in application
   const handleCanvasClick = (event) => {
     const { innerHeight, innerWidth } = window;
     const { pageX, pageY } = event;
@@ -56,6 +85,7 @@ const Canvas = () => {
       const note = {
         ...activeForm,
         rotation: generateRandomRotationAngle(),
+        type: NOTE_STRING,
       };
       dispatch(addNote({ data: note, _id: ObjectID() }));
       dispatch(postAppInstanceResource({ data: note, userId }));
@@ -89,11 +119,14 @@ const Canvas = () => {
         />
       ))}
       {activeFormExists && <Form />}
-      <img
-        src="https://images.unsplash.com/photo-1527245592484-dff09c8e4cd9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80"
-        alt="user selected background"
-        className={classes.image}
-      />
+      {mostRecentImage?.data.uri && (
+        <img
+          src={mostRecentImage?.data.uri}
+          alt="User selected background"
+          className={classes.image}
+        />
+      )}
+      {mode === TEACHER_MODE && <Settings />}
     </div>
   );
 };

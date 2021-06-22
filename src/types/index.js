@@ -5,3 +5,5 @@ export * from './appInstance';
 export * from './layout';
 export * from './action';
 export * from './canvas';
+export * from './file';
+export * from './uppy';

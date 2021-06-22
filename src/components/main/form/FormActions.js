@@ -11,6 +11,7 @@ import {
   setActiveForm,
 } from '../../../actions';
 import { generateRandomRotationAngle } from '../../../utils/canvas';
+import { NOTE_STRING } from '../../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   iconContainer: {
@@ -49,6 +50,7 @@ const FormActions = ({ height }) => {
       const note = {
         ...activeForm,
         rotation: generateRandomRotationAngle(),
+        type: NOTE_STRING,
       };
       dispatch(addNote({ data: note, _id: ObjectID() }));
       dispatch(postAppInstanceResource({ data: note, userId }));

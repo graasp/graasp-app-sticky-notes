@@ -32,3 +32,5 @@ export const DEFAULT_DELETE_REQUEST = {
   ...DEFAULT_REQUEST,
   method: 'DELETE',
 };
+
+export const FILE_UPLOAD_ENDPOINT = 'https://graasp.eu/files';

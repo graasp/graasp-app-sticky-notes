@@ -5,6 +5,7 @@ import users from './users';
 import appInstance from './appInstance';
 import layout from './layout';
 import canvas from './canvas';
+import uppy from './uppy';
 
 export default combineReducers({
   // keys should always be lowercase
@@ -14,4 +15,5 @@ export default combineReducers({
   appInstance,
   layout,
   canvas,
+  uppy,
 });

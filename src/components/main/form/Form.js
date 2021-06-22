@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    cursor: 'default',
   },
 }));
 

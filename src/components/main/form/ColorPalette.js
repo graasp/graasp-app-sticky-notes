@@ -15,6 +15,12 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
+  color: {
+    width: '1vw',
+    height: '1vw',
+    cursor: 'pointer',
+    borderRadius: '50%',
+  },
 }));
 
 const ColorPalette = ({ height }) => {
@@ -28,15 +34,13 @@ const ColorPalette = ({ height }) => {
       {AVAILABLE_COLORS.map((color, index) => (
         <div
           style={{
-            width: '1vw',
-            height: '1vw',
             background:
               currentNoteColor === color
                 ? AVAILABLE_COLORS_DARKER_SHADES[index]
                 : color,
-            borderRadius: '50%',
             border: currentNoteColor === color ? '1px dashed grey' : null,
           }}
+          className={classes.color}
           onClick={() => {
             dispatch(setActiveForm({ ...activeForm, color }));
           }}

@@ -24,6 +24,7 @@ const useStyles = makeStyles(() => ({
     textAlign: 'right',
     fontSize: '1.1vw',
     marginRight: '5px',
+    cursor: 'pointer',
   },
 }));
 

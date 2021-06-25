@@ -43,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
   closeButton: {
     width: '20%',
-    fontSize: '1vw'
+    fontSize: '1vw',
   },
 }));
 
-const NewSettings = () => {
+const Settings = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
@@ -97,4 +97,4 @@ const NewSettings = () => {
   );
 };
 
-export default NewSettings;
+export default Settings;

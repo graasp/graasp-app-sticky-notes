@@ -22,7 +22,4 @@ export const AVAILABLE_COLORS_DARKER_SHADES = [
 export const DEFAULT_MINIMUM_ROTATION_ANGLE = -10;
 export const DEFAULT_MAXIMUM_ROTATION_ANGLE = 10;
 
-export const RE_FETCH_INTERVAL = 2000;
-
-export const NOTE_STRING = 'note';
-export const IMAGE_STRING = 'image';
+export const RE_FETCH_INTERVAL = 1500;

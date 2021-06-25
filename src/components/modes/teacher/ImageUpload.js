@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
-import { postAppInstanceResource } from '../../../actions';
+import { patchAppInstance } from '../../../actions';
 import configureUppy from '../../../utils/uppy';
 import { MAX_FILE_SIZE } from '../../../config/settings';
 
@@ -49,6 +49,9 @@ const ImageUpload = () => {
   const { offline, standalone, spaceId, userId, appInstanceId } = useSelector(
     ({ context }) => context,
   );
+  const currentImageUri = useSelector(
+    ({ appInstance }) => appInstance.content.settings.backgroundImage?.uri,
+  );
   const imageToBeUploaded = useSelector(({ uppy }) => uppy.addedImage);
 
   const uppyInstance = configureUppy({
@@ -58,7 +61,8 @@ const ImageUpload = () => {
     spaceId,
     userId,
     appInstanceId,
-    postAppInstanceResource,
+    patchAppInstance,
+    currentImageUri,
   });
 
   return (

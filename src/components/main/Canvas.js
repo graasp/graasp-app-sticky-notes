@@ -12,11 +12,7 @@ import {
 } from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
-import {
-  NOTE_STRING,
-  IMAGE_STRING,
-  RE_FETCH_INTERVAL,
-} from '../../constants/constants';
+import { RE_FETCH_INTERVAL } from '../../constants/constants';
 import { TEACHER_MODE } from '../../config/settings';
 
 const useStyles = makeStyles(() => ({
@@ -38,24 +34,14 @@ const Canvas = () => {
   const { activeForm, notes: sessionNotes } = useSelector(
     ({ canvas }) => canvas,
   );
-  // in this app, appInstanceResources can be of different types (note or background image)
-  // hence, filter retrieved appInstanceResources by type
-  const savedNotes = useSelector(({ appInstanceResources }) =>
-    appInstanceResources.content.filter(
-      (content) => content.data.type === NOTE_STRING,
-    ),
+  const savedNotes = useSelector(
+    ({ appInstanceResources }) => appInstanceResources.content,
   );
-  const backgroundImages = useSelector(({ appInstanceResources }) =>
-    appInstanceResources.content.filter(
-      (content) => content.data.type === IMAGE_STRING,
-    ),
+  const { backgroundImage } = useSelector(
+    ({ appInstance }) => appInstance.content.settings,
   );
   const userId = useSelector(({ context }) => context.userId);
 
-  // sort retrieved background images by date, and then take the most recent one
-  const mostRecentImage = backgroundImages.sort(
-    (imageA, imageB) => imageA.data.date > imageB.data.date,
-  )[0];
   // if session is standalone, show sessionNotes; if not, show notes retrieved from API
   const notesToDisplay = standalone ? sessionNotes : savedNotes;
   const activeFormExists = !!activeForm.position.pageX;
@@ -85,7 +71,6 @@ const Canvas = () => {
       const note = {
         ...activeForm,
         rotation: generateRandomRotationAngle(),
-        type: NOTE_STRING,
       };
       dispatch(addNote({ data: note, _id: ObjectID() }));
       dispatch(postAppInstanceResource({ data: note, userId }));
@@ -119,10 +104,10 @@ const Canvas = () => {
         />
       ))}
       {activeFormExists && <Form />}
-      {mostRecentImage?.data.uri && (
+      {backgroundImage?.uri && (
         <img
-          src={mostRecentImage?.data.uri}
-          alt="User selected background"
+          src={backgroundImage.uri}
+          alt={`User selected background ${backgroundImage.name}`}
           className={classes.image}
         />
       )}

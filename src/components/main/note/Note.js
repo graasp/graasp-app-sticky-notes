@@ -43,7 +43,7 @@ const Note = ({ note, id, userId }) => {
   const [newPageX, setNewPageX] = useState(0);
   const [newPageY, setNewPageY] = useState(0);
 
-  // default drag behavior is: (1) you grab div (the post-it) in e.g. bottom right and begin dragging it,
+  // default drag behavior is: (1) you grab div (the sticky note) in e.g. bottom right and begin dragging it,
   // (2) the point where you drop it becomes the *top left* of the div.
   // this is counterintuitive and visually unappealing
   // instead, we would expect the place where we drop the div to be the bottom right of the div (where we grabbed it)

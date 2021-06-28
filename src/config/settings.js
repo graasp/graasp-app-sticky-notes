@@ -33,3 +33,6 @@ export const TEACHER_MODES = [TEACHER_MODE, 'producer', 'educator', 'admin'];
 
 export const DEFAULT_VISIBILITY = 'private';
 export const PUBLIC_VISIBILITY = 'public';
+
+export const MAX_NUM_FILES = 1;
+export const MAX_FILE_SIZE = 5 * 1000 * 1000;

@@ -1,6 +1,6 @@
 {
-  "name": "graasp-app-post-it-notes",
-  "version": "0.1.1",
+  "name": "graasp-app-sticky-notes",
+  "version": "0.1.2",
   "private": true,
   "author": "Graasp",
   "contributors": [
@@ -12,6 +12,12 @@
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
+    "@uppy/core": "1.19.1",
+    "@uppy/drag-drop": "1.4.29",
+    "@uppy/file-input": "1.5.1",
+    "@uppy/react": "1.11.10",
+    "@uppy/xhr-upload": "1.7.4",
+    "bson-objectid": "2.0.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
     "i18next": "19.9.0",

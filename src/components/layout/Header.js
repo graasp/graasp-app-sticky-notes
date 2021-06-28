@@ -71,7 +71,7 @@ class Header extends Component {
           <Toolbar>
             <Logo className={classes.logo} />
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              {t('Value Proposition Canvas')}
+              {t('Sticky Notes')}
             </Typography>
             {this.renderViewButtons()}
           </Toolbar>

@@ -14,6 +14,7 @@ i18n.use(initReactI18next).init({
   ns: ['translations'],
   defaultNS: 'translations',
   keySeparator: false,
+  nsSeparator: false,
   interpolation: {
     escapeValue: false,
     formatSeparator: ',',

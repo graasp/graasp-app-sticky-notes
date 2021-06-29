@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AVAILABLE_COLORS,
   AVAILABLE_COLORS_DARKER_SHADES,
-} from '../../../constants/constants';
-import { setActiveForm } from '../../../actions';
+} from '../../../../constants/constants';
+import { editNoteColor } from '../../../../actions';
 
 const useStyles = makeStyles(() => ({
   paletteContainer: {
@@ -23,11 +23,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ColorPalette = ({ height }) => {
+const EditViewColorPalette = ({ height }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const activeForm = useSelector(({ canvas }) => canvas.activeForm);
-  const { color: currentNoteColor } = activeForm;
+  const { color: noteColor } = useSelector(
+    ({ canvas }) => canvas.noteBeingEdited.data,
+  );
 
   return (
     <div className={classes.paletteContainer} style={{ height }}>
@@ -35,14 +36,14 @@ const ColorPalette = ({ height }) => {
         <div
           style={{
             background:
-              currentNoteColor === color
+              noteColor === color
                 ? AVAILABLE_COLORS_DARKER_SHADES[index]
                 : color,
-            border: currentNoteColor === color ? '1px dashed grey' : null,
+            border: noteColor === color ? '1px dashed grey' : null,
           }}
           className={classes.color}
           onClick={() => {
-            dispatch(setActiveForm({ ...activeForm, color }));
+            dispatch(editNoteColor(color));
           }}
           key={color}
         />
@@ -51,8 +52,8 @@ const ColorPalette = ({ height }) => {
   );
 };
 
-ColorPalette.propTypes = {
+EditViewColorPalette.propTypes = {
   height: PropTypes.string.isRequired,
 };
 
-export default ColorPalette;
+export default EditViewColorPalette;

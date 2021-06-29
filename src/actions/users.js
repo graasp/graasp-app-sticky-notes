@@ -56,7 +56,7 @@ const getUsers = async () => async (dispatch, getState) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const appInstanceResourceUser of content) {
       const userId = appInstanceResourceUser.user;
-      if (!userIds.includes(userId)) {
+      if (userId && !userIds.includes(userId)) {
         const graaspUserUrl = `${graaspUsersUrl}/${userId}`;
         try {
           // eslint-disable-next-line no-await-in-loop

@@ -1,24 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
-import { getUsers } from '../../../actions';
 
 const useStyles = makeStyles(() => ({
   addedBy: { fontSize: '0.8vw', color: '#383838', textAlign: 'right' },
   author: { fontWeight: 600 },
 }));
 
-const NoteFooter = ({ userId }) => {
+const FinalViewFooter = ({ userId }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
 
   const standalone = useSelector(({ context }) => context.standalone);
   const usersArray = useSelector(({ users }) => users.content);
@@ -40,12 +34,12 @@ const NoteFooter = ({ userId }) => {
   );
 };
 
-NoteFooter.propTypes = {
+FinalViewFooter.propTypes = {
   userId: PropTypes.string,
 };
 
-NoteFooter.defaultProps = {
+FinalViewFooter.defaultProps = {
   userId: null,
 };
 
-export default NoteFooter;
+export default FinalViewFooter;

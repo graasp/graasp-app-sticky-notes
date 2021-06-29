@@ -1,21 +1,23 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import { setActiveForm } from '../../../actions';
+import { editNoteDescription } from '../../../../actions';
 
 const useStyles = makeStyles(() => ({
   container: { padding: '3%' },
   textfield: { width: '100%' },
 }));
 
-const FormDescription = ({ height }) => {
+const EditViewDescription = ({ height }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const activeForm = useSelector(({ canvas }) => canvas.activeForm);
+  const { description } = useSelector(
+    ({ canvas }) => canvas.noteBeingEdited.data,
+  );
 
   return (
     <div style={{ height }} className={classes.container}>
@@ -27,19 +29,15 @@ const FormDescription = ({ height }) => {
         InputProps={{ disableUnderline: true }}
         multiline
         rows={2}
-        value={activeForm.description}
-        onChange={(event) =>
-          dispatch(
-            setActiveForm({ ...activeForm, description: event.target.value }),
-          )
-        }
+        value={description}
+        onChange={(event) => dispatch(editNoteDescription(event.target.value))}
       />
     </div>
   );
 };
 
-FormDescription.propTypes = {
+EditViewDescription.propTypes = {
   height: PropTypes.string.isRequired,
 };
 
-export default FormDescription;
+export default EditViewDescription;

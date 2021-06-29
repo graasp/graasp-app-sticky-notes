@@ -13,7 +13,6 @@ import {
 const useStyles = makeStyles(() => ({
   noteContainer: {
     width: '15%',
-    height: '20%',
     position: 'absolute',
     padding: '1%',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
@@ -34,6 +33,7 @@ const NoteFinalView = ({ note, id, userId }) => {
     color,
     title,
     description,
+    minimized,
     rotation,
   } = note;
   const { innerHeight, innerWidth } = windowDimensions;
@@ -75,6 +75,7 @@ const NoteFinalView = ({ note, id, userId }) => {
         title,
         description,
         rotation,
+        minimized,
         windowDimensions: { innerHeight, innerWidth },
         position: { pageX: newPageX, pageY: newPageY },
       },
@@ -95,6 +96,7 @@ const NoteFinalView = ({ note, id, userId }) => {
         left: `${(pageX / innerWidth) * 100}%`,
         background: color,
         transform: `rotate(${rotation}deg)`,
+        height: `${minimized ? '10%' : '20%'}`,
       }}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
@@ -108,7 +110,7 @@ const NoteFinalView = ({ note, id, userId }) => {
         showActions={showActions}
         id={id}
       />
-      <FinalViewDescription description={description} />
+      {!minimized && <FinalViewDescription description={description} />}
       <FinalViewFooter id={id} userId={userId} />
     </div>
   );
@@ -128,6 +130,7 @@ NoteFinalView.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
+    minimized: PropTypes.bool.isRequired,
   }).isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,

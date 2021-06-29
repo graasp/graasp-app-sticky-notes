@@ -11,8 +11,9 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
   },
   title: {
-    fontSize: '1.2vw',
+    fontSize: '1.1vw',
     fontWeight: 600,
+    overflowWrap: 'anywhere'
   },
 }));
 

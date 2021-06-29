@@ -24,6 +24,7 @@ const useStyles = makeStyles(() => ({
     height: '100%',
     cursor: 'cell',
     background: '#FFE4E1',
+    overflow: 'scroll',
   },
   image: { width: '100%', height: '100%', display: 'block' },
 }));
@@ -98,6 +99,7 @@ const Canvas = () => {
       position: { pageX, pageY },
       color: userSetColor,
       rotation: generateRandomRotationAngle(),
+      minimized: false,
     };
     // dispatch for non-standalone (add remote resource)
     dispatch(postAppInstanceResource({ data: newNote, userId }));

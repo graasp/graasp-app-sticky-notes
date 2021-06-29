@@ -23,7 +23,10 @@ const EditViewTitle = ({ height }) => {
         placeholder={t('Title')}
         className={classes.textfield}
         autoFocus
-        inputProps={{ style: { fontSize: '1vw', fontWeight: 'bold' } }}
+        inputProps={{
+          style: { fontSize: '1vw', fontWeight: 'bold' },
+          maxLength: 50,
+        }}
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}
         value={title}

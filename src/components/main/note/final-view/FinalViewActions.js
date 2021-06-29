@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import MinimizeIcon from '@material-ui/icons/Remove';
+import MaximizeIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {
@@ -30,7 +32,25 @@ const FinalViewActions = ({ id }) => {
     ({ appInstanceResources }) => appInstanceResources.content,
   );
   const notes = standalone ? sessionNotes : savedNotes;
+  const currentNote = notes.find((note) => note._id === id);
+  const isMinimized = currentNote.data.minimized;
   const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
+
+  const handleMinimize = () => {
+    const minimizedNote = { ...currentNote.data, minimized: true };
+    // dispatch for non-standalone cases
+    dispatch(patchAppInstanceResource({ id, data: minimizedNote }));
+    // dispatch for standalone cases
+    dispatch(updateNote({ data: minimizedNote, _id: id }));
+  };
+
+  const handleMaximize = () => {
+    const maximizedNote = { ...currentNote.data, minimized: false };
+    // dispatch for non-standalone cases
+    dispatch(patchAppInstanceResource({ id, data: maximizedNote }));
+    // dispatch for standalone cases
+    dispatch(updateNote({ data: maximizedNote, _id: id }));
+  };
 
   const handleDelete = () => {
     dispatch(deleteAppInstanceResource(id));
@@ -61,12 +81,16 @@ const FinalViewActions = ({ id }) => {
         }),
       );
     }
-    const noteToBeEdited = notes.find((note) => note._id === id);
-    dispatch(setNoteBeingEdited({ ...noteToBeEdited }));
+    dispatch(setNoteBeingEdited({ ...currentNote }));
   };
 
   return (
     <div className={classes.actionContainer}>
+      {isMinimized ? (
+        <MaximizeIcon className={classes.noteAction} onClick={handleMaximize} />
+      ) : (
+        <MinimizeIcon className={classes.noteAction} onClick={handleMinimize} />
+      )}
       <EditIcon className={classes.noteAction} onClick={handleEdit} />
       <DeleteIcon className={classes.noteAction} onClick={handleDelete} />
     </div>

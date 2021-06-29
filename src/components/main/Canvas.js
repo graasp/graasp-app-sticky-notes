@@ -24,7 +24,6 @@ const useStyles = makeStyles(() => ({
     height: '100%',
     cursor: 'cell',
     background: '#FFE4E1',
-    overflow: 'scroll',
   },
   image: { width: '100%', height: '100%', display: 'block' },
 }));
@@ -124,7 +123,7 @@ const Canvas = () => {
           userId={note.user}
         />
       ))}
-      {backgroundImage?.uri && (
+      {backgroundImage?.uri && backgroundImage?.visible && (
         <img
           src={backgroundImage.uri}
           alt={`User selected background ${backgroundImage.name}`}

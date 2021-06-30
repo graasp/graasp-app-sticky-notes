@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/graasp/graasp-app-post-it-notes/compare/v0.1.3...v0.1.4) (2021-06-30)
+
+
+### Bug Fixes
+
+* fix small production bugs ([4774d3c](https://github.com/graasp/graasp-app-post-it-notes/commit/4774d3c2c7f62c9e1a1b5d23bb4a9e8450d8d639)), closes [#19](https://github.com/graasp/graasp-app-post-it-notes/issues/19) [#20](https://github.com/graasp/graasp-app-post-it-notes/issues/20) [#21](https://github.com/graasp/graasp-app-post-it-notes/issues/21)
+
 ### [0.1.3](https://github.com/graasp/graasp-app-post-it-notes/compare/v0.1.2...v0.1.3) (2021-06-30)
 
 

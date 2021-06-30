@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/graasp/graasp-app-post-it-notes/compare/v0.1.2...v0.1.3) (2021-06-30)
+
+
+### Features
+
+* add background fetch ([a17692b](https://github.com/graasp/graasp-app-post-it-notes/commit/a17692b268da1ea2aa40efbd472fff6738a80545)), closes [#7](https://github.com/graasp/graasp-app-post-it-notes/issues/7)
+* add option to minimize notes ([63c6a9c](https://github.com/graasp/graasp-app-post-it-notes/commit/63c6a9cd5fd555b27772171690e8679214ce4af2)), closes [#14](https://github.com/graasp/graasp-app-post-it-notes/issues/14)
+* add sticky note when canvas is clicked ([015a74e](https://github.com/graasp/graasp-app-post-it-notes/commit/015a74e2d7bdb17446c86ce89aa91df165327fe7)), closes [#15](https://github.com/graasp/graasp-app-post-it-notes/issues/15)
+* allow background image to be set in teacher mode ([7c08ef4](https://github.com/graasp/graasp-app-post-it-notes/commit/7c08ef496e4df8fb9449053be27b18597f622049)), closes [#10](https://github.com/graasp/graasp-app-post-it-notes/issues/10)
+* allow background to be toggled off ([266c058](https://github.com/graasp/graasp-app-post-it-notes/commit/266c05844ebc38b5838286d3d3b0d377050ec75f)), closes [#16](https://github.com/graasp/graasp-app-post-it-notes/issues/16) [#13](https://github.com/graasp/graasp-app-post-it-notes/issues/13)
+* store background image in appInstance settings, delete old image on server ([c55d8b1](https://github.com/graasp/graasp-app-post-it-notes/commit/c55d8b1ea289105c85b41a391c884c3b9c26fca2))
+
 ### [0.1.2](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.1...v0.1.2) (2021-06-17)
 
 ### Features

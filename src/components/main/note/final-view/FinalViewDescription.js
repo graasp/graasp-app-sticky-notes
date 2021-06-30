@@ -7,14 +7,18 @@ const useStyles = makeStyles(() => ({
   description: { fontSize: '1vw', overflow: 'auto' },
 }));
 
-const NoteDescription = ({ description }) => {
+const FinalViewDescription = ({ description }) => {
   const classes = useStyles();
 
   return <Typography className={classes.description}>{description}</Typography>;
 };
 
-NoteDescription.propTypes = {
-  description: PropTypes.string.isRequired,
+FinalViewDescription.propTypes = {
+  description: PropTypes.string,
 };
 
-export default NoteDescription;
+FinalViewDescription.defaultProps = {
+  description: '',
+};
+
+export default FinalViewDescription;

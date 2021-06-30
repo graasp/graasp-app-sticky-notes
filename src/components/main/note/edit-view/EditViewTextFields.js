@@ -1,26 +1,26 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import FormTitle from './FormTitle';
-import FormDescription from './FormDescription';
+import EditViewTitle from './EditViewTitle';
+import EditViewDescription from './EditViewDescription';
 
 const useStyles = makeStyles(() => ({
   container: { display: 'flex', flexDirection: 'column' },
 }));
 
-const FormTextFields = ({ height }) => {
+const EditViewTextFields = ({ height }) => {
   const classes = useStyles();
 
   return (
     <div style={{ height }} className={classes.container}>
-      <FormTitle height="20%" />
-      <FormDescription height="80%" />
+      <EditViewTitle height="20%" />
+      <EditViewDescription height="80%" />
     </div>
   );
 };
 
-FormTextFields.propTypes = {
+EditViewTextFields.propTypes = {
   height: PropTypes.string.isRequired,
 };
 
-export default FormTextFields;
+export default EditViewTextFields;

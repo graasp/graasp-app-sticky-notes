@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import ObjectID from 'bson-objectid';
-import Form from './form/Form';
+import objectId from 'bson-objectid';
 import Note from './note/Note';
 import {
-  setActiveForm,
   addNote,
   postAppInstanceResource,
   getAppInstanceResources,
+  patchAppInstanceResource,
+  clearNoteBeingEdited,
+  updateNote,
+  getUsers,
 } from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
 import { RE_FETCH_INTERVAL } from '../../constants/constants';
 import { TEACHER_MODE } from '../../config/settings';
+import ColorSettings from './ColorSettings';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -30,8 +33,8 @@ const Canvas = () => {
   const dispatch = useDispatch();
 
   // extract required state from redux store
-  const { mode, standalone } = useSelector(({ context }) => context);
-  const { activeForm, notes: sessionNotes } = useSelector(
+  const { mode, standalone, userId } = useSelector(({ context }) => context);
+  const { notes: sessionNotes, userSetColor, noteBeingEdited } = useSelector(
     ({ canvas }) => canvas,
   );
   const savedNotes = useSelector(
@@ -40,11 +43,9 @@ const Canvas = () => {
   const { backgroundImage } = useSelector(
     ({ appInstance }) => appInstance.content.settings,
   );
-  const userId = useSelector(({ context }) => context.userId);
 
   // if session is standalone, show sessionNotes; if not, show notes retrieved from API
   const notesToDisplay = standalone ? sessionNotes : savedNotes;
-  const activeFormExists = !!activeForm.position.pageX;
 
   useEffect(() => {
     // fetch app instance resources once on app initialization
@@ -55,35 +56,54 @@ const Canvas = () => {
     }, RE_FETCH_INTERVAL);
   }, []);
 
-  // main click handler in application
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [savedNotes]);
+
   const handleCanvasClick = (event) => {
+    // if the canvas is clicked when a note is in edit mode, update that note and take it out of edit mode
+    if (noteBeingEdited._id) {
+      const updatedData = {
+        ...noteBeingEdited.data,
+        title: noteBeingEdited.data.title,
+        description: noteBeingEdited.data.description,
+        color: noteBeingEdited.data.color,
+      };
+
+      // dispatch for when app is not standalone (patch remote resource)
+      dispatch(
+        patchAppInstanceResource({
+          id: noteBeingEdited._id,
+          data: updatedData,
+        }),
+      );
+
+      // dispatch for when app is standalone (patch note in redux store)
+      dispatch(
+        updateNote({
+          _id: noteBeingEdited._id,
+          data: updatedData,
+        }),
+      );
+
+      // clear note being edited
+      dispatch(clearNoteBeingEdited());
+    }
+
+    // add a new note to the canvas
     const { innerHeight, innerWidth } = window;
     const { pageX, pageY } = event;
-    if (!activeFormExists || (activeFormExists && !activeForm.title)) {
-      dispatch(
-        setActiveForm({
-          ...activeForm,
-          windowDimensions: { innerHeight, innerWidth },
-          position: { pageX, pageY },
-        }),
-      );
-    } else if (activeFormExists && activeForm.title) {
-      const note = {
-        ...activeForm,
-        rotation: generateRandomRotationAngle(),
-      };
-      dispatch(addNote({ data: note, _id: ObjectID() }));
-      dispatch(postAppInstanceResource({ data: note, userId }));
-      dispatch(
-        setActiveForm({
-          ...activeForm,
-          title: '',
-          description: '',
-          windowDimensions: { innerHeight, innerWidth },
-          position: { pageX, pageY },
-        }),
-      );
-    }
+    const newNote = {
+      windowDimensions: { innerHeight, innerWidth },
+      position: { pageX, pageY },
+      color: userSetColor,
+      rotation: generateRandomRotationAngle(),
+      minimized: false,
+    };
+    // dispatch for non-standalone (add remote resource)
+    dispatch(postAppInstanceResource({ data: newNote, userId }));
+    // dispatch for standalone (add note in redux store)
+    dispatch(addNote({ data: newNote, _id: objectId() }));
   };
 
   return (
@@ -103,8 +123,7 @@ const Canvas = () => {
           userId={note.user}
         />
       ))}
-      {activeFormExists && <Form />}
-      {backgroundImage?.uri && (
+      {backgroundImage?.uri && backgroundImage?.visible && (
         <img
           src={backgroundImage.uri}
           alt={`User selected background ${backgroundImage.name}`}
@@ -112,6 +131,7 @@ const Canvas = () => {
         />
       )}
       {mode === TEACHER_MODE && <Settings />}
+      <ColorSettings />
     </div>
   );
 };

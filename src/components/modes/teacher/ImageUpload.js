@@ -28,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     width: '100%',
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
   typographyContainer: {
     display: 'flex',
     flexDirection: 'column',
   },
   headerText: {
-    fontSize: '1.1vw',
+    fontSize: '1.05vw',
   },
   captionText: {
     fontSize: '0.8vw',

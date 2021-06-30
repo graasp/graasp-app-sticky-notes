@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
+import BackgroundToggle from './BackgroundToggle';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   modalContainer: {
     width: '30%',
-    height: '30%',
+    height: '35%',
     padding: theme.spacing(3),
     backgroundColor: 'white',
     borderRadius: '5px',
@@ -80,6 +81,7 @@ const Settings = () => {
         <div className={classes.modalContainer}>
           <Typography className={classes.header}>{t('Settings')}</Typography>
           <ImageUpload />
+          <BackgroundToggle />
           <Divider className={classes.divider} />
           <div className={classes.buttonContainer}>
             <Button

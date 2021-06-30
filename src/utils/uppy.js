@@ -98,6 +98,7 @@ const configureUppy = ({
           backgroundImage: {
             name,
             uri: newImageUri,
+            visible: true,
           },
         },
       }),

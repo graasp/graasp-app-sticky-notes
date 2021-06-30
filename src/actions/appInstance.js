@@ -73,12 +73,12 @@ const getAppInstance = async () => async (dispatch, getState) => {
 
 const patchAppInstance = async ({ data } = {}) => async (
   dispatch,
-  getState
+  getState,
 ) => {
   dispatch(flagPatchingAppInstance(true));
   try {
     const { appInstanceId, apiHost, offline, standalone } = getApiContext(
-      getState
+      getState,
     );
 
     // if standalone, you cannot connect to api

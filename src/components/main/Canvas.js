@@ -15,7 +15,7 @@ import {
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
 import { RE_FETCH_INTERVAL } from '../../constants/constants';
-import { TEACHER_MODE } from '../../config/settings';
+import { TEACHER_MODES } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 
 const useStyles = makeStyles(() => ({
@@ -49,10 +49,10 @@ const Canvas = () => {
 
   useEffect(() => {
     // fetch app instance resources once on app initialization
-    dispatch(getAppInstanceResources());
+    dispatch(getAppInstanceResources({ userId }));
     // subsequently fetch them every RE_FETCH_INTERVAL, so that different clients remain in sync
     setInterval(() => {
-      dispatch(getAppInstanceResources());
+      dispatch(getAppInstanceResources({ userId }));
     }, RE_FETCH_INTERVAL);
   }, []);
 
@@ -130,7 +130,7 @@ const Canvas = () => {
           className={classes.image}
         />
       )}
-      {mode === TEACHER_MODE && <Settings />}
+      {TEACHER_MODES.includes(mode) && <Settings />}
       <ColorSettings />
     </div>
   );

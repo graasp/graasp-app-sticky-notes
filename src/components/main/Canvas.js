@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import ObjectID from 'bson-objectid';
+import objectId from 'bson-objectid';
 import Note from './note/Note';
 import {
   addNote,
@@ -103,7 +103,7 @@ const Canvas = () => {
     // dispatch for non-standalone (add remote resource)
     dispatch(postAppInstanceResource({ data: newNote, userId }));
     // dispatch for standalone (add note in redux store)
-    dispatch(addNote({ data: newNote, _id: ObjectID() }));
+    dispatch(addNote({ data: newNote, _id: objectId() }));
   };
 
   return (

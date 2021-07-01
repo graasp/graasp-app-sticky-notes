@@ -31,8 +31,8 @@ export const MODES = {
 // we haven't decided what to call the teacher mode
 export const TEACHER_MODES = [TEACHER_MODE, 'producer', 'educator', 'admin'];
 
-export const DEFAULT_VISIBILITY = 'private';
 export const PUBLIC_VISIBILITY = 'public';
+export const DEFAULT_VISIBILITY = PUBLIC_VISIBILITY;
 
 export const MAX_NUM_FILES = 1;
 export const MAX_FILE_SIZE = 5 * 1000 * 1000;

@@ -28,6 +28,7 @@ import { flag, getApiContext, isErrorResponse, postMessage } from './common';
 import { showErrorToast } from '../utils/toasts';
 import { MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE } from '../constants/messages';
 import { APP_INSTANCE_RESOURCE_FORMAT } from '../config/formats';
+import { DEFAULT_VISIBILITY } from '../config/settings';
 
 const flagGettingAppInstanceResources = flag(
   FLAG_GETTING_APP_INSTANCE_RESOURCES
@@ -44,6 +45,8 @@ const getAppInstanceResources = async ({
   userId,
   sessionId,
   type,
+  // include public resources by default
+  includePublic = true,
 } = {}) => async (dispatch, getState) => {
   dispatch(flagGettingAppInstanceResources(true));
   try {
@@ -74,9 +77,9 @@ const getAppInstanceResources = async ({
       });
     }
 
-    let url = `//${
-      apiHost + APP_INSTANCE_RESOURCES_ENDPOINT
-    }?appInstanceId=${appInstanceId}`;
+    const queryParams = `appInstanceId=${appInstanceId}&includePublic=${includePublic}`;
+
+    let url = `//${apiHost + APP_INSTANCE_RESOURCES_ENDPOINT}?${queryParams}`;
 
     // only add userId or sessionId, not both
     if (userId) {
@@ -110,7 +113,12 @@ const getAppInstanceResources = async ({
   }
 };
 
-const postAppInstanceResource = async ({ data, userId, type } = {}) => async (
+const postAppInstanceResource = async ({
+  data,
+  userId,
+  type,
+  visibility = DEFAULT_VISIBILITY,
+} = {}) => async (
   dispatch,
   getState
 ) => {
@@ -142,6 +150,7 @@ const postAppInstanceResource = async ({ data, userId, type } = {}) => async (
           format: APP_INSTANCE_RESOURCE_FORMAT,
           appInstanceId,
           userId,
+          visibility,
         },
       });
     }
@@ -151,6 +160,7 @@ const postAppInstanceResource = async ({ data, userId, type } = {}) => async (
     const body = {
       data,
       type,
+      visibility,
       format: APP_INSTANCE_RESOURCE_FORMAT,
       appInstance: appInstanceId,
       // here you can specify who the resource will belong to

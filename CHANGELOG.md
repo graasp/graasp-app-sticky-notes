@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.4...v0.1.5) (2021-07-01)
+
+
+### Bug Fixes
+
+* allow collaboration with public resources ([2d4179f](https://github.com/graasp/graasp-app-sticky-notes/commit/2d4179f18037b0a1ee728e61567e75959fc19c36))
+
 ### [0.1.4](https://github.com/graasp/graasp-app-post-it-notes/compare/v0.1.3...v0.1.4) (2021-06-30)
 
 

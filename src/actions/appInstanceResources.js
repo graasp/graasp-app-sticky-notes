@@ -28,7 +28,7 @@ import { flag, getApiContext, isErrorResponse, postMessage } from './common';
 import { showErrorToast } from '../utils/toasts';
 import { MISSING_APP_INSTANCE_RESOURCE_ID_MESSAGE } from '../constants/messages';
 import { APP_INSTANCE_RESOURCE_FORMAT } from '../config/formats';
-import { DEFAULT_VISIBILITY } from '../config/settings';
+import { DEFAULT_OWNERSHIP, DEFAULT_VISIBILITY } from '../config/settings';
 
 const flagGettingAppInstanceResources = flag(
   FLAG_GETTING_APP_INSTANCE_RESOURCES
@@ -117,6 +117,7 @@ const postAppInstanceResource = async ({
   data,
   userId,
   type,
+  ownership = DEFAULT_OWNERSHIP,
   visibility = DEFAULT_VISIBILITY,
 } = {}) => async (
   dispatch,
@@ -151,6 +152,7 @@ const postAppInstanceResource = async ({
           appInstanceId,
           userId,
           visibility,
+          ownership,
         },
       });
     }

@@ -163,6 +163,7 @@ const postAppInstanceResource = async ({
       data,
       type,
       visibility,
+      ownership,
       format: APP_INSTANCE_RESOURCE_FORMAT,
       appInstance: appInstanceId,
       // here you can specify who the resource will belong to

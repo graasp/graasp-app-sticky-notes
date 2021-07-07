@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.6...v0.1.7) (2021-07-07)
+
+
+### Bug Fixes
+
+* add ownership field for online calls ([2193350](https://github.com/graasp/graasp-app-sticky-notes/commit/21933503460fa79f27b4db4c05e4b9a6a66c8299))
+
 ### [0.1.6](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.5...v0.1.6) (2021-07-02)
 
 

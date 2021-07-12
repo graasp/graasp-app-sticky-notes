@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import objectId from 'bson-objectid';
@@ -31,6 +31,9 @@ const useStyles = makeStyles(() => ({
 const Canvas = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  // see onDragOver event in div below for a note on these variables
+  const [newPageX, setNewPageX] = useState();
+  const [newPageY, setNewPageY] = useState();
 
   // extract required state from redux store
   const { mode, standalone, userId } = useSelector(({ context }) => context);
@@ -113,6 +116,10 @@ const Canvas = () => {
       onDragOver={(event) => {
         event.stopPropagation();
         event.preventDefault();
+        // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
+        // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
+        setNewPageX(event.pageX);
+        setNewPageY(event.pageY);
       }}
     >
       {notesToDisplay.map((note) => (
@@ -121,6 +128,8 @@ const Canvas = () => {
           id={note._id}
           key={note._id}
           userId={note.user}
+          newPageX={newPageX}
+          newPageY={newPageY}
         />
       ))}
       {backgroundImage?.uri && backgroundImage?.visible && (

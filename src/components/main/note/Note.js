@@ -4,13 +4,19 @@ import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
 
-const Note = ({ note, id, userId }) => {
+const Note = ({ note, id, userId, newPageX, newPageY }) => {
   const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
 
   return noteBeingEdited._id === id ? (
     <NoteEditView note={note} id={id} />
   ) : (
-    <NoteFinalView note={note} id={id} userId={userId} />
+    <NoteFinalView
+      note={note}
+      id={id}
+      userId={userId}
+      newPageX={newPageX}
+      newPageY={newPageY}
+    />
   );
 };
 
@@ -29,12 +35,20 @@ Note.propTypes = {
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
   }).isRequired,
-  id: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   userId: PropTypes.string,
+  newPageX: PropTypes.number,
+  newPageY: PropTypes.number,
 };
 
 Note.defaultProps = {
   userId: null,
+  newPageX: null,
+  newPageY: null,
 };
 
 export default Note;

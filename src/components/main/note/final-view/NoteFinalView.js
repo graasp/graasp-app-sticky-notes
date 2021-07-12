@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteFinalView = ({ note, id, userId }) => {
+const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   // destructure note properties
@@ -40,10 +40,15 @@ const NoteFinalView = ({ note, id, userId }) => {
   const { pageX, pageY } = position;
 
   const [showActions, setShowActions] = useState(false);
+  // grabDeltaX/Y captures the distance between the point we grabbed a div (note) and its top left
+  // (this happens in onDragStart below)
+  // when we update the final position of the note (finalPageX/Y), we adjust for this distance
+  // (this adjustment is happening on onDrag below)
+  // (see the note above onDragStart below for further details)
   const [grabDeltaX, setGrabDeltaX] = useState(0);
   const [grabDeltaY, setGrabDeltaY] = useState(0);
-  const [newPageX, setNewPageX] = useState(0);
-  const [newPageY, setNewPageY] = useState(0);
+  const [finalPageX, setFinalPageX] = useState(0);
+  const [finalPageY, setFinalPageY] = useState(0);
 
   // default drag behavior is: (1) you grab div (the sticky note) in e.g. bottom right and begin dragging it,
   // (2) the point where you drop it becomes the *top left* of the div.
@@ -60,14 +65,11 @@ const NoteFinalView = ({ note, id, userId }) => {
     setGrabDeltaY(distanceBetweenGrabAndOriginY);
   };
 
-  const onDrag = (event) => {
-    setNewPageX(event.pageX + grabDeltaX);
-    setNewPageY(event.pageY + grabDeltaY);
+  const onDrag = () => {
+    setFinalPageX(newPageX + grabDeltaX);
+    setFinalPageY(newPageY + grabDeltaY);
   };
 
-  // although the onDragEnd event also supplies pageX and pageY coordinates, these misbehave in Safari (although work well on Chrome)
-  // see: https://stackoverflow.com/questions/51757499/dragend-client-coordinates-incoherent-on-safari-and-firefox
-  // hence, we update coordinates in the onDrag event, which doesn't have the same misbehavior
   const onDragEnd = () => {
     const updatedNote = {
       data: {
@@ -77,7 +79,7 @@ const NoteFinalView = ({ note, id, userId }) => {
         rotation,
         minimized,
         windowDimensions: { innerHeight, innerWidth },
-        position: { pageX: newPageX, pageY: newPageY },
+        position: { pageX: finalPageX, pageY: finalPageY },
       },
       _id: id,
     };
@@ -138,10 +140,14 @@ NoteFinalView.propTypes = {
     PropTypes.number,
   ]).isRequired,
   userId: PropTypes.string,
+  newPageX: PropTypes.number,
+  newPageY: PropTypes.number,
 };
 
 NoteFinalView.defaultProps = {
   userId: null,
+  newPageX: null,
+  newPageY: null,
 };
 
 export default NoteFinalView;

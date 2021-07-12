@@ -43,19 +43,16 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
   // grabDeltaX/Y captures the distance between the point we grabbed a div (note) and its top left
   // (this happens in onDragStart below)
   // when we update the final position of the note (finalPageX/Y), we adjust for this distance
-  // (this adjustment is happening on onDrag below)
   // (see the note above onDragStart below for further details)
   const [grabDeltaX, setGrabDeltaX] = useState(0);
   const [grabDeltaY, setGrabDeltaY] = useState(0);
-  const [finalPageX, setFinalPageX] = useState(0);
-  const [finalPageY, setFinalPageY] = useState(0);
 
   // default drag behavior is: (1) you grab div (the sticky note) in e.g. bottom right and begin dragging it,
   // (2) the point where you drop it becomes the *top left* of the div.
   // this is counterintuitive and visually unappealing
   // instead, we would expect the place where we drop the div to be the bottom right of the div (where we grabbed it)
   // hence, when drag starts, we calculate the distance between current top left of div ('origin') and the point we grabbed it
-  // when we update the position in onDrag (and dispatch it in onDragEnd), we adjust for this distance to generate the expected effect
+  // when we update the position in onDragEnd, we adjust for this distance to generate the expected effect
   const onDragStart = (event) => {
     const noteGrabbedX = event.pageX;
     const noteGrabbedY = event.pageY;
@@ -65,12 +62,9 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
     setGrabDeltaY(distanceBetweenGrabAndOriginY);
   };
 
-  const onDrag = () => {
-    setFinalPageX(newPageX + grabDeltaX);
-    setFinalPageY(newPageY + grabDeltaY);
-  };
-
   const onDragEnd = () => {
+    const finalPageX = newPageX + grabDeltaX;
+    const finalPageY = newPageY + grabDeltaY;
     const updatedNote = {
       data: {
         color,
@@ -79,7 +73,10 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
         rotation,
         minimized,
         windowDimensions: { innerHeight, innerWidth },
-        position: { pageX: finalPageX, pageY: finalPageY },
+        position: {
+          pageX: finalPageX,
+          pageY: finalPageY,
+        },
       },
       _id: id,
     };
@@ -102,7 +99,6 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
       }}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      onDrag={onDrag}
       draggable
     >
       <FinalViewHeader

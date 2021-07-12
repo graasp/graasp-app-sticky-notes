@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/graasp/graasp-app-post-it-notes/compare/v0.1.7...v0.1.8) (2021-07-12)
+
+
+### Bug Fixes
+
+* adjust coordinate updating to fix firefox bug ([ab75c02](https://github.com/graasp/graasp-app-post-it-notes/commit/ab75c02f9452f5dd041de8bf60ff91de94b48ac4)), closes [#23](https://github.com/graasp/graasp-app-post-it-notes/issues/23)
+* remove unnecessary state variables in NoteFinalView ([66452e8](https://github.com/graasp/graasp-app-post-it-notes/commit/66452e8360878924479c18de1da4adc42755366c))
+
 ### [0.1.7](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.6...v0.1.7) (2021-07-07)
 
 

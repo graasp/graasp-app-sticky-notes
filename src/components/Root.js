@@ -4,8 +4,8 @@ import ReactGa from 'react-ga';
 import { I18nextProvider } from 'react-i18next';
 import {
   MuiThemeProvider,
-  createMuiTheme,
-  withStyles,
+  createTheme,
+  makeStyles,
 } from '@material-ui/core/styles';
 import { ToastContainer } from 'react-toastify';
 import pink from '@material-ui/core/colors/pink';
@@ -14,6 +14,15 @@ import orange from '@material-ui/core/colors/orange';
 import 'react-toastify/dist/ReactToastify.css';
 import i18nConfig from '../config/i18n';
 import App from './App';
+
+import { ContextProvider } from './context/ContextContext';
+import {
+  queryClient,
+  QueryClientProvider,
+  ReactQueryDevtools,
+} from '../config/queryClient';
+
+// TODO: Modify DEFINE names
 import {
   REACT_APP_APP_ID,
   REACT_APP_APPS_DEVELOPER_ID,
@@ -21,6 +30,7 @@ import {
   REACT_APP_GOOGLE_ANALYTICS_ID,
 } from '../config/env';
 
+// TODO: Change (somehow)
 ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 ReactGa.ga(
   'send',
@@ -28,14 +38,21 @@ ReactGa.ga(
   `/${REACT_APP_APPS_DEVELOPER_ID}/${REACT_APP_APP_ID}/${REACT_APP_VERSION}/`,
 );
 
-const styles = {
+const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     height: '100%',
   },
-};
+});
 
-const theme = createMuiTheme({
+/* const styles = {
+  root: {
+    flexGrow: 1,
+    height: '100%',
+  },
+}; */
+
+const theme = createTheme({
   palette: {
     primary: {
       main: '#5050d2',
@@ -57,16 +74,27 @@ const theme = createMuiTheme({
   },
 });
 
-const Root = ({ classes }) => (
-  <div className={classes.root}>
-    <MuiThemeProvider theme={theme}>
-      <I18nextProvider i18n={i18nConfig}>
-        <App />
-        <ToastContainer />
-      </I18nextProvider>
-    </MuiThemeProvider>
-  </div>
-);
+const Root = () => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <MuiThemeProvider theme={theme}>
+        <I18nextProvider i18n={i18nConfig}>
+          <QueryClientProvider client={queryClient}>
+            <ContextProvider>
+              <App />
+            </ContextProvider>
+            {process.env.NODE_ENV === 'development' && (
+              <ReactQueryDevtools initialIsOpen />
+            )}
+          </QueryClientProvider>
+          <ToastContainer />
+        </I18nextProvider>
+      </MuiThemeProvider>
+    </div>
+  );
+};
 
 Root.propTypes = {
   classes: PropTypes.shape({
@@ -74,6 +102,6 @@ Root.propTypes = {
   }).isRequired,
 };
 
-const StyledComponent = withStyles(styles)(Root);
+const StyledComponent = withStyles(useStyles)(Root);
 
 export default StyledComponent;

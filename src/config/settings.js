@@ -28,6 +28,8 @@ export const MODES = {
   LEARNER: 'learner',
 };
 
+export const DEFAULT_PERMISSION = 'read';
+
 // we haven't decided what to call the teacher mode
 export const TEACHER_MODES = [TEACHER_MODE, 'producer', 'educator', 'admin'];
 

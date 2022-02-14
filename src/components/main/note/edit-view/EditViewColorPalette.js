@@ -33,20 +33,23 @@ const EditViewColorPalette = ({ height }) => {
   return (
     <div className={classes.paletteContainer} style={{ height }}>
       {AVAILABLE_COLORS.map((color, index) => (
-        <div
-          style={{
-            background:
-              noteColor === color
-                ? AVAILABLE_COLORS_DARKER_SHADES[index]
-                : color,
-            border: noteColor === color ? '1px dashed grey' : null,
-          }}
-          className={classes.color}
-          onClick={() => {
-            dispatch(editNoteColor(color));
-          }}
-          key={color}
-        />
+        <>
+          { /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+          <div
+            style={{
+              background:
+                noteColor === color
+                  ? AVAILABLE_COLORS_DARKER_SHADES[index]
+                  : color,
+              border: noteColor === color ? '1px dashed grey' : null,
+            }}
+            className={classes.color}
+            onClick={() => {
+              dispatch(editNoteColor(color));
+            }}
+            key={color}
+          />
+        </>
       ))}
     </div>
   );

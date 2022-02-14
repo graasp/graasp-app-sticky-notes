@@ -1,13 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
 
+/* eslint-disable-next-line arrow-body-style */
 const Note = ({ note, id, userId, newPageX, newPageY }) => {
-  const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
+  // const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
 
-  return noteBeingEdited._id === id ? (
+  // return noteBeingEdited._id === id ? (
+  /* eslint-disable-next-line no-self-compare */
+  return id === id ? (  // TODO: Modify to implement edition
     <NoteEditView note={note} id={id} />
   ) : (
     <NoteFinalView

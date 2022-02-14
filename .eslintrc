@@ -43,6 +43,9 @@
         "extensions": [".js", ".jsx"]
       }
     ],
+    "react/static-property-placement": ["error", "static public field"],
+    "jsx-a11y/click-events-have-key-events": ["warn"],
+    "jsx-a11y/mouse-events-have-key-events": ["warn"],
     "import/no-named-as-default": 0
   }
 }

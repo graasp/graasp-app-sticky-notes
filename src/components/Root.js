@@ -6,6 +6,7 @@ import {
   MuiThemeProvider,
   createTheme,
   makeStyles,
+  withStyles
 } from '@material-ui/core/styles';
 import { ToastContainer } from 'react-toastify';
 import pink from '@material-ui/core/colors/pink';
@@ -24,8 +25,8 @@ import {
 
 // TODO: Modify DEFINE names
 import {
-  REACT_APP_APP_ID,
-  REACT_APP_APPS_DEVELOPER_ID,
+  REACT_APP_GRAASP_DEVELOPER_ID,
+  REACT_APP_GRAASP_APP_ID,
   REACT_APP_VERSION,
   REACT_APP_GOOGLE_ANALYTICS_ID,
 } from '../config/env';
@@ -35,7 +36,7 @@ ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 ReactGa.ga(
   'send',
   'pageview',
-  `/${REACT_APP_APPS_DEVELOPER_ID}/${REACT_APP_APP_ID}/${REACT_APP_VERSION}/`,
+  `/${REACT_APP_GRAASP_DEVELOPER_ID}/${REACT_APP_GRAASP_APP_ID}/${REACT_APP_VERSION}/`,
 );
 
 const useStyles = makeStyles({

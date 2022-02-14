@@ -1,15 +1,42 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+/* import React, { Component } from 'react'; */
+import React, { useContext } from 'react';
+/* import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import StudentView from './modes/student/StudentView';
 import { getContext } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE, MODES } from '../config/settings';
 import { getAppInstance } from '../actions/appInstance';
-import Loader from './common/Loader';
+import Loader from './common/Loader'; */
 import TeacherView from './modes/teacher/TeacherView';
+import StudentView from './modes/student/StudentView';
+import { Context } from './context/ContextContext';
+import { TokenProvider } from './context/TokenContext';
+import { DEFAULT_PERMISSION } from '../config/settings';
 
-export class App extends Component {
+export const App = () => {
+  const context = useContext(Context);
+
+  const renderContent = () => {
+    switch (context?.get('permission', DEFAULT_PERMISSION)) {
+      // show teacher view when in producer (educator) mode
+      case 'write':
+      case 'admin':
+        // case permission:
+        return <TeacherView />;
+
+      // by default go with the consumer (learner) mode
+      case 'read':
+      default:
+        return <StudentView />;
+    }
+  };
+
+  return <TokenProvider>{renderContent()}</TokenProvider>;
+};
+
+export default App;
+
+/* export class App extends Component {
   static propTypes = {
     i18n: PropTypes.shape({
       defaultNS: PropTypes.string,
@@ -84,21 +111,21 @@ export class App extends Component {
         return <StudentView />;
     }
   }
-}
+} */
 
-const mapStateToProps = ({ context, appInstance }) => ({
+/* const mapStateToProps = ({ context, appInstance }) => ({
   lang: context.lang,
   mode: context.mode,
   appInstanceId: context.appInstanceId,
   ready: appInstance.ready,
   standalone: context.standalone,
-});
+}); */
 
-const mapDispatchToProps = {
+/* const mapDispatchToProps = {
   dispatchGetContext: getContext,
   dispatchGetAppInstance: getAppInstance,
-};
+}; */
 
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+/* const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App); */
 
-export default withTranslation()(ConnectedApp);
+/* export default withTranslation()(ConnectedApp); */

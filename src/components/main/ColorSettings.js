@@ -62,18 +62,21 @@ const ColorSettings = () => {
       {colorPaletteOpen && (
         <div className={classes.colorSettingsContainer}>
           {AVAILABLE_COLORS.map((color) => (
-            <div
-              style={{
-                background: color,
-                border: userSetColor === color && '1px solid grey',
-              }}
-              className={classes.color}
-              key={color}
-              onClick={(event) => {
-                event.stopPropagation();
-                dispatch(setUserNoteColor(color));
-              }}
-            />
+            <>
+              { /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+              <div
+                style={{
+                  background: color,
+                  border: userSetColor === color && '1px solid grey',
+                }}
+                className={classes.color}
+                key={color}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  dispatch(setUserNoteColor(color));
+                }}
+              />
+            </>
           ))}
         </div>
       )}

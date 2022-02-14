@@ -40,3 +40,10 @@ cypress
 
 # exclude local database
 db.json
+
+#yarn
+/.yarn
+
+# pnp files (unknomn...)
+.pnp.cjs
+.pnp.loader.mjs

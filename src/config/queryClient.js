@@ -1,5 +1,4 @@
 import { configureQueryClient } from '@graasp/apps-query-client';
-// import notifier from '../middlewares/notifier';
 import { REACT_APP_GRAASP_APP_ID } from './env';
 
 const {
@@ -13,8 +12,10 @@ const {
   HOOK_KEYS,
 } = configureQueryClient({
   // API_HOST,
-  // notifier,
-  enableWebsocket: true,
+  notifier: (data) => {
+    console.log('notifier: ', data);
+  },
+  enableWebsocket: false,
   keepPreviousData: true,
   // avoid refetching when same data are closely fetched
   staleTime: 1000, // ms

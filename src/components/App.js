@@ -7,7 +7,7 @@ import { getContext } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE, MODES } from '../config/settings';
 import { getAppInstance } from '../actions/appInstance';
 import Loader from './common/Loader'; */
-import TeacherView from './modes/teacher/TeacherView';
+// import TeacherView from './modes/teacher/TeacherView';
 import StudentView from './modes/student/StudentView';
 import { Context } from './context/ContextContext';
 import { TokenProvider } from './context/TokenContext';
@@ -22,7 +22,8 @@ export const App = () => {
       case 'write':
       case 'admin':
         // case permission:
-        return <TeacherView />;
+        // return <TeacherView />;
+        return <div>Hi</div>; // TODO: Port the views
 
       // by default go with the consumer (learner) mode
       case 'read':

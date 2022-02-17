@@ -2,7 +2,7 @@ import React from 'react';
 // import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
-import NoteEditView from './edit-view/NoteEditView';
+// import NoteEditView from './edit-view/NoteEditView';
 
 /* eslint-disable-next-line arrow-body-style */
 const Note = ({ note, id, userId, newPageX, newPageY }) => {
@@ -10,7 +10,7 @@ const Note = ({ note, id, userId, newPageX, newPageY }) => {
 
   // return noteBeingEdited._id === id ? (
   /* eslint-disable-next-line no-self-compare */
-  return id === id ? (  // TODO: Modify to implement edition
+  /* return id === id ? (  // TODO: Modify to implement edition
     <NoteEditView note={note} id={id} />
   ) : (
     <NoteFinalView
@@ -20,7 +20,16 @@ const Note = ({ note, id, userId, newPageX, newPageY }) => {
       newPageX={newPageX}
       newPageY={newPageY}
     />
-  );
+  ); */
+  return (
+    <NoteFinalView
+      note={note}
+      id={id}
+      userId={userId}
+      newPageX={newPageX}
+      newPageY={newPageY}
+    />
+  )
 };
 
 Note.propTypes = {

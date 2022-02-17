@@ -1,4 +1,5 @@
 import { LOCAL_API_HOST } from './api';
+import { CONTEXTS } from './contexts';
 
 export const MAX_INPUT_LENGTH = 5000;
 export const MAX_ROWS = 10;
@@ -28,6 +29,13 @@ export const MODES = {
   LEARNER: 'learner',
 };
 
+// todo: use from graasp constants
+export const PERMISSION_LEVELS = {
+  WRITE: 'write',
+  READ: 'read',
+  ADMIN: 'admin',
+};
+
 export const DEFAULT_PERMISSION = 'read';
 
 // we haven't decided what to call the teacher mode
@@ -41,3 +49,10 @@ export const DEFAULT_OWNERSHIP = PUBLIC_OWNERSHIP;
 
 export const MAX_NUM_FILES = 1;
 export const MAX_FILE_SIZE = 5 * 1000 * 1000;
+
+export const DEFAULT_LOCAL_CONTEXT = {
+  permission: PERMISSION_LEVELS.READ,
+  lang: DEFAULT_LANG,
+  context: CONTEXTS.PLAYER,
+  apiHost: DEFAULT_API_HOST,
+};

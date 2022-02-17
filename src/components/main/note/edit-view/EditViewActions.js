@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -11,6 +13,7 @@ import {
   patchAppInstanceResource,
   updateNote,
 } from '../../../../actions';
+import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 
 const useStyles = makeStyles(() => ({
   iconContainer: {
@@ -30,13 +33,16 @@ const useStyles = makeStyles(() => ({
 const EditViewActions = ({ height, note, id }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { title, description, color } = useSelector(
+  // const dispatch = useDispatch();
+  /* const { title, description, color } = useSelector(
     ({ canvas }) => canvas.noteBeingEdited.data,
-  );
+  ); */
+  const { title, description, color } = useState(null);
+
+  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
 
   const handleCancel = () => {
-    dispatch(clearNoteBeingEdited());
+    // dispatch(clearNoteBeingEdited());
   };
 
   const handleConfirm = () => {
@@ -48,11 +54,16 @@ const EditViewActions = ({ height, note, id }) => {
     };
     
     // dispatch for standalone cases
-    dispatch(updateNote({ data: updatedNote, _id: id }));
+    // dispatch(updateNote({ data: updatedNote, _id: id }));
     // dispatch for non-standalone cases
-    dispatch(patchAppInstanceResource({ id, data: updatedNote }));
+    // dispatch(patchAppInstanceResource({ id, data: updatedNote }));
 
-    dispatch(clearNoteBeingEdited());
+    patchAppData({
+      data: updatedNote.data,
+      id: updatedNote._id,
+    });
+
+    // dispatch(clearNoteBeingEdited());
   };
 
   return (

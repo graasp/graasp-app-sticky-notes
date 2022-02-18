@@ -42,7 +42,7 @@ Note.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string, // .isRequired,
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
@@ -62,5 +62,9 @@ Note.defaultProps = {
   newPageX: null,
   newPageY: null,
 };
+
+/* note.defaultProps = {
+  color: '#DFD59F',
+}; */
 
 export default Note;

@@ -69,21 +69,21 @@ const Canvas = () => {
   useEffect(() => {
     if (isAppDataSuccess && !appData.isEmpty()) {
       //  suppose take first
-      setNotes(appData.findAll(({ type }) => type === ACTION_TYPES.NOTE));
+      // setNotes(appData.findAll(({ type }) => type === ACTION_TYPES.NOTE));
+      setNotes(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
+      // setNotes(appData);
+      console.debug(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
       /* setFeedbackResource(
         appData.find(({ type }) => type === ACTION_TYPES.FEEDBACK)
       ); */
     }
 
     // create this resource once data is loaded and is empty
-    else if (isAppDataSuccess && appData.isEmpty()) {
-      postAppData({ data: { text: '' }, type: ACTION_TYPES.NOTE });
-    }
   }, [appData, isAppDataSuccess, postAppData]);
 
   // if session is standalone, show sessionNotes; if not, show notes retrieved from API
   // const notesToDisplay = standalone ? sessionNotes : savedNotes;
-  const notesToDisplay = notes;
+  // const notesToDisplay = notes;
 
   /* useEffect(() => { 
     dispatch(getUsers());
@@ -132,12 +132,12 @@ const Canvas = () => {
 
     if (newNote?.id) {
       patchAppData({
-        data: { newNote },
+        data: newNote,
         id: notes.id,
       });
     } else {
       postAppData({
-        data: { newNote },
+        data: newNote,
         type: ACTION_TYPES.NOTE,
       });
     }
@@ -175,16 +175,17 @@ const Canvas = () => {
           setNewPageY(event.pageY);
         }}
       >
-        {notesToDisplay.map((note) => (
-          <Note
-            note={note.data}
-            id={note._id}
-            key={note._id}
-            userId={note.user}
-            newPageX={newPageX}
-            newPageY={newPageY}
-          />
-        ))}
+        {notes ? (
+          notes.map((note) => (
+            <Note
+              note={note.data}
+              id={note.id}
+              key={note.id}
+              userId={note.user}
+              newPageX={newPageX}
+              newPageY={newPageY}
+            />)) ):(<div>Add a note.</div>)
+        }
         {/* backgroundImage?.uri && backgroundImage?.visible && (
           <img
             src={backgroundImage.uri}
@@ -192,8 +193,10 @@ const Canvas = () => {
             className={classes.image}
           />
         ) */}
+        {/*
         {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
         <ColorSettings />
+        */}
       </div>
     </>
   );

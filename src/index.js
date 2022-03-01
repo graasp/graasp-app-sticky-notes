@@ -1,9 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { mockServer, buildMockLocalContext } from '@graasp/apps-query-client';
 // import { Provider } from 'react-redux';
 import Root from './components/Root';
 // import configureStore from './store/configureStore';
 import './index.css';
+import buildDatabase from './data/db';
+import { MOCK_API } from './config/settings';
+
+if (MOCK_API) {
+  const appContext = buildMockLocalContext(window.appContext); // To change context
+  const database = window.Cypress ? window.database : buildDatabase(appContext);
+  mockServer({ database, appContext });
+}
 
 const root = document.getElementById('root');
 

@@ -1,11 +1,13 @@
 import { LOCAL_API_HOST } from './api';
 import { CONTEXTS } from './contexts';
+import { REACT_APP_MOCK_API } from './env';
 
 export const MAX_INPUT_LENGTH = 5000;
 export const MAX_ROWS = 10;
 export const DEFAULT_LANG = 'en';
 export const DEFAULT_MODE = 'student';
 export const TEACHER_MODE = 'teacher';
+
 
 // avoid breaking the app in production when embedded in different contexts
 let defaultApiHost;
@@ -56,3 +58,5 @@ export const DEFAULT_LOCAL_CONTEXT = {
   context: CONTEXTS.PLAYER,
   apiHost: DEFAULT_API_HOST,
 };
+
+export const MOCK_API = REACT_APP_MOCK_API === 'true';

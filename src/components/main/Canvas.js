@@ -13,6 +13,7 @@ import {
   clearNoteBeingEdited,
   updateNote,
   getUsers,
+  setNoteBeingEdited,
 } from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
@@ -24,6 +25,7 @@ import { useAppData } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { SAVED } from '../../config/verbs';
 import { Context } from '../context/ContextContext';
+import CanvasContext from '../context/CanvasContext';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -42,11 +44,16 @@ const Canvas = () => {
   const [newPageX, setNewPageX] = useState();
   const [newPageY, setNewPageY] = useState();
   const [notes, setNotes] = useState(null);
+  const [noteBeingEditedId, setterNBEId] = useState(null);
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation('MUTATION_KEYS.POST_APP_DATA');
   const [userSetColor, setUserSetColor] = useState(null);
   const context = useContext(Context);
+
+  function setNoteBeingEditedId(id) {
+    setterNBEId(id);
+  }
 
   // extract required state from redux store
   // const { mode, standalone, userId } = useSelector(({ context }) => context);
@@ -127,7 +134,7 @@ const Canvas = () => {
       position: { pageX, pageY },
       color: userSetColor,
       rotation: generateRandomRotationAngle(),
-      minimized: false,
+      minimized: false, 
     };
 
     if (newNote?.id) {
@@ -150,8 +157,6 @@ const Canvas = () => {
     });
 
 
-
-
     // dispatch for non-standalone (add remote resource)
     // dispatch(postAppInstanceResource({ data: newNote, userId }));
     // dispatch for standalone (add note in redux store)
@@ -161,7 +166,7 @@ const Canvas = () => {
   /* The <div> element has a child <button> element that allows keyboard interaction */
   
   return (
-    <>
+    <CanvasContext.Provider value={[noteBeingEditedId, setNoteBeingEditedId]}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.mainContainer}
@@ -198,7 +203,7 @@ const Canvas = () => {
         <ColorSettings />
         */}
       </div>
-    </>
+    </CanvasContext.Provider>
   );
 };
 

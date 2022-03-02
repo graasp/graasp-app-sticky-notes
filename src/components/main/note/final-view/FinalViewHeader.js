@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// import FinalViewActions from './FinalViewActions';
+import FinalViewActions from './FinalViewActions';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -17,40 +17,40 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinalViewHeader = ({ title /* , description, color, showActions, id */}) => {
+const FinalViewHeader = ({ title, description, color, showActions, id}) => {
   const classes = useStyles();
 
   return (
     <div className={classes.header}>
       <Typography className={classes.title}>{title}</Typography>
-      {/* showActions && (
+      {showActions && (
         <FinalViewActions
           id={id}
           description={description}
           title={title}
           color={color}
         />
-      ) */}
+      )}
     </div>
   );
 };
 
 FinalViewHeader.propTypes = {
   title: PropTypes.string,
-  /* description: PropTypes.string,
+  description: PropTypes.string,
   color: PropTypes.string, // .isRequired,
   showActions: PropTypes.bool.isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,
     PropTypes.number,
-  ]).isRequired, */
+  ]).isRequired,
 };
 
 FinalViewHeader.defaultProps = {
   title: '',
-  /* description: '',
-  color: '#DFD59F', */
+  description: '',
+  color: '#DFD59F',
 };
 
 export default FinalViewHeader;

@@ -1,10 +1,8 @@
-import React from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-// import { editNoteTitle } from '../../../../actions';
 
 const useStyles = makeStyles(() => ({
   container: { padding: '3%' },
@@ -14,8 +12,7 @@ const useStyles = makeStyles(() => ({
 const EditViewTitle = ({ height, title, onChange }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
-  // const { title } = useSelector(({ canvas }) => canvas.noteBeingEdited.data);
+  const [text, setText] = useState(title);
 
   return (
     <div style={{ height }} className={classes.container}>
@@ -29,10 +26,12 @@ const EditViewTitle = ({ height, title, onChange }) => {
         }}
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}
-        value={title}
+        value={text}
         onChange={
-          /* (event) => dispatch(editNoteTitle(event.target.value)) */
-          (event) => onChange(event.target.value)
+          (event) => {
+            setText(event.target.value);
+            onChange(event.target.value);
+          }
         }
       />
     </div>

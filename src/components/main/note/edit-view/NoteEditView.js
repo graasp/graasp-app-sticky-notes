@@ -1,10 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
-import EditViewColorPalette from './EditViewColorPalette';
+// import EditViewColorPalette from './EditViewColorPalette';
 import EditViewActions from './EditViewActions';
+import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -26,8 +27,42 @@ const NoteEditView = ({ note, id }) => {
   const { windowDimensions, position } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
+  let { title, description } = note;
 
-  const { color } = useSelector(({ canvas }) => canvas.noteBeingEdited.data);
+  const handleChangeText = (newTitle, newDescription) => {
+    description = newDescription;
+    title = newTitle;
+
+    console.log(description, title)
+  }
+
+  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+
+  const handleCancel = () => {
+    // dispatch(clearNoteBeingEdited());
+    console.log('Cancel');
+  };
+
+  const handleConfirm = () => {
+    const updatedNote = {
+      ...note,
+      title,
+      description,
+      /* color, */
+    };
+    
+    // dispatch for standalone cases
+    // dispatch(updateNote({ data: updatedNote, _id: id }));
+    // dispatch for non-standalone cases
+    // dispatch(patchAppInstanceResource({ id, data: updatedNote }));
+
+    patchAppData({
+      data: updatedNote,
+      id,
+    });
+  };
+
+  // const { color } = useSelector(({ canvas }) => canvas.noteBeingEdited.data);
 
   return (
     <>
@@ -38,12 +73,12 @@ const NoteEditView = ({ note, id }) => {
         style={{
           top: `${(pageY / innerHeight) * 100}%`,
           left: `${(pageX / innerWidth) * 100}%`,
-          background: color,
+          // background: color,
         }}
       >
-        <EditViewTextFields height="65%" />
-        <EditViewColorPalette height="20%" />
-        <EditViewActions height="15%" note={note} id={id} />
+        <EditViewTextFields height="65%" onChange={handleChangeText} />
+        {/* <EditViewColorPalette height="20%" /> */}
+        <EditViewActions height="15%" note={note} id={id} onConfirm={handleConfirm} onCancel={handleCancel} />
       </div>
     </>
   );

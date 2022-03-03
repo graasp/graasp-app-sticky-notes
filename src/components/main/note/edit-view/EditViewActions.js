@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const EditViewActions = ({ height, note, id }) => {
+const EditViewActions = ({ height, note, id, onConfirm, onCancel }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   // const dispatch = useDispatch();
@@ -69,10 +69,10 @@ const EditViewActions = ({ height, note, id }) => {
   return (
     <div className={classes.iconContainer} style={{ height }}>
       <Tooltip title={t('Cancel')}>
-        <ClearIcon className={classes.formIcon} onClick={handleCancel} />
+        <ClearIcon className={classes.formIcon} onClick={onCancel()} />
       </Tooltip>
       <Tooltip title={t('Save')}>
-        <CheckIcon className={classes.formIcon} onClick={handleConfirm} />
+        <CheckIcon className={classes.formIcon} onClick={onConfirm} />
       </Tooltip>
     </div>
   );
@@ -99,6 +99,8 @@ EditViewActions.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default EditViewActions;

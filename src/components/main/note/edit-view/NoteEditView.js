@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
-// import EditViewColorPalette from './EditViewColorPalette';
+import EditViewColorPalette from './EditViewColorPalette';
 import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import CanvasContext from '../../../context/CanvasContext';
@@ -29,12 +28,17 @@ const NoteEditView = ({ note, id }) => {
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
   let { title, description } = note;
+  const [color, setColor] = useState(note.color);
 
   const [,setNoteBeingEditedId] = useContext(CanvasContext);
 
   const handleChangeText = (newTitle, newDescription) => {
     description = newDescription;
     title = newTitle;
+  }
+
+  const handleChangeColor = (newColor) => {
+    setColor(newColor);
   }
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
@@ -48,8 +52,8 @@ const NoteEditView = ({ note, id }) => {
       ...note,
       title,
       description,
-      /* color, */
-    };  
+      color,
+    };
 
     patchAppData({
       data: updatedNote,
@@ -70,11 +74,11 @@ const NoteEditView = ({ note, id }) => {
         style={{
           top: `${(pageY / innerHeight) * 100}%`,
           left: `${(pageX / innerWidth) * 100}%`,
-          // background: color,
+          background: color,
         }}
       >
         <EditViewTextFields height="65%" title={title} description={description} onChange={handleChangeText} />
-        {/* <EditViewColorPalette height="20%" /> */}
+        <EditViewColorPalette height="20%" color={color} onChange={handleChangeColor} />
         <EditViewActions height="15%" note={note} id={id} onConfirm={handleConfirm} onCancel={handleCancel} />
       </div>
     </>

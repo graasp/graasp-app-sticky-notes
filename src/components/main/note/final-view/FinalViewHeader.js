@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinalViewHeader = ({ title, description, color, showActions, id}) => {
+const FinalViewHeader = ({ title, description, color, showActions, id, minimized, onChangeMinimize}) => {
   const classes = useStyles();
 
   return (
@@ -29,6 +29,8 @@ const FinalViewHeader = ({ title, description, color, showActions, id}) => {
           description={description}
           title={title}
           color={color}
+          minimized={minimized}
+          onChangeMinimize={onChangeMinimize}
         />
       )}
     </div>
@@ -40,6 +42,8 @@ FinalViewHeader.propTypes = {
   description: PropTypes.string,
   color: PropTypes.string, // .isRequired,
   showActions: PropTypes.bool.isRequired,
+  minimized: PropTypes.bool.isRequired,
+  onChangeMinimize: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,

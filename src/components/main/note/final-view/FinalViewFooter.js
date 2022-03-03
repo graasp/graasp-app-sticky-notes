@@ -15,16 +15,16 @@ const FinalViewFooter = ({ userId }) => {
   const { t } = useTranslation();
 
   // const standalone = useSelector(({ context }) => context.standalone);
-  const usersArray = useSelector(({ users }) => users.content); // TODO: Port this
+  // const usersArray = useSelector(({ users }) => users.content); // TODO: Port this
 
   // if app is accessed standalone, don't show any information in the footer (where user info is displayed)
   // a typography element is still rendered for visual consistency
-  if (standalone) {
+  /* if (standalone) {
     return <Typography className={classes.addedBy} />;
-  }
+  } */
 
-  const userName =
-    usersArray.find((user) => user.id === userId)?.name || t('Anonymous');
+  const userName = userId;
+  //  usersArray.find((user) => user.id === userId)?.name || t('Anonymous');
 
   return (
     <Typography className={classes.addedBy}>

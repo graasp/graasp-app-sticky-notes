@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinalViewActions = ({ id }) => {
+const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
   const classes = useStyles();
 //  const dispatch = useDispatch();
 //  const { standalone } = useSelector(({ context }) => context);
@@ -39,24 +39,15 @@ const FinalViewActions = ({ id }) => {
 //  const isMinimized = currentNote.data.minimized;
   // const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
   const [noteBeingEditedId, setNoteBeingEditedId] = useContext(CanvasContext);
-
-  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+  
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
 
   const handleMinimize = () => {
-    // const minimizedNote = { ...currentNote.data, minimized: true };
-    // dispatch for non-standalone cases
-    // dispatch(patchAppInstanceResource({ id, data: minimizedNote }));
-    // dispatch for standalone cases
-    // dispatch(updateNote({ data: minimizedNote, _id: id }));
+    onChangeMinimize(true);
   };
 
   const handleMaximize = () => {
-    // const maximizedNote = { ...currentNote.data, minimized: false };
-    // dispatch for non-standalone cases
-    // dispatch(patchAppInstanceResource({ id, data: maximizedNote }));
-    // dispatch for standalone cases
-    // dispatch(updateNote({ data: maximizedNote, _id: id }));
+    onChangeMinimize(false);
   };
 
   const handleDelete = () => {
@@ -96,11 +87,11 @@ const FinalViewActions = ({ id }) => {
 
   return (
     <div className={classes.actionContainer}>
-      {/* isMinimized ? (
+      {minimized ? (
         <MaximizeIcon className={classes.noteAction} onClick={handleMaximize} />
       ) : (
         <MinimizeIcon className={classes.noteAction} onClick={handleMinimize} />
-      ) */}
+      )}
       <EditIcon className={classes.noteAction} onClick={handleEdit} />
       <DeleteIcon className={classes.noteAction} onClick={handleDelete} />
     </div>
@@ -113,6 +104,8 @@ FinalViewActions.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  minimized: PropTypes.bool.isRequired,
+  onChangeMinimize: PropTypes.func.isRequired,
 };
 
 export default FinalViewActions;

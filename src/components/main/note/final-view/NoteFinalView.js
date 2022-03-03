@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
 import FinalViewDescription from './FinalViewDescription';
-// import FinalViewFooter from './FinalViewFooter';
+import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 /* import {
   patchAppInstanceResource,
@@ -24,8 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-// const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
-  const NoteFinalView = ({ note, id, newPageX, newPageY }) => {
+const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
   const classes = useStyles();
   // const dispatch = useDispatch();
   // destructure note properties
@@ -89,10 +88,18 @@ const useStyles = makeStyles(() => ({
       data: updatedNote.data,
       id: updatedNote._id,
     });
+  };
 
+  const handleChangeMinimize = (isMin) => {
+    const updatedNote = {
+      ...note,
+      minimized: isMin,
+    };
 
-    // dispatch(patchAppInstanceResource({ id, data: updatedNote.data }));
-    // dispatch(updateNotePosition(updatedNote));
+    patchAppData({
+      data: updatedNote,
+      id,
+    });
   };
 
   return (
@@ -119,10 +126,12 @@ const useStyles = makeStyles(() => ({
           description={description}
           color={color}
           showActions={showActions}
+          minimized={minimized}
           id={id}
+          onChangeMinimize={handleChangeMinimize}
         />
         {!minimized && <FinalViewDescription description={description} />}
-        {/* <FinalViewFooter id={id} userId={userId} /> */}
+        <FinalViewFooter id={id} userId={userId} />
       </div>
     </>
   );
@@ -149,13 +158,13 @@ NoteFinalView.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  /* userId: PropTypes.string, */
+  userId: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
 };
 
 NoteFinalView.defaultProps = {
-  /* userId: null, */
+  userId: null,
   newPageX: null,
   newPageY: null,
 };

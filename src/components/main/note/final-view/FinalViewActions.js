@@ -15,6 +15,7 @@ import {
   setNoteBeingEdited,
   updateNote,
 } from '../../../../actions';
+import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
 
 const useStyles = makeStyles(() => ({
   actionContainer: { display: 'flex', alignItems: 'center' },
@@ -38,7 +39,9 @@ const FinalViewActions = ({ id }) => {
 //  const isMinimized = currentNote.data.minimized;
   // const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
   const [noteBeingEditedId, setNoteBeingEditedId] = useContext(CanvasContext);
-  console.log(noteBeingEditedId);
+
+  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+  const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
 
   const handleMinimize = () => {
     // const minimizedNote = { ...currentNote.data, minimized: true };
@@ -57,8 +60,9 @@ const FinalViewActions = ({ id }) => {
   };
 
   const handleDelete = () => {
-    // dispatch(deleteAppInstanceResource(id));
-    // dispatch(deleteNote(id));
+    deleteAppData({
+      id,
+    });
   };
 
   const handleEdit = () => {
@@ -98,7 +102,7 @@ const FinalViewActions = ({ id }) => {
         <MinimizeIcon className={classes.noteAction} onClick={handleMinimize} />
       ) */}
       <EditIcon className={classes.noteAction} onClick={handleEdit} />
-      {/* <DeleteIcon className={classes.noteAction} onClick={handleDelete} /> */}
+      <DeleteIcon className={classes.noteAction} onClick={handleDelete} />
     </div>
   );
 };

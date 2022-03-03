@@ -74,18 +74,12 @@ const Canvas = () => {
   } = useAppData();
 
   useEffect(() => {
+    console.log(appData);
     if (isAppDataSuccess && !appData.isEmpty()) {
-      //  suppose take first
-      // setNotes(appData.findAll(({ type }) => type === ACTION_TYPES.NOTE));
       setNotes(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
-      // setNotes(appData);
-      console.debug(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
-      /* setFeedbackResource(
-        appData.find(({ type }) => type === ACTION_TYPES.FEEDBACK)
-      ); */
+    } else if (isAppDataSuccess && appData.isEmpty()) {
+      setNotes(null);
     }
-
-    // create this resource once data is loaded and is empty
   }, [appData, isAppDataSuccess, postAppData]);
 
   // if session is standalone, show sessionNotes; if not, show notes retrieved from API

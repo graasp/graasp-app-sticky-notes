@@ -1,19 +1,14 @@
 import React, { useContext } from 'react';
-// import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
 import CanvasContext from '../../context/CanvasContext';
 
-/* eslint-disable-next-line arrow-body-style */
 const Note = ({ note, id, userId, newPageX, newPageY }) => {
-  // const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
 
   const [noteBeingEditedId,] = useContext(CanvasContext);
 
-  // return noteBeingEdited._id === id ? (
-  /* eslint-disable-next-line no-self-compare */
-  return noteBeingEditedId === id ? (  // TODO: Modify to implement edition
+  return noteBeingEditedId === id ? (
     <NoteEditView note={note} id={id} />
   ) : (
     <NoteFinalView
@@ -24,15 +19,6 @@ const Note = ({ note, id, userId, newPageX, newPageY }) => {
       newPageY={newPageY}
     />
   );
-  /* return (
-    <NoteFinalView
-      note={note}
-      id={id}
-      userId={userId}
-      newPageX={newPageX}
-      newPageY={newPageY}
-    />
-  ) */
 };
 
 Note.propTypes = {

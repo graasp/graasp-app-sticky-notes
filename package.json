@@ -5,7 +5,8 @@
   "author": "Graasp",
   "contributors": [
     "Juan Carlos Farah",
-    "Jérémy La Scala"
+    "Jérémy La Scala",
+    "Kim Lan Phan Hoang"
   ],
   "homepage": ".",
   "license": "AGPL-3.0-only",
@@ -48,8 +49,6 @@
     "pre-commit": "pretty-quick --staged && yarn lint",
     "start": "npm-run-all --parallel start:local",
     "start:local": "env-cmd -f ./.env.local react-scripts start",
-    "start:api": "json-server --watch data/db.json --port 3636 --id _id --routes data/routes.json",
-    "prestart:api": "cat data/default.json > data/db.json",
     "build": "react-scripts build",
     "build:local": "env-cmd -f ./.env.local yarn build",
     "build:dev": "env-cmd -f ./.env.dev yarn build",

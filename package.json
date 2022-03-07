@@ -27,7 +27,7 @@
     "json2csv": "4.5.4",
     "lodash": "4.17.21",
     "prop-types": "15.7.2",
-    "qs": "6.10.1",
+    "qs": "6.10.3",
     "react": "17.0.1",
     "react-csv": "2.0.1",
     "react-dom": "17.0.1",
@@ -103,5 +103,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "packageManager": "yarn@3.2.0-rc.13"
+  "packageManager": "yarn@3.2.0"
 }

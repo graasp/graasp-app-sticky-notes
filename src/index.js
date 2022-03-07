@@ -8,10 +8,19 @@ import './index.css';
 import buildDatabase from './data/db';
 import { MOCK_API } from './config/settings';
 
+console.log(MOCK_API);
+
 if (MOCK_API) {
-  const appContext = buildMockLocalContext(window.appContext); // To change context
-  const database = window.Cypress ? window.database : buildDatabase(appContext);
-  mockServer({ database, appContext });
+  const appContext = buildMockLocalContext(window.appContext);
+  const searchParams = new URLSearchParams(window.location.search);
+  if (!searchParams.get('itemId')) {
+    searchParams.set('itemId', appContext.itemId);
+    window.location.search = searchParams.toString();
+  }
+  // const database = window.Cypress ? window.database : buildDatabase(appContext);
+  const database = buildDatabase(appContext);
+  const errors = window.apiErrors;
+  mockServer({ database, appContext, errors });
 }
 
 const root = document.getElementById('root');

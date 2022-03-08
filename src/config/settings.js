@@ -59,4 +59,10 @@ export const DEFAULT_LOCAL_CONTEXT = {
   apiHost: DEFAULT_API_HOST,
 };
 
+export const DEFAULT_BACKGROUND_IMAGE = {
+  uri: null,
+  visible: false,
+  name: null,
+}
+
 export const MOCK_API = REACT_APP_MOCK_API === 'true';

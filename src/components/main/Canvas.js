@@ -18,7 +18,7 @@ import {
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
 import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
-import { TEACHER_MODES, DEFAULT_PERMISSION } from '../../config/settings';
+import { TEACHER_MODES, DEFAULT_PERMISSION, DEFAULT_BACKGROUND_IMAGE } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { useAppData } from '../context/appData';
@@ -51,6 +51,8 @@ const Canvas = () => {
   const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
   const context = useContext(Context);
 
+  const [backgroundImage, setBackgroundImage] = useState(context?.get('settings')?.backgroundImage);
+
   // extract required state from redux store
   // const { mode, standalone, userId } = useSelector(({ context }) => context);
   /* const { notes: sessionNotes, userSetColor, noteBeingEdited } = useSelector(
@@ -70,7 +72,6 @@ const Canvas = () => {
   } = useAppData();
 
   useEffect(() => {
-    console.log(appData);
     if (isAppDataSuccess && !appData.isEmpty()) {
       setNotes(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
     } else if (isAppDataSuccess && appData.isEmpty()) {
@@ -186,13 +187,13 @@ const Canvas = () => {
               newPageY={newPageY}
             />)) ):(<div>Add a note.</div>)
         }
-        {/* backgroundImage?.uri && backgroundImage?.visible && (
+        { backgroundImage?.uri && backgroundImage?.visible && (
           <img
             src={backgroundImage.uri}
             alt={`User selected background ${backgroundImage.name}`}
             className={classes.image}
           />
-        ) */}
+        )}
         {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
         <ColorSettings />
       </div>

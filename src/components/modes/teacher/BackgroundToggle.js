@@ -1,11 +1,13 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { patchAppInstance } from '../../../actions';
+// import { patchAppInstance } from '../../../actions';
+import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { Context } from '../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -25,26 +27,26 @@ const useStyles = makeStyles(() => ({
 const BackgroundToggle = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { backgroundImage } = useSelector(
+  const { mutate: patchSettings } = useMutation(MUTATION_KEYS.PATCH_SETTINGS);
+  const context = useContext(Context);
+  const backgroundImage = context?.get('settings')?.backgroundImage;
+
+  /* const { backgroundImage } = useSelector(
     ({ appInstance }) => appInstance.content.settings,
-  );
-
+  ); */
   const toggleDisabled = !backgroundImage?.uri;
 
   const handleToggle = () => {
-    dispatch(
-      patchAppInstance({
-        data: {
-          backgroundImage: {
-            name: backgroundImage.name,
-            uri: backgroundImage.uri,
-            visible: !backgroundImage.visible,
-          },
-        },
-      }),
-    );
+    console.log("Toggling background image.");
+    patchSettings({
+      backgroundImage: {
+        name: backgroundImage?.name,
+        uri: backgroundImage?.uri,
+        visible: !backgroundImage?.visible,
+      },
+    })
   };
 
   return (

@@ -5,13 +5,15 @@ import { mockServer, buildMockLocalContext } from '@graasp/apps-query-client';
 import Root from './components/Root';
 // import configureStore from './store/configureStore';
 import './index.css';
-import buildDatabase from './data/db';
+import buildDatabase, { mockContext }  from './data/db';
 import { MOCK_API } from './config/settings';
 
 console.log(MOCK_API);
 
+
 if (MOCK_API) {
-  const appContext = buildMockLocalContext(window.appContext);
+  const appContext = buildMockLocalContext(window.appContext ?? mockContext);
+  console.log(appContext);
   const searchParams = new URLSearchParams(window.location.search);
   if (!searchParams.get('itemId')) {
     searchParams.set('itemId', appContext.itemId);

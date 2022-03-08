@@ -7,5 +7,7 @@ const buildDatabase = (appContext) => ({
       },
     ],
   });
+
+export  const mockContext ={permission: "write", context:"builder"}
   
   export default buildDatabase;

@@ -154,7 +154,7 @@ const Canvas = () => {
   };
 
   /* The <div> element has a child <button> element that allows keyboard interaction */
-  
+  console.log("The context in canvas is: ", context);
   return (
     <CanvasContext.Provider value={{
       noteBeingEditedId,
@@ -193,7 +193,7 @@ const Canvas = () => {
             className={classes.image}
           />
         ) */}
-        {/* (context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings /> */}
+        {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
         <ColorSettings />
       </div>
     </CanvasContext.Provider>

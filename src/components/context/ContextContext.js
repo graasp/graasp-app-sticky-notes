@@ -1,5 +1,6 @@
 import React, { createContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import { hooks } from '../../config/queryClient';
 import Loader from '../common/Loader';
 import i18n from '../../config/i18n';
@@ -9,7 +10,14 @@ import { showErrorToast } from '../../utils/toasts';
 const Context = createContext();
 
 const ContextProvider = ({ children }) => {
-  const { data: context, isLoading, isError } = hooks.useGetLocalContext();
+  const { itemId } = qs.parse(window.location.search, {
+    ignoreQueryPrefix: true,
+  });
+  const { data: context, isLoading, isError } = hooks.useGetLocalContext(itemId);
+  console.log(itemId);
+  /* const { data: context, isLoading, isError } = hooks.useGetLocalContext({
+    origin: window.location.origin,
+  }); */
 
   useEffect(() => {
     // handle a change of language
@@ -20,6 +28,7 @@ const ContextProvider = ({ children }) => {
   }, [context]);
 
   if (isLoading) {
+    console.log("ContextContext is loading");
     return <Loader />;
   }
 

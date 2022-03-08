@@ -38,7 +38,7 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
 //  const currentNote = notes.find((note) => note._id === id);
 //  const isMinimized = currentNote.data.minimized;
   // const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
-  const [noteBeingEditedId, setNoteBeingEditedId] = useContext(CanvasContext);
+  const { noteBeingEditedId, setNoteBeingEditedId } = useContext(CanvasContext);
   
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
 

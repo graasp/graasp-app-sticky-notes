@@ -17,7 +17,7 @@ import {
 } from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
-// import { RE_FETCH_INTERVAL } from '../../constants/constants';
+import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
 import { TEACHER_MODES, DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 import { ACTION_TYPES } from '../../config/actionTypes';
@@ -44,16 +44,12 @@ const Canvas = () => {
   const [newPageX, setNewPageX] = useState();
   const [newPageY, setNewPageY] = useState();
   const [notes, setNotes] = useState(null);
-  const [noteBeingEditedId, setterNBEId] = useState(null);
+  const [noteBeingEditedId, setNoteBeingEditedId] = useState(null);
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation('MUTATION_KEYS.POST_APP_DATA');
-  const [userSetColor, setUserSetColor] = useState(null);
+  const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
   const context = useContext(Context);
-
-  function setNoteBeingEditedId(id) {
-    setterNBEId(id);
-  }
 
   // extract required state from redux store
   // const { mode, standalone, userId } = useSelector(({ context }) => context);
@@ -160,7 +156,12 @@ const Canvas = () => {
   /* The <div> element has a child <button> element that allows keyboard interaction */
   
   return (
-    <CanvasContext.Provider value={[noteBeingEditedId, setNoteBeingEditedId]}>
+    <CanvasContext.Provider value={{
+      noteBeingEditedId,
+      setNoteBeingEditedId,
+      userSetColor,
+      setUserSetColor
+      }}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.mainContainer}
@@ -192,10 +193,8 @@ const Canvas = () => {
             className={classes.image}
           />
         ) */}
-        {/*
-        {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
+        {/* (context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings /> */}
         <ColorSettings />
-        */}
       </div>
     </CanvasContext.Provider>
   );

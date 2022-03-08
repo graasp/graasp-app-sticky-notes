@@ -30,7 +30,7 @@ const NoteEditView = ({ note, id }) => {
   let { title, description } = note;
   const [color, setColor] = useState(note.color);
 
-  const [,setNoteBeingEditedId] = useContext(CanvasContext);
+  const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   const handleChangeText = (newTitle, newDescription) => {
     description = newDescription;

@@ -6,7 +6,7 @@ import CanvasContext from '../../context/CanvasContext';
 
 const Note = ({ note, id, userId, newPageX, newPageY }) => {
 
-  const [noteBeingEditedId,] = useContext(CanvasContext);
+  const { noteBeingEditedId } = useContext(CanvasContext);
 
   return noteBeingEditedId === id ? (
     <NoteEditView note={note} id={id} />

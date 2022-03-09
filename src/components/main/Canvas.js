@@ -1,24 +1,10 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useEffect, useState, useContext } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-// import objectId from 'bson-objectid';
 import Note from './note/Note';
-import {
-//  addNote,
-//  postAppInstanceResource,
-//  getAppInstanceResources,
-  patchAppInstanceResource,
-  clearNoteBeingEdited,
-  updateNote,
-  getUsers,
-  setNoteBeingEdited,
-} from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
 import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
-import { TEACHER_MODES, DEFAULT_PERMISSION, DEFAULT_BACKGROUND_IMAGE } from '../../config/settings';
+import { DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { useAppData } from '../context/appData';
@@ -39,8 +25,6 @@ const useStyles = makeStyles(() => ({
 
 const Canvas = () => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
-  // see onDragOver event in div below for a note on these variables
   const [newPageX, setNewPageX] = useState();
   const [newPageY, setNewPageY] = useState();
   const [notes, setNotes] = useState(null);
@@ -51,22 +35,11 @@ const Canvas = () => {
   const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
   const context = useContext(Context);
 
-  const [backgroundImage, setBackgroundImage] = useState(context?.get('settings')?.backgroundImage);
-
-  // extract required state from redux store
-  // const { mode, standalone, userId } = useSelector(({ context }) => context);
-  /* const { notes: sessionNotes, userSetColor, noteBeingEdited } = useSelector(
-    ({ canvas }) => canvas,
-  ); */
-  /* const savedNotes = useSelector(
-    ({ appInstanceResources }) => appInstanceResources.content,
-  ); */
-  /* const { backgroundImage } = useSelector(
-    ({ appInstance }) => appInstance.content.settings,
-  ); */
+  const [backgroundImage,] = useState(context?.get('settings')?.backgroundImage);
 
   const {
     data: appData,
+    /* eslint-disable-next-line no-unused-vars */
     isLoading: isAppDataLoading,
     isSuccess: isAppDataSuccess,
   } = useAppData();
@@ -79,44 +52,7 @@ const Canvas = () => {
     }
   }, [appData, isAppDataSuccess, postAppData]);
 
-  // if session is standalone, show sessionNotes; if not, show notes retrieved from API
-  // const notesToDisplay = standalone ? sessionNotes : savedNotes;
-  // const notesToDisplay = notes;
-
-  /* useEffect(() => { 
-    dispatch(getUsers());
-  }, [savedNotes]); */
-
   const handleCanvasClick = (event) => {
-    // if the canvas is clicked when a note is in edit mode, update that note and take it out of edit mode
-    // if (noteBeingEdited._id) {
-      /* const updatedData = {
-        ...noteBeingEdited.data,
-        title: noteBeingEdited.data.title,
-        description: noteBeingEdited.data.description,
-        color: noteBeingEdited.data.color,
-      }; */
-
-      // dispatch for when app is not standalone (patch remote resource)
-      /* dispatch(
-        patchAppInstanceResource({
-          id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-
-      // dispatch for when app is standalone (patch note in redux store)
-      dispatch(
-        updateNote({
-          _id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-
-      // clear note being edited
-      dispatch(clearNoteBeingEdited()); */
-    // }
-
     // add a new note to the canvas
     const { innerHeight, innerWidth } = window;
     const { pageX, pageY } = event;
@@ -146,16 +82,9 @@ const Canvas = () => {
         id: newNote.id,
       },
     });
-
-
-    // dispatch for non-standalone (add remote resource)
-    // dispatch(postAppInstanceResource({ data: newNote, userId }));
-    // dispatch for standalone (add note in redux store)
-    // dispatch(addNote({ data: newNote, _id: objectId() }));
   };
 
   /* The <div> element has a child <button> element that allows keyboard interaction */
-  console.log("The context in canvas is: ", context);
   return (
     <CanvasContext.Provider value={{
       noteBeingEditedId,

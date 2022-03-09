@@ -15,7 +15,8 @@ const {
 } = configureQueryClient({
   // API_HOST,
   notifier: (data) => {
-    console.log('notifier: ', data);
+    /* eslint-disable-next-line no-console */
+    console.info('notifier: ', data);
   },
   enableWebsocket: false,
   keepPreviousData: true,

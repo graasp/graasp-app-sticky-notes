@@ -8,13 +8,14 @@ export const DEFAULT_LANG = 'en';
 export const DEFAULT_MODE = 'student';
 export const TEACHER_MODE = 'teacher';
 
-
+// TODO: Delete.
 // avoid breaking the app in production when embedded in different contexts
 let defaultApiHost;
 try {
   defaultApiHost =
     window.parent.location.hostname === 'localhost' ? LOCAL_API_HOST : null;
 } catch (e) {
+  /* eslint-disable-next-line no-console */
   console.error(e);
   defaultApiHost = null;
 }

@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import MinimizeIcon from '@material-ui/icons/Remove';
@@ -8,13 +6,6 @@ import MaximizeIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CanvasContext from '../../../context/CanvasContext';
-import {
-  deleteAppInstanceResource,
-  deleteNote,
-  patchAppInstanceResource,
-  setNoteBeingEdited,
-  updateNote,
-} from '../../../../actions';
 import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
 
 const useStyles = makeStyles(() => ({
@@ -28,17 +19,7 @@ const useStyles = makeStyles(() => ({
 
 const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
   const classes = useStyles();
-//  const dispatch = useDispatch();
-//  const { standalone } = useSelector(({ context }) => context);
-//  const { notes: sessionNotes } = useSelector(({ canvas }) => canvas);
-  /* const savedNotes = useSelector(
-    ({ appInstanceResources }) => appInstanceResources.content,
-  ); */
-//  const notes = standalone ? sessionNotes : savedNotes;
-//  const currentNote = notes.find((note) => note._id === id);
-//  const isMinimized = currentNote.data.minimized;
-  // const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
-  const { noteBeingEditedId, setNoteBeingEditedId } = useContext(CanvasContext);
+  const { setNoteBeingEditedId } = useContext(CanvasContext);
   
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
 
@@ -58,30 +39,10 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
 
   const handleEdit = () => {
     // if the edit button is clicked when another note is in edit mode, update that note and take it out of edit mode
-    if (noteBeingEditedId) {
-      /* const updatedData = {
-        ...noteBeingEdited.data,
-        title: noteBeingEdited.data.title,
-        description: noteBeingEdited.data.description,
-        color: noteBeingEdited.data.color,
-      };
-
-      dispatch(
-        patchAppInstanceResource({
-          id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-
-      dispatch(
-        updateNote({
-          _id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      ); */
+    // TODO: implement this behaviour.
+    /* if (noteBeingEditedId) {
       console.log('Save note');
-    }
-    // dispatch(setNoteBeingEdited({ ...currentNote }));
+    } */
     setNoteBeingEditedId(id);
   };
 

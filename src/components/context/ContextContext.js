@@ -14,10 +14,6 @@ const ContextProvider = ({ children }) => {
     ignoreQueryPrefix: true,
   });
   const { data: context, isLoading, isError } = hooks.useGetLocalContext(itemId);
-  console.log(itemId);
-  /* const { data: context, isLoading, isError } = hooks.useGetLocalContext({
-    origin: window.location.origin,
-  }); */
 
   useEffect(() => {
     // handle a change of language
@@ -28,7 +24,6 @@ const ContextProvider = ({ children }) => {
   }, [context]);
 
   if (isLoading) {
-    console.log("ContextContext is loading");
     return <Loader />;
   }
 

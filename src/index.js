@@ -8,12 +8,8 @@ import './index.css';
 import buildDatabase, { mockContext }  from './data/db';
 import { MOCK_API } from './config/settings';
 
-console.log(MOCK_API);
-
-
 if (MOCK_API) {
   const appContext = buildMockLocalContext(window.appContext ?? mockContext);
-  console.log(appContext);
   const searchParams = new URLSearchParams(window.location.search);
   if (!searchParams.get('itemId')) {
     searchParams.set('itemId', appContext.itemId);
@@ -31,17 +27,12 @@ const renderApp = RootComponent => {
   render(<RootComponent />, root);
 };
 
-// render app to the dom
-// const { store, history } = configureStore();
-
-// renderApp(Root, store, history);
 renderApp(Root);
 
 if (module.hot) {
   module.hot.accept('./components/Root', () => {
     // eslint-disable-next-line global-require
     const NextRoot = require('./components/Root').default;
-    // renderApp(NextRoot, store, history);
     renderApp(NextRoot);
   });
 }

@@ -7,7 +7,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-// import ImageUpload from './ImageUpload';
+import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,7 @@ const Settings = () => {
         >
           <div className={classes.modalContainer}>
             <Typography className={classes.header}>{t('Settings')}</Typography>
-            {/* <ImageUpload /> */}
+            <ImageUpload />
             <BackgroundToggle />
             <Divider className={classes.divider} />
             <div className={classes.buttonContainer}>

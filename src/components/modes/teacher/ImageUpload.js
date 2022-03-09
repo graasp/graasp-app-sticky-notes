@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
-import { patchAppInstance } from '../../../actions';
 import configureUppy from '../../../utils/uppy';
 import { MAX_FILE_SIZE } from '../../../config/settings';
+import { Context } from '../../context/ContextContext';
 
 const useStyles = makeStyles((theme) => ({
   '@keyframes blinker': {
@@ -46,15 +45,13 @@ const useStyles = makeStyles((theme) => ({
 const ImageUpload = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { offline, standalone, spaceId, userId, appInstanceId } = useSelector(
-    ({ context }) => context,
-  );
-  const currentImageUri = useSelector(
-    ({ appInstance }) => appInstance.content.settings.backgroundImage?.uri,
-  );
-  const imageToBeUploaded = useSelector(({ uppy }) => uppy.addedImage);
+  const { apiHost, itemId, token, settings } = useContext(Context);
+  /* eslint-disable-next-line no-unused-vars */
+  const currentImageUri = settings?.backgroundImage?.uri;
+  // const imageToBeUploaded = useSelector(({ uppy }) => uppy.addedImage);
 
-  const uppyInstance = configureUppy({
+    /*
+    {
     t,
     offline,
     standalone,
@@ -63,6 +60,37 @@ const ImageUpload = () => {
     appInstanceId,
     patchAppInstance,
     currentImageUri,
+  }
+    */
+  const handleComplete = () => {
+    console.log("Upload complete.");
+  }
+
+  const handleProgress = () => {
+    console.log("Upload progressing");
+  }
+
+  const handleFileAdded = () => {
+    console.log("Upload complete.");
+  }
+
+  const handleError = () => {
+    console.log("Upload complete.");
+  }
+
+  const handleUpload = () => {
+    console.log("Upload complete.");
+  }
+
+  const uppyInstance = configureUppy({
+    apiHost,
+    itemId,
+    token,
+    onComplete: handleComplete,
+    onProgress: handleProgress,
+    onFileAdded: handleFileAdded,
+    onError: handleError,
+    onUpload: handleUpload,
   });
 
   return (
@@ -88,11 +116,11 @@ const ImageUpload = () => {
           }}
         />
       </div>
-      {imageToBeUploaded.name && (
+      {/* imageToBeUploaded.name && (
         <Typography variant="caption" className={classes.uploadingText}>
           {t(`Uploading ${imageToBeUploaded.name}...`)}
         </Typography>
-      )}
+      ) */}
     </div>
   );
 };

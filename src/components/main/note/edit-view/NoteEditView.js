@@ -8,6 +8,7 @@ import EditViewColorPalette from './EditViewColorPalette';
 import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import CanvasContext from '../../../context/CanvasContext';
+import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -45,6 +46,7 @@ const NoteEditView = ({ note, id }) => {
   }
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+  const { mutate: postAction } = useMutation('MUTATION_KEYS.PATCH_APP_DATA');
 
   const handleCancel = () => {
     setNoteBeingEditedId(null);
@@ -61,6 +63,13 @@ const NoteEditView = ({ note, id }) => {
     patchAppData({
       data: updatedNote,
       id,
+    });
+    postAction({
+      verb: ACTION_TYPES.EDIT,
+      data: {
+        data: updatedNote,
+        id,
+      },
     });
   };
 

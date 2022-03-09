@@ -7,6 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CanvasContext from '../../../context/CanvasContext';
 import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
+import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
   actionContainer: { display: 'flex', alignItems: 'center' },
@@ -22,6 +23,7 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
   const { setNoteBeingEditedId } = useContext(CanvasContext);
   
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
+  const { mutate: postAction } = useMutation('MUTATION_KEYS.PATCH_APP_DATA');
 
   const handleMinimize = () => {
     onChangeMinimize(true);
@@ -34,6 +36,10 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
   const handleDelete = () => {
     deleteAppData({
       id,
+    });
+    postAction({
+      verb: ACTION_TYPES.DELETE,
+      data: { id },
     });
   };
 

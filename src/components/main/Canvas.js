@@ -7,9 +7,9 @@ import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
 import { DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 import { ACTION_TYPES } from '../../config/actionTypes';
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { useAppData } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
-import { SAVED } from '../../config/verbs';
 import { Context } from '../context/ContextContext';
 import CanvasContext from '../context/CanvasContext';
 
@@ -46,7 +46,7 @@ const Canvas = () => {
 
   useEffect(() => {
     if (isAppDataSuccess && !appData.isEmpty()) {
-      setNotes(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
+      setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
     } else if (isAppDataSuccess && appData.isEmpty()) {
       setNotes(null);
     }
@@ -72,11 +72,11 @@ const Canvas = () => {
     } else {
       postAppData({
         data: newNote,
-        type: ACTION_TYPES.NOTE,
+        type: APP_DATA_TYPES.NOTE,
       });
     }
     postAction({
-      verb: SAVED,
+      verb: ACTION_TYPES.ADD,
       data: {
         data: newNote,
         id: newNote.id,

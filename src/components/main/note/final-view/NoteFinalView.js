@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
 import FinalViewDescription from './FinalViewDescription';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
-/* import {
-  patchAppInstanceResource,
-  updateNotePosition,
-} from '../../../../actions';
- */
+import { ACTION_TYPES } from '../../../../config/actionTypes';
+
 const useStyles = makeStyles(() => ({
   noteContainer: {
     width: '15%',
@@ -49,6 +45,7 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
   const [grabDeltaY, setGrabDeltaY] = useState(0);
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+  const { mutate: postAction } = useMutation('MUTATION_KEYS.PATCH_APP_DATA');
 
   // default drag behavior is: (1) you grab div (the sticky note) in e.g. bottom right and begin dragging it,
   // (2) the point where you drop it becomes the *top left* of the div.
@@ -87,6 +84,13 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
     patchAppData({
       data: updatedNote.data,
       id: updatedNote._id,
+    });
+    postAction({
+      verb: ACTION_TYPES.MOVE,
+      data: {
+        data: updatedNote.data,
+        id: updatedNote._id,
+      },
     });
   };
 

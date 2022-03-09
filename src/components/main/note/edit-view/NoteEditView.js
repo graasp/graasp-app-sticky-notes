@@ -1,4 +1,6 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable no-unused-vars */
+
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
@@ -31,7 +33,7 @@ const NoteEditView = ({ note, id }) => {
   const [ description, setDescription ] = useState(note.description);
   const [ color, setColor ] = useState(note.color);
 
-  const { setNoteBeingEditedId } = useContext(CanvasContext);
+  const { noteBeingEditedId, setNoteBeingEditedId } = useContext(CanvasContext);
 
   const handleChangeText = (newTitle, newDescription) => {
     setDescription(newDescription);
@@ -48,7 +50,7 @@ const NoteEditView = ({ note, id }) => {
     setNoteBeingEditedId(null);
   };
 
-  const handleConfirm = () => {
+  const saveNote = () => {
     const updatedNote = {
       ...note,
       title,
@@ -60,11 +62,24 @@ const NoteEditView = ({ note, id }) => {
       data: updatedNote,
       id,
     });
+  };
 
+  const handleConfirm = () => {
+    saveNote();
     setNoteBeingEditedId(null);
   };
 
-  // const { color } = useSelector(({ canvas }) => canvas.noteBeingEdited.data);
+  /* useEffect(() => function cleanup() {
+      console.log("Cleanup. NoteBeingEditedId = ", noteBeingEditedId);
+      if(noteBeingEditedId === id) {
+        console.log("Cleaning and saving note.");
+        saveNote();
+      }
+    }, [noteBeingEditedId]); */
+  
+  /* useEffect(() => function cleanup() {
+    console.log("Title: ", title, " - Description: ", description);
+  }, [noteBeingEditedId]); */
 
   return (
     <>

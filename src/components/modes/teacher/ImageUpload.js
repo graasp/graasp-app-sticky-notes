@@ -6,8 +6,9 @@ import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
 import configureUppy from '../../../utils/uppy';
-import { MAX_FILE_SIZE } from '../../../config/settings';
+import { DEFAULT_BACKGROUND_IMAGE, MAX_FILE_SIZE } from '../../../config/settings';
 import { Context } from '../../context/ContextContext';
+import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 
 const useStyles = makeStyles((theme) => ({
   '@keyframes blinker': {
@@ -47,8 +48,9 @@ const ImageUpload = () => {
   const classes = useStyles();
   const { apiHost, itemId, token, settings } = useContext(Context);
   /* eslint-disable-next-line no-unused-vars */
-  const currentImageUri = settings?.backgroundImage?.uri;
+  const currentBackgroundImage = settings?.backgroundImage ?? DEFAULT_BACKGROUND_IMAGE;
   // const imageToBeUploaded = useSelector(({ uppy }) => uppy.addedImage);
+  const { mutate: patchSettings } = useMutation(MUTATION_KEYS.PATCH_SETTINGS);
 
     /*
     {
@@ -62,24 +64,41 @@ const ImageUpload = () => {
     currentImageUri,
   }
     */
-  const handleComplete = () => {
-    console.log("Upload complete.");
+  const saveBackgroundImage = () => {
+    patchSettings({
+      backgroundImage: {
+        ...currentBackgroundImage
+      }
+    })
+  };
+
+  const handleComplete = (result) => {
+    const { successful } = result;
+    if(!successful.isEmpty) {
+      const image = successful.pop();
+      const { name, uploadURL } = image;
+      currentBackgroundImage.name = name;
+      currentBackgroundImage.uri = uploadURL;
+      saveBackgroundImage();
+    }
+
+    console.log("Upload complete at ", currentBackgroundImage.uri);
   }
 
-  const handleProgress = () => {
-    console.log("Upload progressing");
+  const handleProgress = (progress) => {
+    console.log("Upload: ", progress, "%");
   }
 
-  const handleFileAdded = () => {
-    console.log("Upload complete.");
+  const handleFileAdded = (file) => {
+    console.log("File added: ", file.name);
   }
 
-  const handleError = () => {
-    console.log("Upload complete.");
+  const handleError = (error) => {
+    console.error(error.stack);
   }
 
   const handleUpload = () => {
-    console.log("Upload complete.");
+    console.log("File uploading.");
   }
 
   const uppyInstance = configureUppy({

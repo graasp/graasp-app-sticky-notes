@@ -27,14 +27,15 @@ const NoteEditView = ({ note, id }) => {
   const { windowDimensions, position } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
-  let { title, description } = note;
-  const [color, setColor] = useState(note.color);
+  const [ title, setTitle ] = useState(note.title);
+  const [ description, setDescription ] = useState(note.description);
+  const [ color, setColor ] = useState(note.color);
 
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   const handleChangeText = (newTitle, newDescription) => {
-    description = newDescription;
-    title = newTitle;
+    setDescription(newDescription);
+    setTitle(newTitle);
   }
 
   const handleChangeColor = (newColor) => {

@@ -20,9 +20,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
+const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
   // destructure note properties
   const {
     windowDimensions,
@@ -135,7 +134,7 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
           onChangeMinimize={handleChangeMinimize}
         />
         {!minimized && <FinalViewDescription description={description} />}
-        <FinalViewFooter id={id} userId={userId} />
+        {!minimized && <FinalViewFooter id={id} userName={userName} />}
       </div>
     </>
   );
@@ -162,13 +161,13 @@ NoteFinalView.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  userId: PropTypes.string,
+  userName: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
 };
 
 NoteFinalView.defaultProps = {
-  userId: null,
+  userName: 'Anonymous', // TODO: Move to cst
   newPageX: null,
   newPageY: null,
 };

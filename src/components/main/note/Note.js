@@ -4,7 +4,7 @@ import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
 import CanvasContext from '../../context/CanvasContext';
 
-const Note = ({ note, id, userId, newPageX, newPageY }) => {
+const Note = ({ note, id, userName, newPageX, newPageY }) => {
 
   const { noteBeingEditedId } = useContext(CanvasContext);
 
@@ -14,7 +14,7 @@ const Note = ({ note, id, userId, newPageX, newPageY }) => {
     <NoteFinalView
       note={note}
       id={id}
-      userId={userId}
+      userName={userName}
       newPageX={newPageX}
       newPageY={newPageY}
     />
@@ -41,13 +41,13 @@ Note.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  userId: PropTypes.string,
+  userName: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
 };
 
 Note.defaultProps = {
-  userId: null,
+  userName: 'Anonymous', // TODO: Move to constant and internationalize
   newPageX: null,
   newPageY: null,
 };

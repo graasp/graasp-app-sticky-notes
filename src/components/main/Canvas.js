@@ -8,7 +8,7 @@ import { DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { useAppData } from '../context/appData';
+import { useAppData, useAppContext } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { Context } from '../context/ContextContext';
 import CanvasContext from '../context/CanvasContext';
@@ -33,8 +33,11 @@ const Canvas = () => {
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation('MUTATION_KEYS.POST_APP_DATA');
   const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
+  const [members, setMembers] = useState([]);
   const context = useContext(Context);
+  const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
 
+  // eslint-disable-next-line react/destructuring-assignment
   const [backgroundImage,] = useState(context?.get('settings')?.backgroundImage);
 
   const {
@@ -43,6 +46,14 @@ const Canvas = () => {
     isLoading: isAppDataLoading,
     isSuccess: isAppDataSuccess,
   } = useAppData();
+
+  useEffect(() => {
+    if(isAppContextLoading) {
+      setMembers([]);
+    } else {
+      setMembers(appContext?.get('members'))
+    }
+  }, [appContext, isAppContextLoading]);
 
   useEffect(() => {
     if (isAppDataSuccess && !appData.isEmpty()) {
@@ -112,7 +123,7 @@ const Canvas = () => {
               note={note.data}
               id={note.id}
               key={note.id}
-              userId={note.user}
+              userName={(members.find((m) => m.id === note.memberId) ?? {name:'AnonymousA'}).name}
               newPageX={newPageX}
               newPageY={newPageY}
             />)) ):(<div>Add a note.</div>)

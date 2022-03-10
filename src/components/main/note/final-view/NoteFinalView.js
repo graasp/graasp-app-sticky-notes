@@ -113,6 +113,8 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
         onClick={(event) => event.stopPropagation()}
         onMouseOver={() => setShowActions(true)}
         onMouseLeave={() => setShowActions(false)}
+        onFocus={() => setShowActions(true)}
+        onBlur={() => setShowActions(false)}
         style={{
           top: `${(pageY / innerHeight) * 100}%`,
           left: `${(pageX / innerWidth) * 100}%`,

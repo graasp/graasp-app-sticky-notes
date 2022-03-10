@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 // import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
+import { Context } from '../../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   addedBy: { fontSize: '0.8vw', color: '#383838', textAlign: 'right' },
@@ -13,6 +14,14 @@ const useStyles = makeStyles(() => ({
 const FinalViewFooter = ({ userId }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const context = useContext(Context);
+
+  
+  // eslint-disable-next-line react/destructuring-assignment
+  const members = context?.get('members') ?? [];
+
+  console.log(members);
 
   // const standalone = useSelector(({ context }) => context.standalone);
   // const usersArray = useSelector(({ users }) => users.content); // TODO: Port this

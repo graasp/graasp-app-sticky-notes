@@ -38,7 +38,7 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
       id,
     });
     postAction({
-      verb: ACTION_TYPES.DELETE,
+      type: ACTION_TYPES.DELETE,
       data: { id },
     });
   };

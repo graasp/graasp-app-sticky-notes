@@ -1,9 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { render } from 'react-dom';
 import { mockServer, buildMockLocalContext } from '@graasp/apps-query-client';
-// import { Provider } from 'react-redux';
 import Root from './components/Root';
-// import configureStore from './store/configureStore';
 import './index.css';
 import buildDatabase, { mockContext }  from './data/db';
 import { MOCK_API } from './config/settings';

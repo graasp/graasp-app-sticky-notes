@@ -65,7 +65,7 @@ const NoteEditView = ({ note, id }) => {
       id,
     });
     postAction({
-      verb: ACTION_TYPES.EDIT,
+      type: ACTION_TYPES.EDIT,
       data: {
         data: updatedNote,
         id,

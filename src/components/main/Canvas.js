@@ -73,10 +73,11 @@ const Canvas = () => {
       postAppData({
         data: newNote,
         type: APP_DATA_TYPES.NOTE,
+        visibility: 'item',
       });
     }
     postAction({
-      verb: ACTION_TYPES.ADD,
+      type: ACTION_TYPES.ADD,
       data: {
         data: newNote,
         id: newNote.id,
@@ -123,6 +124,7 @@ const Canvas = () => {
             className={classes.image}
           />
         )}
+        {/* eslint-disable-next-line react/destructuring-assignment */}
         {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
         <ColorSettings />
       </div>

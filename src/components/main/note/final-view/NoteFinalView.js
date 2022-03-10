@@ -86,7 +86,7 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
       id: updatedNote._id,
     });
     postAction({
-      verb: ACTION_TYPES.MOVE,
+      type: ACTION_TYPES.MOVE,
       data: {
         data: updatedNote.data,
         id: updatedNote._id,

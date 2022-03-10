@@ -18,7 +18,10 @@
     "cy": true,
     "Cypress": true
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false
+  },
   "rules": {
     "no-underscore-dangle": [
       "error",
@@ -43,6 +46,8 @@
         "extensions": [".js", ".jsx"]
       }
     ],
+    "react/jsx-no-constructed-context-values": ["warn"],
+    "react/function-component-definition": ["warn", {"namedComponents": "arrow-function"}],
     "react/static-property-placement": ["error", "static public field"],
     "jsx-a11y/click-events-have-key-events": ["warn"],
     "jsx-a11y/mouse-events-have-key-events": ["warn"],

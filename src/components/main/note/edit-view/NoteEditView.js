@@ -46,7 +46,7 @@ const NoteEditView = ({ note, id }) => {
   }
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: postAction } = useMutation('MUTATION_KEYS.PATCH_APP_DATA');
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   const handleCancel = () => {
     setNoteBeingEditedId(null);
@@ -67,7 +67,7 @@ const NoteEditView = ({ note, id }) => {
     postAction({
       type: ACTION_TYPES.EDIT,
       data: {
-        data: updatedNote,
+        note: updatedNote,
         id,
       },
     });

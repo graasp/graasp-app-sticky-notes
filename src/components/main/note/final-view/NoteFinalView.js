@@ -44,7 +44,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   const [grabDeltaY, setGrabDeltaY] = useState(0);
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: postAction } = useMutation('MUTATION_KEYS.PATCH_APP_DATA');
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   // default drag behavior is: (1) you grab div (the sticky note) in e.g. bottom right and begin dragging it,
   // (2) the point where you drop it becomes the *top left* of the div.
@@ -87,7 +87,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     postAction({
       type: ACTION_TYPES.MOVE,
       data: {
-        data: updatedNote.data,
+        note: updatedNote.data,
         id: updatedNote._id,
       },
     });

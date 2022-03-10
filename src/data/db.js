@@ -1,5 +1,6 @@
 const buildDatabase = (appContext) => ({
     appData: [],
+    appActions: [],
     members: [
       {
         id: appContext.memberId,
@@ -10,4 +11,4 @@ const buildDatabase = (appContext) => ({
 
 export  const mockContext ={permission: "write", context:"builder"}
   
-  export default buildDatabase;
+export default buildDatabase;

@@ -8,7 +8,7 @@ import { DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { useAppData, useAppContext } from '../context/appData';
+import { useAppData, useAppContext, /* useAppActions */ } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { Context } from '../context/ContextContext';
 import CanvasContext from '../context/CanvasContext';
@@ -31,7 +31,7 @@ const Canvas = () => {
   const [noteBeingEditedId, setNoteBeingEditedId] = useState(null);
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: postAction } = useMutation('MUTATION_KEYS.POST_APP_DATA');
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
   const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
   const [members, setMembers] = useState([]);
   const context = useContext(Context);
@@ -46,6 +46,16 @@ const Canvas = () => {
     isLoading: isAppDataLoading,
     isSuccess: isAppDataSuccess,
   } = useAppData();
+
+  // Used for debugging purposes.
+  // const {
+  //   /* eslint-disable-next-line no-unused-vars */
+  //   data: appActions,
+  //   /* eslint-disable-next-line no-unused-vars */
+  //   isLoading: isAppActionsLoading,
+  //   /* eslint-disable-next-line no-unused-vars */
+  //   isSuccess: isAppActionsSuccess,
+  // } = useAppActions();
 
   useEffect(() => {
     if(isAppContextLoading) {
@@ -90,7 +100,7 @@ const Canvas = () => {
     postAction({
       type: ACTION_TYPES.ADD,
       data: {
-        data: newNote,
+        note: newNote,
         id: newNote.id,
       },
     });

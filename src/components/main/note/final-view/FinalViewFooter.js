@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
-  addedBy: { fontSize: '0.6vw', color: '#383838', textAlign: 'right' },
-  author: { fontWeight: 600 },
+  addedBy: { fontSize: '0.4vw', color: 'grey', textAlign: 'right' },
+  author: { fontWeight: 200 },
 }));
 
 const FinalViewFooter = ({ userName }) => {

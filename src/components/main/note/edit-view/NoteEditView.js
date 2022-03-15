@@ -10,14 +10,15 @@ import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
   form: {
-    width: '17.5%',
-    height: '25%',
+    maxWidth: '15%',
+    // height: '25%',
     position: 'absolute',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     cursor: 'default',
+    borderRadius: '0.5em',
   },
 }));
 
@@ -32,7 +33,11 @@ const NoteEditView = ({ note, id }) => {
   const [description, setDescription] = useState(note.description);
   const [color, setColor] = useState(note.color);
 
-  const { setNoteBeingEditedId } = useContext(CanvasContext);
+  const { setNoteBeingEditedId, userSetColor } = useContext(CanvasContext);
+
+  useEffect(() => {
+    setColor(userSetColor);
+  }, [userSetColor]);
 
   const handleChangeText = (newTitle, newDescription) => {
     setDescription(newDescription);
@@ -81,7 +86,6 @@ const NoteEditView = ({ note, id }) => {
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.form}
-        onClick={(event) => event.stopPropagation()}
         style={{
           top: `${(pageY / innerHeight) * 100}%`,
           left: `${(pageX / innerWidth) * 100}%`,
@@ -93,19 +97,10 @@ const NoteEditView = ({ note, id }) => {
           title={title}
           description={description}
           onChange={handleChangeText}
-        />
-        <EditViewColorPalette
-          height="20%"
-          color={color}
-          onChange={handleChangeColor}
-        />
-        <EditViewActions
-          height="15%"
-          note={note}
-          id={id}
           onConfirm={handleConfirm}
-          onCancel={handleCancel}
         />
+        {/* <EditViewColorPalette height="20%" color={color} onChange={handleChangeColor} /> */}
+        {/* <EditViewActions height="15%" note={note} id={id} onConfirm={handleConfirm} onCancel={handleCancel} /> */}
       </div>
     </>
   );

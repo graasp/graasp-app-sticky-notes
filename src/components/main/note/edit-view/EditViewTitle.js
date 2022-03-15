@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -10,10 +10,16 @@ const useStyles = makeStyles(() => ({
   textfield: { width: '100%' },
 }));
 
-const EditViewTitle = ({ height, title, onChange }) => {
+const EditViewTitle = ({ height, title, onChange, onEnter }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [text, setText] = useState(title);
+
+  const textInput = useRef(null);
+
+  const focusOnText = () => {
+    textInput.current.focus();
+  };
 
   return (
     <div style={{ height }} className={classes.container}>
@@ -22,8 +28,8 @@ const EditViewTitle = ({ height, title, onChange }) => {
         className={classes.textfield}
         autoFocus
         inputProps={{
-          style: { fontSize: '1vw', fontWeight: 'bold' },
-          maxLength: MAX_LENGTH_TITLE,
+          style: { fontSize: '1vw'/* , fontWeight: 'bold' */},
+          maxLength: 64,
         }}
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}
@@ -31,6 +37,15 @@ const EditViewTitle = ({ height, title, onChange }) => {
         onChange={(event) => {
           setText(event.target.value);
           onChange(event.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            onEnter();
+          }
+        }}
+        inputRef={textInput}
+        onBlur={() => {
+          setTimeout(focusOnText, 20); // Need a small delay before refocusing.
         }}
       />
     </div>
@@ -41,6 +56,7 @@ EditViewTitle.propTypes = {
   height: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onEnter: PropTypes.func.isRequired,
 };
 
 export default EditViewTitle;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
@@ -8,19 +9,20 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     display: 'block',
-    backgroundSize: '100% 100%'
+    backgroundSize: '100% 100%',
   },
 }));
 
-const BackgroundImage = () => {
+const BackgroundImage = ({ children }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
   );
   const { data: backgroundImage } = useAppSettingFile(
     backgroundSetting?.id,
-    Boolean(backgroundSetting?.data?.extra?.file),
+    Boolean(backgroundSetting?.data?.extra?.file || backgroundSetting?.data?.extra?.s3File),
   );
 
   if (!backgroundSetting || !backgroundImage) {
@@ -35,8 +37,18 @@ const BackgroundImage = () => {
       style={{
         backgroundImage: `url(${url})`,
       }}
-      />
+    >
+      { children }
+    </div>
   );
+};
+
+BackgroundImage.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.elementType),
+};
+
+BackgroundImage.defaultProps = {
+  children: null,
 };
 
 export default BackgroundImage;

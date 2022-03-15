@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
-import FinalViewDescription from './FinalViewDescription';
+// import FinalViewDescription from './FinalViewDescription';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
@@ -10,14 +10,16 @@ import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
-    width: '15%',
+    maxWidth: '15%',
     position: 'absolute',
-    padding: '1%',
+    padding: '0.7em 0.8em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     cursor: 'move',
+    borderRadius: '0.3em',
+    width: '12em',
   },
 }));
 
@@ -32,6 +34,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     description,
     minimized,
     rotation,
+    category,
   } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
@@ -54,6 +57,11 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   // hence, when drag starts, we calculate the distance between current top left of div ('origin') and the point we grabbed it
   // when we update the position in onDragEnd, we adjust for this distance to generate the expected effect
   const onDragStart = (event) => {
+    event.dataTransfer.setData('text/plain', id);
+
+    /* eslint-disable no-param-reassign */
+    event.dataTransfer.dropEffect = 'move';
+
     const noteGrabbedX = event.pageX;
     const noteGrabbedY = event.pageY;
     const distanceBetweenGrabAndOriginX = pageX - noteGrabbedX;
@@ -67,6 +75,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     const finalPageY = newPageY + grabDeltaY;
     const updatedNote = {
       data: {
+        category,
         color,
         title,
         description,
@@ -106,6 +115,8 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     });
   };
 
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
+  /* The click event is used only to prevent its propagation to the canvas. */
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
@@ -121,7 +132,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           left: `${(pageX / innerWidth) * 100}%`,
           background: color,
           transform: `rotate(${rotation}deg)`,
-          height: `${minimized ? '10%' : '20%'}`,
+          // height: `${minimized ? '10%' : '20%'}`,
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
@@ -136,7 +147,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           id={id}
           onChangeMinimize={handleChangeMinimize}
         />
-        {!minimized && <FinalViewDescription description={description} />}
+        {/* !minimized && <FinalViewDescription description={description} /> */}
         {!minimized && <FinalViewFooter id={id} userName={userName} />}
       </div>
     </>
@@ -158,6 +169,7 @@ NoteFinalView.propTypes = {
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
     minimized: PropTypes.bool.isRequired,
+    category: PropTypes.string,
   }).isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,

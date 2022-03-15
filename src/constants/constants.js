@@ -23,3 +23,7 @@ export const DEFAULT_MINIMUM_ROTATION_ANGLE = -10;
 export const DEFAULT_MAXIMUM_ROTATION_ANGLE = 10;
 
 export const RE_FETCH_INTERVAL = 1500;
+
+export const APP_SETTINGS = {
+  BACKGROUND: 'background',
+};

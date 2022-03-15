@@ -6,9 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 // import objectId from 'bson-objectid';
 import Note from './note/Note';
 import {
-//  addNote,
-//  postAppInstanceResource,
-//  getAppInstanceResources,
+  //  addNote,
+  //  postAppInstanceResource,
+  //  getAppInstanceResources,
   patchAppInstanceResource,
   clearNoteBeingEdited,
   updateNote,
@@ -20,6 +20,7 @@ import Settings from '../modes/teacher/Settings';
 // import { RE_FETCH_INTERVAL } from '../../constants/constants';
 import { TEACHER_MODES, DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
+import BackgroundImage from './BackgroundImage';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { useAppData } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
@@ -34,7 +35,6 @@ const useStyles = makeStyles(() => ({
     cursor: 'cell',
     background: '#FFE4E1',
   },
-  image: { width: '100%', height: '100%', display: 'block' },
 }));
 
 const Canvas = () => {
@@ -60,12 +60,6 @@ const Canvas = () => {
   /* const { notes: sessionNotes, userSetColor, noteBeingEdited } = useSelector(
     ({ canvas }) => canvas,
   ); */
-  /* const savedNotes = useSelector(
-    ({ appInstanceResources }) => appInstanceResources.content,
-  ); */
-  /* const { backgroundImage } = useSelector(
-    ({ appInstance }) => appInstance.content.settings,
-  ); */
 
   const {
     data: appData,
@@ -74,7 +68,6 @@ const Canvas = () => {
   } = useAppData();
 
   useEffect(() => {
-    console.log(appData);
     if (isAppDataSuccess && !appData.isEmpty()) {
       setNotes(appData.filter(({ type }) => type === ACTION_TYPES.NOTE));
     } else if (isAppDataSuccess && appData.isEmpty()) {
@@ -93,15 +86,15 @@ const Canvas = () => {
   const handleCanvasClick = (event) => {
     // if the canvas is clicked when a note is in edit mode, update that note and take it out of edit mode
     // if (noteBeingEdited._id) {
-      /* const updatedData = {
+    /* const updatedData = {
         ...noteBeingEdited.data,
         title: noteBeingEdited.data.title,
         description: noteBeingEdited.data.description,
         color: noteBeingEdited.data.color,
       }; */
 
-      // dispatch for when app is not standalone (patch remote resource)
-      /* dispatch(
+    // dispatch for when app is not standalone (patch remote resource)
+    /* dispatch(
         patchAppInstanceResource({
           id: noteBeingEdited._id,
           data: updatedData,
@@ -128,7 +121,7 @@ const Canvas = () => {
       position: { pageX, pageY },
       color: userSetColor,
       rotation: generateRandomRotationAngle(),
-      minimized: false, 
+      minimized: false,
     };
 
     if (newNote?.id) {
@@ -150,7 +143,6 @@ const Canvas = () => {
       },
     });
 
-
     // dispatch for non-standalone (add remote resource)
     // dispatch(postAppInstanceResource({ data: newNote, userId }));
     // dispatch for standalone (add note in redux store)
@@ -158,7 +150,7 @@ const Canvas = () => {
   };
 
   /* The <div> element has a child <button> element that allows keyboard interaction */
-  
+
   return (
     <CanvasContext.Provider value={[noteBeingEditedId, setNoteBeingEditedId]}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
@@ -183,19 +175,14 @@ const Canvas = () => {
               userId={note.user}
               newPageX={newPageX}
               newPageY={newPageY}
-            />)) ):(<div>Add a note.</div>)
-        }
-        {/* backgroundImage?.uri && backgroundImage?.visible && (
-          <img
-            src={backgroundImage.uri}
-            alt={`User selected background ${backgroundImage.name}`}
-            className={classes.image}
-          />
-        ) */}
-        {/*
-        {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
-        <ColorSettings />
-        */}
+            />
+          ))
+        ) : (
+          <div>Add a note.</div>
+        )}
+        <BackgroundImage />
+        <Settings />
+        {/* <ColorSettings /> */}
       </div>
     </CanvasContext.Provider>
   );

@@ -11,7 +11,8 @@
   "homepage": ".",
   "license": "AGPL-3.0-only",
   "dependencies": {
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git",
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#18/appSettings",
+    "@graasp/ui": "github:graasp/graasp-ui.git#100/itemClassname",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
@@ -28,7 +29,7 @@
     "json2csv": "4.5.4",
     "lodash": "4.17.21",
     "prop-types": "15.7.2",
-    "qs": "6.10.3",
+    "qs": "6.10.1",
     "react": "17.0.1",
     "react-csv": "2.0.1",
     "react-dom": "17.0.1",

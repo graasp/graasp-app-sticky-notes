@@ -22,7 +22,7 @@ jobs:
 
     env:
       # default build directory
-      BUILD_FOLDER: 'build/'
+      BUILD_FOLDER: 'build'
       VERSION: 'latest'
 
       # rename necessary variables used in the app
@@ -51,18 +51,19 @@ jobs:
           yarn build
 
       - name: Configure AWS Credentials
+        id: configure-aws
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.APPS_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.APPS_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.APPS_AWS_REGION }}
 
-      - name: Copy files to AWS Bucket
+      - name: S3 Sync
+        id: sync-s3
         env:
-          APP_DIR: '${{ secrets.APPS_DEV_BUCKET }}/${{ secrets.APPS_DEVELOPER_ID }}/${{ secrets.APP_ID }}/${{env.VERSION}}/'
-        run: aws s3 sync ${{env.BUILD_FOLDER}} s3://${APP_DIR} --delete
+          APP_DIR: '${{ secrets.APPS_DEV_BUCKET }}/${{ secrets.APP_ID }}/'
+        run: aws s3 sync ${{env.BUILD_FOLDER}} s3://${APP_DIR} --acl public-read --follow-symlinks --delete
 
       - name: Invalidate cloudfront distribution
-        env:
-          APP_PATH: '${{ secrets.APPS_DEVELOPER_ID }}/${{ secrets.APP_ID }}/${{env.VERSION}}'
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.APPS_DEV_CLOUDFRONT_DISTRIBUTION }} --paths /${APP_PATH}/*
+        id: invalidate-cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.APPS_DEV_CLOUDFRONT_DISTRIBUTION }} --paths /${{ secrets.APP_ID }}/*

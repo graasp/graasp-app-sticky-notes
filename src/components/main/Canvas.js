@@ -37,6 +37,8 @@ const Canvas = () => {
   const context = useContext(Context);
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
 
+  const [edit, setEdit] = useState(false);
+
   // eslint-disable-next-line react/destructuring-assignment
   const [backgroundImage,] = useState(context?.get('settings')?.backgroundImage);
 
@@ -68,6 +70,11 @@ const Canvas = () => {
   useEffect(() => {
     if (isAppDataSuccess && !appData.isEmpty()) {
       setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
+      if(edit && !notes?.isEmpty()) {
+        // setNoteBeingEditedId(notes[0].id); // TODO: Finish implementing immediate editing.
+        // console.log(notes);
+        setEdit(false);
+      }
     } else if (isAppDataSuccess && appData.isEmpty()) {
       setNotes(null);
     }
@@ -96,6 +103,7 @@ const Canvas = () => {
         type: APP_DATA_TYPES.NOTE,
         visibility: 'item',
       });
+      setEdit(true);
     }
     postAction({
       type: ACTION_TYPES.ADD,

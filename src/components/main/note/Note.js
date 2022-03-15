@@ -33,7 +33,6 @@ Note.propTypes = {
     }),
     color: PropTypes.string, // .isRequired,
     title: PropTypes.string,
-    description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
   }).isRequired,
   id: PropTypes.oneOfType([

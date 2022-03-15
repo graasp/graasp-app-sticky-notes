@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
-import FinalViewDescription from './FinalViewDescription';
+// import FinalViewDescription from './FinalViewDescription';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
-    width: '15%',
+    maxWidth: '15%',
     position: 'absolute',
-    padding: '1%',
+    padding: '0.7em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     cursor: 'move',
+    borderRadius: '0.5em'
   },
 }));
 
@@ -120,7 +121,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           left: `${(pageX / innerWidth) * 100}%`,
           background: color,
           transform: `rotate(${rotation}deg)`,
-          height: `${minimized ? '10%' : '20%'}`,
+          // height: `${minimized ? '10%' : '20%'}`,
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
@@ -135,7 +136,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           id={id}
           onChangeMinimize={handleChangeMinimize}
         />
-        {!minimized && <FinalViewDescription description={description} />}
+        {/* !minimized && <FinalViewDescription description={description} /> */}
         {!minimized && <FinalViewFooter id={id} userName={userName} />}
       </div>
     </>

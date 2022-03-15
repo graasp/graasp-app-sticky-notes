@@ -54,12 +54,12 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
 
   return (
     <div className={classes.actionContainer}>
-      {minimized ? (
+      {/* minimized ? (
         <MaximizeIcon className={classes.noteAction} onClick={handleMaximize} />
       ) : (
         <MinimizeIcon className={classes.noteAction} onClick={handleMinimize} />
-      )}
-      <EditIcon className={classes.noteAction} onClick={handleEdit} />
+      ) */}
+      {/* <EditIcon className={classes.noteAction} onClick={handleEdit} /> */}
       <DeleteIcon className={classes.noteAction} onClick={handleDelete} />
     </div>
   );

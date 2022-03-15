@@ -9,7 +9,7 @@ const useStyles = makeStyles(() => ({
   textfield: { width: '100%' },
 }));
 
-const EditViewTitle = ({ height, title, onChange }) => {
+const EditViewTitle = ({ height, title, onChange, onEnter }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [text, setText] = useState(title);
@@ -33,6 +33,11 @@ const EditViewTitle = ({ height, title, onChange }) => {
             onChange(event.target.value);
           }
         }
+        onKeyDown={(e) => {
+          if(e.key === 'Enter') {
+            onEnter();
+          }
+        }}
       />
     </div>
   );
@@ -42,6 +47,7 @@ EditViewTitle.propTypes = {
   height: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onEnter: PropTypes.func.isRequired,
 };
 
 export default EditViewTitle;

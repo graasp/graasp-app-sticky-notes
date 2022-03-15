@@ -44,11 +44,19 @@ jobs:
           node-version: '14'
           check-latest: true
 
-      - name: Yarn build
+      - name: Create .env.dev file
+        run: |
+          touch .env.dev
+          echo REACT_APP_GRAASP_DOMAIN=dev.graasp >> .env.dev
+          echo REACT_APP_GRAASP_APP_ID=${{ secrets.APP_ID }} >> .env.dev
+          echo REACT_APP_MOCK_API=false >> .env.dev
+          cat .env.dev
+
+      - name: Yarn build dev
         id: build-image
         run: |
           yarn install
-          yarn build
+          yarn build:dev 
 
       - name: Configure AWS Credentials
         id: configure-aws

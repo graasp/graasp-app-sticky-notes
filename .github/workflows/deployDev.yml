@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "deploy-dev"
   deploy-dev:
     name: Build and Deploy Image
     # The type of runner that the job will run on
@@ -41,7 +41,7 @@ jobs:
         id: setup-node
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
           check-latest: true
 
       - name: Create .env.dev file
@@ -50,7 +50,6 @@ jobs:
           echo REACT_APP_GRAASP_DOMAIN=dev.graasp >> .env.dev
           echo REACT_APP_GRAASP_APP_ID=${{ secrets.APP_ID }} >> .env.dev
           echo REACT_APP_MOCK_API=false >> .env.dev
-          cat .env.dev
 
       - name: Yarn build dev
         id: build-image
@@ -66,10 +65,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.APPS_AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.APPS_AWS_REGION }}
 
-      - name: S3 Sync
+      - name: Sync files with AWS S3 Bucket
         id: sync-s3
         env:
-          APP_DIR: '${{ secrets.APPS_DEV_BUCKET }}/${{ secrets.APP_ID }}/'
+          APP_DIR: '${{ secrets.APPS_DEV_BUCKET }}/${{ secrets.APP_ID }}/${{env.VERSION}}/'
+      # --acl public-read makes your files publicly readable 
+      # --follow-symlinks won't hurt and fixes some weird symbolic link problems that may come up
+      # --delete permanently deletes files in the S3 bucket that are not present in the latest version of your repository/build.
         run: aws s3 sync ${{env.BUILD_FOLDER}} s3://${APP_DIR} --acl public-read --follow-symlinks --delete
 
       - name: Invalidate cloudfront distribution

@@ -22,7 +22,7 @@ const EditViewTitle = ({ height, title, onChange }) => {
         autoFocus
         inputProps={{
           style: { fontSize: '1vw', fontWeight: 'bold' },
-          maxLength: 50,
+          maxLength: 64,
         }}
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}

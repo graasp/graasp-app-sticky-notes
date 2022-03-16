@@ -12,10 +12,8 @@ const TokenProvider = ({ children }) => {
     ignoreQueryPrefix: true,
   });
   const { data, isLoading, isError } = hooks.useAuthToken(itemId);
-  /* const { data, isLoading, isError } = hooks.useAuthToken(); */
 
   if (isLoading) {
-    console.log("TokenContext is loading");
     return <Loader />;
   }
 

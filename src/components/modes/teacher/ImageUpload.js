@@ -1,3 +1,4 @@
+/* eslint-disable no-console */ // TODO: remove
 import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,7 +9,6 @@ import '@uppy/core/dist/style.css';
 import '../../../index.css';
 import Loader from '../../common/Loader';
 import { Context } from '../../context/ContextContext';
-import { patchAppInstance } from '../../../actions';
 import configureUppy from '../../../utils/uppy';
 import { MAX_FILE_SIZE } from '../../../config/settings';
 import { TokenContext } from '../../context/TokenContext';
@@ -76,7 +76,6 @@ const ImageUpload = () => {
         offline,
         standalone,
         appInstanceId,
-        patchAppInstance,
         itemId: context?.get('itemId'),
         apiHost: context?.get('apiHost'),
         token,

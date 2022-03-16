@@ -1,4 +1,6 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable no-unused-vars */
+
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
@@ -6,6 +8,7 @@ import EditViewColorPalette from './EditViewColorPalette';
 import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import CanvasContext from '../../../context/CanvasContext';
+import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -27,14 +30,15 @@ const NoteEditView = ({ note, id }) => {
   const { windowDimensions, position } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
-  let { title, description } = note;
-  const [color, setColor] = useState(note.color);
+  const [ title, setTitle ] = useState(note.title);
+  const [ description, setDescription ] = useState(note.description);
+  const [ color, setColor ] = useState(note.color);
 
-  const [,setNoteBeingEditedId] = useContext(CanvasContext);
+  const { noteBeingEditedId, setNoteBeingEditedId } = useContext(CanvasContext);
 
   const handleChangeText = (newTitle, newDescription) => {
-    description = newDescription;
-    title = newTitle;
+    setDescription(newDescription);
+    setTitle(newTitle);
   }
 
   const handleChangeColor = (newColor) => {
@@ -42,12 +46,13 @@ const NoteEditView = ({ note, id }) => {
   }
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   const handleCancel = () => {
     setNoteBeingEditedId(null);
   };
 
-  const handleConfirm = () => {
+  const saveNote = () => {
     const updatedNote = {
       ...note,
       title,
@@ -59,11 +64,31 @@ const NoteEditView = ({ note, id }) => {
       data: updatedNote,
       id,
     });
+    postAction({
+      type: ACTION_TYPES.EDIT,
+      data: {
+        note: updatedNote,
+        id,
+      },
+    });
+  };
 
+  const handleConfirm = () => {
+    saveNote();
     setNoteBeingEditedId(null);
   };
 
-  // const { color } = useSelector(({ canvas }) => canvas.noteBeingEdited.data);
+  /* useEffect(() => function cleanup() {
+      console.log("Cleanup. NoteBeingEditedId = ", noteBeingEditedId);
+      if(noteBeingEditedId === id) {
+        console.log("Cleaning and saving note.");
+        saveNote();
+      }
+    }, [noteBeingEditedId]); */
+  
+  /* useEffect(() => function cleanup() {
+    console.log("Title: ", title, " - Description: ", description);
+  }, [noteBeingEditedId]); */
 
   return (
     <>

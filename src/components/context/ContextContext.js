@@ -23,7 +23,7 @@ const ContextProvider = ({ children }) => {
     }
   }, [context]);
 
-  if (isLoading) {
+  if (isLoading) { 
     return <Loader />;
   }
 

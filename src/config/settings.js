@@ -1,8 +1,9 @@
-import { LOCAL_API_HOST } from './api';
 import { CONTEXTS } from './contexts';
 import { REACT_APP_MOCK_API } from './env';
 
 export const DEFAULT_LANG = 'en';
+
+const LOCAL_API_HOST = 'localhost:3000';
 
 // TODO: Delete.
 // avoid breaking the app in production when embedded in different contexts

@@ -35,8 +35,7 @@ const NoteEditView = ({ note, id }) => {
   const [ description, setDescription ] = useState(note.description);
   const [ color, setColor ] = useState(note.color);
 
-  const { noteBeingEditedId, setNoteBeingEditedId } = useContext(CanvasContext);
-  const { userSetColor, setUserSetColor } = useContext(CanvasContext);
+  const { setNoteBeingEditedId, userSetColor} = useContext(CanvasContext);
 
   useEffect(() => {
     setColor(userSetColor);

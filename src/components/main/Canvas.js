@@ -37,7 +37,7 @@ const Canvas = () => {
   const context = useContext(Context);
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
 
-  const [edit, setEdit] = useState(false);
+  // const [edit, setEdit] = useState(false);
 
   // eslint-disable-next-line react/destructuring-assignment
   const [backgroundImage,] = useState(context?.get('settings')?.backgroundImage);
@@ -48,16 +48,6 @@ const Canvas = () => {
     isLoading: isAppDataLoading,
     isSuccess: isAppDataSuccess,
   } = useAppData();
-
-  // Used for debugging purposes.
-  // const {
-  //   /* eslint-disable-next-line no-unused-vars */
-  //   data: appActions,
-  //   /* eslint-disable-next-line no-unused-vars */
-  //   isLoading: isAppActionsLoading,
-  //   /* eslint-disable-next-line no-unused-vars */
-  //   isSuccess: isAppActionsSuccess,
-  // } = useAppActions();
 
   useEffect(() => {
     if(isAppContextLoading) {
@@ -70,48 +60,50 @@ const Canvas = () => {
   useEffect(() => {
     if (isAppDataSuccess && !appData.isEmpty()) {
       setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
-      if(edit && !notes?.isEmpty()) {
-        // setNoteBeingEditedId(notes[0].id); // TODO: Finish implementing immediate editing.
-        // console.log(notes);
-        setEdit(false);
-      }
+      // if(edit && !notes?.isEmpty()) {
+      //   setNoteBeingEditedId(notes.get(-1, {id: null})?.id); // TODO: Finish implementing immediate editing.
+      //   console.log(notes);
+      //   setEdit(false);
+      // }
     } else if (isAppDataSuccess && appData.isEmpty()) {
       setNotes(null);
     }
   }, [appData, isAppDataSuccess, postAppData]);
 
   const handleCanvasClick = (event) => {
-    // add a new note to the canvas
-    const { innerHeight, innerWidth } = window;
-    const { pageX, pageY } = event;
-    const newNote = {
-      windowDimensions: { innerHeight, innerWidth },
-      position: { pageX, pageY },
-      color: userSetColor,
-      rotation: generateRandomRotationAngle(),
-      minimized: false, 
-    };
+    if(noteBeingEditedId===null) {
+      // add a new note to the canvas
+      const { innerHeight, innerWidth } = window;
+      const { pageX, pageY } = event;
+      const newNote = {
+        windowDimensions: { innerHeight, innerWidth },
+        position: { pageX, pageY },
+        color: userSetColor,
+        rotation: generateRandomRotationAngle(),
+        minimized: false, 
+      };
 
-    if (newNote?.id) {
-      patchAppData({
-        data: newNote,
-        id: notes.id,
+      if (newNote?.id) {
+        patchAppData({
+          data: newNote,
+          id: notes.id,
+        });
+      } else {
+        postAppData({
+          data: newNote,
+          type: APP_DATA_TYPES.NOTE,
+          visibility: 'item',
+        });
+        // setEdit(true);
+      }
+      postAction({
+        type: ACTION_TYPES.ADD,
+        data: {
+          note: newNote,
+          id: newNote.id,
+        },
       });
-    } else {
-      postAppData({
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: 'item',
-      });
-      setEdit(true);
     }
-    postAction({
-      type: ACTION_TYPES.ADD,
-      data: {
-        note: newNote,
-        id: newNote.id,
-      },
-    });
   };
 
   /* The <div> element has a child <button> element that allows keyboard interaction */

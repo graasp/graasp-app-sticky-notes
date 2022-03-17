@@ -21,7 +21,7 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
         className={classes.textfield}
         autoFocus
         inputProps={{
-          style: { fontSize: '1vw', fontWeight: 'bold' },
+          style: { fontSize: '1vw'/* , fontWeight: 'bold' */},
           maxLength: 64,
         }}
         // eslint-disable-next-line react/jsx-no-duplicate-props

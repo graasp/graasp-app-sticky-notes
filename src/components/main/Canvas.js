@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Note from './note/Note';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
 import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
-import { DEFAULT_PERMISSION } from '../../config/settings';
 import ColorSettings from './ColorSettings';
+import BackgroundImage from './BackgroundImage';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { useAppData, useAppContext, /* useAppActions */ } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
-import { Context } from '../context/ContextContext';
 import CanvasContext from '../context/CanvasContext';
 
 const useStyles = makeStyles(() => ({
@@ -20,7 +19,6 @@ const useStyles = makeStyles(() => ({
     cursor: 'cell',
     background: '#FFE4E1',
   },
-  image: { width: '100%', height: '100%', display: 'block' },
 }));
 
 const Canvas = () => {
@@ -34,11 +32,7 @@ const Canvas = () => {
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
   const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
   const [members, setMembers] = useState([]);
-  const context = useContext(Context);
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
-
-  // eslint-disable-next-line react/destructuring-assignment
-  const [backgroundImage,] = useState(context?.get('settings')?.backgroundImage);
 
   const {
     data: appData,
@@ -82,7 +76,7 @@ const Canvas = () => {
       position: { pageX, pageY },
       color: userSetColor,
       rotation: generateRandomRotationAngle(),
-      minimized: false, 
+      minimized: false,
     };
 
     if (newNote?.id) {
@@ -136,17 +130,13 @@ const Canvas = () => {
               userName={(members.find((m) => m.id === note.memberId) ?? {name:'AnonymousA'}).name}
               newPageX={newPageX}
               newPageY={newPageY}
-            />)) ):(<div>Add a note.</div>)
-        }
-        { backgroundImage?.uri && backgroundImage?.visible && (
-          <img
-            src={backgroundImage.uri}
-            alt={`User selected background ${backgroundImage.name}`}
-            className={classes.image}
-          />
+            />
+          ))
+        ) : (
+          <div>Add a note.</div>
         )}
-        {/* eslint-disable-next-line react/destructuring-assignment */}
-        {(context?.get('permission', DEFAULT_PERMISSION) === 'write') && <Settings />}
+        <BackgroundImage />
+        <Settings />
         <ColorSettings />
       </div>
     </CanvasContext.Provider>

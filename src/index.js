@@ -23,7 +23,7 @@ if (MOCK_API) {
 
 const root = document.getElementById('root');
 
-const renderApp = RootComponent => {
+const renderApp = (RootComponent) => {
   render(<RootComponent />, root);
 };
 

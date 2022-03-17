@@ -31,6 +31,8 @@ jobs:
       REACT_APP_VERSION: 'latest'
       REACT_APP_GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
       REACT_APP_GRAASP_DOMAIN: ${{ secrets.DEV_GRAASP_DOMAIN }}
+      REACT_APP_GRAASP_APP_ID: ${{ secrets.APP_ID }}
+      REACT_APP_MOCK_API: false
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -44,18 +46,11 @@ jobs:
           node-version: '16'
           check-latest: true
 
-      - name: Create .env.dev file
-        run: |
-          touch .env.dev
-          echo REACT_APP_GRAASP_DOMAIN=dev.graasp >> .env.dev
-          echo REACT_APP_GRAASP_APP_ID=${{ secrets.APP_ID }} >> .env.dev
-          echo REACT_APP_MOCK_API=false >> .env.dev
-
       - name: Yarn build dev
         id: build-image
         run: |
           yarn install
-          yarn build:dev 
+          REACT_APP_GRAASP_DOMAIN REACT_APP_GRAASP_APP_ID REACT_APP_MOCK_API yarn build
 
       - name: Configure AWS Credentials
         id: configure-aws

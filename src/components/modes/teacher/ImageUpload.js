@@ -52,9 +52,9 @@ const ImageUpload = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const [uppy, setUppy] = useState(null);
-  const { offline, standalone, itemId, appInstanceId } = {};
   const context = useContext(Context);
   const token = useContext(TokenContext);
+  const itemId = context?.get('itemId');
   const { mutate: deleteAppSetting } = useMutation(
     MUTATION_KEYS.DELETE_APP_SETTING,
   );
@@ -72,10 +72,9 @@ const ImageUpload = () => {
     setUppy(
       configureUppy({
         t,
-        offline,
-        standalone,
-        appInstanceId,
-        itemId: context?.get('itemId'),
+        offline: context?.get('offline'),
+        standalone: context?.get('standalone'),
+        itemId,
         apiHost: context?.get('apiHost'),
         token,
         onComplete: (result) => {

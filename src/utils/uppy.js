@@ -82,6 +82,7 @@ const configureUppy = ({
   // uppy.on('file-added', (file) => dispatch(addImage(file)));
   uppy.on('file-added', (file) => {
     // set name of the settings alongside the file
+    console.log("File added.");
     uppy.setFileMeta(file.id, {
       size: file.size,
       name: APP_SETTINGS.BACKGROUND,
@@ -89,6 +90,7 @@ const configureUppy = ({
   });
 
   uppy.on('complete', async (result) => {
+    console.log("Upload complete.");
     // run mutation to invalidate app setting key
     onComplete(result);
   });

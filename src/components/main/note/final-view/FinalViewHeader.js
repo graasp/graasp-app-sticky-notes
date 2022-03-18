@@ -40,7 +40,7 @@ const FinalViewHeader = ({ title, description, color, showActions, id, minimized
 FinalViewHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  color: PropTypes.string, // .isRequired,
+  color: PropTypes.string,
   showActions: PropTypes.bool.isRequired,
   minimized: PropTypes.bool.isRequired,
   onChangeMinimize: PropTypes.func.isRequired,
@@ -54,7 +54,7 @@ FinalViewHeader.propTypes = {
 FinalViewHeader.defaultProps = {
   title: '',
   description: '',
-  color: '#DFD59F',
+  color: '#DFD59F', // TODO: Move to cst, see issue #37
 };
 
 export default FinalViewHeader;

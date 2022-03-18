@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -8,7 +7,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { AVAILABLE_COLORS } from '../../constants/constants';
 import CanvasContext from '../context/CanvasContext';
-// import { setUserNoteColor } from '../../actions';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -39,10 +37,8 @@ const useStyles = makeStyles((theme) => ({
 const ColorSettings = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
   const { userSetColor, setUserSetColor } = useContext(CanvasContext);
   const [colorPaletteOpen, setColorPaletteOpen] = useState(false);
-  // const userSetColor = useSelector(({ canvas }) => canvas.userSetColor);
 
   const handleClick = (event) => {
     event.stopPropagation();

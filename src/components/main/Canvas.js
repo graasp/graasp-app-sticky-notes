@@ -41,16 +41,6 @@ const Canvas = () => {
     isSuccess: isAppDataSuccess,
   } = useAppData();
 
-  // Used for debugging purposes.
-  // const {
-  //   /* eslint-disable-next-line no-unused-vars */
-  //   data: appActions,
-  //   /* eslint-disable-next-line no-unused-vars */
-  //   isLoading: isAppActionsLoading,
-  //   /* eslint-disable-next-line no-unused-vars */
-  //   isSuccess: isAppActionsSuccess,
-  // } = useAppActions();
-
   useEffect(() => {
     if(isAppContextLoading) {
       setMembers([]);

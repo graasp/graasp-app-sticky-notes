@@ -152,7 +152,7 @@ NoteFinalView.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string, // .isRequired,
+    color: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
@@ -169,7 +169,7 @@ NoteFinalView.propTypes = {
 };
 
 NoteFinalView.defaultProps = {
-  userName: 'Anonymous', // TODO: Move to cst
+  userName: 'Anonymous', // TODO: Move to cst, see issue #36
   newPageX: null,
   newPageY: null,
 };

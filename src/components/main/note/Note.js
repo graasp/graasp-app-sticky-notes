@@ -47,13 +47,9 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  userName: 'Anonymous', // TODO: Move to constant and internationalize
+  userName: 'Anonymous', // TODO: Move to constant and internationalize #36
   newPageX: null,
   newPageY: null,
 };
-
-/* note.defaultProps = {
-  color: '#DFD59F',
-}; */
 
 export default Note;

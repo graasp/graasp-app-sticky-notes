@@ -1,4 +1,3 @@
-/* eslint-disable no-console */ // TODO: remove
 import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';

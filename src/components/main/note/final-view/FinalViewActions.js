@@ -45,10 +45,7 @@ const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
 
   const handleEdit = () => {
     // if the edit button is clicked when another note is in edit mode, update that note and take it out of edit mode
-    // TODO: implement this behaviour.
-    /* if (noteBeingEditedId) {
-      console.log('Save note');
-    } */
+    // TODO: Eventually implement that...
     setNoteBeingEditedId(id);
   };
 

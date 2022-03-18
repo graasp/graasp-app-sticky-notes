@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AVAILABLE_COLORS,
   AVAILABLE_COLORS_DARKER_SHADES,
 } from '../../../../constants/constants';
-// import { editNoteColor } from '../../../../actions';
 
 const useStyles = makeStyles(() => ({
   paletteContainer: {
@@ -25,10 +23,6 @@ const useStyles = makeStyles(() => ({
 
 const EditViewColorPalette = ({ height, color, onChange }) => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
-  /* const { color: noteColor } = useSelector(
-    ({ canvas }) => canvas.noteBeingEdited.data,
-  ); */
 
   const [noteColor, setNoteColor] = useState(color);
 

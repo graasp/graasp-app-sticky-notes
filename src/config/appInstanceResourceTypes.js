@@ -1,3 +1,2 @@
-export const INPUT = 'input';
-export const FEEDBACK = 'feedback';
+/* eslint-disable-next-line import/prefer-default-export */
 export const FILE = 'file';

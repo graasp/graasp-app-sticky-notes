@@ -46,13 +46,6 @@ const useStyles = makeStyles({
   },
 });
 
-/* const styles = {
-  root: {
-    flexGrow: 1,
-    height: '100%',
-  },
-}; */
-
 const theme = createTheme({
   palette: {
     primary: {

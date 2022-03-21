@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     cursor: 'cell',
-    background: '#FFE4E1',
+    background: '#FFFFFF',
   },
   image: { width: '100%', height: '100%', display: 'block' },
 }));

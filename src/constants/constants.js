@@ -1,13 +1,13 @@
-export const DEFAULT_NOTE_COLOR = '#FFFF5A';
+export const DEFAULT_NOTE_COLOR = '#FFFF99';
 export const DEFAULT_NOTE_COLOR_DARKER = '#FDDA0D';
 
 export const AVAILABLE_COLORS = [
   DEFAULT_NOTE_COLOR,
-  '#A7C7E7',
-  '#85C385',
-  '#DF9797',
-  '#FFB347',
-  '#F9F9F9',
+  '#f275ad',
+  '#79cbc5',
+  '#fbae4a',
+  '#f3858e',
+  '#eaec40',
 ];
 
 export const AVAILABLE_COLORS_DARKER_SHADES = [

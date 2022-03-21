@@ -12,7 +12,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#18/appSettings",
-    "@graasp/ui": "github:graasp/graasp-ui.git#100/itemClassname",
+    "@graasp/ui": "github:graasp/graasp-ui.git",
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.60",
@@ -34,7 +34,7 @@
     "react-dom": "~17.0.2",
     "react-ga": "~3.3.0",
     "react-i18next": "~11.15.6",
-    "react-scripts": "~5.0.0",
+    "react-scripts": "~4.0.3",
     "react-toastify": "~8.2.0",
     "stopword": "~2.0.1"
   },
@@ -61,9 +61,9 @@
     "release": "git fetch --tags && git add CHANGELOG.md && standard-version -a"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "~7.17.0",
     "@commitlint/cli": "~16.2.1",
     "@commitlint/config-conventional": "~16.2.1",
+    "babel-eslint": "10.1.0",
     "codacy-coverage": "3.4.0",
     "cross-env": "7.0.3",
     "cypress": "~9.5.1",

@@ -92,6 +92,7 @@ const Canvas = () => {
 
   /* The <div> element has a child <button> element that allows keyboard interaction */
   return (
+    /* eslint-disable-next-line react/jsx-no-constructed-context-values */
     <CanvasContext.Provider value={{
       noteBeingEditedId,
       setNoteBeingEditedId,

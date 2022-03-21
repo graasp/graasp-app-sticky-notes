@@ -1814,9 +1814,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git#18/appSettings":
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git#20/refetchInterval":
   version: 0.1.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=b7054b4ac1c552abf9b5352ef9ffc89a73d7f6ec"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=6efb82e4d2c2eb2e2d45476de42f548275a0518d"
   dependencies:
     axios: 0.26.0
     http-status-codes: 2.1.4
@@ -1828,7 +1828,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 37c33b1bf1178900731afc51c2f1341a353a71030583ea259b2fc06159114f981369ca77b10dbfdef7873f51e5e57c7acbc806d0b71ab1b578a59b455f1c0579
+  checksum: 103edb8a61606b1179290199e128ff65856c4513411e40b142e24a288accc2d5a140a5113778e06b9e5bac20eccf556b3744bba2d6172874d935c9f407949695
   languageName: node
   linkType: hard
 
@@ -9365,7 +9365,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": ~16.2.1
     "@commitlint/config-conventional": ~16.2.1
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#18/appSettings"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#20/refetchInterval"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 4.11.2

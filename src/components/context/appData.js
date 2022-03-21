@@ -2,11 +2,12 @@ import { useContext } from 'react';
 import { Context } from './ContextContext';
 import { TokenContext } from './TokenContext';
 import { hooks } from '../../config/queryClient';
+import { RE_FETCH_INTERVAL } from '../../constants/constants';
 
 export const useAppData = () => {
   const context = useContext(Context);
   const token = useContext(TokenContext);
-  const query = hooks.useAppData({ token, itemId: context?.get('itemId') });
+  const query = hooks.useAppData({ token, itemId: context?.get('itemId') }, RE_FETCH_INTERVAL);
   return query;
 };
 

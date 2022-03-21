@@ -44,7 +44,7 @@
       }
     ],
     "react/static-property-placement": ["error", "static public field"],
-    "react/function-component-definition": ["warn", "arrow-function"],
+    "react/function-component-definition": ["warn", {"namedComponents": "arrow-function"}],
     "jsx-a11y/click-events-have-key-events": ["warn"],
     "jsx-a11y/mouse-events-have-key-events": ["warn"],
     "import/no-named-as-default": 0

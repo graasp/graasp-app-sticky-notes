@@ -12,6 +12,7 @@ import { useAppData, useAppContext, /* useAppActions */ } from '../context/appDa
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { Context } from '../context/ContextContext';
 import CanvasContext from '../context/CanvasContext';
+import vpc from './vpc.png';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -19,6 +20,10 @@ const useStyles = makeStyles(() => ({
     height: '100%',
     cursor: 'cell',
     background: '#FFFFFF',
+    backgroundImage: `url(${vpc})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center',
   },
   image: { width: '100%', height: '100%', display: 'block' },
 }));

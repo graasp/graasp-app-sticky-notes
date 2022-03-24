@@ -42,7 +42,7 @@ const Canvas = () => {
   const context = useContext(Context);
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
 
-  // const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   // eslint-disable-next-line react/destructuring-assignment
   const [backgroundImage,] = useState(context?.get('settings')?.backgroundImage);
@@ -52,6 +52,7 @@ const Canvas = () => {
     /* eslint-disable-next-line no-unused-vars */
     isLoading: isAppDataLoading,
     isSuccess: isAppDataSuccess,
+    isStale: isAppDataStale,
   } = useAppData();
 
   useEffect(() => {
@@ -65,15 +66,18 @@ const Canvas = () => {
   useEffect(() => {
     if (isAppDataSuccess && !appData.isEmpty()) {
       setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
-      // if(edit && !notes?.isEmpty()) {
-      //   setNoteBeingEditedId(notes.get(-1, {id: null})?.id); // TODO: Finish implementing immediate editing.
-      //   console.log(notes);
-      //   setEdit(false);
-      // }
     } else if (isAppDataSuccess && appData.isEmpty()) {
       setNotes(null);
     }
   }, [appData, isAppDataSuccess, postAppData]);
+
+  useEffect(() => {
+    if(edit && !notes?.isEmpty() && isAppDataStale) {
+      setNoteBeingEditedId(notes.get(-1, {id: null})?.id); // TODO: Finish implementing immediate editing.
+      console.log(notes);
+      setEdit(false);
+    }
+  }, [notes]);
 
   const handleCanvasClick = (event) => {
     if(noteBeingEditedId===null) {
@@ -99,7 +103,7 @@ const Canvas = () => {
           type: APP_DATA_TYPES.NOTE,
           visibility: 'item',
         });
-        // setEdit(true);
+        setEdit(true);
       }
       postAction({
         type: ACTION_TYPES.ADD,

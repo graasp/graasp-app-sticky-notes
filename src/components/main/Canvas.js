@@ -108,6 +108,8 @@ const Canvas = () => {
           id: newNote.id,
         },
       });
+    } else {
+      setNoteBeingEditedId(null);
     }
   };
 

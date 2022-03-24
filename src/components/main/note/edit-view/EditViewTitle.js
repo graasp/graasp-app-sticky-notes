@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -13,6 +13,12 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [text, setText] = useState(title);
+
+  const textInput = useRef(null);
+  
+  const focusOnText = () => {
+    textInput.current.focus();
+  };
 
   return (
     <div style={{ height }} className={classes.container}>
@@ -37,6 +43,10 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
           if(e.key === 'Enter') {
             onEnter();
           }
+        }}
+        inputRef={textInput}
+        onBlur={() => {
+          setTimeout(focusOnText, 20); // Need a small delay before refocusing.
         }}
       />
     </div>

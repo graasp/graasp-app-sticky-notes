@@ -1,0 +1,13 @@
+@keyframes onEnter {
+    to {
+        font-size: 2em;
+        color: red;
+    }
+}
+
+.iconOnOver {
+    font-size: 2em;
+    color: red;
+    animation-name: onEnter;
+    animation-duration: 200ms;
+}

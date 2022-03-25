@@ -32,6 +32,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     description,
     minimized,
     rotation,
+    category,
   } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
@@ -54,6 +55,9 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   // hence, when drag starts, we calculate the distance between current top left of div ('origin') and the point we grabbed it
   // when we update the position in onDragEnd, we adjust for this distance to generate the expected effect
   const onDragStart = (event) => {
+    event.dataTransfer.setData('text/plain', id);
+    event.dataTransfer.dropEffect('none');
+
     const noteGrabbedX = event.pageX;
     const noteGrabbedY = event.pageY;
     const distanceBetweenGrabAndOriginX = pageX - noteGrabbedX;
@@ -67,6 +71,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     const finalPageY = newPageY + grabDeltaY;
     const updatedNote = {
       data: {
+        category,
         color,
         title,
         description,
@@ -158,6 +163,7 @@ NoteFinalView.propTypes = {
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
     minimized: PropTypes.bool.isRequired,
+    category: PropTypes.string,
   }).isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,

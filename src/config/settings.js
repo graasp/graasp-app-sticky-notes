@@ -5,7 +5,7 @@ export const DEFAULT_LANG = 'en';
 
 const LOCAL_API_HOST = 'localhost:3000';
 
-// TODO: Delete.
+// TODO: Test.
 // avoid breaking the app in production when embedded in different contexts
 let defaultApiHost;
 try {
@@ -29,7 +29,7 @@ export const MAX_LENGTH_TITLE = 64;
 
 export const DEFAULT_ANONYMOUS_USERNAME = "Anonymous";
 
-export const DEFAULT_PERMISSION = 'read';
+export const DEFAULT_PERMISSION = PERMISSION_LEVELS.READ;
 
 export const PUBLIC_VISIBILITY = 'public';
 export const DEFAULT_VISIBILITY = PUBLIC_VISIBILITY;
@@ -50,12 +50,6 @@ export const DEFAULT_LOCAL_CONTEXT = {
 export const APP_DATA_VISIBLITIES = {
   ITEM: 'item',
   PUBLIC: 'public',
-}
-
-export const DEFAULT_BACKGROUND_IMAGE = {
-  uri: null,  
-  visible: false,
-  name: null,
 }
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';

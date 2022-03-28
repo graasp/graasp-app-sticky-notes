@@ -34,8 +34,6 @@ const configureUppy = ({
     autoProceed: true,
   });
 
-  // const dispatch = useDispatch();
-
   // when offline override upload to post corresponding resources
   if (offline) {
     uppy.upload = () => {

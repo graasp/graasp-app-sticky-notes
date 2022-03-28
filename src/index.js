@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-import-module-exports */
 import React from 'react';
 import { render } from 'react-dom';

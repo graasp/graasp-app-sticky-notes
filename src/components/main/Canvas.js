@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import Note from './note/Note';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
@@ -7,9 +8,10 @@ import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { useAppData, useAppContext, /* useAppActions */ } from '../context/appData';
+import { useAppData, useAppContext } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
+import { APP_DATA_VISIBLITIES } from '../../config/settings';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -22,38 +24,37 @@ const useStyles = makeStyles(() => ({
 
 const Canvas = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const [newPageX, setNewPageX] = useState();
   const [newPageY, setNewPageY] = useState();
   const [notes, setNotes] = useState(null);
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
-  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
   const [members, setMembers] = useState([]);
-  const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
+  const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
   const { userSetColor } = useContext(CanvasContext);
 
   const {
     data: appData,
-    /* eslint-disable-next-line no-unused-vars */
-    isLoading: isAppDataLoading,
     isSuccess: isAppDataSuccess,
+    isError: isAppDataError,
   } = useAppData();
 
   useEffect(() => {
-    if(isAppContextLoading) {
-      setMembers([]);
-    } else {
-      setMembers(appContext?.get('members'))
+    if(isAppContextSuccess) {
+      setMembers(appContext?.get('members'));
     }
-  }, [appContext, isAppContextLoading]);
+  }, [appContext, isAppContextSuccess]);
 
   useEffect(() => {
-    if (isAppDataSuccess && !appData.isEmpty()) {
-      setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
-    } else if (isAppDataSuccess && appData.isEmpty()) {
-      setNotes(null);
+    if(isAppDataError) {
+      console.error("Error getting data.");
+      return;
     }
-  }, [appData, isAppDataSuccess, postAppData]);
+    if (isAppDataSuccess) {
+      setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
+    }
+  }, [appData, isAppDataSuccess]);
 
   const handleCanvasClick = (event) => {
     // add a new note to the canvas
@@ -67,18 +68,11 @@ const Canvas = () => {
       minimized: false,
     };
 
-    if (newNote?.id) {
-      patchAppData({
-        data: newNote,
-        id: notes.id,
-      });
-    } else {
-      postAppData({
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: 'item',
-      });
-    }
+    postAppData({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: APP_DATA_VISIBLITIES.ITEM,
+    });
     postAction({
       type: ACTION_TYPES.ADD,
       data: {
@@ -116,7 +110,7 @@ const Canvas = () => {
             />
           ))
         ) : (
-          <div>Add a note.</div>
+          <div>{t("Add a note.")}</div>
         )}
         <BackgroundImage />
         <Settings />

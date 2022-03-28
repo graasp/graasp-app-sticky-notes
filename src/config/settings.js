@@ -44,6 +44,11 @@ export const DEFAULT_LOCAL_CONTEXT = {
   apiHost: DEFAULT_API_HOST,
 };
 
+export const APP_DATA_VISIBLITIES = {
+  ITEM: 'item',
+  PUBLIC: 'public',
+}
+
 export const DEFAULT_BACKGROUND_IMAGE = {
   uri: null,  
   visible: false,

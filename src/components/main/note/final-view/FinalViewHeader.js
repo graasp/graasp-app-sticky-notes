@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FinalViewActions from './FinalViewActions';
+import { DEFAULT_NOTE_COLOR } from '../../../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -54,7 +55,7 @@ FinalViewHeader.propTypes = {
 FinalViewHeader.defaultProps = {
   title: '',
   description: '',
-  color: '#DFD59F', // TODO: Move to cst, see issue #37
+  color: DEFAULT_NOTE_COLOR,
 };
 
 export default FinalViewHeader;

@@ -11,23 +11,18 @@ const useStyles = makeStyles(() => ({
 const EditViewTextFields = ({ height, title, description, onChange }) => {
   const classes = useStyles();
 
-  let editedTitle = title;
-  let editedDescription = description;
-
   const handleTitleChange = (newTitle) => {
-    editedTitle = newTitle;
-    onChange(editedTitle, editedDescription);
+    onChange(newTitle, description);
   };
 
   const handleDescriptionChange = (newDescription) => {
-    editedDescription = newDescription;
-    onChange(editedTitle, editedDescription);
+    onChange(title, newDescription);
   };
 
   return (
     <div style={{ height }} className={classes.container}>
-      <EditViewTitle height="20%" title={editedTitle} onChange={handleTitleChange}/>
-      <EditViewDescription height="80%" description={editedDescription} onChange={handleDescriptionChange} />
+      <EditViewTitle height="20%" title={title} onChange={handleTitleChange}/>
+      <EditViewDescription height="80%" description={description} onChange={handleDescriptionChange} />
     </div>
   );
 };

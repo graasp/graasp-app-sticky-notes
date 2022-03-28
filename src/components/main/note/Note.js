@@ -32,7 +32,7 @@ Note.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string, // .isRequired,
+    color: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
@@ -48,7 +48,7 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  userName: DEFAULT_ANONYMOUS_USERNAME, // TODO: Move to constant and internationalize #36
+  userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
 };

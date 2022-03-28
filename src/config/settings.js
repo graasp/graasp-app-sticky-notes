@@ -1,8 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { CONTEXTS } from './contexts';
 import { REACT_APP_MOCK_API } from './env';
-
-const { t } = useTranslation();
 
 export const DEFAULT_LANG = 'en';
 
@@ -28,7 +25,9 @@ export const PERMISSION_LEVELS = {
   ADMIN: 'admin',
 };
 
-export const DEFAULT_ANONYMOUS_USERNAME = t("Anonymous");
+export const MAX_LENGTH_TITLE = 64;
+
+export const DEFAULT_ANONYMOUS_USERNAME = "Anonymous";
 
 export const DEFAULT_PERMISSION = 'read';
 

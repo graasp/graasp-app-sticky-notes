@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Note from './note/Note';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
-import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { useAppData, useAppContext, /* useAppActions */ } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
-import CanvasContext from '../context/CanvasContext';
+import { CanvasContext } from '../context/CanvasContext';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -26,13 +25,12 @@ const Canvas = () => {
   const [newPageX, setNewPageX] = useState();
   const [newPageY, setNewPageY] = useState();
   const [notes, setNotes] = useState(null);
-  const [noteBeingEditedId, setNoteBeingEditedId] = useState(null);
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
-  const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
   const [members, setMembers] = useState([]);
   const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
+  const { userSetColor } = useContext(CanvasContext);
 
   const {
     data: appData,
@@ -92,13 +90,7 @@ const Canvas = () => {
 
   /* The <div> element has a child <button> element that allows keyboard interaction */
   return (
-    /* eslint-disable-next-line react/jsx-no-constructed-context-values */
-    <CanvasContext.Provider value={{
-      noteBeingEditedId,
-      setNoteBeingEditedId,
-      userSetColor,
-      setUserSetColor
-      }}>
+    <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.mainContainer}
@@ -130,7 +122,7 @@ const Canvas = () => {
         <Settings />
         <ColorSettings />
       </div>
-    </CanvasContext.Provider>
+    </>
   );
 };
 

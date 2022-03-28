@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
-import CanvasContext from '../../context/CanvasContext';
+import { CanvasContext } from '../../context/CanvasContext';
 
 const Note = ({ note, id, userName, newPageX, newPageY }) => {
 

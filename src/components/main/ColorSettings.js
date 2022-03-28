@@ -6,7 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { AVAILABLE_COLORS } from '../../constants/constants';
-import CanvasContext from '../context/CanvasContext';
+import { CanvasContext } from '../context/CanvasContext';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {

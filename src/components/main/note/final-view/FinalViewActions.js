@@ -5,7 +5,7 @@ import MinimizeIcon from '@material-ui/icons/Remove';
 import MaximizeIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CanvasContext from '../../../context/CanvasContext';
+import { CanvasContext } from '../../../context/CanvasContext';
 import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
 

@@ -4,6 +4,7 @@ import StudentView from './modes/student/StudentView';
 import { Context } from './context/ContextContext';
 import { TokenProvider } from './context/TokenContext';
 import { DEFAULT_PERMISSION, PERMISSION_LEVELS } from '../config/settings';
+import { CanvasProvider } from './context/CanvasContext';
 
 export const App = () => {
   const context = useContext(Context);
@@ -23,7 +24,13 @@ export const App = () => {
     }
   };
 
-  return <TokenProvider>{renderContent()}</TokenProvider>;
+  return (
+    <TokenProvider>
+      <CanvasProvider>
+        {renderContent()}
+      </CanvasProvider>
+    </TokenProvider>
+  );
 };
 
 export default App;

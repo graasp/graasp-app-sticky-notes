@@ -5,7 +5,7 @@ import EditViewTextFields from './EditViewTextFields';
 import EditViewColorPalette from './EditViewColorPalette';
 import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
-import CanvasContext from '../../../context/CanvasContext';
+import { CanvasContext } from '../../../context/CanvasContext';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({

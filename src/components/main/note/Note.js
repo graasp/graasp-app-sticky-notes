@@ -6,7 +6,6 @@ import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 
 const Note = ({ note, id, userName, newPageX, newPageY }) => {
-
   const { noteBeingEditedId } = useContext(CanvasContext);
 
   return noteBeingEditedId === id ? (

@@ -39,7 +39,7 @@ const BackgroundToggle = () => {
         uri: backgroundImage?.uri,
         visible: !backgroundImage?.visible,
       },
-    })
+    });
   };
 
   return (

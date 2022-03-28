@@ -18,7 +18,7 @@ import { ContextProvider } from './context/ContextContext';
 import {
   queryClient,
   QueryClientProvider,
-//  ReactQueryDevtools,
+  //  ReactQueryDevtools,
 } from '../config/queryClient';
 
 // TODO: Modify DEFINE names
@@ -73,7 +73,7 @@ const Root = () => {
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
         <I18nextProvider i18n={i18nConfig}>
-          <QueryClientProvider client={queryClient}>  
+          <QueryClientProvider client={queryClient}>
             <ContextProvider>
               <App />
             </ContextProvider>

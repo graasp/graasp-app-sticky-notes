@@ -27,7 +27,7 @@ export const PERMISSION_LEVELS = {
 
 export const MAX_LENGTH_TITLE = 64;
 
-export const DEFAULT_ANONYMOUS_USERNAME = "Anonymous";
+export const DEFAULT_ANONYMOUS_USERNAME = 'Anonymous';
 
 export const DEFAULT_PERMISSION = PERMISSION_LEVELS.READ;
 
@@ -50,6 +50,6 @@ export const DEFAULT_LOCAL_CONTEXT = {
 export const APP_DATA_VISIBLITIES = {
   ITEM: 'item',
   PUBLIC: 'public',
-}
+};
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';

@@ -14,11 +14,19 @@ const useStyles = makeStyles(() => ({
   title: {
     fontSize: '1.1vw',
     fontWeight: 600,
-    overflowWrap: 'anywhere'
+    overflowWrap: 'anywhere',
   },
 }));
 
-const FinalViewHeader = ({ title, description, color, showActions, id, minimized, onChangeMinimize}) => {
+const FinalViewHeader = ({
+  title,
+  description,
+  color,
+  showActions,
+  id,
+  minimized,
+  onChangeMinimize,
+}) => {
   const classes = useStyles();
 
   return (

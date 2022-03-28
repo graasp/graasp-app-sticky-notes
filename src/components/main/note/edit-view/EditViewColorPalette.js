@@ -30,7 +30,7 @@ const EditViewColorPalette = ({ height, color, onChange }) => {
     <div className={classes.paletteContainer} style={{ height }}>
       {AVAILABLE_COLORS.map((colorItem, index) => (
         <>
-          { /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div
             style={{
               background:

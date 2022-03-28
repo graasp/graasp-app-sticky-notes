@@ -21,8 +21,12 @@ const EditViewTextFields = ({ height, title, description, onChange }) => {
 
   return (
     <div style={{ height }} className={classes.container}>
-      <EditViewTitle height="20%" title={title} onChange={handleTitleChange}/>
-      <EditViewDescription height="80%" description={description} onChange={handleDescriptionChange} />
+      <EditViewTitle height="20%" title={title} onChange={handleTitleChange} />
+      <EditViewDescription
+        height="80%"
+        description={description}
+        onChange={handleDescriptionChange}
+      />
     </div>
   );
 };

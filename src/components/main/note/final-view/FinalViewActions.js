@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
   const classes = useStyles();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
-  
+
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 

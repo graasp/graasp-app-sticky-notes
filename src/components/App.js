@@ -26,9 +26,7 @@ export const App = () => {
 
   return (
     <TokenProvider>
-      <CanvasProvider>
-        {renderContent()}
-      </CanvasProvider>
+      <CanvasProvider>{renderContent()}</CanvasProvider>
     </TokenProvider>
   );
 };

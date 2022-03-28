@@ -11,7 +11,10 @@ import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { useAppData, useAppContext } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
-import { APP_DATA_VISIBLITIES, DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
+import {
+  APP_DATA_VISIBLITIES,
+  DEFAULT_ANONYMOUS_USERNAME,
+} from '../../config/settings';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -41,14 +44,14 @@ const Canvas = () => {
   } = useAppData();
 
   useEffect(() => {
-    if(isAppContextSuccess) {
+    if (isAppContextSuccess) {
       setMembers(appContext?.get('members'));
     }
   }, [appContext, isAppContextSuccess]);
 
   useEffect(() => {
-    if(isAppDataError) {
-      console.error("Error getting data.");
+    if (isAppDataError) {
+      console.error('Error getting data.');
       return;
     }
     if (isAppDataSuccess) {
@@ -104,13 +107,19 @@ const Canvas = () => {
               note={note.data}
               id={note.id}
               key={note.id}
-              userName={(members.find((m) => m.id === note.memberId) ?? {name:DEFAULT_ANONYMOUS_USERNAME}).name}
+              userName={
+                (
+                  members.find((m) => m.id === note.memberId) ?? {
+                    name: DEFAULT_ANONYMOUS_USERNAME,
+                  }
+                ).name
+              }
               newPageX={newPageX}
               newPageY={newPageY}
             />
           ))
         ) : (
-          <div>{t("Add a note.")}</div>
+          <div>{t('Add a note.')}</div>
         )}
         <BackgroundImage />
         <Settings />

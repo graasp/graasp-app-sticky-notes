@@ -28,12 +28,10 @@ const EditViewTitle = ({ height, title, onChange }) => {
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}
         value={text}
-        onChange={
-          (event) => {
-            setText(event.target.value);
-            onChange(event.target.value);
-          }
-        }
+        onChange={(event) => {
+          setText(event.target.value);
+          onChange(event.target.value);
+        }}
       />
     </div>
   );

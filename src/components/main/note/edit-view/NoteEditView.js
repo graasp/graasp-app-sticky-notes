@@ -28,20 +28,20 @@ const NoteEditView = ({ note, id }) => {
   const { windowDimensions, position } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
-  const [ title, setTitle ] = useState(note.title);
-  const [ description, setDescription ] = useState(note.description);
-  const [ color, setColor ] = useState(note.color);
+  const [title, setTitle] = useState(note.title);
+  const [description, setDescription] = useState(note.description);
+  const [color, setColor] = useState(note.color);
 
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   const handleChangeText = (newTitle, newDescription) => {
     setDescription(newDescription);
     setTitle(newTitle);
-  }
+  };
 
   const handleChangeColor = (newColor) => {
     setColor(newColor);
-  }
+  };
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
@@ -78,7 +78,7 @@ const NoteEditView = ({ note, id }) => {
 
   return (
     <>
-      { /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.form}
         onClick={(event) => event.stopPropagation()}
@@ -88,9 +88,24 @@ const NoteEditView = ({ note, id }) => {
           background: color,
         }}
       >
-        <EditViewTextFields height="65%" title={title} description={description} onChange={handleChangeText} />
-        <EditViewColorPalette height="20%" color={color} onChange={handleChangeColor} />
-        <EditViewActions height="15%" note={note} id={id} onConfirm={handleConfirm} onCancel={handleCancel} />
+        <EditViewTextFields
+          height="65%"
+          title={title}
+          description={description}
+          onChange={handleChangeText}
+        />
+        <EditViewColorPalette
+          height="20%"
+          color={color}
+          onChange={handleChangeColor}
+        />
+        <EditViewActions
+          height="15%"
+          note={note}
+          id={id}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
       </div>
     </>
   );

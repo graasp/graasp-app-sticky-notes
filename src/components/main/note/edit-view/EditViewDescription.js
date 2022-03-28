@@ -25,12 +25,10 @@ const EditViewDescription = ({ height, description, onChange }) => {
         multiline
         rows={2}
         value={text}
-        onChange={
-          (event) => {
-            setText(event.target.value);
-            onChange(event.target.value);
-          }
-        }
+        onChange={(event) => {
+          setText(event.target.value);
+          onChange(event.target.value);
+        }}
       />
     </div>
   );

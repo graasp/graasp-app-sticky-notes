@@ -1,9 +1,6 @@
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import {
-  MAX_NUM_FILES,
-  MAX_FILE_SIZE,
-} from '../config/settings';
+import { MAX_NUM_FILES, MAX_FILE_SIZE } from '../config/settings';
 import { API_ROUTES } from '../config/queryClient';
 import { showErrorToast } from './toasts';
 import { APP_SETTINGS } from '../constants/constants';
@@ -45,7 +42,7 @@ const configureUppy = ({
   // uppy.on('file-added', (file) => dispatch(addImage(file)));
   uppy.on('file-added', (file) => {
     // set name of the settings alongside the file
-    console.log("File added.");
+    console.log('File added.');
     uppy.setFileMeta(file.id, {
       size: file.size,
       name: APP_SETTINGS.BACKGROUND,
@@ -53,7 +50,7 @@ const configureUppy = ({
   });
 
   uppy.on('complete', async (result) => {
-    console.log("Upload complete.");
+    console.log('Upload complete.');
     // run mutation to invalidate app setting key
     onComplete(result);
   });

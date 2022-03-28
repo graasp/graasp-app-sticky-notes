@@ -7,7 +7,10 @@ import { RE_FETCH_INTERVAL } from '../../constants/constants';
 export const useAppData = () => {
   const context = useContext(Context);
   const token = useContext(TokenContext);
-  const query = hooks.useAppData({ token, itemId: context?.get('itemId') }, RE_FETCH_INTERVAL);
+  const query = hooks.useAppData(
+    { token, itemId: context?.get('itemId') },
+    RE_FETCH_INTERVAL,
+  );
   return query;
 };
 

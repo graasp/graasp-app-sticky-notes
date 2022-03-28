@@ -3,7 +3,7 @@ import TeacherView from './modes/teacher/TeacherView';
 import StudentView from './modes/student/StudentView';
 import { Context } from './context/ContextContext';
 import { TokenProvider } from './context/TokenContext';
-import { DEFAULT_PERMISSION } from '../config/settings';
+import { DEFAULT_PERMISSION, PERMISSION_LEVELS } from '../config/settings';
 
 export const App = () => {
   const context = useContext(Context);
@@ -11,13 +11,13 @@ export const App = () => {
   const renderContent = () => {
     switch (context?.get('permission', DEFAULT_PERMISSION)) {
       // show teacher view when in producer (educator) mode
-      case 'write':
-      case 'admin':
+      case PERMISSION_LEVELS.WRITE:
+      case PERMISSION_LEVELS.ADMIN:
         // case permission:
         return <TeacherView />;
 
       // by default go with the consumer (learner) mode
-      case 'read':
+      case PERMISSION_LEVELS.READ:
       default:
         return <StudentView />;
     }

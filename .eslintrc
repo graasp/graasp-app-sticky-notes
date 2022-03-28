@@ -20,15 +20,6 @@
   },
   "parser": "babel-eslint",
   "rules": {
-    "no-underscore-dangle": [
-      "error",
-      {
-        "allow": [
-          "_id",
-          "__REDUX_DEVTOOLS_EXTENSION__"
-        ]
-      }
-    ],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {

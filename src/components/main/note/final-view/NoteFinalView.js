@@ -77,18 +77,18 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           pageY: finalPageY,
         },
       },
-      _id: id,
+      id,
     };
 
     patchAppData({
       data: updatedNote.data,
-      id: updatedNote._id,
+      id: updatedNote.id,
     });
     postAction({
       type: ACTION_TYPES.MOVE,
       data: {
         note: updatedNote.data,
-        id: updatedNote._id,
+        id: updatedNote.id,
       },
     });
   };

@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactGa from 'react-ga';
 import { I18nextProvider } from 'react-i18next';
 import {
   MuiThemeProvider,
   createTheme,
   makeStyles,
-  withStyles
 } from '@material-ui/core/styles';
 import { ToastContainer } from 'react-toastify';
 import pink from '@material-ui/core/colors/pink';
@@ -20,7 +18,7 @@ import { ContextProvider } from './context/ContextContext';
 import {
   queryClient,
   QueryClientProvider,
-  ReactQueryDevtools,
+//  ReactQueryDevtools,
 } from '../config/queryClient';
 
 // TODO: Modify DEFINE names
@@ -79,9 +77,9 @@ const Root = () => {
             <ContextProvider>
               <App />
             </ContextProvider>
-            {process.env.NODE_ENV === 'development' && (
+            {/* {process.env.NODE_ENV === 'development' && (
               <ReactQueryDevtools initialIsOpen />
-            )}
+            )} */}
           </QueryClientProvider>
           <ToastContainer />
         </I18nextProvider>
@@ -90,12 +88,4 @@ const Root = () => {
   );
 };
 
-Root.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string,
-  }).isRequired,
-};
-
-const StyledComponent = withStyles(useStyles)(Root);
-
-export default StyledComponent;
+export default Root;

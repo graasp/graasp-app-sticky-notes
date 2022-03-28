@@ -11,13 +11,14 @@ const useStyles = makeStyles(() => ({
   noteContainer: {
     maxWidth: '15%',
     position: 'absolute',
-    padding: '0.7em 1.5em',
+    padding: '0.7em 0.8em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     cursor: 'move',
-    borderRadius: '2em'
+    borderRadius: '0.3em',
+    width: '12em',
   },
 }));
 

@@ -13,7 +13,7 @@ import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { Context } from '../context/ContextContext';
 import CanvasContext from '../context/CanvasContext';
 import vpc from './vpc.png';
-import VPC from './subcanvas/VPC';
+// import VPC from './subcanvas/VPC';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -80,17 +80,17 @@ const Canvas = () => {
     }
   }, [notes]);
 
-  const handleCategoryChange = (id, category) => {
-    const newNote = {
-      ...notes.find((n) => n.id === id).data,
-      category,
-    };
+  // const handleCategoryChange = (id, category) => {
+  //   const newNote = {
+  //     ...notes.find((n) => n.id === id).data,
+  //     category,
+  //   };
 
-    patchAppData({
-      data: newNote,
-      id,
-    });
-  }
+  //   patchAppData({
+  //     data: newNote,
+  //     id,
+  //   });
+  // }
 
   const handleCanvasClick = (event) => {
     if(noteBeingEditedId===null) {
@@ -154,7 +154,7 @@ const Canvas = () => {
           event.preventDefault();
         }}
       >
-        <VPC emitCategory={handleCategoryChange} />
+        {/* <VPC emitCategory={handleCategoryChange} /> */}
         {notes ? (
           notes.map((note) => (
             <Note

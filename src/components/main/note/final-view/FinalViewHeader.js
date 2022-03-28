@@ -10,7 +10,7 @@ const titleStyle = {
   fontWeight: 200,
   overflowWrap: 'anywhere',
   cursor: 'text',
-  textAlign: 'center',
+  textAlign: 'justify',
   padding: 'none',
 };
 

@@ -6,6 +6,7 @@ import FinalViewDescription from './FinalViewDescription';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -169,7 +170,7 @@ NoteFinalView.propTypes = {
 };
 
 NoteFinalView.defaultProps = {
-  userName: 'Anonymous', // TODO: Move to cst, see issue #36
+  userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
 };

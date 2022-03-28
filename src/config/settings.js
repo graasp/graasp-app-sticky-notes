@@ -1,5 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { CONTEXTS } from './contexts';
 import { REACT_APP_MOCK_API } from './env';
+
+const { t } = useTranslation();
 
 export const DEFAULT_LANG = 'en';
 
@@ -19,12 +22,13 @@ try {
 
 export const DEFAULT_API_HOST = defaultApiHost;
 
-// TODO: use from graasp constants
 export const PERMISSION_LEVELS = {
   WRITE: 'write',
   READ: 'read',
   ADMIN: 'admin',
 };
+
+export const DEFAULT_ANONYMOUS_USERNAME = t("Anonymous");
 
 export const DEFAULT_PERMISSION = 'read';
 

@@ -11,7 +11,7 @@ import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import { useAppData, useAppContext } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
-import { APP_DATA_VISIBLITIES } from '../../config/settings';
+import { APP_DATA_VISIBLITIES, DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -104,7 +104,7 @@ const Canvas = () => {
               note={note.data}
               id={note.id}
               key={note.id}
-              userName={(members.find((m) => m.id === note.memberId) ?? {name:'AnonymousA'}).name}
+              userName={(members.find((m) => m.id === note.memberId) ?? {name:DEFAULT_ANONYMOUS_USERNAME}).name}
               newPageX={newPageX}
               newPageY={newPageY}
             />

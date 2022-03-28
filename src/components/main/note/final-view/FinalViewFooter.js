@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Typography from '@material-ui/core/Typography';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   addedBy: { fontSize: '0.6vw', color: '#383838', textAlign: 'right' },
@@ -26,7 +27,7 @@ FinalViewFooter.propTypes = {
 };
 
 FinalViewFooter.defaultProps = {
-  userName: 'Anonymous',
+  userName: DEFAULT_ANONYMOUS_USERNAME,
 };
 
 export default FinalViewFooter;

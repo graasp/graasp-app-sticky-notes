@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
 import { CanvasContext } from '../../context/CanvasContext';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 
 const Note = ({ note, id, userName, newPageX, newPageY }) => {
 
@@ -47,7 +48,7 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  userName: 'Anonymous', // TODO: Move to constant and internationalize #36
+  userName: DEFAULT_ANONYMOUS_USERNAME, // TODO: Move to constant and internationalize #36
   newPageX: null,
   newPageY: null,
 };

@@ -2,24 +2,17 @@ import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import {
   MAX_NUM_FILES,
-  MAX_FILE_SIZE,  
-  DEFAULT_VISIBILITY,
+  MAX_FILE_SIZE,
 } from '../config/settings';
 import { API_ROUTES } from '../config/queryClient';
 import { showErrorToast } from './toasts';
-import { POST_FILE } from '../types';
-import { FILE } from '../config/appInstanceResourceTypes';
 import { APP_SETTINGS } from '../constants/constants';
 
 const { buildUploadAppSettingFilesRoute } = API_ROUTES;
 
 const configureUppy = ({
   t,
-  offline,
   standalone,
-  spaceId,
-  visibility = DEFAULT_VISIBILITY,
-  userId,
   itemId,
   apiHost,
   token,
@@ -33,34 +26,6 @@ const configureUppy = ({
     },
     autoProceed: true,
   });
-
-  // when offline override upload to post corresponding resources
-  if (offline) {
-    uppy.upload = () => {
-      const files = uppy.getFiles();
-      files.forEach((file) => {
-        const {
-          data: { path, name },
-        } = file;
-
-        return postMessage({
-          type: POST_FILE,
-          // the payload will be used in the resulting appInstanceResource
-          payload: {
-            data: { name, path },
-            userId,
-            spaceId,
-            type: FILE,
-            visibility,
-          },
-        });
-      });
-
-      // remove files from stack and cancel upload
-      uppy.cancelAll();
-      return Promise.resolve({ files });
-    };
-  }
 
   // endpoint
   uppy.use(XHRUpload, {

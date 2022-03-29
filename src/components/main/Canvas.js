@@ -8,13 +8,14 @@ import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { useAppData, useAppContext } from '../context/appData';
+import { useAppData, useAppContext, useAppSettings } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import {
   APP_DATA_VISIBLITIES,
   DEFAULT_ANONYMOUS_USERNAME,
 } from '../../config/settings';
+import { APP_SETTINGS } from '../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -36,12 +37,15 @@ const Canvas = () => {
   const [members, setMembers] = useState([]);
   const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
   const { userSetColor } = useContext(CanvasContext);
+  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(false);
 
   const {
     data: appData,
     isSuccess: isAppDataSuccess,
     isError: isAppDataError,
   } = useAppData();
+
+  const { data: appSettings, isSuccess } = useAppSettings();
 
   useEffect(() => {
     if (isAppContextSuccess) {
@@ -58,6 +62,14 @@ const Canvas = () => {
       setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
     }
   }, [appData, isAppDataSuccess]);
+
+  useEffect(() => {
+    if(isSuccess) {
+      setBackgroundToggleSetting(Boolean(appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+      )?.data.toggle ?? false));
+    }
+  });
 
   const handleCanvasClick = (event) => {
     // add a new note to the canvas
@@ -121,7 +133,7 @@ const Canvas = () => {
         ) : (
           <div>{t('Add a note.')}</div>
         )}
-        <BackgroundImage />
+        {backgroundToggleSetting && <BackgroundImage />}
         <Settings />
         <ColorSettings />
       </div>

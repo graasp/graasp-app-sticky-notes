@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
-import { Context } from '../../context/ContextContext';
+import { APP_SETTINGS } from '../../../constants/constants';
+import { useAppSettings } from '../../context/appData';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -26,20 +27,59 @@ const BackgroundToggle = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const { mutate: patchSettings } = useMutation(MUTATION_KEYS.PATCH_SETTINGS);
-  const context = useContext(Context);
-  const backgroundImage = context?.get('settings')?.backgroundImage;
+  const { mutate: postAppSetting } = useMutation(
+    MUTATION_KEYS.POST_APP_SETTING,
+  );
 
-  const toggleDisabled = !backgroundImage?.uri;
+  const { mutate: patchAppSetting } = useMutation(
+    MUTATION_KEYS.PATCH_APP_SETTING,
+  );
+
+  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(null);
+  
+  const { data: appSettings, isSuccess } = useAppSettings();
+
+  useEffect(() => {
+    if(isSuccess) {
+      const backgroundSetting = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND,
+      );
+      if(backgroundSetting){
+        setBackgroundToggleSetting(appSettings?.find(
+          ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+        ));
+
+        if(backgroundToggleSetting === null) {
+          postAppSetting({
+            name: APP_SETTINGS.BACKGROUND_TOGGLE,
+            data: {
+              toggle: false,
+            }
+          });
+        }
+      }
+    }
+  }, [appSettings, isSuccess]);
+
+  const toggleDisabled = backgroundToggleSetting === null;
 
   const handleToggle = () => {
-    patchSettings({
+    /* patchSettings({
       backgroundImage: {
         name: backgroundImage?.name,
         uri: backgroundImage?.uri,
         visible: !backgroundImage?.visible,
       },
-    });
+    }); */
+
+    console.log(backgroundToggleSetting);
+
+    patchAppSetting({
+      id: backgroundToggleSetting.id,
+      data: {
+        toggle: Boolean(!backgroundToggleSetting?.data.toggle),
+      },
+    })
   };
 
   return (
@@ -56,7 +96,7 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={backgroundImage?.visible ?? false}
+            checked={backgroundToggleSetting?.data.toggle}
             onChange={handleToggle}
           />
         }

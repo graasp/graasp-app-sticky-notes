@@ -14,8 +14,11 @@ import { CanvasContext } from '../context/CanvasContext';
 import {
   APP_DATA_VISIBLITIES,
   DEFAULT_ANONYMOUS_USERNAME,
+  DEFAULT_PERMISSION,
+  PERMISSION_LEVELS,
 } from '../../config/settings';
 import { APP_SETTINGS } from '../../constants/constants';
+import { Context } from '../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -38,6 +41,8 @@ const Canvas = () => {
   const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
   const { userSetColor } = useContext(CanvasContext);
   const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(false);
+  const context = useContext(Context);
+  const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
   const {
     data: appData,
@@ -134,7 +139,7 @@ const Canvas = () => {
           <div>{t('Add a note.')}</div>
         )}
         {backgroundToggleSetting && <BackgroundImage />}
-        <Settings />
+        {(permissionLevel === PERMISSION_LEVELS.WRITE || permissionLevel === PERMISSION_LEVELS.ADMIN) && <Settings />}
         <ColorSettings />
       </div>
     </>

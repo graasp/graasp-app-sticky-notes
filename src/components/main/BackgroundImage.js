@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const BackgroundImage = () => {
-  console.info("BackgroundImage re-render");
   const classes = useStyles();
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(

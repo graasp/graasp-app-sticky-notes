@@ -56,7 +56,7 @@ const FinalViewHeader = ({ title, id, color, showActions /* , description, color
         color={color}
         showActions={showActions}
         // minimized={minimized}
-    // onChangeMinimize={onChangeMinimize}
+        // onChangeMinimize={onChangeMinimize}
       />
     </div>
   );

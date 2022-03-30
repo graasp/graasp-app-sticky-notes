@@ -58,7 +58,9 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   // when we update the position in onDragEnd, we adjust for this distance to generate the expected effect
   const onDragStart = (event) => {
     event.dataTransfer.setData('text/plain', id);
-    event.dataTransfer.dropEffect('none');
+    
+    /* eslint-disable no-param-reassign */
+    event.dataTransfer.dropEffect = 'move';
 
     const noteGrabbedX = event.pageX;
     const noteGrabbedY = event.pageY;
@@ -105,7 +107,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
     const updatedNote = {
       ...note,
       minimized: isMin,
-    };
+    };  
 
     patchAppData({
       data: updatedNote,

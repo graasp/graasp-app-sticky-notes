@@ -27,11 +27,6 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     cursor: 'cell',
-    background: '#FFFFFF',
-    // backgroundImage: `url(${vpc})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundAttachment: 'fixed',
-    backgroundPosition: 'center',
   },
 }));
 
@@ -45,7 +40,7 @@ const Canvas = () => {
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
   const [members, setMembers] = useState([]);
   const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
-  const { userSetColor, setNoteBeingEditedId } = useContext(CanvasContext);
+  const { userSetColor, noteBeingEditedId, setNoteBeingEditedId } = useContext(CanvasContext);
   const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(false);
   const context = useContext(Context);
 
@@ -95,29 +90,32 @@ const Canvas = () => {
   }, [notes]);
 
   const handleCanvasClick = (event) => {
-    // add a new note to the canvas
-    const { innerHeight, innerWidth } = window;
-    const { pageX, pageY } = event;
-    const newNote = {
-      windowDimensions: { innerHeight, innerWidth },
-      position: { pageX, pageY },
-      color: userSetColor,
-      rotation: generateRandomRotationAngle(),
-      minimized: false,
-    };
+    if(noteBeingEditedId===null) {
+      // add a new note to the canvas
+      const { innerHeight, innerWidth } = window;
+      const { pageX, pageY } = event;
+      const newNote = {
+        windowDimensions: { innerHeight, innerWidth },
+        position: { pageX, pageY },
+        color: userSetColor,
+        rotation: generateRandomRotationAngle(),
+        minimized: false,
+      };
 
-    postAppData({
-      data: newNote,
-      type: APP_DATA_TYPES.NOTE,
-      visibility: APP_DATA_VISIBLITIES.ITEM,
-    });
-    postAction({
-      type: ACTION_TYPES.ADD,
-      data: {
-        note: newNote,
-        id: newNote.id,
-      },
-    });
+      postAppData({
+        data: newNote,
+        type: APP_DATA_TYPES.NOTE,
+        visibility: APP_DATA_VISIBLITIES.ITEM,
+      });
+      setEdit(true);
+      postAction({
+        type: ACTION_TYPES.ADD,
+        data: {
+          note: newNote,
+          id: newNote.id,
+        },
+      });
+    }
   };
 
   /* The <div> element has a child <button> element that allows keyboard interaction */

@@ -1,6 +1,4 @@
 import React from 'react';
-// import { FileItem } from '@graasp/ui';
-// import { Map } from 'immutable';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
@@ -30,8 +28,6 @@ const BackgroundImage = () => {
   }
 
   const url = URL.createObjectURL(backgroundImage);
-
-  // const item = Map(backgroundSetting?.data);
 
   if (backgroundSetting.data?.extra?.file) {
     return (

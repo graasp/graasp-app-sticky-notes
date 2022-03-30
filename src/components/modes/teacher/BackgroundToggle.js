@@ -64,16 +64,6 @@ const BackgroundToggle = () => {
   const toggleDisabled = backgroundToggleSetting === null;
 
   const handleToggle = () => {
-    /* patchSettings({
-      backgroundImage: {
-        name: backgroundImage?.name,
-        uri: backgroundImage?.uri,
-        visible: !backgroundImage?.visible,
-      },
-    }); */
-
-    console.log(backgroundToggleSetting);
-
     patchAppSetting({
       id: backgroundToggleSetting.id,
       data: {
@@ -96,7 +86,7 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={backgroundToggleSetting?.data.toggle}
+            checked={backgroundToggleSetting?.data?.toggle}
             onChange={handleToggle}
           />
         }

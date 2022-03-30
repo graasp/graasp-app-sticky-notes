@@ -17,7 +17,6 @@ const {
   MUTATION_KEYS,
   HOOK_KEYS,
 } = configureQueryClient({
-  // API_HOST,
   notifier: (data) => {
     /* eslint-disable-next-line no-console */
     console.info('notifier: ', data);

@@ -12,10 +12,10 @@ export const App = () => {
   const context = useContext(Context);
 
   const renderContent = () => {
-    if(context?.get('context', ) === CONTEXTS.ANALYZER){
-      return <AnalyzerView />
+    if (context?.get('context') === CONTEXTS.ANALYZER) {
+      return <AnalyzerView />;
     }
-    
+
     switch (context?.get('permission', DEFAULT_PERMISSION)) {
       // show teacher view when in producer (educator) mode
       case PERMISSION_LEVELS.WRITE:

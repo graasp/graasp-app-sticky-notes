@@ -8,7 +8,12 @@ const useStyles = makeStyles(() => ({
   container: { display: 'flex', flexDirection: 'column' },
 }));
 
-const EditViewTextFields = ({ height, title, /* description, */ onChange, onConfirm }) => {
+const EditViewTextFields = ({
+  height,
+  title,
+  /* description, */ onChange,
+  onConfirm,
+}) => {
   const classes = useStyles();
 
   const handleTitleChange = (newTitle) => {
@@ -21,7 +26,12 @@ const EditViewTextFields = ({ height, title, /* description, */ onChange, onConf
 
   return (
     <div style={{ height }} className={classes.container}>
-      <EditViewTitle height="20%" title={title} onChange={handleTitleChange} onEnter={onConfirm} />
+      <EditViewTitle
+        height="20%"
+        title={title}
+        onChange={handleTitleChange}
+        onEnter={onConfirm}
+      />
       {/* <EditViewDescription
         height="80%"
         description={description}

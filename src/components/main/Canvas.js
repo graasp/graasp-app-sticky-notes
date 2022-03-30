@@ -33,13 +33,13 @@ const Canvas = () => {
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const [ newPageX, setNewPageX ] = useState(null);
-  const [ newPageY, setNewPageY ] = useState(null);
+  const [newPageX, setNewPageX] = useState(null);
+  const [newPageY, setNewPageY] = useState(null);
   let tmpNewPageX;
   let tmpNewPageY;
-  
+
   const { userSetColor, noteBeingEditedId } = useContext(CanvasContext);
-  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(false);
+  const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
@@ -48,15 +48,19 @@ const Canvas = () => {
   const { data: appSettings, isSuccess } = useAppSettings();
 
   useEffect(() => {
-    if(isSuccess) {
-      setBackgroundToggleSetting(Boolean(appSettings?.find(
-        ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
-      )?.data.toggle ?? false));
+    if (isSuccess) {
+      setBackgroundToggleSetting(
+        Boolean(
+          appSettings?.find(
+            ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+          )?.data.toggle ?? false,
+        ),
+      );
     }
   });
 
   const handleCanvasClick = (event) => {
-    if(noteBeingEditedId===null) {
+    if (noteBeingEditedId === null) {
       // add a new note to the canvas
       const { innerHeight, innerWidth } = window;
       const { pageX, pageY } = event;
@@ -108,7 +112,8 @@ const Canvas = () => {
         {/* <VPC emitCategory={handleCategoryChange} /> */}
         <NoteContainer edit={edit} newPageX={newPageX} newPageY={newPageY} />
         {backgroundToggleSetting && <BackgroundImage />}
-        {(permissionLevel === PERMISSION_LEVELS.WRITE || permissionLevel === PERMISSION_LEVELS.ADMIN) && <Settings />}
+        {(permissionLevel === PERMISSION_LEVELS.WRITE ||
+          permissionLevel === PERMISSION_LEVELS.ADMIN) && <Settings />}
         <ColorSettings />
       </div>
     </>

@@ -35,19 +35,21 @@ const BackgroundToggle = () => {
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
 
-  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(null);
-  
+  const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(null);
+
   const { data: appSettings, isSuccess } = useAppSettings();
 
   useEffect(() => {
-    if(isSuccess) {
+    if (isSuccess) {
       const backgroundSetting = appSettings?.find(
         ({ name }) => name === APP_SETTINGS.BACKGROUND,
       );
-      if(backgroundSetting){
-        setBackgroundToggleSetting(appSettings?.find(
-          ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
-        ));
+      if (backgroundSetting) {
+        setBackgroundToggleSetting(
+          appSettings?.find(
+            ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+          ),
+        );
       }
     }
   }, [appSettings, isSuccess]);
@@ -55,21 +57,19 @@ const BackgroundToggle = () => {
   const toggleDisabled = backgroundToggleSetting === null;
 
   const handleToggle = () => {
-    console.log(backgroundToggleSetting);
-    
-    if(backgroundToggleSetting?.id) {
+    if (backgroundToggleSetting?.id) {
       patchAppSetting({
         id: backgroundToggleSetting.id,
         data: {
           toggle: Boolean(!backgroundToggleSetting?.data.toggle),
         },
-      })
+      });
     } else {
       postAppSetting({
         name: APP_SETTINGS.BACKGROUND_TOGGLE,
         data: {
           toggle: true,
-        }
+        },
       });
     }
   };

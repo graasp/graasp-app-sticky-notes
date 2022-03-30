@@ -16,7 +16,7 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
   const [text, setText] = useState(title);
 
   const textInput = useRef(null);
-  
+
   const focusOnText = () => {
     textInput.current.focus();
   };
@@ -34,14 +34,12 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}
         value={text}
-        onChange={
-          (event) => {
-            setText(event.target.value);
-            onChange(event.target.value);
-          }
-        }
+        onChange={(event) => {
+          setText(event.target.value);
+          onChange(event.target.value);
+        }}
         onKeyDown={(e) => {
-          if(e.key === 'Enter') {
+          if (e.key === 'Enter') {
             onEnter();
           }
         }}

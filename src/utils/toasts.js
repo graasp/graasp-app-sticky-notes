@@ -4,6 +4,7 @@ import {
   FAILED_TO_FETCH_MESSAGE_RAW,
   FAILED_TO_FETCH_MESSAGE_PRETTY,
   UNEXPECTED_ERROR_MESSAGE,
+  SUCCESS_MESSAGE,
 } from '../constants/messages';
 
 const showErrorToast = (payload) => {
@@ -27,7 +28,24 @@ const showErrorToast = (payload) => {
   });
 };
 
+const showSuccessToast = (payload) => {
+  let message = SUCCESS_MESSAGE;
+  if (_.isString(payload)) {
+    message = payload;
+  } else if (_.isObject(payload)) {
+    if (payload.message) {
+      ({ message } = payload);
+    }
+  }
+
+  toast.success(message, {
+    toastId: message,
+    autoClose: true,
+    position: 'bottom-right',
+  });
+};
+
 export {
-  // eslint-disable-next-line import/prefer-default-export
   showErrorToast,
+  showSuccessToast,
 };

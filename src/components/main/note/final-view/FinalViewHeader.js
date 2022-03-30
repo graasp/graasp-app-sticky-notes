@@ -30,7 +30,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinalViewHeader = ({ title, id, color, showActions /* , description, color, id, minimized, onChangeMinimize */}) => {
+const FinalViewHeader = ({
+  title,
+  id,
+  color,
+  showActions /* , description, color, id, minimized, onChangeMinimize */,
+}) => {
   const classes = useStyles();
 
   const { setNoteBeingEditedId, setUserSetColor } = useContext(CanvasContext);
@@ -45,11 +50,16 @@ const FinalViewHeader = ({ title, id, color, showActions /* , description, color
     setUserSetColor(color);
   };
 
-  const isTitleEmpty = (title === '');
+  const isTitleEmpty = title === '';
 
   return (
     <div className={classes.header}>
-      <Typography className={isTitleEmpty? classes.placeholderTitle : classes.title} onClick={handleEdit}>{isTitleEmpty? 'Click to edit...' : title}</Typography>
+      <Typography
+        className={isTitleEmpty ? classes.placeholderTitle : classes.title}
+        onClick={handleEdit}
+      >
+        {isTitleEmpty ? 'Click to edit...' : title}
+      </Typography>
       <FinalViewActions
         id={id}
         title={title}

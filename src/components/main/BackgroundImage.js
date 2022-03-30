@@ -1,6 +1,5 @@
 import React from 'react';
-// import { FileItem } from '@graasp/ui';
-// import { Map } from 'immutable';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
@@ -10,12 +9,13 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     display: 'block',
-    backgroundSize: '100% 100%'
+    backgroundSize: '100% 100%',
   },
 }));
 
 const BackgroundImage = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
@@ -40,11 +40,11 @@ const BackgroundImage = () => {
         style={{
           backgroundImage: `url(${url})`,
         }}
-        />
+      />
     );
   }
-
-  console.error('file type is not recognised');
+  /* eslint-disable-next-line no-console */
+  console.error(t('File type is not recognised.'));
 
   return null;
 };

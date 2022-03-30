@@ -13,39 +13,39 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const VPC = ({emitCategory}) => {
+const VPC = ({ emitCategory }) => {
   const classes = useStyles();
-  
+
   return (
     <div className={classes.mainContainer}>
-        <div>
-            <Classifier category='gain_creators' emitCategory={emitCategory}>
-                <TrendingUpIcon />
-            </Classifier>
-            <Classifier category='product_services' emitCategory={emitCategory}>
-                <RoomServiceIcon />
-            </Classifier>
-            <Classifier category='pain_relievers' emitCategory={emitCategory}>
-                <HealingIcon />
-            </Classifier>
-        </div>
-        <div>
-            <Classifier category='gains' emitCategory={emitCategory}>
-                <TrendingUpIcon />
-            </Classifier>
-            <Classifier category='pains' emitCategory={emitCategory}>
-                <TrendingUpIcon />
-            </Classifier>
-            <Classifier category='customer-jobs' emitCategory={emitCategory}>
-                <TrendingUpIcon />
-            </Classifier>
-        </div>
+      <div>
+        <Classifier category="gain_creators" emitCategory={emitCategory}>
+          <TrendingUpIcon />
+        </Classifier>
+        <Classifier category="product_services" emitCategory={emitCategory}>
+          <RoomServiceIcon />
+        </Classifier>
+        <Classifier category="pain_relievers" emitCategory={emitCategory}>
+          <HealingIcon />
+        </Classifier>
+      </div>
+      <div>
+        <Classifier category="gains" emitCategory={emitCategory}>
+          <TrendingUpIcon />
+        </Classifier>
+        <Classifier category="pains" emitCategory={emitCategory}>
+          <TrendingUpIcon />
+        </Classifier>
+        <Classifier category="customer-jobs" emitCategory={emitCategory}>
+          <TrendingUpIcon />
+        </Classifier>
+      </div>
     </div>
   );
 };
 
 VPC.propTypes = {
-    emitCategory: PropTypes.func.isRequired,
-}
+  emitCategory: PropTypes.func.isRequired,
+};
 
 export default VPC;

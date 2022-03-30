@@ -24,13 +24,16 @@ const useStyles = makeStyles(() => ({
   noteActionHidden: {
     ...noteAction,
     visibility: 'hidden',
-  }
+  },
 }));
 
-const FinalViewActions = ({ id, showActions /* , minimized, onChangeMinimize */}) => {
+const FinalViewActions = ({
+  id,
+  showActions /* , minimized, onChangeMinimize */,
+}) => {
   const classes = useStyles();
   // const { setNoteBeingEditedId } = useContext(CanvasContext);
-  
+
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
@@ -69,7 +72,10 @@ const FinalViewActions = ({ id, showActions /* , minimized, onChangeMinimize */}
         <MinimizeIcon className={classes.noteAction} onClick={handleMinimize} />
       ) */}
       {/* <EditIcon className={classes.noteAction} onClick={handleEdit} /> */}
-      <DeleteIcon className={showActions ? classes.noteAction : classes.noteActionHidden} onClick={handleDelete} />
+      <DeleteIcon
+        className={showActions ? classes.noteAction : classes.noteActionHidden}
+        onClick={handleDelete}
+      />
     </div>
   );
 };

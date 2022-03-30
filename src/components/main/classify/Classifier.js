@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 // import { useTranslation } from 'react-i18next';
 import './classifier.css';
 
-
 const useStyles = makeStyles(() => ({
   mainContainer: {
     display: 'flex',
@@ -20,28 +19,29 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Classifier = ({category, emitCategory, children}) => {
+const Classifier = ({ category, emitCategory, children }) => {
   const classes = useStyles();
-  const tag = "TAG";
+  const tag = 'TAG';
   const [/* isOver, */ setIsOver] = useState(false);
 
   const handleDragEnter = (e) => {
     console.log(e, tag);
-    const id = e.dataTransfer.getData("text/plain");
+    const id = e.dataTransfer.getData('text/plain');
     console.log(id, category);
     setIsOver(true);
     emitCategory(id, category);
-  }
+  };
 
   return (
-    <div className={classes.mainContainer}
-    onDragEnter={handleDragEnter}
-    onDragLeave={() => {
-      setIsOver(false);
-    }}
-    onDrop={(e) => {
-      e.preventDefault();
-    }}
+    <div
+      className={classes.mainContainer}
+      onDragEnter={handleDragEnter}
+      onDragLeave={() => {
+        setIsOver(false);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+      }}
     >
       {/* <MoodIcon className={isOver && "iconOnOver"} /> */}
       {children}
@@ -57,6 +57,6 @@ Classifier.propTypes = {
 
 Classifier.defaultProps = {
   children: null,
-}
+};
 
 export default Classifier;

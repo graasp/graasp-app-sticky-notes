@@ -33,7 +33,7 @@ const NoteEditView = ({ note, id }) => {
   const [description, setDescription] = useState(note.description);
   const [color, setColor] = useState(note.color);
 
-  const { setNoteBeingEditedId, userSetColor} = useContext(CanvasContext);
+  const { setNoteBeingEditedId, userSetColor } = useContext(CanvasContext);
 
   useEffect(() => {
     setColor(userSetColor);
@@ -93,7 +93,13 @@ const NoteEditView = ({ note, id }) => {
           background: color,
         }}
       >
-        <EditViewTextFields height="65%" title={title} description={description} onChange={handleChangeText} onConfirm={handleConfirm} />
+        <EditViewTextFields
+          height="65%"
+          title={title}
+          description={description}
+          onChange={handleChangeText}
+          onConfirm={handleConfirm}
+        />
         {/* <EditViewColorPalette height="20%" color={color} onChange={handleChangeColor} /> */}
         {/* <EditViewActions height="15%" note={note} id={id} onConfirm={handleConfirm} onCancel={handleCancel} /> */}
       </div>

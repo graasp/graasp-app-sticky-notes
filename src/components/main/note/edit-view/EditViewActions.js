@@ -24,10 +24,6 @@ const useStyles = makeStyles(() => ({
 const EditViewActions = ({ height, onConfirm, onCancel }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
-  /* const { title, description, color } = useSelector(
-    ({ canvas }) => canvas.noteBeingEdited.data,
-  ); */
 
   return (
     <div className={classes.iconContainer} style={{ height }}>

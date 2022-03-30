@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
-import EditViewColorPalette from './EditViewColorPalette';
-import EditViewActions from './EditViewActions';
+// import EditViewColorPalette from './EditViewColorPalette';
+// import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
-import CanvasContext from '../../../context/CanvasContext';
+import { CanvasContext } from '../../../context/CanvasContext';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
@@ -31,9 +29,9 @@ const NoteEditView = ({ note, id }) => {
   const { windowDimensions, position } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
-  const [ title, setTitle ] = useState(note.title);
-  const [ description, setDescription ] = useState(note.description);
-  const [ color, setColor ] = useState(note.color);
+  const [title, setTitle] = useState(note.title);
+  const [description, setDescription] = useState(note.description);
+  const [color, setColor] = useState(note.color);
 
   const { setNoteBeingEditedId, userSetColor} = useContext(CanvasContext);
 
@@ -44,18 +42,18 @@ const NoteEditView = ({ note, id }) => {
   const handleChangeText = (newTitle, newDescription) => {
     setDescription(newDescription);
     setTitle(newTitle);
-  }
+  };
 
-  const handleChangeColor = (newColor) => {
-    setColor(newColor);
-  }
+  // const handleChangeColor = (newColor) => {
+  //   setColor(newColor);
+  // };
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const handleCancel = () => {
-    setNoteBeingEditedId(null);
-  };
+  // const handleCancel = () => {
+  //   setNoteBeingEditedId(null);
+  // };
 
   const saveNote = () => {
     const updatedNote = {
@@ -83,21 +81,9 @@ const NoteEditView = ({ note, id }) => {
     setNoteBeingEditedId(null);
   };
 
-  /* useEffect(() => function cleanup() {
-      console.log("Cleanup. NoteBeingEditedId = ", noteBeingEditedId);
-      if(noteBeingEditedId === id) {
-        console.log("Cleaning and saving note.");
-        saveNote();
-      }
-    }, [noteBeingEditedId]); */
-  
-  /* useEffect(() => function cleanup() {
-    console.log("Title: ", title, " - Description: ", description);
-  }, [noteBeingEditedId]); */
-
   return (
     <>
-      { /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.form}
         onClick={(event) => event.stopPropagation()}

@@ -6,6 +6,7 @@ import FinalViewHeader from './FinalViewHeader';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -84,18 +85,18 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           pageY: finalPageY,
         },
       },
-      _id: id,
+      id,
     };
 
     patchAppData({
       data: updatedNote.data,
-      id: updatedNote._id,
+      id: updatedNote.id,
     });
     postAction({
       type: ACTION_TYPES.MOVE,
       data: {
         note: updatedNote.data,
-        id: updatedNote._id,
+        id: updatedNote.id,
       },
     });
   };
@@ -159,7 +160,7 @@ NoteFinalView.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string, // .isRequired,
+    color: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
@@ -177,7 +178,7 @@ NoteFinalView.propTypes = {
 };
 
 NoteFinalView.defaultProps = {
-  userName: 'Anonymous', // TODO: Move to cst
+  userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
 };

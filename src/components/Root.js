@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactGa from 'react-ga';
 import { I18nextProvider } from 'react-i18next';
 import {
   MuiThemeProvider,
   createTheme,
   makeStyles,
-  withStyles
 } from '@material-ui/core/styles';
 import { ToastContainer } from 'react-toastify';
 import pink from '@material-ui/core/colors/pink';
@@ -46,13 +44,6 @@ const useStyles = makeStyles({
   },
 });
 
-/* const styles = {
-  root: {
-    flexGrow: 1,
-    height: '100%',
-  },
-}; */
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -82,7 +73,7 @@ const Root = () => {
     <div className={classes.root}>
       <MuiThemeProvider theme={theme}>
         <I18nextProvider i18n={i18nConfig}>
-          <QueryClientProvider client={queryClient}>  
+          <QueryClientProvider client={queryClient}>
             <ContextProvider>
               <App />
             </ContextProvider>
@@ -97,12 +88,4 @@ const Root = () => {
   );
 };
 
-Root.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string,
-  }).isRequired,
-};
-
-const StyledComponent = withStyles(useStyles)(Root);
-
-export default StyledComponent;
+export default Root;

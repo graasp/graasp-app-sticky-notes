@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
-import CanvasContext from '../../context/CanvasContext';
+import { CanvasContext } from '../../context/CanvasContext';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 
 const Note = ({ note, id, userName, newPageX, newPageY }) => {
-
   const { noteBeingEditedId } = useContext(CanvasContext);
 
   return noteBeingEditedId === id ? (
@@ -31,7 +31,7 @@ Note.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string, // .isRequired,
+    color: PropTypes.string,
     title: PropTypes.string,
     rotation: PropTypes.number.isRequired,
   }).isRequired,
@@ -46,13 +46,9 @@ Note.propTypes = {
 };
 
 Note.defaultProps = {
-  userName: 'Anonymous', // TODO: Move to constant and internationalize
+  userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
 };
-
-/* note.defaultProps = {
-  color: '#DFD59F',
-}; */
 
 export default Note;

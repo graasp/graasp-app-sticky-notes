@@ -13,7 +13,11 @@ const ContextProvider = ({ children }) => {
   const { itemId } = qs.parse(window.location.search, {
     ignoreQueryPrefix: true,
   });
-  const { data: context, isLoading, isError } = hooks.useGetLocalContext(itemId);
+  const {
+    data: context,
+    isLoading,
+    isError,
+  } = hooks.useGetLocalContext(itemId);
 
   useEffect(() => {
     // handle a change of language

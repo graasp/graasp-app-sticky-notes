@@ -1,15 +1,19 @@
-/* eslint-disable no-console */ // TODO: remove
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
+import Button from '@material-ui/core/Button';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
-import configureUppy from '../../../utils/uppy';
-import { DEFAULT_BACKGROUND_IMAGE, MAX_FILE_SIZE } from '../../../config/settings';
+import Loader from '../../common/Loader';
 import { Context } from '../../context/ContextContext';
+import configureUppy from '../../../utils/uppy';
+import { MAX_FILE_SIZE } from '../../../config/settings';
+import { TokenContext } from '../../context/TokenContext';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { useAppSettings } from '../../context/appData';
+import { APP_SETTINGS } from '../../../constants/constants';
 
 const useStyles = makeStyles((theme) => ({
   '@keyframes blinker': {
@@ -47,71 +51,79 @@ const useStyles = makeStyles((theme) => ({
 const ImageUpload = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { apiHost, itemId, token, settings } = useContext(Context);
-  /* eslint-disable-next-line no-unused-vars */
-  const currentBackgroundImage = settings?.backgroundImage ?? DEFAULT_BACKGROUND_IMAGE;
-  // const imageToBeUploaded = useSelector(({ uppy }) => uppy.addedImage);
-  const { mutate: patchSettings } = useMutation(MUTATION_KEYS.PATCH_SETTINGS);
+  const [uppy, setUppy] = useState(null);
+  const context = useContext(Context);
+  const token = useContext(TokenContext);
+  const itemId = context?.get('itemId');
+  const { mutate: deleteAppSetting } = useMutation(
+    MUTATION_KEYS.DELETE_APP_SETTING,
+  );
+  const { mutate: onFileUploadComplete } = useMutation(
+    MUTATION_KEYS.APP_SETTING_FILE_UPLOAD,
+  );
 
-    /*
-    {
-    t,
-    offline,
-    standalone,
-    spaceId,
-    userId,
-    appInstanceId,
-    patchAppInstance,
-    currentImageUri,
+  // current background
+  const { data: appSettings } = useAppSettings();
+  const backgroundSetting = appSettings?.find(
+    ({ name }) => name === APP_SETTINGS.BACKGROUND,
+  );
+
+  useEffect(() => {
+    setUppy(
+      configureUppy({
+        t,
+        offline: context?.get('offline'),
+        standalone: context?.get('standalone'),
+        itemId,
+        apiHost: context?.get('apiHost'),
+        token,
+        onComplete: (result) => {
+          onFileUploadComplete({
+            id: itemId,
+            data: result.successful
+              ?.map(({ response }) => response?.body?.[0])
+              .filter(Boolean),
+          });
+        },
+      }),
+    );
+  }, [context]);
+
+  if (!uppy) {
+    return <Loader />;
   }
-    */
-  const saveBackgroundImage = () => {
-    patchSettings({
-      backgroundImage: {
-        ...currentBackgroundImage
-      }
-    })
+
+  const deleteBackground = () => {
+    deleteAppSetting({ id: backgroundSetting.id });
   };
 
-  const handleComplete = (result) => {
-    const { successful } = result;
-    if(!successful.isEmpty) {
-      const image = successful.pop();
-      const { name, uploadURL } = image;
-      currentBackgroundImage.name = name;
-      currentBackgroundImage.uri = uploadURL;
-      saveBackgroundImage();
+  const renderInput = () => {
+    // if image is already set, show delete button
+    if (backgroundSetting) {
+      return (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={deleteBackground}
+          className={classes.closeButton}
+        >
+          {t('Delete Background')}
+        </Button>
+      );
     }
 
-    console.log("Upload complete at ", currentBackgroundImage.uri);
-  }
-
-  const handleProgress = (progress) => {
-    console.log("Upload: ", progress, "%");
-  }
-
-  const handleFileAdded = (file) => {
-    console.log("File added: ", file.name);
-  }
-
-  const handleError = (error) => {
-    console.error(error.stack);
-  }
-
-  const handleUpload = () => {
-    console.log("File uploading.");
-  }
-
-  const uppyInstance = configureUppy({
-    apiHost,
-    itemId,
-    token,
-    onComplete: handleComplete,
-    onProgress: handleProgress,
-    onFileAdded: handleFileAdded,
-    onError: handleError,
-    onUpload: handleUpload,
-  });
+    // render input
+    return (
+      <FileInput
+        uppy={uppy}
+        locale={{
+          strings: {
+            chooseFiles: t('Browse Your Computer'),
+          },
+        }}
+      />
+    );
+  };
 
   return (
     <div>
@@ -127,20 +139,8 @@ const ImageUpload = () => {
             {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
           </Typography>
         </div>
-        <FileInput
-          uppy={uppyInstance}
-          locale={{
-            strings: {
-              chooseFiles: t('Browse Your Computer'),
-            },
-          }}
-        />
+        {renderInput()}
       </div>
-      {/* imageToBeUploaded.name && (
-        <Typography variant="caption" className={classes.uploadingText}>
-          {t(`Uploading ${imageToBeUploaded.name}...`)}
-        </Typography>
-      ) */}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import CanvasContext from '../../../context/CanvasContext';
+import { CanvasContext } from '../../../context/CanvasContext';
 import FinalViewActions from './FinalViewActions';
 
 const titleStyle = {

@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     textAlign: 'center',
     flex: 1,

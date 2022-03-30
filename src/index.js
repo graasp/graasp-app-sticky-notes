@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-import-module-exports */
 import React from 'react';
 import { render } from 'react-dom';
 import { mockServer, buildMockLocalContext } from '@graasp/apps-query-client';
 import Root from './components/Root';
 import './index.css';
-import buildDatabase, { mockContext }  from './data/db';
+import buildDatabase, { mockContext } from './data/db';
 import { MOCK_API } from './config/settings';
 
 if (MOCK_API) {
@@ -23,7 +22,7 @@ if (MOCK_API) {
 
 const root = document.getElementById('root');
 
-const renderApp = RootComponent => {
+const renderApp = (RootComponent) => {
   render(<RootComponent />, root);
 };
 

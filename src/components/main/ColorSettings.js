@@ -73,6 +73,12 @@ const ColorSettings = () => {
                   event.stopPropagation();
                   setUserSetColor(color);
                 }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.stopPropagation();
+                    setUserSetColor(color);
+                  }
+                }}
               />
             </>
           ))}

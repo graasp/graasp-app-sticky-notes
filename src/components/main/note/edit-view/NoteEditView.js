@@ -86,7 +86,6 @@ const NoteEditView = ({ note, id }) => {
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.form}
-        onClick={(event) => event.stopPropagation()}
         style={{
           top: `${(pageY / innerHeight) * 100}%`,
           left: `${(pageX / innerWidth) * 100}%`,

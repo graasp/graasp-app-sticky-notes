@@ -59,11 +59,11 @@ const Canvas = () => {
     }
   });
 
-  const handleCanvasClick = (event) => {
+  const createNewNote = (pageX, pageY) => {
     if (noteBeingEditedId === null) {
       // add a new note to the canvas
       const { innerHeight, innerWidth } = window;
-      const { pageX, pageY } = event;
+
       const newNote = {
         windowDimensions: { innerHeight, innerWidth },
         position: { pageX, pageY },
@@ -88,7 +88,13 @@ const Canvas = () => {
     }
   };
 
+  const handleCanvasClick = (event) => {
+    const { pageX, pageY } = event;
+    createNewNote(pageX, pageY);
+  };
+
   /* The <div> element has a child <button> element that allows keyboard interaction */
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}

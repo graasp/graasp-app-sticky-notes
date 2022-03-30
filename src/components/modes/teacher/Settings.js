@@ -61,6 +61,8 @@ const Settings = () => {
     setModalOpen(false);
   };
 
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
+  /* The click event is used only to prevent its propagation to the canvas. */
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}

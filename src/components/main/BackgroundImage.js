@@ -20,7 +20,7 @@ const BackgroundImage = () => {
   );
   const { data: backgroundImage } = useAppSettingFile(
     backgroundSetting?.id,
-    Boolean(backgroundSetting),
+    Boolean(backgroundSetting?.data?.extra?.file),
   );
 
   if (!backgroundSetting || !backgroundImage) {
@@ -29,20 +29,14 @@ const BackgroundImage = () => {
 
   const url = URL.createObjectURL(backgroundImage);
 
-  if (backgroundSetting.data?.extra?.file) {
-    return (
-      <div
-        className={classes.image}
-        style={{
-          backgroundImage: `url(${url})`,
-        }}
-        />
-    );
-  }
-
-  console.error('file type is not recognised');
-
-  return null;
+  return (
+    <div
+      className={classes.image}
+      style={{
+        backgroundImage: `url(${url})`,
+      }}
+      />
+  );
 };
 
 export default BackgroundImage;

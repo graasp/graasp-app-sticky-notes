@@ -18,6 +18,7 @@ import { ContextProvider } from './context/ContextContext';
 import {
   queryClient,
   QueryClientProvider,
+  ReactQueryDevtools,
 } from '../config/queryClient';
 
 import {
@@ -74,6 +75,9 @@ const Root = () => {
             <ContextProvider>
               <App />
             </ContextProvider>
+            {process.env.NODE_ENV === 'development' && (
+              <ReactQueryDevtools initialIsOpen />
+            )}
           </QueryClientProvider>
           <ToastContainer />
         </I18nextProvider>

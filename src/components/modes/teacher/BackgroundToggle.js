@@ -47,16 +47,12 @@ const BackgroundToggle = () => {
       if(backgroundSetting){
         setBackgroundToggleSetting(appSettings?.find(
           ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
-        ));
-
-        if(backgroundToggleSetting === null) {
-          postAppSetting({
-            name: APP_SETTINGS.BACKGROUND_TOGGLE,
-            data: {
-              toggle: false,
-            }
-          });
-        }
+        ) || {
+          name: APP_SETTINGS.BACKGROUND_TOGGLE,
+          data: {
+            toggle: false,
+          }
+        });
       }
     }
   }, [appSettings, isSuccess]);
@@ -64,12 +60,17 @@ const BackgroundToggle = () => {
   const toggleDisabled = backgroundToggleSetting === null;
 
   const handleToggle = () => {
-    patchAppSetting({
-      id: backgroundToggleSetting.id,
+    const newBackgroundToggleSetting = {
+      ...backgroundToggleSetting,
       data: {
-        toggle: Boolean(!backgroundToggleSetting?.data.toggle),
+        toggle: Boolean(!backgroundToggleSetting?.data?.toggle),
       },
-    })
+    };
+    if(backgroundToggleSetting?.id) {
+      patchAppSetting(newBackgroundToggleSetting);
+    } else {
+      postAppSetting(newBackgroundToggleSetting);
+    }
   };
 
   return (
@@ -86,7 +87,7 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={backgroundToggleSetting?.data?.toggle}
+            checked={backgroundToggleSetting?.data?.toggle || false}
             onChange={handleToggle}
           />
         }

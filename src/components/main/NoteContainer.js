@@ -11,7 +11,7 @@ const NoteContainer = ({ edit, newPageX, newPageY }) => {
   const { t } = useTranslation();
   const [members, setMembers] = useState([]);
   const [notes, setNotes] = useState(null);
-  const [editFlag, setEditFlag] = useState(edit);
+  let editFlag = edit;
   const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
@@ -42,7 +42,7 @@ const NoteContainer = ({ edit, newPageX, newPageY }) => {
   useEffect(() => {
     if (editFlag && !notes?.isEmpty() && isAppDataStale) {
       setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
-      setEditFlag(false);
+      editFlag = false;
     }
   }, [notes]);
 

@@ -43,7 +43,7 @@ const Canvas = () => {
   const context = useContext(Context);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit ] = useState(false);
 
   const { data: appSettings, isSuccess } = useAppSettings();
 

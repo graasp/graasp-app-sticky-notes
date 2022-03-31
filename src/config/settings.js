@@ -3,21 +3,7 @@ import { REACT_APP_MOCK_API } from './env';
 
 export const DEFAULT_LANG = 'en';
 
-const LOCAL_API_HOST = 'localhost:3000';
-
-// TODO: Test.
-// avoid breaking the app in production when embedded in different contexts
-let defaultApiHost;
-try {
-  defaultApiHost =
-    window.parent.location.hostname === 'localhost' ? LOCAL_API_HOST : null;
-} catch (e) {
-  /* eslint-disable-next-line no-console */
-  console.error(e);
-  defaultApiHost = null;
-}
-
-export const DEFAULT_API_HOST = defaultApiHost;
+export const DEFAULT_API_HOST = 'localhost:3000';
 
 export const PERMISSION_LEVELS = {
   WRITE: 'write',
@@ -49,7 +35,8 @@ export const DEFAULT_LOCAL_CONTEXT = {
 
 export const APP_DATA_VISIBLITIES = {
   ITEM: 'item',
-  PUBLIC: 'public',
 };
+
+export const DEFAULT_BACKGROUND_ENABLED = false;
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';

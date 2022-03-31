@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
 import { useAppSettings } from '../../context/appData';
+import { DEFAULT_BACKGROUND_ENABLED } from '../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -23,6 +24,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const DEFAULT_BACKGROUND_TOGGLE = {
+  name: APP_SETTINGS.BACKGROUND_TOGGLE,
+  data: {
+    toggle: DEFAULT_BACKGROUND_ENABLED,
+  }
+};
+
 const BackgroundToggle = () => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -35,42 +43,36 @@ const BackgroundToggle = () => {
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
 
-  const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(null);
-
-  const { data: appSettings, isSuccess } = useAppSettings();
+  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(null);
+  
+  const { data: appSettings, isSuccess, isLoading } = useAppSettings();
 
   useEffect(() => {
     if (isSuccess) {
       const backgroundSetting = appSettings?.find(
         ({ name }) => name === APP_SETTINGS.BACKGROUND,
       );
-      if (backgroundSetting) {
-        setBackgroundToggleSetting(
-          appSettings?.find(
-            ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
-          ),
-        );
+      if(backgroundSetting){
+        setBackgroundToggleSetting(appSettings?.find(
+          ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+        ) || DEFAULT_BACKGROUND_TOGGLE);
       }
     }
   }, [appSettings, isSuccess]);
 
-  const toggleDisabled = backgroundToggleSetting === null;
+  const toggleDisabled = isLoading || (backgroundToggleSetting === null);
 
   const handleToggle = () => {
-    if (backgroundToggleSetting?.id) {
-      patchAppSetting({
-        id: backgroundToggleSetting.id,
-        data: {
-          toggle: Boolean(!backgroundToggleSetting?.data.toggle),
-        },
-      });
+    const newBackgroundToggleSetting = {
+      ...(backgroundToggleSetting ?? DEFAULT_BACKGROUND_TOGGLE),
+      data: {
+        toggle: Boolean(!backgroundToggleSetting?.data?.toggle),
+      },
+    };
+    if(backgroundToggleSetting?.id) {
+      patchAppSetting(newBackgroundToggleSetting);
     } else {
-      postAppSetting({
-        name: APP_SETTINGS.BACKGROUND_TOGGLE,
-        data: {
-          toggle: true,
-        },
-      });
+      postAppSetting(newBackgroundToggleSetting);
     }
   };
 
@@ -88,7 +90,7 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={Boolean(backgroundToggleSetting?.data.toggle)}
+            checked={backgroundToggleSetting?.data?.toggle || DEFAULT_BACKGROUND_ENABLED}
             onChange={handleToggle}
           />
         }

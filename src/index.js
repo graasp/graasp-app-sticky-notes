@@ -14,8 +14,7 @@ if (MOCK_API) {
     searchParams.set('itemId', appContext.itemId);
     window.location.search = searchParams.toString();
   }
-  // const database = window.Cypress ? window.database : buildDatabase(appContext);
-  const database = buildDatabase(appContext);
+  const database = window.Cypress ? window.database : buildDatabase(appContext);
   const errors = window.apiErrors;
   mockServer({ database, appContext, errors });
 }

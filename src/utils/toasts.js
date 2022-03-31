@@ -6,7 +6,7 @@ import {
   UNEXPECTED_ERROR_MESSAGE,
 } from '../constants/messages';
 
-const showErrorToast = payload => {
+const showErrorToast = (payload) => {
   let message = UNEXPECTED_ERROR_MESSAGE;
   if (_.isString(payload)) {
     message = payload;

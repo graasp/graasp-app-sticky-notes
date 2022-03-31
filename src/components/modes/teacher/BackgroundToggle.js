@@ -1,11 +1,13 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { patchAppInstance } from '../../../actions';
+import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { APP_SETTINGS } from '../../../constants/constants';
+import { useAppSettings } from '../../context/appData';
+import { DEFAULT_BACKGROUND_ENABLED } from '../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -22,29 +24,56 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const DEFAULT_BACKGROUND_TOGGLE = {
+  name: APP_SETTINGS.BACKGROUND_TOGGLE,
+  data: {
+    toggle: DEFAULT_BACKGROUND_ENABLED,
+  }
+};
+
 const BackgroundToggle = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
-  const { backgroundImage } = useSelector(
-    ({ appInstance }) => appInstance.content.settings,
+  const { mutate: postAppSetting } = useMutation(
+    MUTATION_KEYS.POST_APP_SETTING,
   );
 
-  const toggleDisabled = !backgroundImage?.uri;
+  const { mutate: patchAppSetting } = useMutation(
+    MUTATION_KEYS.PATCH_APP_SETTING,
+  );
+
+  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(null);
+  
+  const { data: appSettings, isSuccess, isLoading } = useAppSettings();
+
+  useEffect(() => {
+    if(isSuccess) {
+      const backgroundSetting = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND,
+      );
+      if(backgroundSetting){
+        setBackgroundToggleSetting(appSettings?.find(
+          ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+        ) || DEFAULT_BACKGROUND_TOGGLE);
+      }
+    }
+  }, [appSettings, isSuccess]);
+
+  const toggleDisabled = isLoading || (backgroundToggleSetting === null);
 
   const handleToggle = () => {
-    dispatch(
-      patchAppInstance({
-        data: {
-          backgroundImage: {
-            name: backgroundImage.name,
-            uri: backgroundImage.uri,
-            visible: !backgroundImage.visible,
-          },
-        },
-      }),
-    );
+    const newBackgroundToggleSetting = {
+      ...(backgroundToggleSetting ?? DEFAULT_BACKGROUND_TOGGLE),
+      data: {
+        toggle: Boolean(!backgroundToggleSetting?.data?.toggle),
+      },
+    };
+    if(backgroundToggleSetting?.id) {
+      patchAppSetting(newBackgroundToggleSetting);
+    } else {
+      postAppSetting(newBackgroundToggleSetting);
+    }
   };
 
   return (
@@ -61,7 +90,7 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={backgroundImage?.visible ?? false}
+            checked={backgroundToggleSetting?.data?.toggle || DEFAULT_BACKGROUND_ENABLED}
             onChange={handleToggle}
           />
         }

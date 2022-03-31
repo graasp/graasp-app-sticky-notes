@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
 import FinalViewDescription from './FinalViewDescription';
 import FinalViewFooter from './FinalViewFooter';
-import {
-  patchAppInstanceResource,
-  updateNotePosition,
-} from '../../../../actions';
+import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
+import { ACTION_TYPES } from '../../../../config/actionTypes';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -23,9 +21,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
+const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   // destructure note properties
   const {
     windowDimensions,
@@ -46,6 +43,9 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
   // (see the note above onDragStart below for further details)
   const [grabDeltaX, setGrabDeltaX] = useState(0);
   const [grabDeltaY, setGrabDeltaY] = useState(0);
+
+  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   // default drag behavior is: (1) you grab div (the sticky note) in e.g. bottom right and begin dragging it,
   // (2) the point where you drop it becomes the *top left* of the div.
@@ -78,39 +78,68 @@ const NoteFinalView = ({ note, id, userId, newPageX, newPageY }) => {
           pageY: finalPageY,
         },
       },
-      _id: id,
+      id,
     };
-    dispatch(patchAppInstanceResource({ id, data: updatedNote.data }));
-    dispatch(updateNotePosition(updatedNote));
+
+    patchAppData({
+      data: updatedNote.data,
+      id: updatedNote.id,
+    });
+    postAction({
+      type: ACTION_TYPES.MOVE,
+      data: {
+        note: updatedNote.data,
+        id: updatedNote.id,
+      },
+    });
+  };
+
+  const handleChangeMinimize = (isMin) => {
+    const updatedNote = {
+      ...note,
+      minimized: isMin,
+    };
+
+    patchAppData({
+      data: updatedNote,
+      id,
+    });
   };
 
   return (
-    <div
-      className={classes.noteContainer}
-      onClick={(event) => event.stopPropagation()}
-      onMouseOver={() => setShowActions(true)}
-      onMouseLeave={() => setShowActions(false)}
-      style={{
-        top: `${(pageY / innerHeight) * 100}%`,
-        left: `${(pageX / innerWidth) * 100}%`,
-        background: color,
-        transform: `rotate(${rotation}deg)`,
-        height: `${minimized ? '10%' : '20%'}`,
-      }}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      draggable
-    >
-      <FinalViewHeader
-        title={title}
-        description={description}
-        color={color}
-        showActions={showActions}
-        id={id}
-      />
-      {!minimized && <FinalViewDescription description={description} />}
-      <FinalViewFooter id={id} userId={userId} />
-    </div>
+    <>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      <div
+        className={classes.noteContainer}
+        onClick={(event) => event.stopPropagation()}
+        onMouseOver={() => setShowActions(true)}
+        onMouseLeave={() => setShowActions(false)}
+        onFocus={() => setShowActions(true)}
+        onBlur={() => setShowActions(false)}
+        style={{
+          top: `${(pageY / innerHeight) * 100}%`,
+          left: `${(pageX / innerWidth) * 100}%`,
+          background: color,
+          transform: `rotate(${rotation}deg)`,
+          height: `${minimized ? '10%' : '20%'}`,
+        }}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        draggable
+      >
+        <FinalViewHeader
+          title={title}
+          description={description}
+          color={color}
+          showActions={showActions}
+          minimized={minimized}
+          id={id}
+          onChangeMinimize={handleChangeMinimize}
+        />
+        {!minimized && <FinalViewDescription description={description} />}
+        {!minimized && <FinalViewFooter id={id} userName={userName} />}
+      </div>
+    </>
   );
 };
 
@@ -124,7 +153,7 @@ NoteFinalView.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
@@ -135,13 +164,13 @@ NoteFinalView.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  userId: PropTypes.string,
+  userName: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
 };
 
 NoteFinalView.defaultProps = {
-  userId: null,
+  userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
 };

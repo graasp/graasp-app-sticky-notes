@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FinalViewActions from './FinalViewActions';
+import { DEFAULT_NOTE_COLOR } from '../../../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -13,11 +14,19 @@ const useStyles = makeStyles(() => ({
   title: {
     fontSize: '1.1vw',
     fontWeight: 600,
-    overflowWrap: 'anywhere'
+    overflowWrap: 'anywhere',
   },
 }));
 
-const FinalViewHeader = ({ title, description, color, showActions, id }) => {
+const FinalViewHeader = ({
+  title,
+  description,
+  color,
+  showActions,
+  id,
+  minimized,
+  onChangeMinimize,
+}) => {
   const classes = useStyles();
 
   return (
@@ -29,6 +38,8 @@ const FinalViewHeader = ({ title, description, color, showActions, id }) => {
           description={description}
           title={title}
           color={color}
+          minimized={minimized}
+          onChangeMinimize={onChangeMinimize}
         />
       )}
     </div>
@@ -38,8 +49,10 @@ const FinalViewHeader = ({ title, description, color, showActions, id }) => {
 FinalViewHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
   showActions: PropTypes.bool.isRequired,
+  minimized: PropTypes.bool.isRequired,
+  onChangeMinimize: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,
@@ -50,6 +63,7 @@ FinalViewHeader.propTypes = {
 FinalViewHeader.defaultProps = {
   title: '',
   description: '',
+  color: DEFAULT_NOTE_COLOR,
 };
 
 export default FinalViewHeader;

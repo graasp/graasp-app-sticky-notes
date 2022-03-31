@@ -1,19 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
+import { CanvasContext } from '../../context/CanvasContext';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 
-const Note = ({ note, id, userId, newPageX, newPageY }) => {
-  const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
+const Note = ({ note, id, userName, newPageX, newPageY }) => {
+  const { noteBeingEditedId } = useContext(CanvasContext);
 
-  return noteBeingEdited._id === id ? (
+  return noteBeingEditedId === id ? (
     <NoteEditView note={note} id={id} />
   ) : (
     <NoteFinalView
       note={note}
       id={id}
-      userId={userId}
+      userName={userName}
       newPageX={newPageX}
       newPageY={newPageY}
     />
@@ -30,7 +31,7 @@ Note.propTypes = {
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
     }),
-    color: PropTypes.string.isRequired,
+    color: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
@@ -40,13 +41,13 @@ Note.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  userId: PropTypes.string,
+  userName: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
 };
 
 Note.defaultProps = {
-  userId: null,
+  userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
 };

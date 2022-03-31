@@ -22,9 +22,6 @@ yarn-error.log*
 # exclude webstorm and idea files
 .idea
 
-# exclude cypress
-cypress
-
 # exclude environment variables
 .env*
 
@@ -38,5 +35,10 @@ cypress
 /coverage
 .nyc_output
 
-# exclude local database
-db.json
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

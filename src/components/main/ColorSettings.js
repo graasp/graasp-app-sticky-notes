@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -7,7 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { AVAILABLE_COLORS } from '../../constants/constants';
-import { setUserNoteColor } from '../../actions';
+import { CanvasContext } from '../context/CanvasContext';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -38,9 +37,8 @@ const useStyles = makeStyles((theme) => ({
 const ColorSettings = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const { userSetColor, setUserSetColor } = useContext(CanvasContext);
   const [colorPaletteOpen, setColorPaletteOpen] = useState(false);
-  const userSetColor = useSelector(({ canvas }) => canvas.userSetColor);
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -62,18 +60,21 @@ const ColorSettings = () => {
       {colorPaletteOpen && (
         <div className={classes.colorSettingsContainer}>
           {AVAILABLE_COLORS.map((color) => (
-            <div
-              style={{
-                background: color,
-                border: userSetColor === color && '1px solid grey',
-              }}
-              className={classes.color}
-              key={color}
-              onClick={(event) => {
-                event.stopPropagation();
-                dispatch(setUserNoteColor(color));
-              }}
-            />
+            <>
+              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+              <div
+                style={{
+                  background: color,
+                  border: userSetColor === color && '1px solid grey',
+                }}
+                className={classes.color}
+                key={color}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setUserSetColor(color);
+                }}
+              />
+            </>
           ))}
         </div>
       )}

@@ -1,16 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
-import {
-  clearNoteBeingEdited,
-  patchAppInstanceResource,
-  updateNote,
-} from '../../../../actions';
 
 const useStyles = makeStyles(() => ({
   iconContainer: {
@@ -27,41 +21,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const EditViewActions = ({ height, note, id }) => {
+const EditViewActions = ({ height, onConfirm, onCancel }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { title, description, color } = useSelector(
-    ({ canvas }) => canvas.noteBeingEdited.data,
-  );
-
-  const handleCancel = () => {
-    dispatch(clearNoteBeingEdited());
-  };
-
-  const handleConfirm = () => {
-    const updatedNote = {
-      ...note,
-      title,
-      description,
-      color,
-    };
-    
-    // dispatch for standalone cases
-    dispatch(updateNote({ data: updatedNote, _id: id }));
-    // dispatch for non-standalone cases
-    dispatch(patchAppInstanceResource({ id, data: updatedNote }));
-
-    dispatch(clearNoteBeingEdited());
-  };
 
   return (
     <div className={classes.iconContainer} style={{ height }}>
       <Tooltip title={t('Cancel')}>
-        <ClearIcon className={classes.formIcon} onClick={handleCancel} />
+        <ClearIcon className={classes.formIcon} onClick={onCancel} />
       </Tooltip>
       <Tooltip title={t('Save')}>
-        <CheckIcon className={classes.formIcon} onClick={handleConfirm} />
+        <CheckIcon className={classes.formIcon} onClick={onConfirm} />
       </Tooltip>
     </div>
   );
@@ -83,11 +53,8 @@ EditViewActions.propTypes = {
     description: PropTypes.string,
     rotation: PropTypes.number.isRequired,
   }).isRequired,
-  id: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
 
 export default EditViewActions;

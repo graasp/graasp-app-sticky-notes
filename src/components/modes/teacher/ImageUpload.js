@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
+import Button from '@material-ui/core/Button';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
-import { patchAppInstance } from '../../../actions';
+import Loader from '../../common/Loader';
+import { Context } from '../../context/ContextContext';
 import configureUppy from '../../../utils/uppy';
 import { MAX_FILE_SIZE } from '../../../config/settings';
+import { TokenContext } from '../../context/TokenContext';
+import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { useAppSettings } from '../../context/appData';
+import { APP_SETTINGS } from '../../../constants/constants';
 
 const useStyles = makeStyles((theme) => ({
   '@keyframes blinker': {
@@ -46,24 +51,79 @@ const useStyles = makeStyles((theme) => ({
 const ImageUpload = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { offline, standalone, spaceId, userId, appInstanceId } = useSelector(
-    ({ context }) => context,
+  const [uppy, setUppy] = useState(null);
+  const context = useContext(Context);
+  const token = useContext(TokenContext);
+  const itemId = context?.get('itemId');
+  const { mutate: deleteAppSetting } = useMutation(
+    MUTATION_KEYS.DELETE_APP_SETTING,
   );
-  const currentImageUri = useSelector(
-    ({ appInstance }) => appInstance.content.settings.backgroundImage?.uri,
+  const { mutate: onFileUploadComplete } = useMutation(
+    MUTATION_KEYS.APP_SETTING_FILE_UPLOAD,
   );
-  const imageToBeUploaded = useSelector(({ uppy }) => uppy.addedImage);
 
-  const uppyInstance = configureUppy({
-    t,
-    offline,
-    standalone,
-    spaceId,
-    userId,
-    appInstanceId,
-    patchAppInstance,
-    currentImageUri,
-  });
+  // current background
+  const { data: appSettings } = useAppSettings();
+  const backgroundSetting = appSettings?.find(
+    ({ name }) => name === APP_SETTINGS.BACKGROUND,
+  );
+
+  useEffect(() => {
+    setUppy(
+      configureUppy({
+        t,
+        offline: context?.get('offline'),
+        standalone: context?.get('standalone'),
+        itemId,
+        apiHost: context?.get('apiHost'),
+        token,
+        onComplete: (result) => {
+          onFileUploadComplete({
+            id: itemId,
+            data: result.successful
+              ?.map(({ response }) => response?.body?.[0])
+              .filter(Boolean),
+          });
+        },
+      }),
+    );
+  }, [context]);
+
+  if (!uppy) {
+    return <Loader />;
+  }
+
+  const deleteBackground = () => {
+    deleteAppSetting({ id: backgroundSetting.id });
+  };
+
+  const renderInput = () => {
+    // if image is already set, show delete button
+    if (backgroundSetting) {
+      return (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={deleteBackground}
+          className={classes.closeButton}
+        >
+          {t('Delete Background')}
+        </Button>
+      );
+    }
+
+    // render input
+    return (
+      <FileInput
+        uppy={uppy}
+        locale={{
+          strings: {
+            chooseFiles: t('Browse Your Computer'),
+          },
+        }}
+      />
+    );
+  };
 
   return (
     <div>
@@ -79,20 +139,8 @@ const ImageUpload = () => {
             {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
           </Typography>
         </div>
-        <FileInput
-          uppy={uppyInstance}
-          locale={{
-            strings: {
-              chooseFiles: t('Browse Your Computer'),
-            },
-          }}
-        />
+        {renderInput()}
       </div>
-      {imageToBeUploaded.name && (
-        <Typography variant="caption" className={classes.uploadingText}>
-          {t(`Uploading ${imageToBeUploaded.name}...`)}
-        </Typography>
-      )}
     </div>
   );
 };

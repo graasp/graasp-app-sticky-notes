@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import objectId from 'bson-objectid';
+import { useTranslation } from 'react-i18next';
 import Note from './note/Note';
-import {
-  addNote,
-  postAppInstanceResource,
-  getAppInstanceResources,
-  patchAppInstanceResource,
-  clearNoteBeingEdited,
-  updateNote,
-  getUsers,
-} from '../../actions';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import Settings from '../modes/teacher/Settings';
-import { RE_FETCH_INTERVAL } from '../../constants/constants';
-import { TEACHER_MODES } from '../../config/settings';
 import ColorSettings from './ColorSettings';
+import BackgroundImage from './BackgroundImage';
+import { ACTION_TYPES } from '../../config/actionTypes';
+import { APP_DATA_TYPES } from '../../config/appDataTypes';
+import { useAppData, useAppContext, useAppSettings } from '../context/appData';
+import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
+import { CanvasContext } from '../context/CanvasContext';
+import {
+  APP_DATA_VISIBLITIES,
+  DEFAULT_ANONYMOUS_USERNAME,
+  DEFAULT_PERMISSION,
+  PERMISSION_LEVELS,
+} from '../../config/settings';
+import { APP_SETTINGS } from '../../constants/constants';
+import { Context } from '../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
@@ -25,74 +27,56 @@ const useStyles = makeStyles(() => ({
     cursor: 'cell',
     background: '#FFE4E1',
   },
-  image: { width: '100%', height: '100%', display: 'block' },
 }));
 
 const Canvas = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  // see onDragOver event in div below for a note on these variables
+  const { t } = useTranslation();
   const [newPageX, setNewPageX] = useState();
   const [newPageY, setNewPageY] = useState();
+  const [notes, setNotes] = useState(null);
+  const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
+  const [members, setMembers] = useState([]);
+  const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
+  const { userSetColor } = useContext(CanvasContext);
+  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(false);
+  const context = useContext(Context);
+  const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
-  // extract required state from redux store
-  const { mode, standalone, userId } = useSelector(({ context }) => context);
-  const { notes: sessionNotes, userSetColor, noteBeingEdited } = useSelector(
-    ({ canvas }) => canvas,
-  );
-  const savedNotes = useSelector(
-    ({ appInstanceResources }) => appInstanceResources.content,
-  );
-  const { backgroundImage } = useSelector(
-    ({ appInstance }) => appInstance.content.settings,
-  );
+  const {
+    data: appData,
+    isSuccess: isAppDataSuccess,
+    isError: isAppDataError,
+  } = useAppData();
 
-  // if session is standalone, show sessionNotes; if not, show notes retrieved from API
-  const notesToDisplay = standalone ? sessionNotes : savedNotes;
-
-  useEffect(() => {
-    // fetch app instance resources once on app initialization
-    dispatch(getAppInstanceResources({ userId }));
-    // subsequently fetch them every RE_FETCH_INTERVAL, so that different clients remain in sync
-    setInterval(() => {
-      dispatch(getAppInstanceResources({ userId }));
-    }, RE_FETCH_INTERVAL);
-  }, []);
+  const { data: appSettings, isSuccess } = useAppSettings();
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [savedNotes]);
+    if (isAppContextSuccess) {
+      setMembers(appContext?.get('members'));
+    }
+  }, [appContext, isAppContextSuccess]);
+
+  useEffect(() => {
+    if (isAppDataError) {
+      console.error('Error getting data.');
+      return;
+    }
+    if (isAppDataSuccess) {
+      setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
+    }
+  }, [appData, isAppDataSuccess]);
+
+  useEffect(() => {
+    if(isSuccess) {
+      setBackgroundToggleSetting(Boolean(appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+      )?.data.toggle ?? false));
+    }
+  });
 
   const handleCanvasClick = (event) => {
-    // if the canvas is clicked when a note is in edit mode, update that note and take it out of edit mode
-    if (noteBeingEdited._id) {
-      const updatedData = {
-        ...noteBeingEdited.data,
-        title: noteBeingEdited.data.title,
-        description: noteBeingEdited.data.description,
-        color: noteBeingEdited.data.color,
-      };
-
-      // dispatch for when app is not standalone (patch remote resource)
-      dispatch(
-        patchAppInstanceResource({
-          id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-
-      // dispatch for when app is standalone (patch note in redux store)
-      dispatch(
-        updateNote({
-          _id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-
-      // clear note being edited
-      dispatch(clearNoteBeingEdited());
-    }
-
     // add a new note to the canvas
     const { innerHeight, innerWidth } = window;
     const { pageX, pageY } = event;
@@ -103,45 +87,62 @@ const Canvas = () => {
       rotation: generateRandomRotationAngle(),
       minimized: false,
     };
-    // dispatch for non-standalone (add remote resource)
-    dispatch(postAppInstanceResource({ data: newNote, userId }));
-    // dispatch for standalone (add note in redux store)
-    dispatch(addNote({ data: newNote, _id: objectId() }));
+
+    postAppData({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: APP_DATA_VISIBLITIES.ITEM,
+    });
+    postAction({
+      type: ACTION_TYPES.ADD,
+      data: {
+        note: newNote,
+        id: newNote.id,
+      },
+    });
   };
 
+  /* The <div> element has a child <button> element that allows keyboard interaction */
   return (
-    <div
-      className={classes.mainContainer}
-      onClick={handleCanvasClick}
-      onDragOver={(event) => {
-        event.stopPropagation();
-        event.preventDefault();
-        // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
-        // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
-        setNewPageX(event.pageX);
-        setNewPageY(event.pageY);
-      }}
-    >
-      {notesToDisplay.map((note) => (
-        <Note
-          note={note.data}
-          id={note._id}
-          key={note._id}
-          userId={note.user}
-          newPageX={newPageX}
-          newPageY={newPageY}
-        />
-      ))}
-      {backgroundImage?.uri && backgroundImage?.visible && (
-        <img
-          src={backgroundImage.uri}
-          alt={`User selected background ${backgroundImage.name}`}
-          className={classes.image}
-        />
-      )}
-      {TEACHER_MODES.includes(mode) && <Settings />}
-      <ColorSettings />
-    </div>
+    <>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      <div
+        className={classes.mainContainer}
+        onClick={handleCanvasClick}
+        onDragOver={(event) => {
+          event.stopPropagation();
+          event.preventDefault();
+          // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
+          // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
+          setNewPageX(event.pageX);
+          setNewPageY(event.pageY);
+        }}
+      >
+        {notes ? (
+          notes.map((note) => (
+            <Note
+              note={note.data}
+              id={note.id}
+              key={note.id}
+              userName={
+                (
+                  members.find((m) => m.id === note.memberId) ?? {
+                    name: DEFAULT_ANONYMOUS_USERNAME,
+                  }
+                ).name
+              }
+              newPageX={newPageX}
+              newPageY={newPageY}
+            />
+          ))
+        ) : (
+          <div>{t('Add a note.')}</div>
+        )}
+        {backgroundToggleSetting && <BackgroundImage />}
+        {(permissionLevel === PERMISSION_LEVELS.WRITE || permissionLevel === PERMISSION_LEVELS.ADMIN) && <Settings />}
+        <ColorSettings />
+      </div>
+    </>
   );
 };
 

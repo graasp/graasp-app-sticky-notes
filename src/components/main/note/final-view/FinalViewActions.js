@@ -1,18 +1,13 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import MinimizeIcon from '@material-ui/icons/Remove';
 import MaximizeIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-  deleteAppInstanceResource,
-  deleteNote,
-  patchAppInstanceResource,
-  setNoteBeingEdited,
-  updateNote,
-} from '../../../../actions';
+import { CanvasContext } from '../../../context/CanvasContext';
+import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
+import { ACTION_TYPES } from '../../../../config/actionTypes';
 
 const useStyles = makeStyles(() => ({
   actionContainer: { display: 'flex', alignItems: 'center' },
@@ -23,70 +18,40 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinalViewActions = ({ id }) => {
+const FinalViewActions = ({ id, minimized, onChangeMinimize }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { standalone } = useSelector(({ context }) => context);
-  const { notes: sessionNotes } = useSelector(({ canvas }) => canvas);
-  const savedNotes = useSelector(
-    ({ appInstanceResources }) => appInstanceResources.content,
-  );
-  const notes = standalone ? sessionNotes : savedNotes;
-  const currentNote = notes.find((note) => note._id === id);
-  const isMinimized = currentNote.data.minimized;
-  const noteBeingEdited = useSelector(({ canvas }) => canvas.noteBeingEdited);
+  const { setNoteBeingEditedId } = useContext(CanvasContext);
+
+  const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
+  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   const handleMinimize = () => {
-    const minimizedNote = { ...currentNote.data, minimized: true };
-    // dispatch for non-standalone cases
-    dispatch(patchAppInstanceResource({ id, data: minimizedNote }));
-    // dispatch for standalone cases
-    dispatch(updateNote({ data: minimizedNote, _id: id }));
+    onChangeMinimize(true);
   };
 
   const handleMaximize = () => {
-    const maximizedNote = { ...currentNote.data, minimized: false };
-    // dispatch for non-standalone cases
-    dispatch(patchAppInstanceResource({ id, data: maximizedNote }));
-    // dispatch for standalone cases
-    dispatch(updateNote({ data: maximizedNote, _id: id }));
+    onChangeMinimize(false);
   };
 
   const handleDelete = () => {
-    dispatch(deleteAppInstanceResource(id));
-    dispatch(deleteNote(id));
+    deleteAppData({
+      id,
+    });
+    postAction({
+      type: ACTION_TYPES.DELETE,
+      data: { id },
+    });
   };
 
   const handleEdit = () => {
     // if the edit button is clicked when another note is in edit mode, update that note and take it out of edit mode
-    if (noteBeingEdited._id) {
-      const updatedData = {
-        ...noteBeingEdited.data,
-        title: noteBeingEdited.data.title,
-        description: noteBeingEdited.data.description,
-        color: noteBeingEdited.data.color,
-      };
-
-      dispatch(
-        patchAppInstanceResource({
-          id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-
-      dispatch(
-        updateNote({
-          _id: noteBeingEdited._id,
-          data: updatedData,
-        }),
-      );
-    }
-    dispatch(setNoteBeingEdited({ ...currentNote }));
+    // TODO: Eventually implement that...
+    setNoteBeingEditedId(id);
   };
 
   return (
     <div className={classes.actionContainer}>
-      {isMinimized ? (
+      {minimized ? (
         <MaximizeIcon className={classes.noteAction} onClick={handleMaximize} />
       ) : (
         <MinimizeIcon className={classes.noteAction} onClick={handleMinimize} />
@@ -103,6 +68,8 @@ FinalViewActions.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  minimized: PropTypes.bool.isRequired,
+  onChangeMinimize: PropTypes.func.isRequired,
 };
 
 export default FinalViewActions;

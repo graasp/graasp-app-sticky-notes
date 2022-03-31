@@ -62,40 +62,43 @@ const Settings = () => {
   };
 
   return (
-    <div onClick={(event) => event.stopPropagation()}>
-      <Fab
-        color="primary"
-        className={classes.fab}
-        onClick={(event) => {
-          event.stopPropagation();
-          handleModalOpen();
-        }}
-      >
-        <SettingsIcon />
-      </Fab>
-      <Modal
-        open={modalOpen}
-        onClose={handleModalClose}
-        className={classes.modal}
-      >
-        <div className={classes.modalContainer}>
-          <Typography className={classes.header}>{t('Settings')}</Typography>
-          <ImageUpload />
-          <BackgroundToggle />
-          <Divider className={classes.divider} />
-          <div className={classes.buttonContainer}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleModalClose}
-              className={classes.closeButton}
-            >
-              {t('Close')}
-            </Button>
+    <>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      <div onClick={(event) => event.stopPropagation()}>
+        <Fab
+          color="primary"
+          className={classes.fab}
+          onClick={(event) => {
+            event.stopPropagation();
+            handleModalOpen();
+          }}
+        >
+          <SettingsIcon />
+        </Fab>
+        <Modal
+          open={modalOpen}
+          onClose={handleModalClose}
+          className={classes.modal}
+        >
+          <div className={classes.modalContainer}>
+            <Typography className={classes.header}>{t('Settings')}</Typography>
+            <ImageUpload />
+            <BackgroundToggle />
+            <Divider className={classes.divider} />
+            <div className={classes.buttonContainer}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleModalClose}
+                className={classes.closeButton}
+              >
+                {t('Close')}
+              </Button>
+            </div>
           </div>
-        </div>
-      </Modal>
-    </div>
+        </Modal>
+      </div>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
 import { useAppSettings } from '../../context/appData';
+import { DEFAULT_BACKGROUND_ENABLED } from '../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -23,6 +24,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const DEFAULT_BACKGROUND_TOGGLE = {
+  name: APP_SETTINGS.BACKGROUND_TOGGLE,
+  data: {
+    toggle: DEFAULT_BACKGROUND_ENABLED,
+  }
+};
+
 const BackgroundToggle = () => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -37,7 +45,7 @@ const BackgroundToggle = () => {
 
   const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(null);
   
-  const { data: appSettings, isSuccess } = useAppSettings();
+  const { data: appSettings, isSuccess, isLoading } = useAppSettings();
 
   useEffect(() => {
     if(isSuccess) {
@@ -47,21 +55,16 @@ const BackgroundToggle = () => {
       if(backgroundSetting){
         setBackgroundToggleSetting(appSettings?.find(
           ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
-        ) || {
-          name: APP_SETTINGS.BACKGROUND_TOGGLE,
-          data: {
-            toggle: false,
-          }
-        });
+        ) || DEFAULT_BACKGROUND_TOGGLE);
       }
     }
   }, [appSettings, isSuccess]);
 
-  const toggleDisabled = backgroundToggleSetting === null;
+  const toggleDisabled = isLoading || (backgroundToggleSetting === null);
 
   const handleToggle = () => {
     const newBackgroundToggleSetting = {
-      ...backgroundToggleSetting,
+      ...(backgroundToggleSetting ?? DEFAULT_BACKGROUND_TOGGLE),
       data: {
         toggle: Boolean(!backgroundToggleSetting?.data?.toggle),
       },
@@ -87,7 +90,7 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={backgroundToggleSetting?.data?.toggle || false}
+            checked={backgroundToggleSetting?.data?.toggle || DEFAULT_BACKGROUND_ENABLED}
             onChange={handleToggle}
           />
         }

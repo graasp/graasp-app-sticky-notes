@@ -37,4 +37,6 @@ export const APP_DATA_VISIBLITIES = {
   ITEM: 'item',
 };
 
+export const DEFAULT_BACKGROUND_ENABLED = false;
+
 export const MOCK_API = REACT_APP_MOCK_API === 'true';

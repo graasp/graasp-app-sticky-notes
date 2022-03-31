@@ -35,7 +35,7 @@ const BackgroundImage = () => {
       style={{
         backgroundImage: `url(${url})`,
       }}
-      />
+    />
   );
 };
 

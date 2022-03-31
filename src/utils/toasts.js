@@ -45,7 +45,4 @@ const showSuccessToast = (payload) => {
   });
 };
 
-export {
-  showErrorToast,
-  showSuccessToast,
-};
+export { showErrorToast, showSuccessToast };

@@ -19,7 +19,7 @@ const configureUppy = ({
     restrictions: {
       maxNumberOfFiles: MAX_NUM_FILES,
       maxFileSize: MAX_FILE_SIZE,
-      allowedFileTypes: ['.jpg', '.jpeg', '.png'],
+      allowedFileTypes: ['.jpg', '.jpeg', '.png','.svg'],
     },
     autoProceed: true,
   });

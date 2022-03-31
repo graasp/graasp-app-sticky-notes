@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
@@ -12,7 +13,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const BackgroundImage = () => {
+const BackgroundImage = ({ children }) => {
   const classes = useStyles();
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
@@ -35,8 +36,18 @@ const BackgroundImage = () => {
       style={{
         backgroundImage: `url(${url})`,
       }}
-    />
+    >
+      { children }
+    </div>
   );
+};
+
+BackgroundImage.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.elementType),
+};
+
+BackgroundImage.defaultProps = {
+  children: null,
 };
 
 export default BackgroundImage;

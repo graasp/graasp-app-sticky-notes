@@ -20,7 +20,6 @@ import {
   QueryClientProvider,
 } from '../config/queryClient';
 
-// TODO: Modify DEFINE names
 import {
   REACT_APP_GRAASP_DEVELOPER_ID,
   REACT_APP_GRAASP_APP_ID,
@@ -28,7 +27,6 @@ import {
   REACT_APP_GOOGLE_ANALYTICS_ID,
 } from '../config/env';
 
-// TODO: Change (somehow)
 ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 ReactGa.ga(
   'send',

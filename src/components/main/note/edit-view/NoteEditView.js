@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
-import EditViewColorPalette from './EditViewColorPalette';
-import EditViewActions from './EditViewActions';
+// import EditViewColorPalette from './EditViewColorPalette';
+// import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { CanvasContext } from '../../../context/CanvasContext';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
@@ -44,16 +44,16 @@ const NoteEditView = ({ note, id }) => {
     setTitle(newTitle);
   };
 
-  const handleChangeColor = (newColor) => {
-    setColor(newColor);
-  };
+  // const handleChangeColor = (newColor) => {
+  //   setColor(newColor);
+  // };
 
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const handleCancel = () => {
-    setNoteBeingEditedId(null);
-  };
+  // const handleCancel = () => {
+  //   setNoteBeingEditedId(null);
+  // };
 
   const saveNote = () => {
     const updatedNote = {

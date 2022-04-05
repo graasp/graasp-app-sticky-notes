@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
-import { useAppSettings } from '../context/appData';
+import {  useAppSettings } from '../context/appData';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_PERMISSION,
@@ -26,7 +26,7 @@ const Canvas = () => {
   const classes = useStyles();
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
-  const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
+  // const { data: appContext, isLoading: isAppContextLoading } = useAppContext();
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
   

@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
+import DownloadActions from './DownloadActions';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -86,6 +87,7 @@ const Settings = () => {
             <Typography className={classes.header}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />
+            <DownloadActions />
             <Divider className={classes.divider} />
             <div className={classes.buttonContainer}>
               <Button

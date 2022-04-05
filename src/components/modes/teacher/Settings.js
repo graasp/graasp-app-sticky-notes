@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   modalContainer: {
     width: '30%',
-    height: '35%',
+    maxHeight: '50%',
     padding: theme.spacing(3),
     backgroundColor: 'white',
     borderRadius: '5px',

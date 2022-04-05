@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import {CanvasContext} from '../../../context/CanvasContext';
+import { CanvasContext } from '../../../context/CanvasContext';
 import FinalViewActions from './FinalViewActions';
 
 const titleStyle = {
@@ -65,8 +65,6 @@ const FinalViewHeader = ({
         title={title}
         color={color}
         showActions={showActions}
-        // minimized={minimized}
-        // onChangeMinimize={onChangeMinimize}
       />
     </div>
   );
@@ -74,11 +72,8 @@ const FinalViewHeader = ({
 
 FinalViewHeader.propTypes = {
   title: PropTypes.string,
-  // description: PropTypes.string,
   color: PropTypes.string.isRequired,
   showActions: PropTypes.bool.isRequired,
-  // minimized: PropTypes.bool.isRequired,
-  // onChangeMinimize: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,
@@ -88,8 +83,6 @@ FinalViewHeader.propTypes = {
 
 FinalViewHeader.defaultProps = {
   title: '',
-  // description: '',
-  // color: '#DFD59F',
 };
 
 export default FinalViewHeader;

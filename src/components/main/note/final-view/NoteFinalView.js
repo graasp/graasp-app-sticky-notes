@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
-// import FinalViewDescription from './FinalViewDescription';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
@@ -147,7 +146,6 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           id={id}
           onChangeMinimize={handleChangeMinimize}
         />
-        {/* !minimized && <FinalViewDescription description={description} /> */}
         {!minimized && <FinalViewFooter id={id} userName={userName} />}
       </div>
     </>

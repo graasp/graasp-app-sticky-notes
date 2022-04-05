@@ -7,7 +7,10 @@ import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
 import Note from './note/Note';
-import { DEFAULT_ANONYMOUS_USERNAME, APP_DATA_VISIBLITIES } from '../../config/settings';
+import {
+  DEFAULT_ANONYMOUS_USERNAME,
+  APP_DATA_VISIBLITIES,
+} from '../../config/settings';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 
 const useStyles = makeStyles(() => ({
@@ -31,7 +34,7 @@ const NoteContainer = () => {
   const [newPageX, setNewPageX] = useState(null);
   const [newPageY, setNewPageY] = useState(null);
 
-  const [ edit, setEdit ] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   let tmpNewPageX;
   let tmpNewPageY;
@@ -149,9 +152,5 @@ const NoteContainer = () => {
     </>
   );
 };
-
-// NoteContainer.propTypes = {
-//   edit: PropTypes.bool.isRequired,
-// };
 
 export default NoteContainer;

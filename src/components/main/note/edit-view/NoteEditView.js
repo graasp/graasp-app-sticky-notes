@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import EditViewTextFields from './EditViewTextFields';
-// import EditViewColorPalette from './EditViewColorPalette';
-// import EditViewActions from './EditViewActions';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { CanvasContext } from '../../../context/CanvasContext';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
@@ -99,8 +97,6 @@ const NoteEditView = ({ note, id }) => {
           onChange={handleChangeText}
           onConfirm={handleConfirm}
         />
-        {/* <EditViewColorPalette height="20%" color={color} onChange={handleChangeColor} /> */}
-        {/* <EditViewActions height="15%" note={note} id={id} onConfirm={handleConfirm} onCancel={handleCancel} /> */}
       </div>
     </>
   );

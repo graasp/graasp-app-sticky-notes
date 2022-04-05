@@ -23,7 +23,10 @@ const BackgroundImage = ({ children }) => {
   );
   const { data: backgroundImage } = useAppSettingFile(
     backgroundSetting?.id,
-    Boolean(backgroundSetting?.data?.extra?.file || backgroundSetting?.data?.extra?.s3File),
+    Boolean(
+      backgroundSetting?.data?.extra?.file ||
+        backgroundSetting?.data?.extra?.s3File,
+    ),
   );
 
   if (!backgroundSetting || !backgroundImage) {
@@ -39,7 +42,7 @@ const BackgroundImage = ({ children }) => {
         backgroundImage: `url(${url})`,
       }}
     >
-      { children }
+      {children}
     </div>
   );
 };

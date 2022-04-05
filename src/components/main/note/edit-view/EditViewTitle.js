@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-// import { MAX_LENGTH_TITLE } from '../../../../config/settings';
+import { MAX_LENGTH_TITLE } from '../../../../config/settings';
 
 const useStyles = makeStyles(() => ({
   container: { padding: '3%' },
@@ -28,8 +28,8 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
         className={classes.textfield}
         autoFocus
         inputProps={{
-          style: { fontSize: '1vw'/* , fontWeight: 'bold' */},
-          maxLength: 64,
+          style: { fontSize: '1vw' },
+          maxLength: MAX_LENGTH_TITLE,
         }}
         // eslint-disable-next-line react/jsx-no-duplicate-props
         InputProps={{ disableUnderline: true }}

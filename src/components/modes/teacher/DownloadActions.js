@@ -8,7 +8,6 @@ import { saveAs } from 'file-saver';
 import { useAppActions } from '../../context/appData';
 import { showErrorToast } from '../../../utils/toasts';
 
-
 const useStyles = makeStyles(() => ({
   toggleContainer: {
     display: 'flex',
@@ -25,9 +24,9 @@ const DownloadActions = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const [ actions, setActions ] = useState([]);
+  const [actions, setActions] = useState([]);
 
-  const [ enableDownload, setEnableDownload ] = useState(false);
+  const [enableDownload, setEnableDownload] = useState(false);
 
   const {
     data: appActions,
@@ -49,27 +48,27 @@ const DownloadActions = () => {
 
   const handleDownload = () => {
     // The filename should be improved.
-    const blob = new Blob([JSON.stringify(actions)], {type: "text/json;charset=utf-8"});
-    saveAs(blob, "app_actions.json");
+    const blob = new Blob([JSON.stringify(actions)], {
+      type: 'text/json;charset=utf-8',
+    });
+    saveAs(blob, 'app_actions.json');
   };
 
   return (
     <div className={classes.toggleContainer}>
-      <Typography
-        className={classes.headerText}
-      >
+      <Typography className={classes.headerText}>
         {t('Download learning analytics.')}
       </Typography>
       <FormControlLabel
         control={
           <Button
-                disabled={!enableDownload}
-                variant="contained"
-                color="secondary"
-                onClick={handleDownload}
-              >
-                {t('Download')}
-              </Button>
+            disabled={!enableDownload}
+            variant="contained"
+            color="secondary"
+            onClick={handleDownload}
+          >
+            {t('Download')}
+          </Button>
         }
       />
     </div>

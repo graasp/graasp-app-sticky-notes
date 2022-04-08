@@ -40,7 +40,7 @@ const DownloadActions = () => {
       setEnableDownload(false);
       return;
     }
-    if (isAppActionsSuccess) {
+    if (isAppActionsSuccess && !appActions?.isEmpty()) {
       setActions(appActions);
       setEnableDownload(true);
     }

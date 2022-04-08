@@ -22,6 +22,8 @@ export const AVAILABLE_COLORS_DARKER_SHADES = [
 export const DEFAULT_MINIMUM_ROTATION_ANGLE = -10;
 export const DEFAULT_MAXIMUM_ROTATION_ANGLE = 10;
 
+export const SMALL_DELAY_REFOCUS_MS = 20;
+
 export const APP_SETTINGS = {
   BACKGROUND: 'background',
   BACKGROUND_TOGGLE: 'background_toggle',

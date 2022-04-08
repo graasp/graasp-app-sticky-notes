@@ -10,11 +10,12 @@ const useStyles = makeStyles(() => ({
 const EditViewTextFields = ({ height, title, onChange, onConfirm }) => {
   const classes = useStyles();
 
-  let editedTitle = title;
+  // let editedTitle = title;
 
   const handleTitleChange = (newTitle) => {
-    editedTitle = newTitle;
-    onChange(editedTitle);
+    // editedTitle = newTitle;
+    // onChange(editedTitle);
+    onChange(newTitle);
   };
 
   return (

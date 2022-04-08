@@ -4,21 +4,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import { MUTATION_KEYS, useMutation } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
-
-const noteAction = {
-  color: '#383838',
-  fontSize: '0.8vw',
-  cursor: 'pointer',
-};
+import { NOTE_ACTION_STYLE } from '../../../../constants/styles';
 
 const useStyles = makeStyles(() => ({
   actionContainer: {
     display: 'flex',
     alignItems: 'center',
   },
-  noteAction,
+  NOTE_ACTION_STYLE,
   noteActionHidden: {
-    ...noteAction,
+    ...NOTE_ACTION_STYLE,
     visibility: 'hidden',
   },
 }));

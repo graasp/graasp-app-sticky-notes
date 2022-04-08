@@ -1,18 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { CanvasContext } from '../../../context/CanvasContext';
 import FinalViewActions from './FinalViewActions';
-
-const titleStyle = {
-  fontSize: '1vw',
-  fontWeight: 200,
-  overflowWrap: 'anywhere',
-  cursor: 'text',
-  textAlign: 'justify',
-  padding: 'none',
-};
+import { TITLE_STYLE } from '../../../../constants/styles';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -20,11 +14,8 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
-  title: {
-    ...titleStyle,
-  },
+  title: TITLE_STYLE,
   placeholderTitle: {
-    ...titleStyle,
     fontSize: '0.9vw',
     color: 'grey',
   },
@@ -34,18 +25,15 @@ const FinalViewHeader = ({
   title,
   id,
   color,
-  showActions /* , description, color, id, minimized, onChangeMinimize */,
+  showActions,
 }) => {
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const { setNoteBeingEditedId, setUserSetColor } = useContext(CanvasContext);
 
   const handleEdit = () => {
-    // if the edit button is clicked when another note is in edit mode, update that note and take it out of edit mode
-    // TODO: implement this behaviour.
-    /* if (noteBeingEditedId) {
-      console.log('Save note');
-    } */
+    // TODO: implement: if the edit button is clicked when another note is in edit mode, update that note and take it out of edit mode
     setNoteBeingEditedId(id);
     setUserSetColor(color);
   };
@@ -55,10 +43,10 @@ const FinalViewHeader = ({
   return (
     <div className={classes.header}>
       <Typography
-        className={isTitleEmpty ? classes.placeholderTitle : classes.title}
+        className={clsx(classes.title, {[classes.placeholderTitle]: isTitleEmpty})}
         onClick={handleEdit}
       >
-        {isTitleEmpty ? 'Click to edit...' : title}
+        {isTitleEmpty ? t('Click to edit...') : title}
       </Typography>
       <FinalViewActions
         id={id}

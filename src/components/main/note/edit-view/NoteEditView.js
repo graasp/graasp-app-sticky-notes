@@ -9,7 +9,6 @@ import { ACTION_TYPES } from '../../../../config/actionTypes';
 const useStyles = makeStyles(() => ({
   form: {
     maxWidth: '15%',
-    // height: '25%',
     position: 'absolute',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
@@ -42,16 +41,8 @@ const NoteEditView = ({ note, id }) => {
     setTitle(newTitle);
   };
 
-  // const handleChangeColor = (newColor) => {
-  //   setColor(newColor);
-  // };
-
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
-
-  // const handleCancel = () => {
-  //   setNoteBeingEditedId(null);
-  // };
 
   const saveNote = () => {
     const updatedNote = {

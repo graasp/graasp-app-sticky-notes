@@ -131,7 +131,6 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
           left: `${(pageX / innerWidth) * 100}%`,
           background: color,
           transform: `rotate(${rotation}deg)`,
-          // height: `${minimized ? '10%' : '20%'}`,
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}

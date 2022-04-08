@@ -1,6 +1,5 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-// import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
@@ -16,7 +15,6 @@ const useStyles = makeStyles(() => ({
 
 const BackgroundImage = ({ children }) => {
   const classes = useStyles();
-  // const { t } = useTranslation();
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,

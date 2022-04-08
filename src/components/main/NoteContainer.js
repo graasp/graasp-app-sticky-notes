@@ -1,3 +1,6 @@
+/* The main <div> element has a child <button> element that allows keyboard interaction */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +15,7 @@ import {
   APP_DATA_VISIBLITIES,
 } from '../../config/settings';
 import { generateRandomRotationAngle } from '../../utils/canvas';
+import { showErrorToast } from '../../utils/toasts';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -56,8 +60,7 @@ const NoteContainer = () => {
 
   useEffect(() => {
     if (isAppDataError) {
-      /* eslint-disable-next-line no-console */
-      console.error(t('Error getting data.'));
+      showErrorToast(t('Error getting data.'));
       return;
     }
     if (isAppDataSuccess) {
@@ -65,8 +68,12 @@ const NoteContainer = () => {
     }
   }, [appData, isAppDataSuccess]);
 
+  // Sets the focus to the last created note. The `edit` boolean is set to
+  // true whenever a new note is created. When the notes are actually
+  // refetched, the focus is set to the newest one and the `edit` bool is
+  // set back to false.
   useEffect(() => {
-    if (edit && !notes?.isEmpty() && isAppDataStale) {
+    if (edit && !notes?.isEmpty() && isAppDataStale && notes) {
       setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
       setEdit(false);
     }
@@ -106,8 +113,6 @@ const NoteContainer = () => {
     createNewNote(pageX, pageY);
   };
 
-  /* The <div> element has a child <button> element that allows keyboard interaction */
-  /* eslint-disable jsx-a11y/click-events-have-key-events */
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}

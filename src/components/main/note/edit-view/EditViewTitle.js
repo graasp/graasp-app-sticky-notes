@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { MAX_LENGTH_TITLE } from '../../../../config/settings';
+import { SMALL_DELAY_REFOCUS_MS } from '../../../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   container: { padding: '3%' },
@@ -45,7 +46,7 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
         }}
         inputRef={textInput}
         onBlur={() => {
-          setTimeout(focusOnText, 20); // Need a small delay before refocusing.
+          setTimeout(focusOnText, SMALL_DELAY_REFOCUS_MS); // Need a small delay before refocusing.
         }}
       />
     </div>

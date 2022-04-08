@@ -42,21 +42,17 @@ const Canvas = () => {
   });
 
   return (
-    <>
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div className={classes.mainContainer}>
-        {backgroundToggleSetting ? (
-          <BackgroundImage>
-            <NoteContainer />
-          </BackgroundImage>
-        ) : (
+    <div className={classes.mainContainer}>
+      {backgroundToggleSetting ? (
+        <BackgroundImage>
           <NoteContainer />
-        )}
-        {(permissionLevel === PERMISSION_LEVELS.WRITE ||
-          permissionLevel === PERMISSION_LEVELS.ADMIN) && <Settings />}
-        <ColorSettings />
-      </div>
-    </>
+        </BackgroundImage>
+      ) : (
+        <NoteContainer />
+      )}
+      {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permissionLevel) && <Settings />}
+      <ColorSettings />
+    </div>
   );
 };
 

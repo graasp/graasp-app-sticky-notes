@@ -77,7 +77,7 @@ const BackgroundToggle = () => {
       postAppSetting({
         name: APP_SETTINGS.BACKGROUND_TOGGLE,
         data: {
-          toggle: true,
+          toggle: !DEFAULT_BACKGROUND_ENABLED,
         },
       });
     }

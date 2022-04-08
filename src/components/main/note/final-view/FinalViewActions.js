@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
   },
-  NOTE_ACTION_STYLE,
+  noteAction: NOTE_ACTION_STYLE,
   noteActionHidden: {
     ...NOTE_ACTION_STYLE,
     visibility: 'hidden',

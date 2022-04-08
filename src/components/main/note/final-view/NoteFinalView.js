@@ -56,11 +56,6 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   // hence, when drag starts, we calculate the distance between current top left of div ('origin') and the point we grabbed it
   // when we update the position in onDragEnd, we adjust for this distance to generate the expected effect
   const onDragStart = (event) => {
-    event.dataTransfer.setData('text/plain', id);
-
-    /* eslint-disable no-param-reassign */
-    event.dataTransfer.dropEffect = 'move';
-
     const noteGrabbedX = event.pageX;
     const noteGrabbedY = event.pageY;
     const distanceBetweenGrabAndOriginX = pageX - noteGrabbedX;

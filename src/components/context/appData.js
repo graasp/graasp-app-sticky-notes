@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Context } from './ContextContext';
 import { TokenContext } from './TokenContext';
 import { hooks } from '../../config/queryClient';
-import { RE_FETCH_INTERVAL } from '../../constants/constants';
+import { RE_FETCH_INTERVAL } from '../../config/settings';
 
 export const useAppData = () => {
   const context = useContext(Context);

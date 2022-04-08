@@ -1,5 +1,5 @@
 import { CONTEXTS } from './contexts';
-import { REACT_APP_MOCK_API, RE_FETCH_INTERVAL_SETTING } from './env';
+import { REACT_APP_MOCK_API, REACT_APP_REFETCH_INTERVAL_SETTING } from './env';
 
 export const DEFAULT_LANG = 'en';
 
@@ -41,4 +41,4 @@ export const DEFAULT_BACKGROUND_ENABLED = false;
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
 
-export const RE_FETCH_INTERVAL = RE_FETCH_INTERVAL_SETTING ?? 1500; // Default: 1500
+export const RE_FETCH_INTERVAL = REACT_APP_REFETCH_INTERVAL_SETTING ?? 1500; // Default: 1500

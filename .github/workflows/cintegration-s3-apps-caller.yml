@@ -21,8 +21,8 @@ jobs:
       build-folder: 'build'
       version: 'latest'
     secrets:
-      aws-access-key-id: ${{ secrets.APPS_AWS_ACCESS_KEY_ID }}
-      aws-secret-access-key: ${{ secrets.APPS_AWS_SECRET_ACCESS_KEY }}
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
       aws-region: ${{ secrets.APPS_AWS_REGION }}
       aws-s3-bucket-name: ${{ secrets.APPS_DEV_BUCKET }}
       app-id: ${{ secrets.APP_ID }}

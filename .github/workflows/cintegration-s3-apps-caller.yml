@@ -27,5 +27,5 @@ jobs:
       aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_APPS_DEV }}
       app-id: ${{ secrets.APP_ID }}
       graasp-domain-dev: ${{ secrets.DEV_GRAASP_DOMAIN }}
-      cloudfront-distribution: ${{ secrets.APPS_DEV_CLOUDFRONT_DISTRIBUTION }}
+      cloudfront-distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_DEV }}
 

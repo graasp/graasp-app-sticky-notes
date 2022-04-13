@@ -62,7 +62,7 @@ const BackgroundToggle = () => {
     }
   }, [appSettings, isSuccess]);
 
-  const toggleDisabled = isLoading || backgroundToggleSetting === null;
+  const toggleDisabled = Boolean(isLoading || !backgroundToggleSetting);
 
   const handleToggle = () => {
     const newBackgroundToggleSetting = {
@@ -98,7 +98,7 @@ const BackgroundToggle = () => {
           <Switch
             color="primary"
             checked={
-              backgroundToggleSetting?.data?.toggle ||
+              backgroundToggleSetting?.data?.toggle ??
               DEFAULT_BACKGROUND_ENABLED
             }
             onChange={handleToggle}

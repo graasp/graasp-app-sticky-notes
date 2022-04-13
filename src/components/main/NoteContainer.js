@@ -40,8 +40,8 @@ const NoteContainer = () => {
 
   const [edit, setEdit] = useState(false);
 
-  let tmpNewPageX;
-  let tmpNewPageY;
+  let tmpNewPageX; // Used for the drag-drop animation.
+  let tmpNewPageY; // Used for the drag-drop animation.
   const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
@@ -80,7 +80,7 @@ const NoteContainer = () => {
   }, [notes]);
 
   const createNewNote = (pageX, pageY) => {
-    if (noteBeingEditedId === null) {
+    if (!noteBeingEditedId) {
       // add a new note to the canvas
       const { innerHeight, innerWidth } = window;
 

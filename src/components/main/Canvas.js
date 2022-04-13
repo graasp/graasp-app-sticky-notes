@@ -50,7 +50,9 @@ const Canvas = () => {
       ) : (
         <NoteContainer />
       )}
-      {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permissionLevel) && <Settings />}
+      {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
+        permissionLevel,
+      ) && <Settings />}
       <ColorSettings />
     </div>
   );

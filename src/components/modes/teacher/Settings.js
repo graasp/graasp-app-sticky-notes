@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* The click event is used only to prevent its propagation to the canvas. */
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
+import DownloadActions from './DownloadActions';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -18,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   modalContainer: {
     width: '30%',
-    height: '35%',
+    maxHeight: '50%',
     padding: theme.spacing(3),
     backgroundColor: 'white',
     borderRadius: '5px',
@@ -84,6 +88,7 @@ const Settings = () => {
             <Typography className={classes.header}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />
+            <DownloadActions />
             <Divider className={classes.divider} />
             <div className={classes.buttonContainer}>
               <Button

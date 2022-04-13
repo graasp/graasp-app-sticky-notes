@@ -1,6 +1,6 @@
 {
   "name": "graasp-app-sticky-notes",
-  "version": "0.2.0a",
+  "version": "0.3.2a",
   "private": true,
   "author": "Graasp",
   "contributors": [
@@ -22,8 +22,10 @@
     "@uppy/react": "2.1.2",
     "@uppy/xhr-upload": "2.0.7",
     "bson-objectid": "~2.0.2",
+    "clsx": "~1.1.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
+    "file-saver": "~2.0.5",
     "i18next": "~21.6.14",
     "immutable": "~4.0.0",
     "json2csv": "~5.0.7",
@@ -61,6 +63,8 @@
     "release": "git fetch --tags && git add CHANGELOG.md && standard-version -a"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "~7.17.0",
+    "@babel/preset-react": "~7.16.7",
     "@commitlint/cli": "~16.2.1",
     "@commitlint/config-conventional": "~16.2.1",
     "babel-eslint": "10.1.0",

@@ -28,7 +28,7 @@ const DEFAULT_BACKGROUND_TOGGLE = {
   name: APP_SETTINGS.BACKGROUND_TOGGLE,
   data: {
     toggle: DEFAULT_BACKGROUND_ENABLED,
-  }
+  },
 };
 
 const BackgroundToggle = () => {
@@ -43,24 +43,26 @@ const BackgroundToggle = () => {
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
 
-  const [ backgroundToggleSetting, setBackgroundToggleSetting ] = useState(null);
-  
+  const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(null);
+
   const { data: appSettings, isSuccess, isLoading } = useAppSettings();
 
   useEffect(() => {
-    if(isSuccess) {
+    if (isSuccess) {
       const backgroundSetting = appSettings?.find(
         ({ name }) => name === APP_SETTINGS.BACKGROUND,
       );
-      if(backgroundSetting){
-        setBackgroundToggleSetting(appSettings?.find(
-          ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
-        ) || DEFAULT_BACKGROUND_TOGGLE);
+      if (backgroundSetting) {
+        setBackgroundToggleSetting(
+          appSettings?.find(
+            ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+          ) || DEFAULT_BACKGROUND_TOGGLE,
+        );
       }
     }
   }, [appSettings, isSuccess]);
 
-  const toggleDisabled = isLoading || (backgroundToggleSetting === null);
+  const toggleDisabled = Boolean(isLoading || !backgroundToggleSetting);
 
   const handleToggle = () => {
     const newBackgroundToggleSetting = {
@@ -69,10 +71,15 @@ const BackgroundToggle = () => {
         toggle: Boolean(!backgroundToggleSetting?.data?.toggle),
       },
     };
-    if(backgroundToggleSetting?.id) {
+    if (backgroundToggleSetting?.id) {
       patchAppSetting(newBackgroundToggleSetting);
     } else {
-      postAppSetting(newBackgroundToggleSetting);
+      postAppSetting({
+        name: APP_SETTINGS.BACKGROUND_TOGGLE,
+        data: {
+          toggle: !DEFAULT_BACKGROUND_ENABLED,
+        },
+      });
     }
   };
 
@@ -90,7 +97,10 @@ const BackgroundToggle = () => {
         control={
           <Switch
             color="primary"
-            checked={backgroundToggleSetting?.data?.toggle || DEFAULT_BACKGROUND_ENABLED}
+            checked={
+              backgroundToggleSetting?.data?.toggle ??
+              DEFAULT_BACKGROUND_ENABLED
+            }
             onChange={handleToggle}
           />
         }

@@ -95,6 +95,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/eslint-parser@npm:~7.17.0":
+  version: 7.17.0
+  resolution: "@babel/eslint-parser@npm:7.17.0"
+  dependencies:
+    eslint-scope: ^5.1.1
+    eslint-visitor-keys: ^2.1.0
+    semver: ^6.3.0
+  peerDependencies:
+    "@babel/core": ">=7.11.0"
+    eslint: ^7.5.0 || ^8.0.0
+  checksum: 1cedd9998dd89f779bbc5496531e3ef1b43d6f4fb7209ed5088938292b81287302cb47c0923ce074e84e83aa41b236b09bfecacdf20770f4cbfade2de9519c10
+  languageName: node
+  linkType: hard
+
 "@babel/generator@npm:^7.12.1, @babel/generator@npm:^7.17.3, @babel/generator@npm:^7.17.7":
   version: 7.17.7
   resolution: "@babel/generator@npm:7.17.7"
@@ -1416,7 +1430,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-react@npm:^7.12.5, @babel/preset-react@npm:^7.16.0":
+"@babel/preset-react@npm:^7.12.5, @babel/preset-react@npm:^7.16.0, @babel/preset-react@npm:~7.16.7":
   version: 7.16.7
   resolution: "@babel/preset-react@npm:7.16.7"
   dependencies:
@@ -1814,9 +1828,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git":
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git#22/fetchFile":
   version: 0.1.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=739f3df1b674fa8cf128b2b1999275e58ae02992"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=32b711ef927c92bb217c871cf857f7b669d106b4"
   dependencies:
     axios: 0.26.0
     http-status-codes: 2.1.4
@@ -1828,7 +1842,7 @@ __metadata:
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 103edb8a61606b1179290199e128ff65856c4513411e40b142e24a288accc2d5a140a5113778e06b9e5bac20eccf556b3744bba2d6172874d935c9f407949695
+  checksum: d26b0edd8622a24846eda2ee4171374235de43f9157e6de9e56d8cb5767d29671706840510bfcd73b977c810c905a7060d919a0809db710867d8155757becfbb
   languageName: node
   linkType: hard
 
@@ -5563,7 +5577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:1.1.1, clsx@npm:^1.0.4, clsx@npm:^1.1.1":
+"clsx@npm:1.1.1, clsx@npm:^1.0.4, clsx@npm:^1.1.1, clsx@npm:~1.1.1":
   version: 1.1.1
   resolution: "clsx@npm:1.1.1"
   checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
@@ -8057,7 +8071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^2.0.0":
+"eslint-visitor-keys@npm:^2.0.0, eslint-visitor-keys@npm:^2.1.0":
   version: 2.1.0
   resolution: "eslint-visitor-keys@npm:2.1.0"
   checksum: e3081d7dd2611a35f0388bbdc2f5da60b3a3c5b8b6e928daffff7391146b434d691577aa95064c8b7faad0b8a680266bcda0a42439c18c717b80e6718d7e267d
@@ -8623,6 +8637,13 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 6369da5af456b640599d7ede7a3a9a55e485138a7829c583313d5165d0984c3d337de3aebee32fdfa3295facb4a44b74a9c3c956b1e0e30e8c96152106ff4b23
+  languageName: node
+  linkType: hard
+
+"file-saver@npm:~2.0.5":
+  version: 2.0.5
+  resolution: "file-saver@npm:2.0.5"
+  checksum: c62d96e5cebc58b4bdf3ae8a60d5cf9607ad82f75f798c33a4ee63435ac2203002584d5256a2a780eda7feb5e19dc3b6351c2212e58b3f529e63d265a7cc79f7
   languageName: node
   linkType: hard
 
@@ -9373,9 +9394,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-app-sticky-notes@workspace:."
   dependencies:
+    "@babel/eslint-parser": ~7.17.0
+    "@babel/preset-react": ~7.16.7
     "@commitlint/cli": ~16.2.1
     "@commitlint/config-conventional": ~16.2.1
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#22/fetchFile"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 4.11.2
@@ -9387,6 +9410,7 @@ __metadata:
     "@uppy/xhr-upload": 2.0.7
     babel-eslint: 10.1.0
     bson-objectid: ~2.0.2
+    clsx: ~1.1.1
     codacy-coverage: 3.4.0
     cross-env: 7.0.3
     cypress: ~9.5.1
@@ -9398,6 +9422,7 @@ __metadata:
     eslint-plugin-import: ~2.25.4
     eslint-plugin-jsx-a11y: ~6.5.1
     eslint-plugin-react: ~7.29.3
+    file-saver: ~2.0.5
     glob: 7.1.6
     html-webpack-plugin: ~5.5.0
     husky: ~7.0.4

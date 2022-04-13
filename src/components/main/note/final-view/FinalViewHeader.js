@@ -1,58 +1,64 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { CanvasContext } from '../../../context/CanvasContext';
 import FinalViewActions from './FinalViewActions';
-import { DEFAULT_NOTE_COLOR } from '../../../../constants/constants';
+import { TITLE_STYLE } from '../../../../constants/styles';
 
 const useStyles = makeStyles(() => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
-  title: {
-    fontSize: '1.1vw',
-    fontWeight: 600,
-    overflowWrap: 'anywhere',
+  title: TITLE_STYLE,
+  placeholderTitle: {
+    fontSize: '0.9vw',
+    color: 'grey',
   },
 }));
 
-const FinalViewHeader = ({
-  title,
-  description,
-  color,
-  showActions,
-  id,
-  minimized,
-  onChangeMinimize,
-}) => {
+const FinalViewHeader = ({ title, id, color, showActions }) => {
+  const { t } = useTranslation();
   const classes = useStyles();
+
+  const { setNoteBeingEditedId, setUserSetColor } = useContext(CanvasContext);
+
+  const handleEdit = () => {
+    // TODO: implement: if the edit button is clicked when another note is in edit mode, update that note and take it out of edit mode
+    setNoteBeingEditedId(id);
+    setUserSetColor(color);
+  };
+
+  const isTitleEmpty = Boolean(title?.length);
 
   return (
     <div className={classes.header}>
-      <Typography className={classes.title}>{title}</Typography>
-      {showActions && (
-        <FinalViewActions
-          id={id}
-          description={description}
-          title={title}
-          color={color}
-          minimized={minimized}
-          onChangeMinimize={onChangeMinimize}
-        />
-      )}
+      <Typography
+        className={clsx(classes.title, {
+          [classes.placeholderTitle]: isTitleEmpty,
+        })}
+        onClick={handleEdit}
+      >
+        {isTitleEmpty ? t('Click to edit...') : title}
+      </Typography>
+      <FinalViewActions
+        id={id}
+        title={title}
+        color={color}
+        showActions={showActions}
+      />
     </div>
   );
 };
 
 FinalViewHeader.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
-  color: PropTypes.string,
+  color: PropTypes.string.isRequired,
   showActions: PropTypes.bool.isRequired,
-  minimized: PropTypes.bool.isRequired,
-  onChangeMinimize: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,
@@ -62,8 +68,6 @@ FinalViewHeader.propTypes = {
 
 FinalViewHeader.defaultProps = {
   title: '',
-  description: '',
-  color: DEFAULT_NOTE_COLOR,
 };
 
 export default FinalViewHeader;

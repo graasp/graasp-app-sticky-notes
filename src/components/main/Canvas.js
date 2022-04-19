@@ -15,8 +15,9 @@ import NoteContainer from './NoteContainer';
 
 const useStyles = makeStyles(() => ({
   mainContainer: {
-    width: '100%',
-    height: '100%',
+    width: '99%',
+    height: '99%',
+    border: '2px solid gray',
   },
 }));
 

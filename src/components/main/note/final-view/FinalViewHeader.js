@@ -21,12 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FinalViewHeader = ({
-  title,
-  id,
-  color,
-  showActions,
-}) => {
+const FinalViewHeader = ({ title, id, color, showActions }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -43,7 +38,9 @@ const FinalViewHeader = ({
   return (
     <div className={classes.header}>
       <Typography
-        className={clsx(classes.title, {[classes.placeholderTitle]: isTitleEmpty})}
+        className={clsx(classes.title, {
+          [classes.placeholderTitle]: isTitleEmpty,
+        })}
         onClick={handleEdit}
       >
         {isTitleEmpty ? t('Click to edit...') : title}

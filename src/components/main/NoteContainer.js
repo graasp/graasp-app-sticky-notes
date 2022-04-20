@@ -26,13 +26,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteContainer = ({scrollLeft, scrollTop}) => {
+const NoteContainer = ({ scrollLeft, scrollTop }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const { userSetColor, noteBeingEditedId } = useContext(CanvasContext);
+  const { userSetColor, noteBeingEditedId, setHighlightNoteBeingEdited } = useContext(CanvasContext);
   const [members, setMembers] = useState([]);
   const [notes, setNotes] = useState(null);
 
@@ -106,12 +106,14 @@ const NoteContainer = ({scrollLeft, scrollTop}) => {
           id: newNote.id,
         },
       });
+    } else {
+      setHighlightNoteBeingEdited(true);
     }
   };
 
   const handleCanvasClick = (event) => {
     const { pageX, pageY } = event;
-    createNewNote(pageX, pageY); 
+    createNewNote(pageX, pageY);
   };
 
   return (
@@ -134,16 +136,6 @@ const NoteContainer = ({scrollLeft, scrollTop}) => {
         }}
         onClick={handleCanvasClick}
       >
-        <div
-          style={{
-            top: '500px',
-            left: '200px',
-            position: 'relative',
-            background: 'red',
-            height: '10px',
-            width: '10px',
-          }}
-        />
         {notes ? (
           notes.map((note) => (
             <Note

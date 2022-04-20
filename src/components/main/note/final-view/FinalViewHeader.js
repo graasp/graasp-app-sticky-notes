@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { CanvasContext } from '../../../context/CanvasContext';
 import FinalViewActions from './FinalViewActions';
-import { TITLE_STYLE } from '../../../../constants/styles';
+import { NOTE_TEXT_STYLE } from '../../../../constants/styles';
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -14,10 +14,17 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
-  title: TITLE_STYLE,
+  textStyle: NOTE_TEXT_STYLE,
   placeholderTitle: {
     fontSize: '0.9vw',
     color: 'grey',
+  },
+  title: {
+    fontSize: '1.2vw',
+    fontWeight: 'bold',
+  },
+  text: {
+    fontSize: '0.9vw',
   },
 }));
 
@@ -35,16 +42,41 @@ const FinalViewHeader = ({ title, id, color, showActions }) => {
 
   const isTitleEmpty = Boolean(title?.length);
 
+  const lines = title.split(/\r?\n/);
+
   return (
     <div className={classes.header}>
-      <Typography
-        className={clsx(classes.title, {
-          [classes.placeholderTitle]: isTitleEmpty,
-        })}
-        onClick={handleEdit}
-      >
-        {isTitleEmpty ? t('Click to edit...') : title}
-      </Typography>
+      <div>
+        {lines.length > 1 ? (
+          <>
+            <Typography
+              className={classes.title}
+              onClick={handleEdit}
+              component="h4"
+            >
+              {lines[0]}
+            </Typography>
+            {lines.slice(1).map((line) => (
+              <Typography
+                className={classes.text}
+                onClick={handleEdit}
+                component="p"
+              >
+                {line}
+              </Typography>
+            ))}
+          </>
+        ) : (
+          <Typography
+            className={clsx(classes.text, {
+              [classes.placeholderTitle]: isTitleEmpty,
+            })}
+            onClick={handleEdit}
+          >
+            {isTitleEmpty ? t('Click to edit...') : title}
+          </Typography>
+        )}
+      </div>
       <FinalViewActions
         id={id}
         title={title}

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import EditViewTextFields from './EditViewTextFields';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { CanvasContext } from '../../../context/CanvasContext';
@@ -17,6 +18,14 @@ const useStyles = makeStyles(() => ({
     cursor: 'default',
     borderRadius: '0.5em',
   },
+  highlight: { // TODO: Change this style and implement the animation
+    animation: 'glow 800ms ease-out 6 alternate',
+	  background: 'linear-gradient(#333933, #222922)',
+	  borderColor: '#f44336',
+	  boxShadow: '5px 5px 7px rgba(255,0,0,.1)',
+	  color: '#efe',
+	  outline: 'none',
+  },
 }));
 
 const NoteEditView = ({ note, id }) => {
@@ -29,7 +38,7 @@ const NoteEditView = ({ note, id }) => {
   const [description, setDescription] = useState(note.description);
   const [color, setColor] = useState(note.color);
 
-  const { setNoteBeingEditedId, userSetColor } = useContext(CanvasContext);
+  const { setNoteBeingEditedId, userSetColor, highlightNoteBeingEdited, setHighlightNoteBeingEdited } = useContext(CanvasContext);
 
   useEffect(() => {
     setColor(userSetColor);
@@ -67,13 +76,16 @@ const NoteEditView = ({ note, id }) => {
   const handleConfirm = () => {
     saveNote();
     setNoteBeingEditedId(null);
+    setHighlightNoteBeingEdited(false);
   };
+
+  console.log("Highlight? ", highlightNoteBeingEdited);
 
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
-        className={classes.form}
+        className={clsx(classes.form, (highlightNoteBeingEdited && classes.highlight))}
         style={{
           top: `${pageY}px`,
           left: `${pageX}px`,

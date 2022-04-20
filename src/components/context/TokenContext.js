@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
-import Loader from '../common/Loader';
+import { Loader } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
 import { showErrorToast } from '../../utils/toasts';
 

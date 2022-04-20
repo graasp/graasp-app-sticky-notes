@@ -23,8 +23,7 @@ const NoteEditView = ({ note, id }) => {
   const classes = useStyles();
 
   // destructure note properties
-  const { /* windowDimensions, */ position } = note;
-  // const { innerHeight, innerWidth } = windowDimensions;
+  const { position } = note;
   const { pageX, pageY } = position;
   const [title, setTitle] = useState(note.title);
   const [description, setDescription] = useState(note.description);

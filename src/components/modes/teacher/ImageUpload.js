@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
-import Loader from '../../common/Loader';
+import { Loader } from '@graasp/ui';
 import { Context } from '../../context/ContextContext';
 import configureUppy from '../../../utils/uppy';
 import { MAX_FILE_SIZE } from '../../../config/settings';

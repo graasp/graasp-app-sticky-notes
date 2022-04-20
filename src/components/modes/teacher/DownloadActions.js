@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Button } from '@material-ui/core';
+import { Button } from '@graasp/ui';
 import { saveAs } from 'file-saver';
 import { useAppActions } from '../../context/appData';
 import { showErrorToast } from '../../../utils/toasts';

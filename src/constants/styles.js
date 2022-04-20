@@ -4,9 +4,7 @@ export const NOTE_ACTION_STYLE = {
   cursor: 'pointer',
 };
 
-export const TITLE_STYLE = {
-  fontSize: '1vw',
-  fontWeight: 200,
+export const NOTE_TEXT_STYLE = {
   overflowWrap: 'anywhere',
   cursor: 'text',
   textAlign: 'justify',

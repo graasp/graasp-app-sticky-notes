@@ -134,16 +134,6 @@ const NoteContainer = ({ scrollLeft, scrollTop }) => {
         }}
         onClick={handleCanvasClick}
       >
-        <div
-          style={{
-            top: '500px',
-            left: '200px',
-            position: 'relative',
-            background: 'red',
-            height: '10px',
-            width: '10px',
-          }}
-        />
         {notes ? (
           notes.map((note) => (
             <Note

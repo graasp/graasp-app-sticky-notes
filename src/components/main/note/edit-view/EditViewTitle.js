@@ -5,10 +5,14 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { MAX_LENGTH_TITLE } from '../../../../config/settings';
 import { SMALL_DELAY_REFOCUS_MS } from '../../../../constants/constants';
+import { NOTE_TEXT_STYLE } from '../../../../constants/styles';
 
 const useStyles = makeStyles(() => ({
   container: { padding: '3%' },
-  textfield: { width: '100%' },
+  textfield: {
+    ...NOTE_TEXT_STYLE,
+    width: '100%',
+  },
 }));
 
 const EditViewTitle = ({ height, title, onChange, onEnter }) => {
@@ -28,6 +32,7 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
         placeholder={t('Title')}
         className={classes.textfield}
         autoFocus
+        multiline
         inputProps={{
           style: { fontSize: '1vw' },
           maxLength: MAX_LENGTH_TITLE,
@@ -40,7 +45,7 @@ const EditViewTitle = ({ height, title, onChange, onEnter }) => {
           onChange(event.target.value);
         }}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' && !e.shiftKey) {
             onEnter();
           }
         }}

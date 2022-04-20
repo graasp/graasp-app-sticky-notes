@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,7 @@ import { Button } from '@graasp/ui';
 import { saveAs } from 'file-saver';
 import { useAppActions } from '../../context/appData';
 import { showErrorToast } from '../../../utils/toasts';
+import { Context } from '../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -28,6 +29,8 @@ const DownloadActions = () => {
 
   const [enableDownload, setEnableDownload] = useState(false);
 
+  const context = useContext(Context);
+
   const {
     data: appActions,
     isSuccess: isAppActionsSuccess,
@@ -47,11 +50,24 @@ const DownloadActions = () => {
   }, [appActions, isAppActionsSuccess, isAppActionsError]);
 
   const handleDownload = () => {
-    // The filename should be improved.
-    const blob = new Blob([JSON.stringify(actions)], {
-      type: 'text/json;charset=utf-8',
-    });
-    saveAs(blob, 'app_actions.json');
+    const datetime = new Date().toJSON();
+
+    const blob = new Blob(
+      [
+        JSON.stringify({
+          context: {
+            ...Object.fromEntries(context),
+            datetime,
+          },
+          actions,
+        }),
+      ],
+      {
+        type: 'text/json;charset=utf-8',
+      },
+    );
+    const filename = `app_actions_${datetime}.json`;
+    saveAs(blob, filename);
   };
 
   return (

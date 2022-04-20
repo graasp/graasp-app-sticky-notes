@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import FinalViewHeader from './FinalViewHeader';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
-import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
+import { DEFAULT_ANONYMOUS_USERNAME, PERMISSION_LEVELS, DEFAULT_PERMISSION } from '../../../../config/settings';
+import { Context } from '../../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -45,6 +46,9 @@ const NoteFinalView = ({
   } = note;
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
+
+  const context = useContext(Context);
+  const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
   const [showActions, setShowActions] = useState(false);
   // grabDeltaX/Y captures the distance between the point we grabbed a div (note) and its top left
@@ -144,7 +148,7 @@ const NoteFinalView = ({
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        draggable
+        draggable={[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permissionLevel)}
       >
         <FinalViewHeader
           title={title}

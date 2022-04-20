@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
+import SelectCanvasSize from './SelectCanvasSize';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -89,6 +90,7 @@ const Settings = () => {
             <ImageUpload />
             <BackgroundToggle />
             <DownloadActions />
+            <SelectCanvasSize />
             <Divider className={classes.divider} />
             <div className={classes.buttonContainer}>
               <Button

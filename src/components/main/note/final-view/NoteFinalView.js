@@ -10,7 +10,7 @@ import { DEFAULT_ANONYMOUS_USERNAME } from '../../../../config/settings';
 const useStyles = makeStyles(() => ({
   noteContainer: {
     maxWidth: '15%',
-    position: 'absolute',
+    position: 'relative',
     padding: '0.7em 0.8em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
+const NoteFinalView = ({ note, id, userName, newPageX, newPageY, scrollLeft, scrollTop}) => {
   const classes = useStyles();
   // destructure note properties
   const {
@@ -56,8 +56,13 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
   // hence, when drag starts, we calculate the distance between current top left of div ('origin') and the point we grabbed it
   // when we update the position in onDragEnd, we adjust for this distance to generate the expected effect
   const onDragStart = (event) => {
-    const noteGrabbedX = event.pageX;
-    const noteGrabbedY = event.pageY;
+    event.dataTransfer.setData('text/plain', id);
+
+    /* eslint-disable no-param-reassign */
+    event.dataTransfer.dropEffect = 'move';
+
+    const noteGrabbedX = event.pageX + scrollLeft;
+    const noteGrabbedY = event.pageY + scrollTop;
     const distanceBetweenGrabAndOriginX = pageX - noteGrabbedX;
     const distanceBetweenGrabAndOriginY = pageY - noteGrabbedY;
     setGrabDeltaX(distanceBetweenGrabAndOriginX);
@@ -122,8 +127,10 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY }) => {
         onFocus={() => setShowActions(true)}
         onBlur={() => setShowActions(false)}
         style={{
-          top: `${(pageY / innerHeight) * 100}%`,
-          left: `${(pageX / innerWidth) * 100}%`,
+          // top: `${(pageY / innerHeight) * 100}%`,
+          // left: `${(pageX / innerWidth) * 100}%`,
+           top: `${pageY}px`,
+          left: `${pageX}px`,
           background: color,
           transform: `rotate(${rotation}deg)`,
         }}
@@ -171,12 +178,16 @@ NoteFinalView.propTypes = {
   userName: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
+  scrollLeft: PropTypes.number,
+  scrollTop: PropTypes.number,
 };
 
 NoteFinalView.defaultProps = {
   userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
+  scrollLeft: 0,
+  scrollTop: 0,
 };
 
 export default NoteFinalView;

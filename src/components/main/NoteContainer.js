@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppContext, useAppData } from '../context/appData';
@@ -25,7 +26,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteContainer = () => {
+/* eslint-disable-next-line no-unused-vars */
+const NoteContainer = ({scrollLeft, scrollTop}) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
@@ -109,8 +111,10 @@ const NoteContainer = () => {
   };
 
   const handleCanvasClick = (event) => {
+    console.log(event);
     const { pageX, pageY } = event;
-    createNewNote(pageX, pageY);
+    console.log("In element coord ", pageX, pageY);
+    createNewNote(pageX, pageY); 
   };
 
   return (
@@ -133,6 +137,16 @@ const NoteContainer = () => {
         }}
         onClick={handleCanvasClick}
       >
+        <div
+          style={{
+            top: '500px',
+            left: '200px',
+            position: 'relative',
+            background: 'red',
+            height: '10px',
+            width: '10px',
+          }}
+        />
         {notes ? (
           notes.map((note) => (
             <Note
@@ -148,6 +162,8 @@ const NoteContainer = () => {
               }
               newPageX={newPageX}
               newPageY={newPageY}
+              scrollLeft={scrollLeft}
+              scrollTop={scrollTop}
             />
           ))
         ) : (
@@ -156,6 +172,16 @@ const NoteContainer = () => {
       </div>
     </>
   );
+};
+
+NoteContainer.propTypes = {
+  scrollLeft: PropTypes.number,
+  scrollTop: PropTypes.number,
+};
+
+NoteContainer.defaultProps = {
+  scrollLeft: 0,
+  scrollTop: 0,
 };
 
 export default NoteContainer;

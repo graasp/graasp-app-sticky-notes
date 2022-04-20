@@ -46,7 +46,7 @@ const BackgroundImage = ({ children }) => {
 };
 
 BackgroundImage.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.elementType),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.elementType),PropTypes.elementType]),
 };
 
 BackgroundImage.defaultProps = {

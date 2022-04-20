@@ -26,7 +26,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-/* eslint-disable-next-line no-unused-vars */
 const NoteContainer = ({scrollLeft, scrollTop}) => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -111,9 +110,7 @@ const NoteContainer = ({scrollLeft, scrollTop}) => {
   };
 
   const handleCanvasClick = (event) => {
-    console.log(event);
     const { pageX, pageY } = event;
-    console.log("In element coord ", pageX, pageY);
     createNewNote(pageX, pageY); 
   };
 

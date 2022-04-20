@@ -1,8 +1,8 @@
 import React, { createContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
+import { Loader } from '@graasp/ui';
 import { hooks } from '../../config/queryClient';
-import Loader from '../common/Loader';
 import i18n from '../../config/i18n';
 import { DEFAULT_LANG, DEFAULT_LOCAL_CONTEXT } from '../../config/settings';
 import { showErrorToast } from '../../utils/toasts';

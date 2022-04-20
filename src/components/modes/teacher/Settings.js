@@ -8,7 +8,7 @@ import Modal from '@material-ui/core/Modal';
 import Fab from '@material-ui/core/Fab';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';

@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteContainer = ({scrollLeft, scrollTop}) => {
+const NoteContainer = ({ scrollLeft, scrollTop }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
@@ -111,7 +111,7 @@ const NoteContainer = ({scrollLeft, scrollTop}) => {
 
   const handleCanvasClick = (event) => {
     const { pageX, pageY } = event;
-    createNewNote(pageX, pageY); 
+    createNewNote(pageX, pageY);
   };
 
   return (

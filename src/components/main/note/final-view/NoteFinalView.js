@@ -22,7 +22,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteFinalView = ({ note, id, userName, newPageX, newPageY, scrollLeft, scrollTop}) => {
+const NoteFinalView = ({
+  note,
+  id,
+  userName,
+  newPageX,
+  newPageY,
+  scrollLeft,
+  scrollTop,
+}) => {
   const classes = useStyles();
   // destructure note properties
   const {
@@ -129,7 +137,7 @@ const NoteFinalView = ({ note, id, userName, newPageX, newPageY, scrollLeft, scr
         style={{
           // top: `${(pageY / innerHeight) * 100}%`,
           // left: `${(pageX / innerWidth) * 100}%`,
-           top: `${pageY}px`,
+          top: `${pageY}px`,
           left: `${pageX}px`,
           background: color,
           transform: `rotate(${rotation}deg)`,

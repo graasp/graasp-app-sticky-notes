@@ -12,3 +12,13 @@ export const TITLE_STYLE = {
   textAlign: 'justify',
   padding: 'none',
 };
+
+export const A4_DIMENSIONS = {
+  height: '210mm',
+  width: '297mm',
+};
+
+export const A3_DIMENSIONS = {
+  height: '297mm',
+  width: '420mm',
+};

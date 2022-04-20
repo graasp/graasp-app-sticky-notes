@@ -1846,18 +1846,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@github:graasp/graasp-ui.git":
+"@graasp/ui@github:graasp/graasp-ui.git#114/addDataCyProp":
   version: 0.2.0
-  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=24d2a4becb962236a768b9fb8e9a42f78580aee1"
+  resolution: "@graasp/ui@https://github.com/graasp/graasp-ui.git#commit=c957e05969f8ffcb09dce888c1d4c1d7317aad70"
   dependencies:
     "@graasp/utils": "github:graasp/graasp-utils.git"
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.0.0
-    katex: 0.15.1
+    katex: 0.15.3
     qs: 6.10.3
-    react-cookie-consent: 7.2.1
-    react-i18next: 11.15.3
+    react-cookie-consent: 7.4.1
+    react-i18next: 11.16.2
     react-quill: 1.3.5
     react-text-mask: 5.4.3
     uuid: 8.3.2
@@ -1868,7 +1868,7 @@ __metadata:
     i18next: 21.3.1
     react: ^16.13.1
     react-dom: 16.13.1
-  checksum: 03db9261ae6a180410dd32d63189eeff8dc394f183290b2ce46aecf85bf382424384c70c729fda7a4a17d160a3ab1a6db7b506fb0f913d677871c004af272359
+  checksum: 765d81e4a760cceef52397cb58d44738db04ee794003f5abd2448a8389136bb06f8a94ab4ecb6122e04fbd62f57b931b318e881a309f3dda09695fce104148d1
   languageName: node
   linkType: hard
 
@@ -9399,7 +9399,7 @@ __metadata:
     "@commitlint/cli": ~16.2.1
     "@commitlint/config-conventional": ~16.2.1
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git"
-    "@graasp/ui": "github:graasp/graasp-ui.git"
+    "@graasp/ui": "github:graasp/graasp-ui.git#114/addDataCyProp"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 4.11.2
     "@material-ui/lab": 4.0.0-alpha.60
@@ -11991,14 +11991,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:0.15.1":
-  version: 0.15.1
-  resolution: "katex@npm:0.15.1"
+"katex@npm:0.15.3":
+  version: 0.15.3
+  resolution: "katex@npm:0.15.3"
   dependencies:
     commander: ^8.0.0
   bin:
     katex: cli.js
-  checksum: eab97bbe292cc60b15fec264cba86d110e5e089045de084cd3a0f27b21ef65857a4d296c418ec3b397ff987671a20c6a9a1fd30f1862b86a0e6b7dbe3fb893f6
+  checksum: 12bec82d9ae9f122b9aeafaf2de476e702d12ae19bb9bdd9c8c24126fd81e752047bb856254af98ca54fc51f3bb7f149b3902d65dcdafb5e3deeb691ec4d3db2
   languageName: node
   linkType: hard
 
@@ -15869,15 +15869,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-cookie-consent@npm:7.2.1":
-  version: 7.2.1
-  resolution: "react-cookie-consent@npm:7.2.1"
+"react-cookie-consent@npm:7.4.1":
+  version: 7.4.1
+  resolution: "react-cookie-consent@npm:7.4.1"
   dependencies:
     js-cookie: ^2.2.1
     prop-types: ^15.7.2
   peerDependencies:
-    react: ^16.13.1 || ^17.0.0
-  checksum: 9676e9611998f58e43ae76721f33b80eb95be37ad3937de0fd4f623ac5e7c72573d45cc36ca5e0c6b9d494a09a8aea1aea7ba8ae5ad0ebb2b692837ef78a561e
+    react: ^16.13.1 || ^17.0.0 || ^18.0.0
+  checksum: 05ab24f7e028da89160baa51c1c2eb62156a98c8e0b55d6548fc95aba8a7e325b06637c1aa1a974b9456f2f1316082dda73ac3b6448fd79ac4cccecda195e4ed
   languageName: node
   linkType: hard
 
@@ -15950,9 +15950,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:11.15.3":
-  version: 11.15.3
-  resolution: "react-i18next@npm:11.15.3"
+"react-i18next@npm:11.16.2":
+  version: 11.16.2
+  resolution: "react-i18next@npm:11.16.2"
   dependencies:
     "@babel/runtime": ^7.14.5
     html-escaper: ^2.0.2
@@ -15965,7 +15965,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 8bb926e40136f57c21771d41b92c445ce457b70243fef45642c98967d2c6bb2d8a0df3c0db16909c2c6a8b007b2f7a4355b949a80e07f7e1152ed1be4756400d
+  checksum: 3e86c5e7a73eef88eff7487bbc87ecf3d5c6808ce3d0cc1e9599e6a1b72466d2d6ced2b1b600c18a2309757bea49d1670526a1bc8953a9bf377964e9ea3c9166
   languageName: node
   linkType: hard
 

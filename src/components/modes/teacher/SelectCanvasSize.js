@@ -42,7 +42,7 @@ const SelectCanvasSize = () => {
     MUTATION_KEYS.PATCH_APP_SETTING,
   );
 
-  const [dimensionsSelected, setDimensionsSelected] = useState(DEFAULT_CANVAS_DIMENSIONS);
+  const [dimensionsSelected, setDimensionsSelected] = useState();
   const [dimensionsSelectedKey, setDimensionsSelectedKey] = useState(DEFAULT_CANVAS_DIMENSIONS);
 
   const { data: appSettings, isSuccess } = useAppSettings();
@@ -53,19 +53,20 @@ const SelectCanvasSize = () => {
         ({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS,
       );
       if (size) {
-        setDimensionsSelected(
-          appSettings?.find(
-            ({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS,
-          ) || CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
-        );
+        const s = appSettings?.find(
+          ({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS,
+        ) || DEFAULT_CANVAS_DIMENSIONS_SETTING;
+        setDimensionsSelected(s);
+        setDimensionsSelectedKey(s?.data?.key ?? DEFAULT_CANVAS_DIMENSIONS);
       }
     }
   }, [appSettings, isSuccess]);
 
   const handleSelect = (event) => {
-    console.log(event.target.value);
-    const dimSel = CANVAS_DIMENSIONS.get(event.target.value);
-    console.log(dimensionsSelected);
+    const dimSel = {
+      ...CANVAS_DIMENSIONS.get(event.target.value),
+      key: event.target.value,
+    };
     const newDimensionsSetting = {
       ...(dimensionsSelected ?? DEFAULT_CANVAS_DIMENSIONS_SETTING),
       data: dimSel,

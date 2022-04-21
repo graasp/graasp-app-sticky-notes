@@ -11,7 +11,7 @@ export const PERMISSION_LEVELS = {
   ADMIN: 'admin',
 };
 
-export const MAX_LENGTH_TITLE = 64;
+export const MAX_LENGTH_TITLE = 1024;
 
 export const DEFAULT_ANONYMOUS_USERNAME = 'Anonymous';
 

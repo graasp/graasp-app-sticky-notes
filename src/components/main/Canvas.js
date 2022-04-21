@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
 import { useAppSettings } from '../context/appData';
 import {
   DEFAULT_BACKGROUND_ENABLED,
+  DEFAULT_CANVAS_DIMENSIONS,
   DEFAULT_PERMISSION,
   PERMISSION_LEVELS,
 } from '../../config/settings';
-import { APP_SETTINGS, CANVAS_DIMENSIONS } from '../../constants/constants';
+import { APP_SETTINGS } from '../../constants/constants';
 import { Context } from '../context/ContextContext';
 import NoteContainer from './NoteContainer';
-import { A3_DIMENSIONS, A4_DIMENSIONS } from '../../constants/styles';
+import CANVAS_DIMENSIONS from '../../constants/canvas_dimensions';
 
 const useStyles = makeStyles(() => ({
   scrollContainer: {
@@ -26,15 +26,13 @@ const useStyles = makeStyles(() => ({
   mainContainer: {
     border: '2px solid black',
   },
-  A4_container: A4_DIMENSIONS,
-  A3_container: A3_DIMENSIONS,
 }));
 
 const Canvas = () => {
   const classes = useStyles();
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
-  const [canvasDimensionsSelector, setCanvasDimensionsSelector] = useState(
-    CANVAS_DIMENSIONS.A3,
+  const [canvasDimensions, setCanvasDimensions] = useState(
+    CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
   );
   const context = useContext(Context);
 
@@ -60,9 +58,9 @@ const Canvas = () => {
           )?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED,
         ),
       );
-      setCanvasDimensionsSelector(
+      setCanvasDimensions(
         appSettings?.find(({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS)
-          ?.data?.dimensions ?? CANVAS_DIMENSIONS.A3,
+          ?.data ?? CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
       );
     }
   });
@@ -83,24 +81,19 @@ const Canvas = () => {
     ticking = true;
   };
 
-  const dimensions = () => {
-    switch (canvasDimensionsSelector) {
-      case CANVAS_DIMENSIONS.A4:
-        return classes.A4_container;
-      case CANVAS_DIMENSIONS.A3:
-        return classes.A3_container;
-      default:
-        return classes.A4_container;
-    }
-  };
-
   return (
     <div
       className={classes.scrollContainer}
       ref={scrollContainer}
       onScroll={handleScrollEvent}
     >
-      <div className={clsx(classes.mainContainer, dimensions())}>
+      <div
+        className={classes.mainContainer}
+        style={{
+          height: canvasDimensions.height,
+          width: canvasDimensions.width,
+        }}
+      >
         {backgroundToggleSetting ? (
           <BackgroundImage>
             <NoteContainer

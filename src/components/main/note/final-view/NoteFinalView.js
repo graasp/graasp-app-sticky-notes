@@ -5,7 +5,11 @@ import FinalViewHeader from './FinalViewHeader';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
-import { DEFAULT_ANONYMOUS_USERNAME, PERMISSION_LEVELS, DEFAULT_PERMISSION } from '../../../../config/settings';
+import {
+  DEFAULT_ANONYMOUS_USERNAME,
+  PERMISSION_LEVELS,
+  DEFAULT_PERMISSION,
+} from '../../../../config/settings';
 import { Context } from '../../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
@@ -148,7 +152,9 @@ const NoteFinalView = ({
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        draggable={[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permissionLevel)}
+        draggable={[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
+          permissionLevel,
+        )}
       >
         <FinalViewHeader
           title={title}

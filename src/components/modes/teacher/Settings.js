@@ -22,14 +22,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '30%',
-    maxHeight: '50%',
+    width: '50%',
+    maxHeight: '70%',
     padding: theme.spacing(3),
     backgroundColor: 'white',
     borderRadius: '5px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    overflowY: 'scroll',
   },
   header: {
     fontSize: '1.5vw',

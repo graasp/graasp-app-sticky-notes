@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem, InputAdornment, TextField } from '@material-ui/core';
+import { Button } from '@graasp/ui';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
 import { useAppSettings } from '../../context/appData';
@@ -17,11 +18,17 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     width: '100%',
   },
+
   headerText: {
     fontSize: '1.05vw',
   },
   headerDisabled: {
     color: 'grey',
+  },
+  rightContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
 }));
 
@@ -43,7 +50,12 @@ const SelectCanvasSize = () => {
   );
 
   const [dimensionsSelected, setDimensionsSelected] = useState();
-  const [dimensionsSelectedKey, setDimensionsSelectedKey] = useState(DEFAULT_CANVAS_DIMENSIONS);
+  const [dimensionsSelectedKey, setDimensionsSelectedKey] = useState(
+    DEFAULT_CANVAS_DIMENSIONS,
+  );
+
+  const [customWidth, setCustomWidth] = useState();
+  const [customHeight, setCustomHeight] = useState();
 
   const { data: appSettings, isSuccess } = useAppSettings();
 
@@ -53,11 +65,14 @@ const SelectCanvasSize = () => {
         ({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS,
       );
       if (size) {
-        const s = appSettings?.find(
-          ({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS,
-        ) || DEFAULT_CANVAS_DIMENSIONS_SETTING;
+        const s =
+          appSettings?.find(
+            ({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS,
+          ) || DEFAULT_CANVAS_DIMENSIONS_SETTING;
         setDimensionsSelected(s);
         setDimensionsSelectedKey(s?.data?.key ?? DEFAULT_CANVAS_DIMENSIONS);
+        setCustomWidth(parseFloat(s?.data?.width));
+        setCustomHeight(parseFloat(s?.data?.height));
       }
     }
   }, [appSettings, isSuccess]);
@@ -67,6 +82,10 @@ const SelectCanvasSize = () => {
       ...CANVAS_DIMENSIONS.get(event.target.value),
       key: event.target.value,
     };
+    if (event.target.value === 'custom') {
+      dimSel.height = `${customHeight.toString()}mm`;
+      dimSel.width = `${customWidth.toString()}mm`;
+    }
     const newDimensionsSetting = {
       ...(dimensionsSelected ?? DEFAULT_CANVAS_DIMENSIONS_SETTING),
       data: dimSel,
@@ -79,6 +98,16 @@ const SelectCanvasSize = () => {
     setDimensionsSelectedKey(event.target.value);
   };
 
+  const saveCustomDimensions = (event) => {
+    const fakeEvent = {
+      ...event,
+      target: {
+        value: 'custom',
+      },
+    };
+    handleSelect(fakeEvent);
+  };
+
   const generateMenuItem = () => {
     const children = [];
     CANVAS_DIMENSIONS.forEach((value, key) => {
@@ -88,24 +117,70 @@ const SelectCanvasSize = () => {
   };
 
   return (
-    <div className={classes.toggleContainer}>
-      <Typography className={classes.headerText}>
-        {t('Select canvas size')}
-      </Typography>
-      <FormControlLabel
-        control={
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={dimensionsSelectedKey}
-            label="Size"
-            onChange={handleSelect}
-          >
-            {generateMenuItem()}
-          </Select>
-        }
-      />
-    </div>
+    <>
+      <div className={classes.toggleContainer}>
+        <Typography className={classes.headerText}>
+          {t('Select canvas size')}
+        </Typography>
+        <FormControlLabel
+          control={
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={dimensionsSelectedKey}
+              label="Size"
+              onChange={handleSelect}
+            >
+              {generateMenuItem()}
+            </Select>
+          }
+        />
+      </div>
+      {dimensionsSelectedKey === 'custom' && (
+          <div className={classes.toggleContainer}>
+            <Typography className={classes.headerText}>
+              {t('Enter custom size')}
+            </Typography>
+            <FormControlLabel
+              control={
+                <>
+                  <TextField
+                    label="Width"
+                    value={customWidth}
+                    onChange={(e) => {
+                      setCustomWidth(e.target.value);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">mm</InputAdornment>
+                    }
+                    type="number"
+                    size="small"
+                  />
+                  <TextField
+                    label="Height"
+                    value={customHeight}
+                    onChange={(e) => {
+                      setCustomHeight(e.target.value);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">mm</InputAdornment>
+                    }
+                    type="number"
+                    size="small"
+                  />
+                  <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={saveCustomDimensions}
+                >
+                  {t('Update')}
+                </Button>
+                </>
+              }
+            />
+          </div>
+      )}
+    </>
   );
 };
 

@@ -1,16 +1,20 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import FinalViewHeader from './FinalViewHeader';
 import FinalViewFooter from './FinalViewFooter';
 import { useMutation, MUTATION_KEYS } from '../../../../config/queryClient';
 import { ACTION_TYPES } from '../../../../config/actionTypes';
-import { DEFAULT_ANONYMOUS_USERNAME, PERMISSION_LEVELS, DEFAULT_PERMISSION } from '../../../../config/settings';
+import {
+  DEFAULT_ANONYMOUS_USERNAME,
+  PERMISSION_LEVELS,
+  DEFAULT_PERMISSION,
+} from '../../../../config/settings';
 import { Context } from '../../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
-    maxWidth: '15%',
     position: 'relative',
     padding: '0.7em 0.8em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
@@ -19,7 +23,15 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'flex-start',
     cursor: 'move',
     borderRadius: '0.3em',
+  },
+  smallNoteContainer: {
     width: '12em',
+  },
+  mediumNoteContainer: {
+    width: '15em',
+  },
+  largeNoteContainer: {
+    width: '20em',
   },
 }));
 
@@ -126,13 +138,25 @@ const NoteFinalView = ({
     });
   };
 
+  const getClassSize = () => {
+    if(title?.length < 32) {
+      return classes.smallNoteContainer;
+    }
+    if(title?.length < 64) {
+      return classes.mediumNoteContainer;
+    }
+    return classes.largeNoteContainer;
+  };
+
+  const getClass = () => clsx(classes.noteContainer, getClassSize());
+
   /* eslint-disable jsx-a11y/click-events-have-key-events */
   /* The click event is used only to prevent its propagation to the canvas. */
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
-        className={classes.noteContainer}
+        className={getClass()}
         onClick={(event) => event.stopPropagation()}
         onMouseOver={() => setShowActions(true)}
         onMouseLeave={() => setShowActions(false)}
@@ -148,7 +172,9 @@ const NoteFinalView = ({
         }}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        draggable={[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(permissionLevel)}
+        draggable={[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
+          permissionLevel,
+        )}
       >
         <FinalViewHeader
           title={title}

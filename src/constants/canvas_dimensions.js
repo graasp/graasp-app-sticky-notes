@@ -15,6 +15,22 @@ const CANVAS_DIMENSIONS = new Map([
       width: '420mm',
     },
   ],
+  [
+    'custom',
+    {
+      name: 'Custom',
+      height: 'auto',
+      width: 'auto',
+    },
+  ],
+  [
+    'screen',
+    {
+      name: 'Screen size',
+      height: '100%',
+      width: '100%',
+    },
+  ],
 ]);
 
 export default CANVAS_DIMENSIONS;

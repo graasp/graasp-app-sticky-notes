@@ -16,6 +16,8 @@
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.60",
+    "@sentry/react": "6.19.6",
+    "@sentry/tracing": "6.19.6",
     "@uppy/core": "2.1.5",
     "@uppy/drag-drop": "2.0.6",
     "@uppy/file-input": "2.0.5",

@@ -73,7 +73,7 @@ const NoteEditView = ({ note, id }) => {
     postAction({
       type: ACTION_TYPES.EDIT,
       data: {
-        note: updatedNote,
+        ...updatedNote,
         id,
       },
     });

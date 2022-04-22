@@ -8,13 +8,17 @@ import Root from './components/Root';
 import './index.css';
 import buildDatabase, { mockContext } from './data/db';
 import { MOCK_API } from './config/settings';
-import { SENTRY_DSN, SENTRY_TRACE_SAMPLE_RATE, SENTRY_ENVIRONMENT } from './config/sentry';
+import {
+  SENTRY_DSN,
+  SENTRY_TRACE_SAMPLE_RATE,
+  SENTRY_ENVIRONMENT,
+} from './config/sentry';
 
 Sentry.init({
   dsn: SENTRY_DSN,
   integrations: [new BrowserTracing()],
   environment: SENTRY_ENVIRONMENT,
-  
+
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production

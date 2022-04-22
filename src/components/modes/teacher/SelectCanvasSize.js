@@ -137,48 +137,48 @@ const SelectCanvasSize = () => {
         />
       </div>
       {dimensionsSelectedKey === 'custom' && (
-          <div className={classes.toggleContainer}>
-            <Typography className={classes.headerText}>
-              {t('Enter custom size')}
-            </Typography>
-            <FormControlLabel
-              control={
-                <>
-                  <TextField
-                    label="Width"
-                    value={customWidth}
-                    onChange={(e) => {
-                      setCustomWidth(e.target.value);
-                    }}
-                    endAdornment={
-                      <InputAdornment position="end">mm</InputAdornment>
-                    }
-                    type="number"
-                    size="small"
-                  />
-                  <TextField
-                    label="Height"
-                    value={customHeight}
-                    onChange={(e) => {
-                      setCustomHeight(e.target.value);
-                    }}
-                    endAdornment={
-                      <InputAdornment position="end">mm</InputAdornment>
-                    }
-                    type="number"
-                    size="small"
-                  />
-                  <Button
+        <div className={classes.toggleContainer}>
+          <Typography className={classes.headerText}>
+            {t('Enter custom size')}
+          </Typography>
+          <FormControlLabel
+            control={
+              <>
+                <TextField
+                  label="Width"
+                  value={customWidth}
+                  onChange={(e) => {
+                    setCustomWidth(e.target.value);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">mm</InputAdornment>
+                  }
+                  type="number"
+                  size="small"
+                />
+                <TextField
+                  label="Height"
+                  value={customHeight}
+                  onChange={(e) => {
+                    setCustomHeight(e.target.value);
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">mm</InputAdornment>
+                  }
+                  type="number"
+                  size="small"
+                />
+                <Button
                   variant="contained"
                   color="secondary"
                   onClick={saveCustomDimensions}
                 >
                   {t('Update')}
                 </Button>
-                </>
-              }
-            />
-          </div>
+              </>
+            }
+          />
+        </div>
       )}
     </>
   );

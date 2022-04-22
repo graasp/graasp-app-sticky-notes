@@ -5,55 +5,55 @@ import PropTypes from 'prop-types';
 import { Slider, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    mainContainer: {
-      position: 'fixed',
-      bottom: theme.spacing(2),
-      left: theme.spacing(1),
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      maxWidth: '20%',
-      width: '20%',
-      maxHeight: '20%',
-    },
-    sliderStyle: {
-        width: '80%',
-    },
-  }));
+  mainContainer: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    left: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    maxWidth: '20%',
+    width: '20%',
+    maxHeight: '20%',
+  },
+  sliderStyle: {
+    width: '80%',
+  },
+}));
 
-const CanvasScaleControl = ({canvasScale, setCanvasScale}) => {
-    const { t } = useTranslation();
-    const classes = useStyles();
+const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
+  const { t } = useTranslation();
+  const classes = useStyles();
 
-    const getAriaLabel = (val) => `${100*val}%`;
+  const getAriaLabel = (val) => `${100 * val}%`;
 
-    const handleChange = (event, value) => {
-        setCanvasScale(value);
-    };
-    return (
-        <div className={classes.mainContainer}>
-        <Typography>{t('Zoom')}</Typography>
-        <Slider
-            className={classes.sliderStyle}
-            getAriaLabel={getAriaLabel}
-            defaultValue={1}
-            value={canvasScale}
-            onChange={handleChange}
-            valueLabelDisplay="auto"
-            step={0.2}
-            marks
-            min={0.2}
-            max={2}
-            // orientation='vertical'
-            />
-            </div>
-    );
+  const handleChange = (event, value) => {
+    setCanvasScale(value);
+  };
+  return (
+    <div className={classes.mainContainer}>
+      <Typography>{t('Zoom')}</Typography>
+      <Slider
+        className={classes.sliderStyle}
+        getAriaLabel={getAriaLabel}
+        defaultValue={1}
+        value={canvasScale}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+        step={0.2}
+        marks
+        min={0.2}
+        max={2}
+        // orientation='vertical'
+      />
+    </div>
+  );
 };
 
 CanvasScaleControl.propTypes = {
-    canvasScale: PropTypes.number.isRequired,
-    setCanvasScale: PropTypes.func.isRequired,
+  canvasScale: PropTypes.number.isRequired,
+  setCanvasScale: PropTypes.func.isRequired,
 };
 
 export default CanvasScaleControl;

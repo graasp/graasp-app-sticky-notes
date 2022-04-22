@@ -105,7 +105,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
       postAction({
         type: ACTION_TYPES.ADD,
         data: {
-          note: newNote,
+          ...newNote,
           id: newNote.id,
         },
       });

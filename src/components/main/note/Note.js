@@ -5,7 +5,8 @@ import NoteEditView from './edit-view/NoteEditView';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 
-const Note = ({ note, id, userName, newPageX, newPageY }) => {
+const Note = ({ note, id, userName, newPageX, newPageY, scrollLeft,
+  scrollTop, canvasScale }) => {
   const { noteBeingEditedId } = useContext(CanvasContext);
 
   return noteBeingEditedId === id ? (
@@ -17,6 +18,9 @@ const Note = ({ note, id, userName, newPageX, newPageY }) => {
       userName={userName}
       newPageX={newPageX}
       newPageY={newPageY}
+      scrollLeft={scrollLeft}
+      scrollTop={scrollTop}
+      canvasScale={canvasScale}
     />
   );
 };
@@ -43,12 +47,18 @@ Note.propTypes = {
   userName: PropTypes.string,
   newPageX: PropTypes.number,
   newPageY: PropTypes.number,
+  scrollLeft: PropTypes.number,
+  scrollTop: PropTypes.number,
+  canvasScale: PropTypes.number,
 };
 
 Note.defaultProps = {
   userName: DEFAULT_ANONYMOUS_USERNAME,
   newPageX: null,
   newPageY: null,
+  scrollLeft: 0,
+  scrollTop: 0,
+  canvasScale: 1.0,
 };
 
 export default Note;

@@ -8,15 +8,17 @@ import Root from './components/Root';
 import './index.css';
 import buildDatabase, { mockContext } from './data/db';
 import { MOCK_API } from './config/settings';
+import { SENTRY_DSN, SENTRY_TRACE_SAMPLE_RATE, SENTRY_ENVIRONMENT } from './config/sentry';
 
 Sentry.init({
-  dsn: 'https://6558f0f2adb64d6593db72a3905cfe49@o244065.ingest.sentry.io/6353030',
+  dsn: SENTRY_DSN,
   integrations: [new BrowserTracing()],
-
+  environment: SENTRY_ENVIRONMENT,
+  
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
+  tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
 });
 
 if (MOCK_API) {

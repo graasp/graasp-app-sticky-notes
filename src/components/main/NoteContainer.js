@@ -105,7 +105,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
       postAction({
         type: ACTION_TYPES.ADD,
         data: {
-          note: newNote,
+          ...newNote,
           id: newNote.id,
         },
       });
@@ -116,9 +116,9 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
 
   const handleCanvasClick = (event) => {
     const { clientX, clientY } = event;
-    const { left, top } = noteContainerRef.current.getBoundingClientRect()
-    const x = (clientX - left)/canvasScale;
-    const y = (clientY - top)/canvasScale;
+    const { left, top } = noteContainerRef.current.getBoundingClientRect();
+    const x = (clientX - left) / canvasScale;
+    const y = (clientY - top) / canvasScale;
     createNewNote(x, y);
   };
 
@@ -138,8 +138,8 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
         }}
         onDrop={(event) => {
           event.preventDefault();
-          setNewPageX(tmpNewPageX/canvasScale);
-          setNewPageY(tmpNewPageY/canvasScale);
+          setNewPageX(tmpNewPageX / canvasScale);
+          setNewPageY(tmpNewPageY / canvasScale);
         }}
         onClick={handleCanvasClick}
       >

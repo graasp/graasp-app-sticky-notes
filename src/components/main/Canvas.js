@@ -120,10 +120,13 @@ const Canvas = () => {
         )}
       </div>
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
-          permissionLevel,
-        ) && <Settings />}
-        <ColorSettings />
-        <CanvasScaleControl canvasScale={canvasScale} setCanvasScale={setCanvasScale} />
+        permissionLevel,
+      ) && <Settings />}
+      <ColorSettings />
+      <CanvasScaleControl
+        canvasScale={canvasScale}
+        setCanvasScale={setCanvasScale}
+      />
     </div>
   );
 };

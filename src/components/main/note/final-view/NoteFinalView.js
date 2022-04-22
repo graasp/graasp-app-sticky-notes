@@ -15,7 +15,7 @@ import { Context } from '../../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
-    position: 'relative',
+    position: 'absolute',
     padding: '0.7em 0.8em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
@@ -62,6 +62,8 @@ const NoteFinalView = ({
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
 
+  // console.log("Position: ", pageX, " - ", pageY);
+
   const context = useContext(Context);
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
@@ -88,8 +90,8 @@ const NoteFinalView = ({
     /* eslint-disable no-param-reassign */
     event.dataTransfer.dropEffect = 'move';
 
-    const noteGrabbedX = event.pageX/canvasScale;
-    const noteGrabbedY = event.pageY/canvasScale;
+    const noteGrabbedX = event.pageX / canvasScale;
+    const noteGrabbedY = event.pageY / canvasScale;
     const distanceBetweenGrabAndOriginX = pageX - noteGrabbedX;
     const distanceBetweenGrabAndOriginY = pageY - noteGrabbedY;
     setGrabDeltaX(distanceBetweenGrabAndOriginX);
@@ -99,6 +101,8 @@ const NoteFinalView = ({
   const onDragEnd = () => {
     const finalPageX = newPageX + grabDeltaX;
     const finalPageY = newPageY + grabDeltaY;
+
+    console.log("Final position: ", finalPageX, " - " ,finalPageY);
     const updatedNote = {
       data: {
         category,
@@ -123,7 +127,7 @@ const NoteFinalView = ({
     postAction({
       type: ACTION_TYPES.MOVE,
       data: {
-        note: updatedNote.data,
+        ...updatedNote.data,
         id: updatedNote.id,
       },
     });
@@ -142,10 +146,10 @@ const NoteFinalView = ({
   };
 
   const getClassSize = () => {
-    if(title?.length < 32) {
+    if (title?.length < 32) {
       return classes.smallNoteContainer;
     }
-    if(title?.length < 64) {
+    if (title?.length < 64) {
       return classes.mediumNoteContainer;
     }
     return classes.largeNoteContainer;

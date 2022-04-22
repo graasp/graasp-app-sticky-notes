@@ -5,8 +5,16 @@ import NoteEditView from './edit-view/NoteEditView';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 
-const Note = ({ note, id, userName, newPageX, newPageY, scrollLeft,
-  scrollTop, canvasScale }) => {
+const Note = ({
+  note,
+  id,
+  userName,
+  newPageX,
+  newPageY,
+  scrollLeft,
+  scrollTop,
+  canvasScale,
+}) => {
   const { noteBeingEditedId } = useContext(CanvasContext);
 
   return noteBeingEditedId === id ? (

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactGa from 'react-ga';
+// import ReactGa from 'react-ga';
 import { I18nextProvider } from 'react-i18next';
 import {
   MuiThemeProvider,
@@ -21,19 +21,19 @@ import {
   ReactQueryDevtools,
 } from '../config/queryClient';
 
-import {
-  REACT_APP_GRAASP_DEVELOPER_ID,
-  REACT_APP_GRAASP_APP_ID,
-  REACT_APP_VERSION,
-  REACT_APP_GOOGLE_ANALYTICS_ID,
-} from '../config/env';
+// import {
+//   REACT_APP_GRAASP_DEVELOPER_ID,
+//   REACT_APP_GRAASP_APP_ID,
+//   REACT_APP_VERSION,
+//   REACT_APP_GOOGLE_ANALYTICS_ID,
+// } from '../config/env';
 
-ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
-ReactGa.ga(
-  'send',
-  'pageview',
-  `/${REACT_APP_GRAASP_DEVELOPER_ID}/${REACT_APP_GRAASP_APP_ID}/${REACT_APP_VERSION}/`,
-);
+// ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
+// ReactGa.ga(
+//   'send',
+//   'pageview',
+//   `/${REACT_APP_GRAASP_DEVELOPER_ID}/${REACT_APP_GRAASP_APP_ID}/${REACT_APP_VERSION}/`,
+// );
 
 const useStyles = makeStyles({
   root: {

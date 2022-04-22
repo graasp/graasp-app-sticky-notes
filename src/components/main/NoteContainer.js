@@ -1,7 +1,7 @@
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,11 +26,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteContainer = ({ scrollLeft, scrollTop }) => {
+const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
+
+  const noteContainerRef = useRef();
 
   const { userSetColor, noteBeingEditedId, setHighlightNoteBeingEdited } =
     useContext(CanvasContext);
@@ -113,8 +115,11 @@ const NoteContainer = ({ scrollLeft, scrollTop }) => {
   };
 
   const handleCanvasClick = (event) => {
-    const { pageX, pageY } = event;
-    createNewNote(pageX, pageY);
+    const { clientX, clientY } = event;
+    const { left, top } = noteContainerRef.current.getBoundingClientRect()
+    const x = (clientX - left)/canvasScale;
+    const y = (clientY - top)/canvasScale;
+    createNewNote(x, y);
   };
 
   return (
@@ -122,6 +127,7 @@ const NoteContainer = ({ scrollLeft, scrollTop }) => {
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={classes.noteContainer}
+        ref={noteContainerRef}
         onDragOver={(event) => {
           event.stopPropagation();
           event.preventDefault();
@@ -132,8 +138,8 @@ const NoteContainer = ({ scrollLeft, scrollTop }) => {
         }}
         onDrop={(event) => {
           event.preventDefault();
-          setNewPageX(tmpNewPageX);
-          setNewPageY(tmpNewPageY);
+          setNewPageX(tmpNewPageX/canvasScale);
+          setNewPageY(tmpNewPageY/canvasScale);
         }}
         onClick={handleCanvasClick}
       >
@@ -154,6 +160,7 @@ const NoteContainer = ({ scrollLeft, scrollTop }) => {
               newPageY={newPageY}
               scrollLeft={scrollLeft}
               scrollTop={scrollTop}
+              canvasScale={canvasScale}
             />
           ))
         ) : (
@@ -167,11 +174,13 @@ const NoteContainer = ({ scrollLeft, scrollTop }) => {
 NoteContainer.propTypes = {
   scrollLeft: PropTypes.number,
   scrollTop: PropTypes.number,
+  canvasScale: PropTypes.number,
 };
 
 NoteContainer.defaultProps = {
   scrollLeft: 0,
   scrollTop: 0,
+  canvasScale: 1.0,
 };
 
 export default NoteContainer;

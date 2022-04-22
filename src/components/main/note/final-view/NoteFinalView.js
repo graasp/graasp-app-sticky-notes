@@ -41,8 +41,11 @@ const NoteFinalView = ({
   userName,
   newPageX,
   newPageY,
+  /* eslint-disable-next-line no-unused-vars */
   scrollLeft,
+  /* eslint-disable-next-line no-unused-vars */
   scrollTop,
+  canvasScale,
 }) => {
   const classes = useStyles();
   // destructure note properties
@@ -85,8 +88,8 @@ const NoteFinalView = ({
     /* eslint-disable no-param-reassign */
     event.dataTransfer.dropEffect = 'move';
 
-    const noteGrabbedX = event.pageX + scrollLeft;
-    const noteGrabbedY = event.pageY + scrollTop;
+    const noteGrabbedX = event.pageX/canvasScale;
+    const noteGrabbedY = event.pageY/canvasScale;
     const distanceBetweenGrabAndOriginX = pageX - noteGrabbedX;
     const distanceBetweenGrabAndOriginY = pageY - noteGrabbedY;
     setGrabDeltaX(distanceBetweenGrabAndOriginX);
@@ -218,6 +221,7 @@ NoteFinalView.propTypes = {
   newPageY: PropTypes.number,
   scrollLeft: PropTypes.number,
   scrollTop: PropTypes.number,
+  canvasScale: PropTypes.number,
 };
 
 NoteFinalView.defaultProps = {
@@ -226,6 +230,7 @@ NoteFinalView.defaultProps = {
   newPageY: null,
   scrollLeft: 0,
   scrollTop: 0,
+  canvasScale: 1.0,
 };
 
 export default NoteFinalView;

@@ -14,6 +14,7 @@ import { APP_SETTINGS } from '../../constants/constants';
 import { Context } from '../context/ContextContext';
 import NoteContainer from './NoteContainer';
 import CANVAS_DIMENSIONS from '../../constants/canvas_dimensions';
+import CanvasScaleControl from './CanvasScaleControl';
 
 const useStyles = makeStyles(() => ({
   scrollContainer: {
@@ -22,9 +23,13 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     border: '2px solid gray',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   mainContainer: {
     border: '2px solid black',
+    flexShrink: 0,
   },
 }));
 
@@ -43,6 +48,9 @@ const Canvas = () => {
     scrollLeft,
     scrollTop,
   });
+
+  const [canvasScale, setCanvasScale] = useState();
+
   const scrollContainer = useRef(null);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
@@ -92,6 +100,7 @@ const Canvas = () => {
         style={{
           height: canvasDimensions.height,
           width: canvasDimensions.width,
+          transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
       >
         {backgroundToggleSetting ? (
@@ -99,19 +108,22 @@ const Canvas = () => {
             <NoteContainer
               scrollLeft={scrollPosition.scrollLeft}
               scrollTop={scrollPosition.scrollTop}
+              canvasScale={canvasScale}
             />
           </BackgroundImage>
         ) : (
           <NoteContainer
             scrollLeft={scrollPosition.scrollLeft}
             scrollTop={scrollPosition.scrollTop}
+            canvasScale={canvasScale}
           />
         )}
-        {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
+      </div>
+      {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
           permissionLevel,
         ) && <Settings />}
         <ColorSettings />
-      </div>
+        <CanvasScaleControl canvasScale={canvasScale} setCanvasScale={setCanvasScale} />
     </div>
   );
 };

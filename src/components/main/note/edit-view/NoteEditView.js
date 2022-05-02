@@ -10,7 +10,7 @@ import { ACTION_TYPES } from '../../../../config/actionTypes';
 const useStyles = makeStyles(() => ({
   form: {
     maxWidth: '15%',
-    position: 'relative',
+    position: 'absolute',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
     flexDirection: 'column',

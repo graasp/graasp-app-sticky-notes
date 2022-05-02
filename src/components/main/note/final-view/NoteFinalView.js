@@ -15,7 +15,7 @@ import { Context } from '../../../context/ContextContext';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
-    position: 'relative',
+    position: 'absolute',
     padding: '0.7em 0.8em',
     boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
     display: 'flex',
@@ -62,6 +62,8 @@ const NoteFinalView = ({
   const { innerHeight, innerWidth } = windowDimensions;
   const { pageX, pageY } = position;
 
+  // console.log("Position: ", pageX, " - ", pageY);
+
   const context = useContext(Context);
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
@@ -99,6 +101,8 @@ const NoteFinalView = ({
   const onDragEnd = () => {
     const finalPageX = newPageX + grabDeltaX;
     const finalPageY = newPageY + grabDeltaY;
+
+    console.log("Final position: ", finalPageX, " - " ,finalPageY);
     const updatedNote = {
       data: {
         category,

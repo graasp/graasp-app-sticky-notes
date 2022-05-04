@@ -43,7 +43,7 @@
     "stopword": "~2.0.1"
   },
   "scripts": {
-    "pre-commit": "pretty-quick --staged && yarn lint",
+    "pre-commit": "yarn prettier:check && yarn lint",
     "start": "npm-run-all --parallel start:local",
     "start:local": "env-cmd -f ./.env.local react-scripts start",
     "build": "react-scripts build",

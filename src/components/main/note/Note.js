@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Group, Text } from 'react-konva';
 import { Html } from 'react-konva-utils';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
@@ -18,24 +21,34 @@ const Note = ({
 }) => {
   const { noteBeingEditedId } = useContext(CanvasContext);
 
-  return noteBeingEditedId === id ? (
-    <Html>
-      <NoteEditView note={note} id={id} />
-    </Html>
-  ) : (
-    <Html>
-      <NoteFinalView
-        note={note}
-        id={id}
-        userName={userName}
-        newPageX={newPageX}
-        newPageY={newPageY}
-        scrollLeft={scrollLeft}
-        scrollTop={scrollTop}
-        canvasScale={canvasScale}
-      />
-    </Html>
-  );
+  const { position } = note;
+  const { pageX,pageY } = position;
+  return (
+    <Group x={pageX} y={pageY}>
+      <Text text={note.title} />
+      <Text text={id} />
+      <Text text={userName} />
+    </Group>
+  )
+
+  // return noteBeingEditedId === id ? (
+  //   <Html>
+  //     <NoteEditView note={note} id={id} />
+  //   </Html>
+  // ) : (
+  //   <Html>
+  //     <NoteFinalView
+  //       note={note}
+  //       id={id}
+  //       userName={userName}
+  //       newPageX={newPageX}
+  //       newPageY={newPageY}
+  //       scrollLeft={scrollLeft}
+  //       scrollTop={scrollTop}
+  //       canvasScale={canvasScale}
+  //     />
+  //   </Html>
+  // );
 };
 
 Note.propTypes = {

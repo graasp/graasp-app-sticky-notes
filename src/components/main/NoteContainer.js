@@ -1,9 +1,17 @@
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React, { useState, useEffect, useContext, useRef } from 'react';
+/* eslint-disable no-unused-vars */
+
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import PropTypes from 'prop-types';
-import { Layer } from 'react-konva';
+import { Layer, Rect, Text } from 'react-konva';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppContext, useAppData } from '../context/appData';
@@ -27,150 +35,167 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
-  const { t } = useTranslation();
-  const classes = useStyles();
-  const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
-  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
+const NoteContainer = forwardRef(
+  ({ scrollLeft, scrollTop, canvasScale }, ref) => {
+    const { t } = useTranslation();
+    const classes = useStyles();
+    const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
+    const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const noteContainerRef = useRef();
+    // const noteContainerRef = useRef();
 
-  const { userSetColor, noteBeingEditedId, setHighlightNoteBeingEdited } =
-    useContext(CanvasContext);
-  const [members, setMembers] = useState([]);
-  const [notes, setNotes] = useState(null);
+    const { userSetColor, noteBeingEditedId, setHighlightNoteBeingEdited } =
+      useContext(CanvasContext);
+    const [members, setMembers] = useState([]);
+    const [notes, setNotes] = useState(null);
 
-  const [newPageX, setNewPageX] = useState(null);
-  const [newPageY, setNewPageY] = useState(null);
+    const [newPageX, setNewPageX] = useState(null);
+    const [newPageY, setNewPageY] = useState(null);
 
-  const [edit, setEdit] = useState(false);
+    const [edit, setEdit] = useState(false);
 
-  let tmpNewPageX;
-  let tmpNewPageY;
-  const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
-  const { setNoteBeingEditedId } = useContext(CanvasContext);
+    let tmpNewPageX;
+    let tmpNewPageY;
+    const { data: appContext, isSuccess: isAppContextSuccess } =
+      useAppContext();
+    const { setNoteBeingEditedId } = useContext(CanvasContext);
 
-  useEffect(() => {
-    if (isAppContextSuccess) {
-      setMembers(appContext?.get('members'));
-    }
-  }, [appContext, isAppContextSuccess]);
+    useEffect(() => {
+      if (isAppContextSuccess) {
+        setMembers(appContext?.get('members'));
+      }
+    }, [appContext, isAppContextSuccess]);
 
-  const {
-    data: appData,
-    isSuccess: isAppDataSuccess,
-    isStale: isAppDataStale,
-    isError: isAppDataError,
-  } = useAppData();
+    const {
+      data: appData,
+      isSuccess: isAppDataSuccess,
+      isStale: isAppDataStale,
+      isError: isAppDataError,
+    } = useAppData();
 
-  useEffect(() => {
-    if (isAppDataError) {
-      showErrorToast(t('Error getting data.'));
-      return;
-    }
-    if (isAppDataSuccess) {
-      setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
-    }
-  }, [appData, isAppDataSuccess]);
+    useEffect(() => {
+      if (isAppDataError) {
+        showErrorToast(t('Error getting data.'));
+        return;
+      }
+      if (isAppDataSuccess) {
+        setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
+      }
+    }, [appData, isAppDataSuccess]);
 
-  // Sets the focus to the last created note. The `edit` boolean is set to
-  // true whenever a new note is created. When the notes are actually
-  // refetched, the focus is set to the newest one and the `edit` bool is
-  // set back to false.
-  useEffect(() => {
-    if (edit && !notes?.isEmpty() && isAppDataStale && notes) {
-      setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
-      setEdit(false);
-    }
-  }, [notes]);
+    // Sets the focus to the last created note. The `edit` boolean is set to
+    // true whenever a new note is created. When the notes are actually
+    // refetched, the focus is set to the newest one and the `edit` bool is
+    // set back to false.
+    useEffect(() => {
+      if (edit && !notes?.isEmpty() && isAppDataStale && notes) {
+        setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
+        setEdit(false);
+      }
+    }, [notes]);
 
-  const createNewNote = (pageX, pageY) => {
-    if (noteBeingEditedId === null) {
-      // add a new note to the canvas
-      const { innerHeight, innerWidth } = window;
+    const createNewNote = (pageX, pageY) => {
+      if (noteBeingEditedId === null) {
+        // add a new note to the canvas
+        const { innerHeight, innerWidth } = window;
 
-      const newNote = {
-        windowDimensions: { innerHeight, innerWidth },
-        position: { pageX, pageY },
-        color: userSetColor,
-        rotation: generateRandomRotationAngle(),
-        minimized: false,
-      };
+        const newNote = {
+          windowDimensions: { innerHeight, innerWidth },
+          position: { pageX, pageY },
+          color: userSetColor,
+          rotation: generateRandomRotationAngle(),
+          minimized: false,
+        };
 
-      postAppData({
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: APP_DATA_VISIBLITIES.ITEM,
-      });
-      setEdit(true);
-      postAction({
-        type: ACTION_TYPES.ADD,
-        data: {
-          ...newNote,
-          id: newNote.id,
-        },
-      });
-    } else {
-      setHighlightNoteBeingEdited(true);
-    }
-  };
+        postAppData({
+          data: newNote,
+          type: APP_DATA_TYPES.NOTE,
+          visibility: APP_DATA_VISIBLITIES.ITEM,
+        });
+        setEdit(true);
+        postAction({
+          type: ACTION_TYPES.ADD,
+          data: {
+            ...newNote,
+            id: newNote.id,
+          },
+        });
+      } else {
+        setHighlightNoteBeingEdited(true);
+      }
+    };
 
-  const handleCanvasClick = (event) => {
-    const { clientX, clientY } = event;
-    const { left, top } = noteContainerRef.current.getBoundingClientRect();
-    const x = (clientX - left) / canvasScale;
-    const y = (clientY - top) / canvasScale;
-    createNewNote(x, y);
-  };
+    const handleCanvasClick = (event) => {
+      const { x, y } = event;
+      /* eslint-disable-next-line react/destructuring-assignment */
+      // const { left, top } = ref.current.getBoundingClientRect();
+      // const x = (clientX - left) / canvasScale;
+      // const y = (clientY - top) / canvasScale;
+      createNewNote(x, y);
+    };
 
-  return (
-    <>
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <Layer
-        className={classes.noteContainer}
-        ref={noteContainerRef}
-        onDragOver={(event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
-          // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
-          tmpNewPageX = event.pageX;
-          tmpNewPageY = event.pageY;
-        }}
-        onDrop={(event) => {
-          event.preventDefault();
-          setNewPageX(tmpNewPageX / canvasScale);
-          setNewPageY(tmpNewPageY / canvasScale);
-        }}
-        onClick={handleCanvasClick}
-      >
-        {notes ? (
-          notes.map((note) => (
-            <Note
-              note={note.data}
-              id={note.id}
-              key={note.id}
-              userName={
-                (
-                  members.find((m) => m.id === note.memberId) ?? {
-                    name: DEFAULT_ANONYMOUS_USERNAME,
-                  }
-                ).name
-              }
-              newPageX={newPageX}
-              newPageY={newPageY}
-              scrollLeft={scrollLeft}
-              scrollTop={scrollTop}
-              canvasScale={canvasScale}
-            />
-          ))
-        ) : (
-          <div>{t('Add a note.')}</div>
-        )}
-      </Layer>
-    </>
-  );
-};
+    useImperativeHandle(ref, () => ({
+      click: (e) => {
+        handleCanvasClick(e);
+      },
+    }));
+
+    return (
+      <>
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+        <Layer
+          className={classes.noteContainer}
+          ref={ref}
+          onDragOver={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
+            // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
+            tmpNewPageX = event.pageX;
+            tmpNewPageY = event.pageY;
+          }}
+          onDrop={(event) => {
+            event.preventDefault();
+            setNewPageX(tmpNewPageX / canvasScale);
+            setNewPageY(tmpNewPageY / canvasScale);
+          }}
+        >
+          {notes ? (
+            notes.map((note) => (
+              <Note
+                note={note.data}
+                id={note.id}
+                key={note.id}
+                userName={
+                  (
+                    members.find((m) => m.id === note.memberId) ?? {
+                      name: DEFAULT_ANONYMOUS_USERNAME,
+                    }
+                  ).name
+                }
+                newPageX={newPageX}
+                newPageY={newPageY}
+                scrollLeft={scrollLeft}
+                scrollTop={scrollTop}
+                canvasScale={canvasScale}
+              />
+            ))
+          ) : (
+            <Text text={t('Add a note.')} />
+          )}
+          {/* <Rect
+          x={20}
+          y={50}
+          width={100}
+          height={100}
+          fill="red"
+          shadowBlur={10}
+        /> */}
+        </Layer>
+      </>
+    );
+  },
+);
 
 NoteContainer.propTypes = {
   scrollLeft: PropTypes.number,

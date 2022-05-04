@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Layer } from 'react-konva';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppContext, useAppData } from '../context/appData';
@@ -125,7 +126,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div
+      <Layer
         className={classes.noteContainer}
         ref={noteContainerRef}
         onDragOver={(event) => {
@@ -166,7 +167,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
         ) : (
           <div>{t('Add a note.')}</div>
         )}
-      </div>
+      </Layer>
     </>
   );
 };

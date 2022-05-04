@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Html } from 'react-konva-utils';
 import NoteFinalView from './final-view/NoteFinalView';
 import NoteEditView from './edit-view/NoteEditView';
 import { CanvasContext } from '../../context/CanvasContext';
@@ -18,18 +19,22 @@ const Note = ({
   const { noteBeingEditedId } = useContext(CanvasContext);
 
   return noteBeingEditedId === id ? (
-    <NoteEditView note={note} id={id} />
+    <Html>
+      <NoteEditView note={note} id={id} />
+    </Html>
   ) : (
-    <NoteFinalView
-      note={note}
-      id={id}
-      userName={userName}
-      newPageX={newPageX}
-      newPageY={newPageY}
-      scrollLeft={scrollLeft}
-      scrollTop={scrollTop}
-      canvasScale={canvasScale}
-    />
+    <Html>
+      <NoteFinalView
+        note={note}
+        id={id}
+        userName={userName}
+        newPageX={newPageX}
+        newPageY={newPageY}
+        scrollLeft={scrollLeft}
+        scrollTop={scrollTop}
+        canvasScale={canvasScale}
+      />
+    </Html>
   );
 };
 

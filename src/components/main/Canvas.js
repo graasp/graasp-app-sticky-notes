@@ -1,5 +1,7 @@
+// Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Stage } from 'react-konva';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
@@ -105,18 +107,22 @@ const Canvas = () => {
       >
         {backgroundToggleSetting ? (
           <BackgroundImage>
+            <Stage>
+              <NoteContainer
+                scrollLeft={scrollPosition.scrollLeft}
+                scrollTop={scrollPosition.scrollTop}
+                canvasScale={canvasScale}
+              />
+            </Stage>
+          </BackgroundImage>
+        ) : (
+          <Stage>
             <NoteContainer
               scrollLeft={scrollPosition.scrollLeft}
               scrollTop={scrollPosition.scrollTop}
               canvasScale={canvasScale}
             />
-          </BackgroundImage>
-        ) : (
-          <NoteContainer
-            scrollLeft={scrollPosition.scrollLeft}
-            scrollTop={scrollPosition.scrollTop}
-            canvasScale={canvasScale}
-          />
+          </Stage>
         )}
       </div>
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(

@@ -1,8 +1,15 @@
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-unused-vars */
 
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
+import { Layer, Text } from 'react-konva';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppContext, useAppData } from '../context/appData';
@@ -17,6 +24,10 @@ import {
 } from '../../config/settings';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import { showErrorToast } from '../../utils/toasts';
+import {
+  DEFAULT_NOTE_HEIGHT,
+  DEFAULT_NOTE_WIDTH,
+} from '../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
@@ -26,26 +37,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
+const NoteContainer = forwardRef((props, ref) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const noteContainerRef = useRef();
+  // const noteContainerRef = useRef();
 
-  const { userSetColor, noteBeingEditedId, setHighlightNoteBeingEdited } =
-    useContext(CanvasContext);
+  const {
+    userSetColor,
+    noteBeingEditedId,
+    noteBeingTransformedId,
+    setNoteBeingTransformedId,
+  } = useContext(CanvasContext);
   const [members, setMembers] = useState([]);
   const [notes, setNotes] = useState(null);
 
-  const [newPageX, setNewPageX] = useState(null);
-  const [newPageY, setNewPageY] = useState(null);
-
   const [edit, setEdit] = useState(false);
 
-  let tmpNewPageX; // Used for the drag-drop animation.
-  let tmpNewPageY; // Used for the drag-drop animation.
   const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
@@ -84,65 +94,50 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   }, [notes]);
 
   const createNewNote = (pageX, pageY) => {
-    if (!noteBeingEditedId) {
-      // add a new note to the canvas
-      const { innerHeight, innerWidth } = window;
+    const newNote = {
+      position: { pageX, pageY },
+      size: { height: DEFAULT_NOTE_HEIGHT, width: DEFAULT_NOTE_WIDTH },
+      color: userSetColor,
+      rotation: generateRandomRotationAngle(),
+      minimized: false,
+    };
 
-      const newNote = {
-        windowDimensions: { innerHeight, innerWidth },
-        position: { pageX, pageY },
-        color: userSetColor,
-        rotation: generateRandomRotationAngle(),
-        minimized: false,
-      };
+    postAppData({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: APP_DATA_VISIBLITIES.ITEM,
+    });
+    setEdit(true);
+    postAction({
+      type: ACTION_TYPES.ADD,
+      data: {
+        ...newNote,
+        id: newNote.id,
+      },
+    });
+  };
 
-      postAppData({
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: APP_DATA_VISIBLITIES.ITEM,
-      });
-      setEdit(true);
-      postAction({
-        type: ACTION_TYPES.ADD,
-        data: {
-          ...newNote,
-          id: newNote.id,
-        },
-      });
+  const handleCanvasClick = (event, stage) => {
+    console.log("BORDEL DE CHIER", event);
+    if (noteBeingEditedId === null && noteBeingTransformedId === null) {
+      const { x, y } = stage.getPointerPosition();
+      createNewNote(x, y);
     } else {
-      setHighlightNoteBeingEdited(true);
+      setNoteBeingEditedId(null);
+      setNoteBeingTransformedId(null);
     }
   };
 
-  const handleCanvasClick = (event) => {
-    const { clientX, clientY } = event;
-    const { left, top } = noteContainerRef.current.getBoundingClientRect();
-    const x = (clientX - left) / canvasScale;
-    const y = (clientY - top) / canvasScale;
-    createNewNote(x, y);
-  };
+  useImperativeHandle(ref, () => ({
+    click: (e, stage) => {
+      handleCanvasClick(e, stage);
+    },
+  }));
 
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div
-        className={classes.noteContainer}
-        ref={noteContainerRef}
-        onDragOver={(event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
-          // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
-          tmpNewPageX = event.pageX;
-          tmpNewPageY = event.pageY;
-        }}
-        onDrop={(event) => {
-          event.preventDefault();
-          setNewPageX(tmpNewPageX / canvasScale);
-          setNewPageY(tmpNewPageY / canvasScale);
-        }}
-        onClick={handleCanvasClick}
-      >
+      <Layer className={classes.noteContainer} ref={ref}>
         {notes ? (
           notes.map((note) => (
             <Note
@@ -156,31 +151,14 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
                   }
                 ).name
               }
-              newPageX={newPageX}
-              newPageY={newPageY}
-              scrollLeft={scrollLeft}
-              scrollTop={scrollTop}
-              canvasScale={canvasScale}
             />
           ))
         ) : (
-          <div>{t('Add a note.')}</div>
+          <Text text={t('Add a note.')} />
         )}
-      </div>
+      </Layer>
     </>
   );
-};
-
-NoteContainer.propTypes = {
-  scrollLeft: PropTypes.number,
-  scrollTop: PropTypes.number,
-  canvasScale: PropTypes.number,
-};
-
-NoteContainer.defaultProps = {
-  scrollLeft: 0,
-  scrollTop: 0,
-  canvasScale: 1.0,
-};
+});
 
 export default NoteContainer;

@@ -101,8 +101,6 @@ const NoteFinalView = ({
   const onDragEnd = () => {
     const finalPageX = newPageX + grabDeltaX;
     const finalPageY = newPageY + grabDeltaY;
-
-    console.log("Final position: ", finalPageX, " - " ,finalPageY);
     const updatedNote = {
       data: {
         category,

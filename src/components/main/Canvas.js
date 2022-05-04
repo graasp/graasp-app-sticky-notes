@@ -1,5 +1,7 @@
+// Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Stage } from 'react-konva';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
@@ -15,6 +17,9 @@ import { Context } from '../context/ContextContext';
 import NoteContainer from './NoteContainer';
 import CANVAS_DIMENSIONS from '../../constants/canvas_dimensions';
 import CanvasScaleControl from './CanvasScaleControl';
+import { queryClient, QueryClientProvider } from '../../config/queryClient';
+import { CanvasContext } from '../context/CanvasContext';
+import { TokenContext } from '../context/TokenContext';
 
 const useStyles = makeStyles(() => ({
   scrollContainer: {
@@ -52,6 +57,9 @@ const Canvas = () => {
   const [canvasScale, setCanvasScale] = useState();
 
   const scrollContainer = useRef(null);
+  const mainContainer = useRef(null);
+  const noteContainerRef = useRef(null);
+  const mainStage = useRef(null);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
@@ -89,6 +97,44 @@ const Canvas = () => {
     ticking = true;
   };
 
+  const renderStage = () => (
+    <CanvasContext.Consumer>
+      {(value) => (
+        <TokenContext.Consumer>
+          {(valueToken) => (
+            <Context.Consumer>
+              {(valueContext) => (
+                <Stage
+                  width={mainContainer.current?.clientWidth}
+                  height={mainContainer.current?.clientHeight}
+                  onClick={(e) => {
+                    noteContainerRef.current?.click(e, mainStage.current);
+                  }}
+                  ref={mainStage}
+                >
+                  <QueryClientProvider client={queryClient}>
+                    <Context.Provider value={valueContext}>
+                      <TokenContext.Provider value={valueToken}>
+                        <CanvasContext.Provider value={value}>
+                          <NoteContainer
+                            scrollLeft={scrollPosition.scrollLeft}
+                            scrollTop={scrollPosition.scrollTop}
+                            canvasScale={canvasScale}
+                            ref={noteContainerRef}
+                          />
+                        </CanvasContext.Provider>
+                      </TokenContext.Provider>
+                    </Context.Provider>
+                  </QueryClientProvider>
+                </Stage>
+              )}
+            </Context.Consumer>
+          )}
+        </TokenContext.Consumer>
+      )}
+    </CanvasContext.Consumer>
+  );
+
   return (
     <div
       className={classes.scrollContainer}
@@ -97,6 +143,7 @@ const Canvas = () => {
     >
       <div
         className={classes.mainContainer}
+        ref={mainContainer}
         style={{
           height: canvasDimensions.height,
           width: canvasDimensions.width,
@@ -104,19 +151,9 @@ const Canvas = () => {
         }}
       >
         {backgroundToggleSetting ? (
-          <BackgroundImage>
-            <NoteContainer
-              scrollLeft={scrollPosition.scrollLeft}
-              scrollTop={scrollPosition.scrollTop}
-              canvasScale={canvasScale}
-            />
-          </BackgroundImage>
+          <BackgroundImage>{renderStage()}</BackgroundImage>
         ) : (
-          <NoteContainer
-            scrollLeft={scrollPosition.scrollLeft}
-            scrollTop={scrollPosition.scrollTop}
-            canvasScale={canvasScale}
-          />
+          renderStage()
         )}
       </div>
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(

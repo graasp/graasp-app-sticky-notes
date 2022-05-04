@@ -1,6 +1,9 @@
 export const DEFAULT_NOTE_COLOR = '#FFFF99';
 export const DEFAULT_NOTE_COLOR_DARKER = '#FDDA0D';
 
+export const DEFAULT_NOTE_WIDTH = 240;
+export const DEFAULT_NOTE_HEIGHT = 80;
+
 export const AVAILABLE_COLORS = [
   DEFAULT_NOTE_COLOR,
   '#f275ad',

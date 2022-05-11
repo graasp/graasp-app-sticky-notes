@@ -95,6 +95,7 @@ const NoteContainer = forwardRef(
     }, [notes]);
 
     const createNewNote = (pageX, pageY) => {
+      console.log('cretae new note: ', pageX, ' - ', pageY);
       if (noteBeingEditedId === null) {
         // add a new note to the canvas
         const { innerHeight, innerWidth } = window;
@@ -125,8 +126,8 @@ const NoteContainer = forwardRef(
       }
     };
 
-    const handleCanvasClick = (event) => {
-      const { x, y } = event;
+    const handleCanvasClick = (event, stage) => {
+      const { x, y } = stage.getPointerPosition();
       /* eslint-disable-next-line react/destructuring-assignment */
       // const { left, top } = ref.current.getBoundingClientRect();
       // const x = (clientX - left) / canvasScale;
@@ -135,8 +136,8 @@ const NoteContainer = forwardRef(
     };
 
     useImperativeHandle(ref, () => ({
-      click: (e) => {
-        handleCanvasClick(e);
+      click: (e, stage) => {
+        handleCanvasClick(e, stage);
       },
     }));
 

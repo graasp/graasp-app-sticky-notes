@@ -59,6 +59,7 @@ const Canvas = () => {
   const scrollContainer = useRef(null);
   const mainContainer = useRef(null);
   const noteContainerRef = useRef(null);
+  const mainStage = useRef(null);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
@@ -106,7 +107,10 @@ const Canvas = () => {
                 <Stage
                   width={mainContainer.current?.clientWidth}
                   height={mainContainer.current?.clientHeight}
-                  onClick={(e) => noteContainerRef?.current?.click(e)}
+                  onClick={(e) =>
+                    noteContainerRef?.current?.click(e, mainStage.current)
+                  }
+                  ref={mainStage}
                 >
                   <QueryClientProvider client={queryClient}>
                     <Context.Provider value={valueContext}>

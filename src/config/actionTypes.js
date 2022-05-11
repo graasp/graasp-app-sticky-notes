@@ -4,5 +4,6 @@ export const ACTION_TYPES = {
   ADD: 'add',
   MOVE: 'move',
   EDIT: 'edit',
+  TRANSFORM: 'transform',
   DELETE: 'delete',
 };

@@ -107,9 +107,9 @@ const Canvas = () => {
                 <Stage
                   width={mainContainer.current?.clientWidth}
                   height={mainContainer.current?.clientHeight}
-                  onClick={(e) =>
-                    noteContainerRef?.current?.click(e, mainStage.current)
-                  }
+                  onClick={(e) => {
+                    noteContainerRef.current?.click(e, mainStage.current);
+                  }}
                   ref={mainStage}
                 >
                   <QueryClientProvider client={queryClient}>

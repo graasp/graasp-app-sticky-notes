@@ -1,5 +1,6 @@
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-unused-vars */
 
 import React, {
   useState,
@@ -44,8 +45,12 @@ const NoteContainer = forwardRef((props, ref) => {
 
   // const noteContainerRef = useRef();
 
-  const { userSetColor, noteBeingEditedId, setHighlightNoteBeingEdited, noteBeingTransformedId } =
-    useContext(CanvasContext);
+  const {
+    userSetColor,
+    noteBeingEditedId,
+    noteBeingTransformedId,
+    setNoteBeingTransformedId,
+  } = useContext(CanvasContext);
   const [members, setMembers] = useState([]);
   const [notes, setNotes] = useState(null);
 
@@ -89,36 +94,38 @@ const NoteContainer = forwardRef((props, ref) => {
   }, [notes]);
 
   const createNewNote = (pageX, pageY) => {
-    if (noteBeingEditedId === null && noteBeingTransformedId === null) {
-      const newNote = {
-        position: { pageX, pageY },
-        size: { height: DEFAULT_NOTE_HEIGHT, width: DEFAULT_NOTE_WIDTH },
-        color: userSetColor,
-        rotation: generateRandomRotationAngle(),
-        minimized: false,
-      };
+    const newNote = {
+      position: { pageX, pageY },
+      size: { height: DEFAULT_NOTE_HEIGHT, width: DEFAULT_NOTE_WIDTH },
+      color: userSetColor,
+      rotation: generateRandomRotationAngle(),
+      minimized: false,
+    };
 
-      postAppData({
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: APP_DATA_VISIBLITIES.ITEM,
-      });
-      setEdit(true);
-      postAction({
-        type: ACTION_TYPES.ADD,
-        data: {
-          ...newNote,
-          id: newNote.id,
-        },
-      });
-    } else {
-      setHighlightNoteBeingEdited(true);
-    }
+    postAppData({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: APP_DATA_VISIBLITIES.ITEM,
+    });
+    setEdit(true);
+    postAction({
+      type: ACTION_TYPES.ADD,
+      data: {
+        ...newNote,
+        id: newNote.id,
+      },
+    });
   };
 
   const handleCanvasClick = (event, stage) => {
-    const { x, y } = stage.getPointerPosition();
-    createNewNote(x, y);
+    console.log("BORDEL DE CHIER", event);
+    if (noteBeingEditedId === null && noteBeingTransformedId === null) {
+      const { x, y } = stage.getPointerPosition();
+      createNewNote(x, y);
+    } else {
+      setNoteBeingEditedId(null);
+      setNoteBeingTransformedId(null);
+    }
   };
 
   useImperativeHandle(ref, () => ({

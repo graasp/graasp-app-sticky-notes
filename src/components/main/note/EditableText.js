@@ -1,7 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ResizableText from './ResizableText';
+import { Text } from 'react-konva';
+// import ResizableText from './ResizableText';
 import EditableTextInput from './EditableTextInput';
+
+// const HEIGHT_MARGIN_TEXT = 20;
 
 const RETURN_KEY = 13;
 const ESCAPE_KEY = 27;
@@ -12,11 +15,11 @@ const EditableText = forwardRef(
       x,
       y,
       isEditing,
-      isTransforming,
       onToggleEdit,
       onToggleTransform,
       onChange,
       onResize,
+      onContentResize,
       text,
       width,
       height,
@@ -36,6 +39,15 @@ const EditableText = forwardRef(
       onChange(e.currentTarget.value);
     };
 
+    const h = ref?.current?.height();
+    const w = width;
+
+    useEffect(() => {
+      if(h && w) {
+          onContentResize(null, h);
+      }
+    }, [h,w]);
+
     if (isEditing) {
       return (
         <EditableTextInput
@@ -51,14 +63,30 @@ const EditableText = forwardRef(
       );
     }
     return (
-      <ResizableText
+      // <ResizableText
+      //   x={x}
+      //   y={y}
+      //   isSelected={isTransforming}
+      //   onClick={onToggleTransform}
+      //   onDoubleClick={onToggleEdit}
+      //   onResize={onResize}
+      //   text={text}
+      //   width={width}
+      // />
+      <Text
+        ref={ref}
         x={x}
         y={y}
-        isSelected={isTransforming}
-        onClick={onToggleTransform}
-        onDoubleClick={onToggleEdit}
-        onResize={onResize}
         text={text}
+        fill="black"
+        fontFamily="sans-serif"
+        fontSize={24}
+        perfectDrawEnabled={false}
+        onTransform={onResize}
+        onClick={onToggleTransform}
+        onTap={onToggleTransform}
+        onDblClick={onToggleEdit}
+        onDblTap={onToggleEdit}
         width={width}
       />
     );
@@ -69,11 +97,11 @@ EditableText.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  isTransforming: PropTypes.bool.isRequired,
   onToggleEdit: PropTypes.func.isRequired,
   onToggleTransform: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
+  onContentResize: PropTypes.func.isRequired,
   text: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,

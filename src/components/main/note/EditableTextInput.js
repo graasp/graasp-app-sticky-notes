@@ -3,10 +3,10 @@ import { Html } from 'react-konva-utils';
 import PropTypes from 'prop-types';
 import { SMALL_DELAY_REFOCUS_MS } from '../../../constants/constants';
 
-function getStyle(width, height) {
+function getStyle(width , height) {
   const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
   const baseStyle = {
-    width: `${width}px`,
+    width: `${width-30}px`,
     height: `${height}px`,
     border: 'none',
     padding: '0px',
@@ -32,17 +32,21 @@ const EditableTextInput = forwardRef(
     const style = getStyle(width, height);
 
     const textInput = useRef();
+    const htmlContainer = useRef();
 
     const focusOnText = () => {
       textInput.current.focus();
     };
 
+    const getHeight = () => htmlContainer?.current?.height();
+
     useImperativeHandle(ref, () => ({
       focus: focusOnText,
+      height: getHeight,
     }));
 
     return (
-      <Html groupProps={{ x, y }} divProps={{ style: { opacity: 1 } }}>
+      <Html ref={htmlContainer} groupProps={{ x, y }} divProps={{ style: { opacity: 1 } }}>
         <textarea
           value={value}
           onChange={onChange}

@@ -63,16 +63,6 @@ const EditableText = forwardRef(
       );
     }
     return (
-      // <ResizableText
-      //   x={x}
-      //   y={y}
-      //   isSelected={isTransforming}
-      //   onClick={onToggleTransform}
-      //   onDoubleClick={onToggleEdit}
-      //   onResize={onResize}
-      //   text={text}
-      //   width={width}
-      // />
       <Text
         ref={ref}
         x={x}

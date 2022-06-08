@@ -20,6 +20,7 @@ import CanvasScaleControl from './CanvasScaleControl';
 import { queryClient, QueryClientProvider } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { TokenContext } from '../context/TokenContext';
+import CanvasToolbar from './CanvasToolbar';
 
 const useStyles = makeStyles(() => ({
   scrollContainer: {
@@ -160,6 +161,7 @@ const Canvas = () => {
         permissionLevel,
       ) && <Settings />}
       <ColorSettings />
+      <CanvasToolbar />
       <CanvasScaleControl
         canvasScale={canvasScale}
         setCanvasScale={setCanvasScale}

@@ -1,15 +1,13 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Group, Transformer, Path, Rect, Text } from 'react-konva';
+import { Group, Transformer, Rect, Text } from 'react-konva';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
 import { ACTION_TYPES } from '../../../config/actionTypes';
 import { DEFAULT_NOTE_COLOR } from '../../../constants/constants';
 import EditableText from './EditableText';
-import { generateRandomRotationAngle } from '../../../utils/canvas';
+// import { generateRandomRotationAngle } from '../../../utils/canvas';
 
 const DEFAULT_STYLE = {
   minHeight: 120,
@@ -23,6 +21,7 @@ const DEFAULT_STYLE = {
 
 const Note = ({ note, id, userName }) => {
   const {
+    userSetColor,
     noteBeingEditedId,
     setNoteBeingEditedId,
     noteBeingTransformedId,
@@ -34,7 +33,6 @@ const Note = ({ note, id, userName }) => {
 
   const { pageX, pageY } = position;
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   const [text, setText] = useState(note?.text);
@@ -42,40 +40,24 @@ const Note = ({ note, id, userName }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [width, setWidth] = useState(w);
   const [height, setHeight] = useState(h);
-  const [showActions, setShowActions] = useState(false);
   const [style, setStyle] = useState(DEFAULT_STYLE);
 
   const noteRef = useRef(id);
   const contentRef = useRef(null);
-  const deleteActionRef = useRef(null);
   const textRef = useRef(null);
   const backgroundNoteRef = useRef(null);
-
-  const [deleteActionRect, setDeleteActionRect] = useState({
-    width: 0,
-    height: 0,
-  });
 
   useEffect(() => {
     if (noteBeingTransformedId === id && !isTransforming) {
       setIsTransforming(true);
     } else if (noteBeingTransformedId !== id) {
-      console.log("B");
       setIsTransforming(false);
     }
-    console.log("Effect isTransforming", isTransforming);
   }, [noteBeingTransformedId]);
-
-  useEffect(() => {
-    const tmpDeleteActionRect = deleteActionRef.current?.getSelfRect();
-    if (tmpDeleteActionRect) {
-      setDeleteActionRect(tmpDeleteActionRect);
-    }
-  }, [showActions, deleteActionRef]);
 
   const patchNote = (updatedNote, actionType) => {
     const patch = {
-      data: note,
+      data: updatedNote,
       id,
     };
     patchAppData(patch);
@@ -88,7 +70,18 @@ const Note = ({ note, id, userName }) => {
     });
   };
 
-  const handleDragEnd = (e) => {
+  useEffect(() => {
+    if(noteBeingTransformedId === id) {
+      const updatedNote = {
+        ...note,
+        color: userSetColor,
+      };
+
+      patchNote(updatedNote, ACTION_TYPES.EDIT);
+    }
+  }, [userSetColor]);
+
+  const handleDragEnd = () => {
     const { x, y } = noteRef.current.getAbsolutePosition();
     const updatedNote = {
       ...note,
@@ -124,31 +117,14 @@ const Note = ({ note, id, userName }) => {
     }
   }, [noteBeingEditedId]);
   
-  const toggleTransform = (e) => {
-    console.log("Toggle transform: ", e, " is Transforming: ", isTransforming);
+  const toggleTransform = () => {
     if (isTransforming) {
       setNoteBeingTransformedId(null);
       setIsTransforming(false);
     } else {
-      console.log("A");
       setNoteBeingTransformedId(id);
-      console.log("C");
       setIsTransforming(true);
-      console.log("D, isTransforming:", isTransforming);
     }
-  };
-  const handleDelete = (e) => {
-    console.log(e);
-    e.evt.cancelBubble = true; // TODO: prevent event propagation...
-    setNoteBeingEditedId(null);
-    setNoteBeingTransformedId(null);
-    deleteAppData({
-      id,
-    });
-    postAction({
-      type: ACTION_TYPES.DELETE,
-      data: { id },
-    });
   };
 
   const handleTextEdit = (newText) => {
@@ -231,14 +207,10 @@ const Note = ({ note, id, userName }) => {
   const handleTransform = () => {
     if (noteRef.current !== null && backgroundNoteRef.current !== null) {
       const node = backgroundNoteRef.current;
-      // const backgroundRect = backgroundNoteRef.current;
-      const { newWidth, newHeight } = getNewSizeAfterTransform(node);
       node.setAttrs({
         x: 0,
         y: 0,
       });
-      // console.log("It is resizing !");
-      // handleTextResize(newWidth, newHeight);
     }
   };
 
@@ -263,8 +235,6 @@ const Note = ({ note, id, userName }) => {
         y={pageY}
         name="note"
         onDragEnd={handleDragEnd}
-        onPointerEnter={() => setShowActions(true)}
-        onPointerLeave={() => setShowActions(false)}
         onClick={(e) => {
           e.cancelBubble = true;
         }}
@@ -306,26 +276,6 @@ const Note = ({ note, id, userName }) => {
             ref={textRef}
           />
           <Text x={5} y={height - 20} text={`Added by ${userName}`} />
-          {/* {showActions ? (
-            <Group x={width} y={0}>
-              <Rect
-                width={deleteActionRect?.width}
-                height={deleteActionRect?.height}
-                fill="red"
-                opacity={1.0}
-                onPointerClick={handleDelete}
-              />
-              <Path
-                ref={deleteActionRef}
-                data="M15 39H33Q33 39 33 39Q33 39 33 39V15H15V39Q15 39 15 39Q15 39 15 39ZM10.5 11V8H17.2L19.2 6H28.8L30.8 8H37.5V11ZM15 42Q13.8 42 12.9 41.1Q12 40.2 12 39V12H36V39Q36 40.2 35.1 41.1Q34.2 42 33 42ZM15 39H33Q33 39 33 39Q33 39 33 39H15Q15 39 15 39Q15 39 15 39Z"
-                fill="black"
-                scale={{
-                  x: 0.4,
-                  y: 0.4,
-                }}
-              />
-            </Group>
-          ) : null} */}
         </Group>
       </Group>
   );

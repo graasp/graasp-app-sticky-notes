@@ -1,7 +1,5 @@
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unused-vars */
-
 import React, {
   useState,
   useEffect,
@@ -51,6 +49,7 @@ const NoteContainer = forwardRef((props, ref) => {
     noteBeingTransformedId,
     setNoteBeingTransformedId,
   } = useContext(CanvasContext);
+
   const [members, setMembers] = useState([]);
   const [notes, setNotes] = useState(null);
 
@@ -118,7 +117,6 @@ const NoteContainer = forwardRef((props, ref) => {
   };
 
   const handleCanvasClick = (event, stage) => {
-    console.log("BORDEL DE CHIER", event);
     if (noteBeingEditedId === null && noteBeingTransformedId === null) {
       const { x, y } = stage.getPointerPosition();
       createNewNote(x, y);

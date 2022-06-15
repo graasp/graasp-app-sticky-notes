@@ -43,10 +43,10 @@ const EditableText = forwardRef(
     const w = width;
 
     useEffect(() => {
-      if(h && w) {
-          onContentResize(null, h);
+      if (h && w) {
+        onContentResize(null, h);
       }
-    }, [h,w]);
+    }, [h, w]);
 
     if (isEditing) {
       return (

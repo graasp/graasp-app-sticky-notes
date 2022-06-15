@@ -18,7 +18,6 @@ const DEFAULT_STYLE = {
   paddingRight: 5,
 };
 
-
 const Note = ({ note, id, userName }) => {
   const {
     userSetColor,
@@ -71,7 +70,7 @@ const Note = ({ note, id, userName }) => {
   };
 
   useEffect(() => {
-    if(noteBeingTransformedId === id) {
+    if (noteBeingTransformedId === id) {
       const updatedNote = {
         ...note,
         color: userSetColor,
@@ -116,7 +115,7 @@ const Note = ({ note, id, userName }) => {
       toggleEdit();
     }
   }, [noteBeingEditedId]);
-  
+
   const toggleTransform = () => {
     if (isTransforming) {
       setNoteBeingTransformedId(null);
@@ -149,10 +148,10 @@ const Note = ({ note, id, userName }) => {
   const setMinSize = (minWidth = null, minHeight = null) => {
     let mh = style.minHeight;
     let mw = style.minWidth;
-    if(minHeight !== null) {
+    if (minHeight !== null) {
       mh = minHeight;
     }
-    if(minWidth !== null) {
+    if (minWidth !== null) {
       mw = minWidth;
     }
     setStyle({
@@ -163,10 +162,10 @@ const Note = ({ note, id, userName }) => {
   };
 
   useEffect(() => {
-    if(width<style.minWidth) {
+    if (width < style.minWidth) {
       setWidth(style.minWidth);
     }
-    if(height<style.minHeight) {
+    if (height < style.minHeight) {
       setHeight(style.minHeight);
     }
   }, [style]);
@@ -188,8 +187,8 @@ const Note = ({ note, id, userName }) => {
       enabledAnchors={['middle-right', 'bottom-center', 'bottom-right']}
       boundBoxFunc={(oldBox, newBox) => {
         const b = newBox;
-        b.width = Math.max(style.minWidth, newBox.width);
-        b.height = Math.max(style.minHeight, newBox.height);
+        b.width = Math.max(style.minWidth + 100, newBox.width);
+        b.height = Math.max(style.minHeight + 30, newBox.height);
         return b;
       }}
     />
@@ -229,6 +228,7 @@ const Note = ({ note, id, userName }) => {
   };
 
   return (
+    <>
       <Group
         ref={noteRef}
         x={pageX}
@@ -240,26 +240,25 @@ const Note = ({ note, id, userName }) => {
         }}
         draggable
       >
-        <>
-          <Rect
-            ref={backgroundNoteRef}
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-            fill={color}
-            shadowColor="black"
-            shadowOffsetY={10}
-            shadowOffsetX={0}
-            shadowBlur={30}
-            shadowOpacity={0.6}
-            perfectDrawEnabled={false}
-            onClick={toggleTransform}
-            onTransform={handleTransform}
-            onTransformEnd={handleTransformEnd}
-          />
-          {transformer}
-        </>
+        {/* <> */}
+        <Rect
+          ref={backgroundNoteRef}
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          fill={color}
+          shadowColor="black"
+          shadowOffsetY={10}
+          shadowOffsetX={0}
+          shadowBlur={30}
+          shadowOpacity={0.6}
+          perfectDrawEnabled={false}
+          onClick={toggleTransform}
+          onTransform={handleTransform}
+          onTransformEnd={handleTransformEnd}
+        />
+        {/* </> */}
         <Group x={5} y={5} ref={contentRef}>
           <EditableText
             x={0}
@@ -278,6 +277,8 @@ const Note = ({ note, id, userName }) => {
           <Text x={5} y={height - 20} text={`Added by ${userName}`} />
         </Group>
       </Group>
+      {transformer}
+    </>
   );
 };
 

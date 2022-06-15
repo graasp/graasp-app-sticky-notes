@@ -16,6 +16,22 @@ const CANVAS_DIMENSIONS = new Map([
     },
   ],
   [
+    'A2',
+    {
+      name: 'A2',
+      height: '420mm',
+      width: '594mm',
+    },
+  ],
+  [
+    'A1',
+    {
+      name: 'A1',
+      height: '594mm',
+      width: '841mm',
+    },
+  ],
+  [
     'custom',
     {
       name: 'Custom',

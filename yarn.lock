@@ -1827,9 +1827,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git":
-  version: 0.1.0
-  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=0ab2cfd2f6a2a5dd81a59ed61e61d633de9abfeb"
+"@graasp/apps-query-client@github:graasp/graasp-apps-query-client.git#v0.1.1":
+  version: 0.1.1
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=87c713d1f10e334f557bf0459b50942d3f1d1f65"
   dependencies:
     axios: 0.26.0
     http-status-codes: 2.1.4
@@ -1837,11 +1837,12 @@ __metadata:
     miragejs: 0.1.43
     qs: 6.10.1
     react-query: 3.31.0
+    standard-version: 9.5.0
     tsc: 2.0.3
     uuid: 8.3.2
   peerDependencies:
     react: ^17.0.0
-  checksum: 424c07f47d6cd8f77dcc4b717f97223ef1943c111839f3254e10cdd4f7257b74c2655e4689089c7f552f08c12465b3f1fcd5d5eb2329f9a3e4e23c4da87f7bd9
+  checksum: c61bacb528f4ba37f65b33722a371fc93cbe6dae28fa4034068967681609c44c820f11d39a2c7bf7ba6104f70d035f9d54fd089d50ae727e8d88180a32deef52
   languageName: node
   linkType: hard
 
@@ -6150,7 +6151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-conventionalcommits@npm:^4.3.1, conventional-changelog-conventionalcommits@npm:^4.5.0":
+"conventional-changelog-conventionalcommits@npm:4.6.3, conventional-changelog-conventionalcommits@npm:^4.3.1, conventional-changelog-conventionalcommits@npm:^4.5.0":
   version: 4.6.3
   resolution: "conventional-changelog-conventionalcommits@npm:4.6.3"
   dependencies:
@@ -6271,6 +6272,25 @@ __metadata:
     conventional-changelog-jshint: ^2.0.9
     conventional-changelog-preset-loader: ^2.3.4
   checksum: 54253a3e3761369a8c68ec1ea57f3847b323a0104503dfccfd305553f77e83636132406d463dfa60ad3851dba42d84a528e8cb685943e8d6d7ae3eb37aaa19bb
+  languageName: node
+  linkType: hard
+
+"conventional-changelog@npm:3.1.25":
+  version: 3.1.25
+  resolution: "conventional-changelog@npm:3.1.25"
+  dependencies:
+    conventional-changelog-angular: ^5.0.12
+    conventional-changelog-atom: ^2.0.8
+    conventional-changelog-codemirror: ^2.0.8
+    conventional-changelog-conventionalcommits: ^4.5.0
+    conventional-changelog-core: ^4.2.1
+    conventional-changelog-ember: ^2.0.9
+    conventional-changelog-eslint: ^3.0.9
+    conventional-changelog-express: ^2.0.6
+    conventional-changelog-jquery: ^3.0.11
+    conventional-changelog-jshint: ^2.0.9
+    conventional-changelog-preset-loader: ^2.3.4
+  checksum: 1ea18378120cca9fd459f58ed2cf59170773cbfb2fcecad2504c7c44af076c368950013fa16f5e9428f1d723bea4c16e0c48170e152568b73b254a9c1bb93287
   languageName: node
   linkType: hard
 
@@ -9612,7 +9632,7 @@ __metadata:
     "@babel/preset-react": ~7.16.7
     "@commitlint/cli": ~16.2.1
     "@commitlint/config-conventional": ~16.2.1
-    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git"
+    "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git#v0.1.1"
     "@graasp/ui": "github:graasp/graasp-ui.git"
     "@material-ui/core": 4.12.3
     "@material-ui/icons": 4.11.2
@@ -9666,6 +9686,7 @@ __metadata:
     standard-version: ~9.3.2
     stopword: ~2.0.1
     uglifyjs-webpack-plugin: ~2.2.0
+    use-image: ~1.0.12
     webpack-cli: ~4.9.2
   languageName: unknown
   linkType: soft
@@ -18072,6 +18093,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"standard-version@npm:9.5.0":
+  version: 9.5.0
+  resolution: "standard-version@npm:9.5.0"
+  dependencies:
+    chalk: ^2.4.2
+    conventional-changelog: 3.1.25
+    conventional-changelog-config-spec: 2.1.0
+    conventional-changelog-conventionalcommits: 4.6.3
+    conventional-recommended-bump: 6.1.0
+    detect-indent: ^6.0.0
+    detect-newline: ^3.1.0
+    dotgitignore: ^2.1.0
+    figures: ^3.1.0
+    find-up: ^5.0.0
+    git-semver-tags: ^4.0.0
+    semver: ^7.1.1
+    stringify-package: ^1.0.1
+    yargs: ^16.0.0
+  bin:
+    standard-version: bin/cli.js
+  checksum: 55003206f7eca18ee9962566e5222d3930a1fa3c4692615d64e88f08873b9685837d669dc58361831bd3f211b6687c1681ad6a1749edf346b2db3e4564b4933c
+  languageName: node
+  linkType: hard
+
 "standard-version@npm:~9.3.2":
   version: 9.3.2
   resolution: "standard-version@npm:9.3.2"
@@ -19443,7 +19488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-image@npm:^1.0.7":
+"use-image@npm:^1.0.7, use-image@npm:~1.0.12":
   version: 1.0.12
   resolution: "use-image@npm:1.0.12"
   peerDependencies:

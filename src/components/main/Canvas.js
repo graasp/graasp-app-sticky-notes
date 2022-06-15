@@ -1,7 +1,7 @@
 // Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Stage } from 'react-konva';
+import { Layer, Stage } from 'react-konva';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
@@ -28,7 +28,8 @@ const useStyles = makeStyles(() => ({
     overflowY: 'scroll',
     width: '100%',
     height: '100%',
-    border: '2px solid gray',
+    // border: '2px solid gray',
+    border: 'none',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,7 +42,9 @@ const useStyles = makeStyles(() => ({
 
 const Canvas = () => {
   const classes = useStyles();
+  // eslint-disable-next-line no-unused-vars
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [canvasDimensions, setCanvasDimensions] = useState(
     CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
   );
@@ -98,6 +101,9 @@ const Canvas = () => {
     ticking = true;
   };
 
+  const backgroundImageX = (mainContainer.current?.clientWidth ?? 0) / 2;
+  const backgroundImageY = (mainContainer.current?.clientHeight ?? 0) / 2;
+
   const renderStage = () => (
     <CanvasContext.Consumer>
       {(value) => (
@@ -117,6 +123,17 @@ const Canvas = () => {
                     <Context.Provider value={valueContext}>
                       <TokenContext.Provider value={valueToken}>
                         <CanvasContext.Provider value={value}>
+                          {/* {backgroundToggleSetting ?? (
+                            <Layer>
+                              <BackgroundImage x={backgroundImageX} y={backgroundImageY} />
+                            </Layer>
+                          )} */}
+                          <Layer>
+                            <BackgroundImage
+                              x={backgroundImageX}
+                              y={backgroundImageY}
+                            />
+                          </Layer>
                           <NoteContainer
                             scrollLeft={scrollPosition.scrollLeft}
                             scrollTop={scrollPosition.scrollTop}
@@ -146,16 +163,14 @@ const Canvas = () => {
         className={classes.mainContainer}
         ref={mainContainer}
         style={{
-          height: canvasDimensions.height,
-          width: canvasDimensions.width,
+          // height: canvasDimensions.height,
+          // width: canvasDimensions.width,
+          height: '500mm',
+          width: '500mm',
           transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
       >
-        {backgroundToggleSetting ? (
-          <BackgroundImage>{renderStage()}</BackgroundImage>
-        ) : (
-          renderStage()
-        )}
+        {renderStage()}
       </div>
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
         permissionLevel,

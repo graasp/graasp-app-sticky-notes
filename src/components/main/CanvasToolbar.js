@@ -18,10 +18,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center',   
+    alignItems: 'center',
   },
-  sliderStyle: {
-    width: '80%',
+  toolsList: {
+    // backgroundColor: theme.palette.primary.main,
+    border: 'solid',
+    borderRadius: '1em',
+    borderColor: theme.palette.primary.main,
+  },
+  tool: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 }));
 
@@ -52,9 +61,9 @@ const CanvasToolbar = (props) => {
 
   return (
     <div className={classes.mainContainer}>
-      <List>
+      <List className={classes.toolsList}>
       <ListItem button>
-          <ListItemIcon>
+          <ListItemIcon className={classes.tool}>
           <DeleteIcon
             onClick={deleteNote} />
           </ListItemIcon>

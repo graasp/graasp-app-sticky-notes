@@ -1,7 +1,8 @@
 // Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Stage } from 'react-konva';
+import { Layer, Stage } from 'react-konva';
+import { useImage } from 'react-konva-utils';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
@@ -98,6 +99,11 @@ const Canvas = () => {
     ticking = true;
   };
 
+  const [imageTest] = useImage('https://konvajs.org/assets/yoda.jpg');
+
+  const backgroundImageX = (mainContainer.current?.clientWidth??0)/2 - (imageTest?.width??0)/2;
+  const backgroundImageY = (mainContainer.current?.clientHeight??0)/2 - (imageTest?.height??0)/2;
+
   const renderStage = () => (
     <CanvasContext.Consumer>
       {(value) => (
@@ -123,6 +129,11 @@ const Canvas = () => {
                             canvasScale={canvasScale}
                             ref={noteContainerRef}
                           />
+                          {backgroundToggleSetting ?? (
+                            <Layer>
+                              <BackgroundImage x={backgroundImageX} y={backgroundImageY} />
+                            </Layer>
+                          )}
                         </CanvasContext.Provider>
                       </TokenContext.Provider>
                     </Context.Provider>
@@ -151,11 +162,7 @@ const Canvas = () => {
           transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
       >
-        {backgroundToggleSetting ? (
-          <BackgroundImage>{renderStage()}</BackgroundImage>
-        ) : (
-          renderStage()
-        )}
+        {renderStage()}
       </div>
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
         permissionLevel,

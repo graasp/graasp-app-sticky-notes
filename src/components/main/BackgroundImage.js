@@ -1,20 +1,20 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { Image } from 'react-konva';
+import { useImage } from 'react-konva-utils';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
 
-const useStyles = makeStyles(() => ({
-  image: {
-    width: '100%',
-    height: '100%',
-    display: 'block',
-    backgroundSize: '100% 100%',
-  },
-}));
+// const useStyles = makeStyles(() => ({
+//   image: {
+//     width: '100%',
+//     height: '100%',
+//     display: 'block',
+//     backgroundSize: '100% 100%',
+//   },
+// }));
 
-const BackgroundImage = ({ children }) => {
-  const classes = useStyles();
+const BackgroundImage = ({x,y}) => {
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
@@ -32,28 +32,19 @@ const BackgroundImage = ({ children }) => {
   }
 
   const url = URL.createObjectURL(backgroundImage);
+  const [image] = useImage(url);
 
-  return (
-    <div
-      className={classes.image}
-      style={{
-        backgroundImage: `url(${url})`,
-      }}
-    >
-      {children}
-    </div>
-  );
+  // const LionImage = () => {
+  //   const [image] = useImage('https://konvajs.org/assets/lion.png');
+  //   return <Image image={image} />;
+  // };
+
+  return <Image x={x} y={y} image={image} />;
 };
 
 BackgroundImage.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.elementType),
-    PropTypes.elementType,
-  ]),
-};
-
-BackgroundImage.defaultProps = {
-  children: null,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
 };
 
 export default BackgroundImage;

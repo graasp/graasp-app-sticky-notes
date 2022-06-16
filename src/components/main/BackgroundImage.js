@@ -33,7 +33,6 @@ const BackgroundImage = ({ x, y }) => {
   }
 
   const url = URL.createObjectURL(backgroundImage);
-  console.log('Background image: ', url);
 
   const [image] = useImage(url);
   // const [image] = useImage('https://konvajs.org/assets/yoda.jpg');

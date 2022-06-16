@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Image } from 'react-konva';
@@ -14,7 +15,7 @@ import { useAppSettingFile, useAppSettings } from '../context/appData';
 //   },
 // }));
 
-const BackgroundImage = ({x,y}) => {
+const BackgroundImage = ({ x, y }) => {
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
@@ -32,14 +33,23 @@ const BackgroundImage = ({x,y}) => {
   }
 
   const url = URL.createObjectURL(backgroundImage);
+  console.log('Background image: ', url);
+
   const [image] = useImage(url);
+  // const [image] = useImage('https://konvajs.org/assets/yoda.jpg');
 
   // const LionImage = () => {
   //   const [image] = useImage('https://konvajs.org/assets/lion.png');
   //   return <Image image={image} />;
   // };
 
-  return <Image x={x} y={y} image={image} />;
+  return (
+    <Image
+      x={x - (image?.width ?? 0) / 2}
+      y={y - (image?.height ?? 0) / 2}
+      image={image}
+    />
+  );
 };
 
 BackgroundImage.propTypes = {

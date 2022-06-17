@@ -72,6 +72,7 @@ const Settings = () => {
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div onClick={(event) => event.stopPropagation()}>
         <Fab
+          id='settings-button'
           color="primary"
           className={classes.fab}
           onClick={(event) => {
@@ -86,7 +87,9 @@ const Settings = () => {
           onClose={handleModalClose}
           className={classes.modal}
         >
-          <div className={classes.modalContainer}>
+          <div
+            id='settings'
+            className={classes.modalContainer}>
             <Typography className={classes.header}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />

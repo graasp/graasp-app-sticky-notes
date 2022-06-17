@@ -155,6 +155,7 @@ const Canvas = () => {
 
   return (
     <div
+      id='scrollContainer'
       className={classes.scrollContainer}
       ref={scrollContainer}
       onScroll={handleScrollEvent}

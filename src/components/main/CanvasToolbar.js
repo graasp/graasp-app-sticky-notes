@@ -12,13 +12,13 @@ import { ACTION_TYPES } from '../../config/actionTypes';
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     position: 'fixed',
-    bottom: theme.spacing(2),
+    // bottom: theme.spacing(2),
     top: theme.spacing(2),
     left: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   toolsList: {
     border: 'solid',

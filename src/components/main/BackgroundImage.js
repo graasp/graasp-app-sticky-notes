@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Image } from 'react-konva';
 import { useImage } from 'react-konva-utils';
@@ -18,15 +18,22 @@ const BackgroundImage = ({ x, y }) => {
     ),
   );
 
-  const [image, setImage] = useState(null);
+  let image;
 
-  useEffect(() => {
-    if(backgroundImage) {
-      const url = URL.createObjectURL(backgroundImage);
-      const [imageTmp] = useImage(url);
-      setImage(imageTmp);
-    }
-  }, [backgroundImage]);
+  if(backgroundImage){
+    const url = URL.createObjectURL(backgroundImage);
+    [image] = useImage(url);
+  }
+
+  // const [image, setImage] = useState(null);
+
+  // useEffect(() => {
+  //   if(backgroundImage) {
+  //     const url = URL.createObjectURL(backgroundImage);
+  //     const [imageTmp] = useImage(url);
+  //     setImage(imageTmp);
+  //   }
+  // }, [backgroundImage]);
 
   if (!backgroundSetting || !backgroundImage || !image) {
     return null;

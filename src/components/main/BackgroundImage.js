@@ -1,19 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Image } from 'react-konva';
 import { useImage } from 'react-konva-utils';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
 
-// const useStyles = makeStyles(() => ({
-//   image: {
-//     width: '100%',
-//     height: '100%',
-//     display: 'block',
-//     backgroundSize: '100% 100%',
-//   },
-// }));
 
 const BackgroundImage = ({ x, y }) => {
   const { data: appSettings } = useAppSettings();
@@ -28,19 +19,17 @@ const BackgroundImage = ({ x, y }) => {
     ),
   );
 
-  if (!backgroundSetting || !backgroundImage) {
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    const url = URL.createObjectURL(backgroundImage);
+    const [imageTmp] = useImage(url);
+    setImage(imageTmp);
+  }, [backgroundImage]);
+
+  if (!backgroundSetting || !backgroundImage || !backgroundImage) {
     return null;
   }
-
-  const url = URL.createObjectURL(backgroundImage);
-
-  const [image] = useImage(url);
-  // const [image] = useImage('https://konvajs.org/assets/yoda.jpg');
-
-  // const LionImage = () => {
-  //   const [image] = useImage('https://konvajs.org/assets/lion.png');
-  //   return <Image image={image} />;
-  // };
 
   return (
     <Image

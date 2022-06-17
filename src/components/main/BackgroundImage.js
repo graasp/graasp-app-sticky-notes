@@ -5,7 +5,6 @@ import { useImage } from 'react-konva-utils';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
 
-
 const BackgroundImage = ({ x, y }) => {
   const { data: appSettings } = useAppSettings();
   const backgroundSetting = appSettings?.find(
@@ -22,12 +21,14 @@ const BackgroundImage = ({ x, y }) => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    const url = URL.createObjectURL(backgroundImage);
-    const [imageTmp] = useImage(url);
-    setImage(imageTmp);
+    if(backgroundImage) {
+      const url = URL.createObjectURL(backgroundImage);
+      const [imageTmp] = useImage(url);
+      setImage(imageTmp);
+    }
   }, [backgroundImage]);
 
-  if (!backgroundSetting || !backgroundImage || !backgroundImage) {
+  if (!backgroundSetting || !backgroundImage || !image) {
     return null;
   }
 

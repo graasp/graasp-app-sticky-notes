@@ -19,28 +19,33 @@ const BackgroundImage = ({ x, y }) => {
     ),
   );
 
-//   const [blob, setBlob] = useState(null);
+  //   const [backgroundImage, setBlob] = useState(null);
 
-//   const fileUrl = 'https://picsum.photos/200/300';
+  //   const fileUrl = 'https://picsum.photos/200/300';
 
-//   useEffect(() => {
-//   const xhr = new XMLHttpRequest();
-//   xhr.responseType = 'blob';
-//   xhr.onload = () => {
-//     setBlob(xhr.response); // xhr.response is a blob
-//   };
-//   xhr.open('GET', fileUrl);
-//   xhr.send();
-// }, []);
+  //   useEffect(() => {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.responseType = 'blob';
+  //   xhr.onload = () => {
+  //     setBlob(xhr.response); // xhr.response is a blob
+  //   };
+  //   xhr.open('GET', fileUrl);
+  //   xhr.send();
+  // }, []);
 
-  const image = new Image();
+  const [image] = useState(new Image());
 
   useEffect(() => {
     if (backgroundImage) {
       const url = URL.createObjectURL(backgroundImage);
+      // console.log(backgroundImage);
+      // console.log(url);
       image.src = url;
+      // console.log("Now image is :", image);
     }
   }, [backgroundImage]);
+
+  // const backgroundSetting = true;
 
   // const [image, setImage] = useState(null);
 
@@ -52,9 +57,12 @@ const BackgroundImage = ({ x, y }) => {
   //   }
   // }, [backgroundImage]);
 
-  if (!backgroundSetting || !backgroundImage || !image) {
+  if (!backgroundSetting || !backgroundImage) {
+    // console.log("No background image.");
     return null;
   }
+
+  // console.log("Background image!", image);
 
   return (
     <ImageK

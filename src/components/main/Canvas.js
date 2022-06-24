@@ -102,6 +102,13 @@ const Canvas = () => {
   const backgroundImageX = (mainContainer.current?.clientWidth ?? 0) / 2;
   const backgroundImageY = (mainContainer.current?.clientHeight ?? 0) / 2;
 
+  // Scroll to middle of the canvas
+  useEffect(() => {
+    scrollContainer.current.scrollTop = (mainContainer.current.clientHeight - scrollContainer.current.clientHeight)/2;
+    scrollContainer.current.scrollLeft = (mainContainer.current.clientWidth - scrollContainer.current.clientWidth)/2;
+    console.log("scrollLeft: ", (mainContainer.current.clientWidth - scrollContainer.current.clientWidth)/2);
+  }, []);
+
   const renderStage = () => (
     <CanvasContext.Consumer>
       {(value) => (

@@ -51,9 +51,6 @@ const BackgroundToggle = () => {
   );
 
   const [backgroundSettings, setBackgroundSettings] = useState(null);
-  // const [backgroundSettings, setBackgroundSettings] = useState(
-  //   DEFAULT_BACKGROUND_SETTINGS,
-  // );
 
   const [backgroundScale, setBackgroundScale] = useState(
     DEFAULT_BACKGROUND_SCALE,
@@ -63,9 +60,9 @@ const BackgroundToggle = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const backgroundSetting =
-        appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND) ||
-        true;
+      const backgroundSetting = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND,
+      );
       if (backgroundSetting) {
         const backSet =
           appSettings?.find(

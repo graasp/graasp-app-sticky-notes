@@ -16,7 +16,7 @@ import { APP_SETTINGS } from '../../constants/constants';
 import { Context } from '../context/ContextContext';
 import NoteContainer from './NoteContainer';
 import CANVAS_DIMENSIONS from '../../constants/canvas_dimensions';
-import CanvasScaleControl from './CanvasScaleControl';
+// import CanvasScaleControl from './CanvasScaleControl';
 import { queryClient, QueryClientProvider } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { TokenContext } from '../context/TokenContext';
@@ -56,7 +56,7 @@ const Canvas = () => {
     scrollTop,
   });
 
-  const [canvasScale, setCanvasScale] = useState();
+  const [canvasScale, /* setCanvasScale */] = useState();
 
   const scrollContainer = useRef(null);
   const mainContainer = useRef(null);
@@ -104,9 +104,14 @@ const Canvas = () => {
 
   // Scroll to middle of the canvas
   useEffect(() => {
-    scrollContainer.current.scrollTop = (mainContainer.current.clientHeight - scrollContainer.current.clientHeight)/2;
-    scrollContainer.current.scrollLeft = (mainContainer.current.clientWidth - scrollContainer.current.clientWidth)/2;
-    console.log("scrollLeft: ", (mainContainer.current.clientWidth - scrollContainer.current.clientWidth)/2);
+    scrollContainer.current.scrollTop =
+      (mainContainer.current.clientHeight -
+        scrollContainer.current.clientHeight) /
+      2;
+    scrollContainer.current.scrollLeft =
+      (mainContainer.current.clientWidth -
+        scrollContainer.current.clientWidth) /
+      2;
   }, []);
 
   const renderStage = () => (
@@ -178,10 +183,10 @@ const Canvas = () => {
         permissionLevel,
       ) && <Settings />}
       <ColorSettings />
-      <CanvasScaleControl
+      {/* <CanvasScaleControl
         canvasScale={canvasScale}
         setCanvasScale={setCanvasScale}
-      />
+      /> */}
     </div>
   );
 };

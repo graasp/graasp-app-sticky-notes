@@ -1,32 +1,19 @@
-/* eslint-disable no-unused-vars */
-
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Image as ImageK } from 'react-konva';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
-import CANVAS_DIMENSIONS, {
-  CANVAS_DIMENSIONS_PROP,
-} from '../../constants/canvas_dimensions';
 import {
-  DEFAULT_CANVAS_DIMENSIONS,
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../config/settings';
 
-const DEFAULT_BACKGROUND_SETTINGS = {
-  name: APP_SETTINGS.BACKGROUND_SETTINGS,
-  data: {
-    toggle: DEFAULT_BACKGROUND_ENABLED,
-    scale: DEFAULT_BACKGROUND_SCALE,
-  },
-};
-
-const BackgroundImage = ({ x, y, canvasDimensions }) => {
+const BackgroundImage = ({ x, y }) => {
   const [image] = useState(new Image());
 
-  const { data: appSettings, isSuccess, isLoading } = useAppSettings();
+  const { data: appSettings, isSuccess } = useAppSettings();
   const [scale, setScale] = useState();
+  const [enabled, setEnabled] = useState();
 
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
@@ -41,11 +28,15 @@ const BackgroundImage = ({ x, y, canvasDimensions }) => {
 
   useEffect(() => {
     if (isSuccess) {
+      const backgroundSettings = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
+      );
       const scaleTmp =
-        appSettings?.find(
-          ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
-        )?.data?.scale || DEFAULT_BACKGROUND_SCALE;
+        backgroundSettings?.data?.scale || DEFAULT_BACKGROUND_SCALE;
+      const enabledTmp =
+        backgroundSetting?.data?.toggle || DEFAULT_BACKGROUND_ENABLED;
       setScale(scaleTmp);
+      setEnabled(enabledTmp);
     }
   }, [appSettings, isSuccess]);
 
@@ -75,7 +66,7 @@ const BackgroundImage = ({ x, y, canvasDimensions }) => {
     }
   }, [backgroundImage]);
 
-  if (!backgroundSetting || !backgroundImage) {
+  if (!backgroundSetting || !backgroundImage || !enabled) {
     return null;
   }
   return (
@@ -93,11 +84,6 @@ const BackgroundImage = ({ x, y, canvasDimensions }) => {
 BackgroundImage.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  canvasDimensions: CANVAS_DIMENSIONS_PROP,
-};
-
-BackgroundImage.defaultProps = {
-  canvasDimensions: CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
 };
 
 export default BackgroundImage;

@@ -171,6 +171,11 @@ const BackgroundToggle = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              inputProps={{
+                max: 40,
+                min: 0.01,
+                step: 0.1,
+              }}
               onChange={handleScaleChange}
             />
           }

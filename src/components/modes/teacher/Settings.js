@@ -14,6 +14,7 @@ import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
 import SelectCanvasSize from './SelectCanvasSize';
+// import SelectBackgroundScale from './SelectBackgroundScale';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -91,6 +92,7 @@ const Settings = () => {
             <Typography className={classes.header}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />
+            {/* <SelectBackgroundScale /> */}
             <DownloadActions />
             <SelectCanvasSize />
             <Divider className={classes.divider} />

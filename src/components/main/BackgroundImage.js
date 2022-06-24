@@ -1,13 +1,33 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Image as ImageK } from 'react-konva';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
+import CANVAS_DIMENSIONS, {
+  CANVAS_DIMENSIONS_PROP,
+} from '../../constants/canvas_dimensions';
+import {
+  DEFAULT_CANVAS_DIMENSIONS,
+  DEFAULT_BACKGROUND_ENABLED,
+  DEFAULT_BACKGROUND_SCALE,
+} from '../../config/settings';
 
-const BackgroundImage = ({ x, y }) => {
-  const { data: appSettings } = useAppSettings();
+const DEFAULT_BACKGROUND_SETTINGS = {
+  name: APP_SETTINGS.BACKGROUND_SETTINGS,
+  data: {
+    toggle: DEFAULT_BACKGROUND_ENABLED,
+    scale: DEFAULT_BACKGROUND_SCALE,
+  },
+};
+
+const BackgroundImage = ({ x, y, canvasDimensions }) => {
+  const [image] = useState(new Image());
+
+  const { data: appSettings, isSuccess, isLoading } = useAppSettings();
+  const [scale, setScale] = useState();
+
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
   );
@@ -19,11 +39,23 @@ const BackgroundImage = ({ x, y }) => {
     ),
   );
 
-  //   const [backgroundImage, setBlob] = useState(null);
+  useEffect(() => {
+    if (isSuccess) {
+      const scaleTmp =
+        appSettings?.find(
+          ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
+        )?.data?.scale || DEFAULT_BACKGROUND_SCALE;
+      setScale(scaleTmp);
+    }
+  }, [appSettings, isSuccess]);
 
-  //   const fileUrl = 'https://picsum.photos/200/300';
+  const imageRef = useRef();
 
-  //   useEffect(() => {
+  // const [backgroundImage, setBlob] = useState(null);
+
+  // const fileUrl = 'https://picsum.photos/5000/2000';
+
+  // useEffect(() => {
   //   const xhr = new XMLHttpRequest();
   //   xhr.responseType = 'blob';
   //   xhr.onload = () => {
@@ -31,44 +63,29 @@ const BackgroundImage = ({ x, y }) => {
   //   };
   //   xhr.open('GET', fileUrl);
   //   xhr.send();
+  //   image.style.width = canvasDimensions.width;
   // }, []);
 
-  const [image] = useState(new Image());
+  // const backgroundSetting = true;
 
   useEffect(() => {
     if (backgroundImage) {
       const url = URL.createObjectURL(backgroundImage);
-      // console.log(backgroundImage);
-      // console.log(url);
       image.src = url;
-      // console.log("Now image is :", image);
     }
   }, [backgroundImage]);
 
-  // const backgroundSetting = true;
-
-  // const [image, setImage] = useState(null);
-
-  // useEffect(() => {
-  //   if(backgroundImage) {
-  //     const url = URL.createObjectURL(backgroundImage);
-  //     const [imageTmp] = useImage(url);
-  //     setImage(imageTmp);
-  //   }
-  // }, [backgroundImage]);
-
   if (!backgroundSetting || !backgroundImage) {
-    // console.log("No background image.");
     return null;
   }
-
-  // console.log("Background image!", image);
-
   return (
     <ImageK
-      x={x - (image?.width ?? 0) / 2}
-      y={y - (image?.height ?? 0) / 2}
+      ref={imageRef}
+      x={x - (scale * (image?.width ?? 0)) / 2}
+      y={y - (scale * (image?.height ?? 0)) / 2}
       image={image}
+      scaleX={scale}
+      scaleY={scale}
     />
   );
 };
@@ -76,6 +93,11 @@ const BackgroundImage = ({ x, y }) => {
 BackgroundImage.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+  canvasDimensions: CANVAS_DIMENSIONS_PROP,
+};
+
+BackgroundImage.defaultProps = {
+  canvasDimensions: CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
 };
 
 export default BackgroundImage;

@@ -63,9 +63,9 @@ const BackgroundToggle = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const backgroundSetting =
-        appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND) ||
-        true;
+      const backgroundSetting = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND,
+      );
       if (backgroundSetting) {
         const backSet =
           appSettings?.find(

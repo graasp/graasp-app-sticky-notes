@@ -274,7 +274,13 @@ const Note = ({ note, id, userName }) => {
             onContentResize={setMinSize}
             ref={textRef}
           />
-          <Text x={5} y={height - 20} text={`Added by ${userName}`} />
+          <Text
+            x={5}
+            y={height - 20}
+            text={`Added by ${userName}`}
+            fontSize={10}
+            fontFamily="sans-serif"
+          />
         </Group>
       </Group>
       {transformer}

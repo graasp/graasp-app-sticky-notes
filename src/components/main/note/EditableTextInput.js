@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Html } from 'react-konva-utils';
 import PropTypes from 'prop-types';
-import { SMALL_DELAY_REFOCUS_MS } from '../../../constants/constants';
+// import { SMALL_DELAY_REFOCUS_MS } from '../../../constants/constants';
 
 function getStyle(width, height) {
   const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
@@ -15,7 +15,7 @@ function getStyle(width, height) {
     outline: 'none',
     resize: 'none',
     colour: 'black',
-    fontSize: '24px',
+    fontSize: '12px',
     fontFamily: 'sans-serif',
   };
   if (isFirefox) {
@@ -57,9 +57,11 @@ const EditableTextInput = forwardRef(
           onKeyDown={onKeyDown}
           style={style}
           ref={textInput}
-          onBlur={() => {
-            setTimeout(focusOnText, SMALL_DELAY_REFOCUS_MS); // Need a small delay before refocusing.
-          }}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus
+          // onBlur={() => {
+          //   setTimeout(focusOnText, SMALL_DELAY_REFOCUS_MS); // Need a small delay before refocusing.
+          // }}
         />
       </Html>
     );

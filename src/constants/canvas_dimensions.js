@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const CANVAS_DIMENSIONS = new Map([
   [
     'A4',
@@ -49,4 +51,11 @@ const CANVAS_DIMENSIONS = new Map([
   ],
 ]);
 
+const CANVAS_DIMENSIONS_PROP = PropTypes.shape({
+  name: PropTypes.string,
+  height: PropTypes.string,
+  width: PropTypes.string,
+});
+
+export { CANVAS_DIMENSIONS_PROP };
 export default CANVAS_DIMENSIONS;

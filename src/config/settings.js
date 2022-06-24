@@ -38,6 +38,7 @@ export const APP_DATA_VISIBLITIES = {
 };
 
 export const DEFAULT_BACKGROUND_ENABLED = false;
+export const DEFAULT_BACKGROUND_SCALE = 1.0;
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
 

@@ -24,18 +24,16 @@ import CanvasToolbar from './CanvasToolbar';
 
 const useStyles = makeStyles(() => ({
   scrollContainer: {
-    overflowX: 'scroll',
-    overflowY: 'scroll',
+    backgroundColor: 'silver',
+    overflow: 'auto',
     width: '100%',
     height: '100%',
-    // border: '2px solid gray',
     border: 'none',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
   },
   mainContainer: {
-    border: '2px solid black',
+    backgroundColor: 'white',
+    // border: '2px solid black',
+    transformOrigin: '0 0',
     flexShrink: 0,
   },
 }));
@@ -123,11 +121,6 @@ const Canvas = () => {
                     <Context.Provider value={valueContext}>
                       <TokenContext.Provider value={valueToken}>
                         <CanvasContext.Provider value={value}>
-                          {/* {backgroundToggleSetting ?? (
-                            <Layer>
-                              <BackgroundImage x={backgroundImageX} y={backgroundImageY} />
-                            </Layer>
-                          )} */}
                           <Layer>
                             <BackgroundImage
                               x={backgroundImageX}
@@ -166,18 +159,18 @@ const Canvas = () => {
         style={{
           // height: canvasDimensions.height,
           // width: canvasDimensions.width,
-          height: '500mm',
-          width: '500mm',
+          height: '2160px',
+          width: '4096px',
           transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
       >
         {renderStage()}
       </div>
+      <CanvasToolbar />
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
         permissionLevel,
       ) && <Settings />}
       <ColorSettings />
-      <CanvasToolbar />
       <CanvasScaleControl
         canvasScale={canvasScale}
         setCanvasScale={setCanvasScale}

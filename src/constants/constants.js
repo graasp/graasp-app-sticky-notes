@@ -29,6 +29,7 @@ export const SMALL_DELAY_REFOCUS_MS = 20;
 
 export const APP_SETTINGS = {
   BACKGROUND: 'background',
-  BACKGROUND_TOGGLE: 'background_toggle',
+  BACKGROUND_SETTINGS: 'background_settings',
   CANVAS_DIMENSIONS: 'canvas_dimensions',
+  BACKGROUND_SCALE: 'background_scale',
 };

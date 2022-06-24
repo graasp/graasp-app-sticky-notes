@@ -12,24 +12,31 @@ import { ACTION_TYPES } from '../../config/actionTypes';
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     position: 'fixed',
-    // bottom: theme.spacing(2),
+    bottom: theme.spacing(2),
     top: theme.spacing(2),
-    left: theme.spacing(1),
+    right: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   toolsList: {
-    border: 'solid',
-    borderRadius: '1em',
-    borderColor: theme.palette.primary.main,
+    // border: 'solid',
+    // borderRadius: '1em',
+    // borderColor: theme.palette.primary.main,
   },
   tool: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '50%',
+    width: '3.5em',
+    height: '3.5em',
+  },
+  toolIcon: {
+    color: 'white',
   },
 }));
 
@@ -67,7 +74,7 @@ const CanvasToolbar = (props) => {
     </ListItem> */}
         <ListItem button>
           <ListItemIcon className={classes.tool}>
-            <DeleteIcon onClick={deleteNote} />
+            <DeleteIcon className={classes.toolIcon} onClick={deleteNote} />
           </ListItemIcon>
         </ListItem>
       </List>

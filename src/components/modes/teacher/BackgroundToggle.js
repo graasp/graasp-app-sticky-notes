@@ -51,9 +51,6 @@ const BackgroundToggle = () => {
   );
 
   const [backgroundSettings, setBackgroundSettings] = useState(null);
-  // const [backgroundSettings, setBackgroundSettings] = useState(
-  //   DEFAULT_BACKGROUND_SETTINGS,
-  // );
 
   const [backgroundScale, setBackgroundScale] = useState(
     DEFAULT_BACKGROUND_SCALE,

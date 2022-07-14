@@ -27,7 +27,7 @@ const Note = ({ note, id, userName }) => {
     setNoteBeingTransformedId,
   } = useContext(CanvasContext);
 
-  const { position, size, color } = note;
+  const { position, size = {}, color } = note;
   const { width: w = DEFAULT_NOTE_WIDTH, height: h = DEFAULT_NOTE_HEIGHT } = size;
 
   const { pageX = 0, pageY = 0 } = position;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {
@@ -7,7 +8,6 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react';
-import { Layer, Text } from 'react-konva';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAppContext, useAppData } from '../context/appData';
@@ -132,31 +132,57 @@ const NoteContainer = forwardRef((props, ref) => {
     },
   }));
 
+  console.log(notes);
+
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <Layer className={classes.noteContainer} ref={ref}>
-        {notes ? (
-          notes.map((note) => (
-            <Note
-              note={note.data}
-              id={note.id}
-              key={note.id}
-              userName={
-                (
-                  members.find((m) => m.id === note.memberId) ?? {
-                    name: DEFAULT_ANONYMOUS_USERNAME,
-                  }
-                ).name
-              }
-            />
-          ))
-        ) : (
-          <Text text={t('Add a note.')} />
-        )}
-      </Layer>
+      {notes ? (
+        notes.map((note) => (
+          <Note
+            note={note.data}
+            id={note.id}
+            key={note.id}
+            userName={
+              (
+                members.find((m) => m.id === note.memberId) ?? {
+                  name: DEFAULT_ANONYMOUS_USERNAME,
+                }
+              ).name
+            }
+          />
+        ))
+      ) : (
+        <p>{t('Add a note.')}</p>
+      )}
     </>
   );
+
+  // return (
+  //   <>
+  //     {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+  //     <Layer className={classes.noteContainer} ref={ref}>
+  //       {notes ? (
+  //         notes.map((note) => (
+  //           <Note
+  //             note={note.data}
+  //             id={note.id}
+  //             key={note.id}
+  //             userName={
+  //               (
+  //                 members.find((m) => m.id === note.memberId) ?? {
+  //                   name: DEFAULT_ANONYMOUS_USERNAME,
+  //                 }
+  //               ).name
+  //             }
+  //           />
+  //         ))
+  //       ) : (
+  //         <Text text={t('Add a note.')} />
+  //       )}
+  //     </Layer>
+  //   </>
+  // );
 });
 
 export default NoteContainer;

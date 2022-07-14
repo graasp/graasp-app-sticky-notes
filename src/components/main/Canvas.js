@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 // Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Layer, Stage } from 'react-konva';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
@@ -56,7 +56,7 @@ const Canvas = () => {
     scrollTop,
   });
 
-  const [canvasScale, /* setCanvasScale */] = useState();
+  const [canvasScale /* setCanvasScale */] = useState();
 
   const scrollContainer = useRef(null);
   const mainContainer = useRef(null);
@@ -115,48 +115,57 @@ const Canvas = () => {
   }, []);
 
   const renderStage = () => (
-    <CanvasContext.Consumer>
-      {(value) => (
-        <TokenContext.Consumer>
-          {(valueToken) => (
-            <Context.Consumer>
-              {(valueContext) => (
-                <Stage
-                  width={mainContainer.current?.clientWidth}
-                  height={mainContainer.current?.clientHeight}
-                  onClick={(e) => {
-                    noteContainerRef.current?.click(e, mainStage.current);
-                  }}
-                  ref={mainStage}
-                >
-                  <QueryClientProvider client={queryClient}>
-                    <Context.Provider value={valueContext}>
-                      <TokenContext.Provider value={valueToken}>
-                        <CanvasContext.Provider value={value}>
-                          <Layer>
-                            <BackgroundImage
-                              x={backgroundImageX}
-                              y={backgroundImageY}
-                            />
-                          </Layer>
-                          <NoteContainer
-                            scrollLeft={scrollPosition.scrollLeft}
-                            scrollTop={scrollPosition.scrollTop}
-                            canvasScale={canvasScale}
-                            ref={noteContainerRef}
-                          />
-                        </CanvasContext.Provider>
-                      </TokenContext.Provider>
-                    </Context.Provider>
-                  </QueryClientProvider>
-                </Stage>
-              )}
-            </Context.Consumer>
-          )}
-        </TokenContext.Consumer>
-      )}
-    </CanvasContext.Consumer>
+    <NoteContainer
+      scrollLeft={scrollPosition.scrollLeft}
+      scrollTop={scrollPosition.scrollTop}
+      canvasScale={canvasScale}
+      ref={noteContainerRef}
+    />
   );
+
+  // const renderStage = () => (
+  //   <CanvasContext.Consumer>
+  //     {(value) => (
+  //       <TokenContext.Consumer>
+  //         {(valueToken) => (
+  //           <Context.Consumer>
+  //             {(valueContext) => (
+  //               <Stage
+  //                 width={mainContainer.current?.clientWidth}
+  //                 height={mainContainer.current?.clientHeight}
+  //                 onClick={(e) => {
+  //                   noteContainerRef.current?.click(e, mainStage.current);
+  //                 }}
+  //                 ref={mainStage}
+  //               >
+  //                 <QueryClientProvider client={queryClient}>
+  //                   <Context.Provider value={valueContext}>
+  //                     <TokenContext.Provider value={valueToken}>
+  //                       <CanvasContext.Provider value={value}>
+  //                         <Layer>
+  //                           <BackgroundImage
+  //                             x={backgroundImageX}
+  //                             y={backgroundImageY}
+  //                           />
+  //                         </Layer>
+  //                         <NoteContainer
+  //                           scrollLeft={scrollPosition.scrollLeft}
+  //                           scrollTop={scrollPosition.scrollTop}
+  //                           canvasScale={canvasScale}
+  //                           ref={noteContainerRef}
+  //                         />
+  //                       </CanvasContext.Provider>
+  //                     </TokenContext.Provider>
+  //                   </Context.Provider>
+  //                 </QueryClientProvider>
+  //               </Stage>
+  //             )}
+  //           </Context.Consumer>
+  //         )}
+  //       </TokenContext.Consumer>
+  //     )}
+  //   </CanvasContext.Consumer>
+  // );
 
   return (
     <div

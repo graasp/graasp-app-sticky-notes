@@ -1,10 +1,9 @@
-import React, { forwardRef, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { forwardRef, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'react-konva';
+import DOMPurify from 'dompurify';
 // import ResizableText from './ResizableText';
 import EditableTextInput from './EditableTextInput';
-
-// const HEIGHT_MARGIN_TEXT = 20;
 
 const RETURN_KEY = 13;
 const ESCAPE_KEY = 27;
@@ -18,14 +17,17 @@ const EditableText = forwardRef(
       onToggleEdit,
       onToggleTransform,
       onChange,
-      onResize,
-      onContentResize,
       text,
       width,
       height,
     },
     ref,
   ) => {
+    const htmlContainer = useRef();
+    const cleanText = DOMPurify.sanitize(text, {
+      USE_PROFILES: { html: true },
+    });
+
     const handleEscapeKeys = (e) => {
       if (
         (e.keyCode === RETURN_KEY && !e.shiftKey) ||
@@ -36,17 +38,8 @@ const EditableText = forwardRef(
     };
 
     const handleTextChange = (e) => {
-      onChange(e.currentTarget.value);
+      onChange(e);
     };
-
-    const h = ref?.current?.height();
-    const w = width;
-
-    useEffect(() => {
-      if (h && w) {
-        onContentResize(null, h);
-      }
-    }, [h, w]);
 
     if (isEditing) {
       return (
@@ -63,21 +56,14 @@ const EditableText = forwardRef(
       );
     }
     return (
-      <Text
-        ref={ref}
-        x={x}
-        y={y}
-        text={text}
-        fill="black"
-        fontFamily="sans-serif"
-        fontSize={12}
-        perfectDrawEnabled={false}
-        onTransform={onResize}
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+      <div
+        ref={htmlContainer}
         onClick={onToggleTransform}
         onTap={onToggleTransform}
         onDblClick={onToggleEdit}
         onDblTap={onToggleEdit}
-        width={width}
+        dangerouslySetInnerHTML={{ __html: cleanText }}
       />
     );
   },
@@ -90,8 +76,6 @@ EditableText.propTypes = {
   onToggleEdit: PropTypes.func.isRequired,
   onToggleTransform: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  onResize: PropTypes.func.isRequired,
-  onContentResize: PropTypes.func.isRequired,
   text: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,

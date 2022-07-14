@@ -1,22 +1,38 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Group, Transformer, Rect, Text } from 'react-konva';
+import { makeStyles } from '@material-ui/core/styles';
+import Draggable from 'react-draggable';
+import classNames from 'classnames';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
 import { ACTION_TYPES } from '../../../config/actionTypes';
-import { DEFAULT_NOTE_COLOR, DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../../../constants/constants';
+import {
+  DEFAULT_NOTE_COLOR,
+  DEFAULT_NOTE_HEIGHT,
+  DEFAULT_NOTE_WIDTH,
+} from '../../../constants/constants';
 import EditableText from './EditableText';
 // import { generateRandomRotationAngle } from '../../../utils/canvas';
 
-const DEFAULT_STYLE = {
-  minHeight: 120,
-  minWidth: 80,
-  paddingTop: 5,
-  paddingLeft: 5,
-  paddingBottom: 5,
-  paddingRight: 5,
-};
+const useStyles = makeStyles(() => ({
+  note: {
+    overflow: 'auto',
+    border: 'none',
+    maxWidth: '30em',
+    padding: '0.7em 0.8em',
+    boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
+    cursor: 'move',
+    width: 'auto',
+    height: 'fit-content',
+  },
+  selected: {
+    border: '2px solid dodgerblue',
+  },
+}));
 
 const Note = ({ note, id, userName }) => {
   const {
@@ -27,8 +43,9 @@ const Note = ({ note, id, userName }) => {
     setNoteBeingTransformedId,
   } = useContext(CanvasContext);
 
-  const { position, size, color } = note;
-  const { width: w = DEFAULT_NOTE_WIDTH, height: h = DEFAULT_NOTE_HEIGHT } = size;
+  const { position, size = {}, color } = note;
+  const { width: w = DEFAULT_NOTE_WIDTH, height: h = DEFAULT_NOTE_HEIGHT } =
+    size;
 
   const { pageX = 0, pageY = 0 } = position;
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
@@ -39,7 +56,8 @@ const Note = ({ note, id, userName }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [width, setWidth] = useState(w);
   const [height, setHeight] = useState(h);
-  const [style, setStyle] = useState(DEFAULT_STYLE);
+
+  const classes = useStyles();
 
   const noteRef = useRef(id);
   const contentRef = useRef(null);
@@ -145,31 +163,6 @@ const Note = ({ note, id, userName }) => {
     patchNote(updatedNote, ACTION_TYPES.TRANSFORM);
   };
 
-  const setMinSize = (minWidth = null, minHeight = null) => {
-    let mh = style.minHeight;
-    let mw = style.minWidth;
-    if (minHeight !== null) {
-      mh = minHeight;
-    }
-    if (minWidth !== null) {
-      mw = minWidth;
-    }
-    setStyle({
-      ...style,
-      minWidth: mw,
-      minHeight: mh,
-    });
-  };
-
-  useEffect(() => {
-    if (width < style.minWidth) {
-      setWidth(style.minWidth);
-    }
-    if (height < style.minHeight) {
-      setHeight(style.minHeight);
-    }
-  }, [style]);
-
   const transformerRef = useRef(null);
 
   useEffect(() => {
@@ -178,21 +171,6 @@ const Note = ({ note, id, userName }) => {
       transformerRef.current.getLayer().batchDraw();
     }
   }, [isTransforming]);
-
-  const transformer = isTransforming ? (
-    <Transformer
-      ref={transformerRef}
-      rotateEnabled={false}
-      flipEnabled={false}
-      enabledAnchors={['middle-right', 'bottom-center', 'bottom-right']}
-      boundBoxFunc={(oldBox, newBox) => {
-        const b = newBox;
-        b.width = Math.max(style.minWidth + 100, newBox.width);
-        b.height = Math.max(style.minHeight + 30, newBox.height);
-        return b;
-      }}
-    />
-  ) : null;
 
   const getNewSizeAfterTransform = (node) => {
     const newWidth = width * node.scaleX();
@@ -228,63 +206,38 @@ const Note = ({ note, id, userName }) => {
   };
 
   return (
-    <>
-      <Group
-        ref={noteRef}
-        x={pageX}
-        y={pageY}
-        name="note"
-        onDragEnd={handleDragEnd}
-        onClick={(e) => {
-          e.cancelBubble = true;
-        }}
-        draggable
+    <Draggable
+      defaultPosition={{ x: pageX, y: pageY }}
+      disabled={isEditing}
       >
-        {/* <> */}
-        <Rect
-          ref={backgroundNoteRef}
+      <div
+        className={classNames(classes.note, isTransforming && classes.selected )}
+        style={{
+          backgroundColor: color,
+        }}
+        onClick={(e) => {
+          if(e.detail === 2 && !isEditing){
+            toggleEdit();
+          } else {
+            toggleTransform();
+          }
+        }}
+      >
+        <EditableText
           x={0}
           y={0}
-          width={width}
+          text={text}
           height={height}
-          fill={color}
-          shadowColor="black"
-          shadowOffsetY={10}
-          shadowOffsetX={0}
-          shadowBlur={30}
-          shadowOpacity={0.6}
-          perfectDrawEnabled={false}
-          onClick={toggleTransform}
-          onTransform={handleTransform}
-          onTransformEnd={handleTransformEnd}
+          isEditing={isEditing}
+          isTransforming={isTransforming}
+          onToggleEdit={toggleEdit}
+          onToggleTransform={toggleTransform}
+          onChange={handleTextEdit}
+          ref={textRef}
         />
-        {/* </> */}
-        <Group x={5} y={5} ref={contentRef}>
-          <EditableText
-            x={0}
-            y={0}
-            text={text}
-            width={width}
-            height={height}
-            isEditing={isEditing}
-            isTransforming={isTransforming}
-            onToggleEdit={toggleEdit}
-            onToggleTransform={toggleTransform}
-            onChange={handleTextEdit}
-            onContentResize={setMinSize}
-            ref={textRef}
-          />
-          <Text
-            x={5}
-            y={height - 20}
-            text={`Added by ${userName}`}
-            fontSize={10}
-            fontFamily="sans-serif"
-          />
-        </Group>
-      </Group>
-      {transformer}
-    </>
+        {!isEditing && <p>{`Added by ${userName}`}</p>}
+      </div>
+    </Draggable>
   );
 };
 

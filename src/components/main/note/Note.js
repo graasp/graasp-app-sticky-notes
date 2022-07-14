@@ -5,7 +5,7 @@ import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
 import { ACTION_TYPES } from '../../../config/actionTypes';
-import { DEFAULT_NOTE_COLOR } from '../../../constants/constants';
+import { DEFAULT_NOTE_COLOR, DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../../../constants/constants';
 import EditableText from './EditableText';
 // import { generateRandomRotationAngle } from '../../../utils/canvas';
 
@@ -28,9 +28,9 @@ const Note = ({ note, id, userName }) => {
   } = useContext(CanvasContext);
 
   const { position, size, color } = note;
-  const { width: w, height: h } = size;
+  const { width: w = DEFAULT_NOTE_WIDTH, height: h = DEFAULT_NOTE_HEIGHT } = size;
 
-  const { pageX, pageY } = position;
+  const { pageX = 0, pageY = 0 } = position;
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 

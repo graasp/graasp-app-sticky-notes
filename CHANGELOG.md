@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.8...v0.2.0) (2022-07-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* no views, no app
+* Not compatible with old API
+* breaks everything
+
+### Features
+
+* add action traces ([3a5fffc](https://github.com/graasp/graasp-app-sticky-notes/commit/3a5fffc4e27312daa932ab6398738eb98daea3b0))
+* add caller workflow to graasp-deploy ([74aa110](https://github.com/graasp/graasp-app-sticky-notes/commit/74aa110ad619204b863599db2136dca6734ede0c))
+* add cdelivery and cdeployment workflows ([b817c12](https://github.com/graasp/graasp-app-sticky-notes/commit/b817c12e17a43789c57195c72c612766f14ee35e))
+* implement app actions (2) ([2e8e45c](https://github.com/graasp/graasp-app-sticky-notes/commit/2e8e45c252acd7ba3f6465e2eea5e6fc13bed931))
+* implement refetchInterval ([f6e71bd](https://github.com/graasp/graasp-app-sticky-notes/commit/f6e71bddd8c3e472e51e91fa898f89deeeebb413))
+* include required scripts to use standard-version ([be79d4c](https://github.com/graasp/graasp-app-sticky-notes/commit/be79d4ce21bc19e2bf4929cfd9b89e48cc8809b3))
+* make app run standalone ([004253a](https://github.com/graasp/graasp-app-sticky-notes/commit/004253a0f2aa11d6b3915d7722388b5170a209d9))
+* try to implement itemId in context ([cdc7455](https://github.com/graasp/graasp-app-sticky-notes/commit/cdc74550e768d25f3fd87ba7e9f294e5bed56396))
+* update staging versions in graasp deploy ([39d7c05](https://github.com/graasp/graasp-app-sticky-notes/commit/39d7c05a920f40d8631d2408f00fb61d20262e18))
+
+
+### Bug Fixes
+
+* [#36](https://github.com/graasp/graasp-app-sticky-notes/issues/36) ([aac3527](https://github.com/graasp/graasp-app-sticky-notes/commit/aac3527f1b0a0a27afbecdc270b0a5dac6f54db3))
+* activate toggle background ([5058273](https://github.com/graasp/graasp-app-sticky-notes/commit/5058273d8aef0bf12fc4ae83d004b8ce37968c2d))
+* adapt post actions to new apps-query-client ([65e08e7](https://github.com/graasp/graasp-app-sticky-notes/commit/65e08e78365454d6ab4360f39ed2ed14d101ee5c))
+* add  script ([6b63258](https://github.com/graasp/graasp-app-sticky-notes/commit/6b6325860b526549e7bd4cd832d7f24c809ef916))
+* add REACT_APP prefix in env var ([2df7051](https://github.com/graasp/graasp-app-sticky-notes/commit/2df70515d3d7985fdd7baea7a59f208f7897ae82))
+* added changes to fix .env issue ([48eaa8e](https://github.com/graasp/graasp-app-sticky-notes/commit/48eaa8ee76c792f868a231c3ab4f83975fbe543d))
+* added changes to resolve issues ([15dd72b](https://github.com/graasp/graasp-app-sticky-notes/commit/15dd72b99efd95461de46c0028cbe77f789283af))
+* added step to create .env file ([bda0e16](https://github.com/graasp/graasp-app-sticky-notes/commit/bda0e16cc8dcc4d53fbd9728a99ded7711c42e1e))
+* background image and app settings ([35d82b0](https://github.com/graasp/graasp-app-sticky-notes/commit/35d82b06e7b69b36abc2ac821cbd2e39981a1235))
+* change secret name ([f7c2616](https://github.com/graasp/graasp-app-sticky-notes/commit/f7c2616fcef1d4188fb82c7c1006d4ab4394e6cc))
+* delete notes ([f025d14](https://github.com/graasp/graasp-app-sticky-notes/commit/f025d14c0bbc381d124f619bca7567ac76dcf517))
+* display image upload ([084068e](https://github.com/graasp/graasp-app-sticky-notes/commit/084068eb9227d8d18e8012303528fa7ba2fe4bf5))
+* Implement color ([c19f8d7](https://github.com/graasp/graasp-app-sticky-notes/commit/c19f8d78666e0fc87d4a9ca32229ab5a891c442b))
+* make background image stretchable over canvas ([4b2ce21](https://github.com/graasp/graasp-app-sticky-notes/commit/4b2ce213dbe5da5cf288ba00c37439711868d66a))
+* migrate note edit note action (UI only) ([b36054b](https://github.com/graasp/graasp-app-sticky-notes/commit/b36054bbe679683ad1ea47dc31ef7d3f5ffb4a8b))
+* minor changes to trigger updates in pull request ([89b8e90](https://github.com/graasp/graasp-app-sticky-notes/commit/89b8e9080e1e391f1f24159b691a817c2b205e60))
+* no more data lost when color change ([1a8138f](https://github.com/graasp/graasp-app-sticky-notes/commit/1a8138fb0af890314b5ade3c014c82c21b30d95c))
+* note maximisation/minimization ([4a1cdbc](https://github.com/graasp/graasp-app-sticky-notes/commit/4a1cdbcec83fe4b5886f1be987c70dc168f939f2))
+* note patching after validation ([dc1593d](https://github.com/graasp/graasp-app-sticky-notes/commit/dc1593d163706415e6a6c22d13d282a2c284101d))
+* reimplement color settings ([582f1e7](https://github.com/graasp/graasp-app-sticky-notes/commit/582f1e78ad11084e9c86b31584fb99f45b818011))
+* reimplement settings + fix mock context ([66d65fb](https://github.com/graasp/graasp-app-sticky-notes/commit/66d65fb97d6eaace310d531c6f79a2e712cc6238))
+* reimplement toggle background image ([06ac795](https://github.com/graasp/graasp-app-sticky-notes/commit/06ac795e068c17be96a6a4da1966ba5d23190b6c))
+* reimplement user name display ([425cc0f](https://github.com/graasp/graasp-app-sticky-notes/commit/425cc0fdacba923ea78f078cdd9b22ecac32a1ad))
+* remove unused workflows ([dbbcda8](https://github.com/graasp/graasp-app-sticky-notes/commit/dbbcda827b8c3186a3831d5609835319804f0151))
+* replace anonymous username with cst. ([fc48874](https://github.com/graasp/graasp-app-sticky-notes/commit/fc48874975e6607526b0761126ce0f3d0ecca6d2)), closes [#36](https://github.com/graasp/graasp-app-sticky-notes/issues/36)
+* restore noteAction style ([ae63b91](https://github.com/graasp/graasp-app-sticky-notes/commit/ae63b911f35610ae3f61a86fbd1688f6d874dd09))
+* revert to react-scripts 4.0.3 (for uppy) ([e1cf13d](https://github.com/graasp/graasp-app-sticky-notes/commit/e1cf13d4102450b30e97831db1a750d8268c42ae))
+* title and description edit works ([5147293](https://github.com/graasp/graasp-app-sticky-notes/commit/51472932db2f814a4fdaa8126d6b9a9e65f3bc31))
+* update required secrets ([85e95f6](https://github.com/graasp/graasp-app-sticky-notes/commit/85e95f60f6004968b253b9031da007db8fd876bc))
+* update secret name ([dcacf11](https://github.com/graasp/graasp-app-sticky-notes/commit/dcacf110bc92d976b2057695a046cff953a5722d))
+* update sha ref and solve minor issues ([80b6e85](https://github.com/graasp/graasp-app-sticky-notes/commit/80b6e85f0fc33fd6ded78d6aed85e0b8d44e1d20))
+* update workflow sha ref ([eee953f](https://github.com/graasp/graasp-app-sticky-notes/commit/eee953ff3b09b153ca43f0b3a5f56627a7e951a7))
+* upload background image mechanism ([eb96725](https://github.com/graasp/graasp-app-sticky-notes/commit/eb9672540eecb122ee3572b2c9e60b91e6c709bb))
+
+
+* add context for new graasp api ([322efa1](https://github.com/graasp/graasp-app-sticky-notes/commit/322efa15244ff9c8fd6cf6affa9ab20cceede888))
+* port ([4c5e4f5](https://github.com/graasp/graasp-app-sticky-notes/commit/4c5e4f5ac8cbbecc22e1de55a12058c5bfd822a3))
+* port to new api ([d7d95db](https://github.com/graasp/graasp-app-sticky-notes/commit/d7d95dbdec05063034728581b4e9686737d5f629))
+
 ### [0.1.8](https://github.com/graasp/graasp-app-post-it-notes/compare/v0.1.7...v0.1.8) (2021-07-12)
 
 

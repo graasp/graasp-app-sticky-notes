@@ -1,22 +1,17 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
+import { Typography } from '@material-ui/core';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
 import { ACTION_TYPES } from '../../../config/actionTypes';
 import {
   DEFAULT_NOTE_COLOR,
-  DEFAULT_NOTE_HEIGHT,
-  DEFAULT_NOTE_WIDTH,
 } from '../../../constants/constants';
 import EditableText from './EditableText';
-// import { generateRandomRotationAngle } from '../../../utils/canvas';
 
 const useStyles = makeStyles(() => ({
   note: {
@@ -24,17 +19,18 @@ const useStyles = makeStyles(() => ({
     border: 'none',
     maxWidth: '30em',
     padding: '0.7em 0.8em',
-    boxShadow: '5px 5px 7px rgba(33,33,33,.7)',
+    boxShadow: '3px 3px 4px rgba(33,33,33,.7)',
     cursor: 'move',
     width: 'auto',
     height: 'fit-content',
+    position: 'absolute',
   },
   selected: {
-    border: '2px solid dodgerblue',
+    border: '1px solid dodgerblue',
   },
 }));
 
-const Note = ({ note, id, userName }) => {
+const Note = ({ note, id, userName, scale }) => {
   const {
     userSetColor,
     noteBeingEditedId,
@@ -43,9 +39,7 @@ const Note = ({ note, id, userName }) => {
     setNoteBeingTransformedId,
   } = useContext(CanvasContext);
 
-  const { position, size = {}, color } = note;
-  const { width: w = DEFAULT_NOTE_WIDTH, height: h = DEFAULT_NOTE_HEIGHT } =
-    size;
+  const { position, color } = note;
 
   const { pageX = 0, pageY = 0 } = position;
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
@@ -54,15 +48,11 @@ const Note = ({ note, id, userName }) => {
   const [text, setText] = useState(note?.text);
   const [isTransforming, setIsTransforming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [width, setWidth] = useState(w);
-  const [height, setHeight] = useState(h);
 
   const classes = useStyles();
-
-  const noteRef = useRef(id);
-  const contentRef = useRef(null);
   const textRef = useRef(null);
   const backgroundNoteRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (noteBeingTransformedId === id && !isTransforming) {
@@ -98,8 +88,21 @@ const Note = ({ note, id, userName }) => {
     }
   }, [userSetColor]);
 
-  const handleDragEnd = () => {
-    const { x, y } = noteRef.current.getAbsolutePosition();
+  // eslint-disable-next-line no-unused-vars
+  const eventControl = (event, data) => {
+    if (event.type === 'mousemove' || event.type === 'touchmove') {
+      setIsDragging(true);
+    }
+    if (event.type === 'mouseup' || event.type === 'touchend') {
+      setTimeout(() => {
+        setIsDragging(false);
+      }, 100);
+    }
+  };
+
+  const handleDragEnd = (event, data) => {
+    eventControl(event, data);
+    const { x, y } = data;
     const updatedNote = {
       ...note,
       position: {
@@ -148,21 +151,6 @@ const Note = ({ note, id, userName }) => {
     setText(newText);
   };
 
-  const resize = (newWidth, newHeight) => {
-    setWidth(newWidth);
-    setHeight(newHeight);
-
-    const updatedNote = {
-      ...note,
-      size: {
-        width: newWidth,
-        height: newHeight,
-      },
-    };
-
-    patchNote(updatedNote, ACTION_TYPES.TRANSFORM);
-  };
-
   const transformerRef = useRef(null);
 
   useEffect(() => {
@@ -172,36 +160,15 @@ const Note = ({ note, id, userName }) => {
     }
   }, [isTransforming]);
 
-  const getNewSizeAfterTransform = (node) => {
-    const newWidth = width * node.scaleX();
-    const newHeight = height * node.scaleY();
-    return {
-      newWidth,
-      newHeight,
-    };
-  };
-
-  const handleTransform = () => {
-    if (noteRef.current !== null && backgroundNoteRef.current !== null) {
-      const node = backgroundNoteRef.current;
-      node.setAttrs({
-        x: 0,
-        y: 0,
-      });
+  const handleClickEvent = (e) => {
+    e.stopPropagation();
+    if(isDragging){
+      return;
     }
-  };
-
-  const handleTransformEnd = () => {
-    if (noteRef.current !== null && backgroundNoteRef.current !== null) {
-      const node = backgroundNoteRef.current;
-      const { newWidth, newHeight } = getNewSizeAfterTransform(node);
-      node.setAttrs({
-        width: newWidth,
-        scaleX: 1,
-        height: newHeight,
-        scaleY: 1,
-      });
-      resize(newWidth, newHeight);
+    if(e.detail === 2 && !isEditing){
+      toggleEdit();
+    } else {
+      toggleTransform();
     }
   };
 
@@ -209,33 +176,33 @@ const Note = ({ note, id, userName }) => {
     <Draggable
       defaultPosition={{ x: pageX, y: pageY }}
       disabled={isEditing}
+      onStart={(e) => {
+        e.stopPropagation();
+      }}
+      onMouseDown={(e) => {
+        e.stopPropagation();
+      }}
+      onDrag={eventControl}
+      onStop={handleDragEnd}
+      scale={scale}
       >
+      { /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div
         className={classNames(classes.note, isTransforming && classes.selected )}
         style={{
           backgroundColor: color,
         }}
-        onClick={(e) => {
-          if(e.detail === 2 && !isEditing){
-            toggleEdit();
-          } else {
-            toggleTransform();
-          }
-        }}
+        onClick={handleClickEvent}
       >
         <EditableText
-          x={0}
-          y={0}
           text={text}
-          height={height}
           isEditing={isEditing}
-          isTransforming={isTransforming}
           onToggleEdit={toggleEdit}
           onToggleTransform={toggleTransform}
           onChange={handleTextEdit}
           ref={textRef}
         />
-        {!isEditing && <p>{`Added by ${userName}`}</p>}
+        {!isEditing && <Typography>{`Added by ${userName}`}</Typography>}
       </div>
     </Draggable>
   );
@@ -265,6 +232,7 @@ Note.propTypes = {
     PropTypes.number,
   ]).isRequired,
   userName: PropTypes.string,
+  scale: PropTypes.number,
 };
 
 Note.defaultProps = {
@@ -276,6 +244,7 @@ Note.defaultProps = {
       width: 40,
     },
   },
+  scale: 1,
 };
 
 export default Note;

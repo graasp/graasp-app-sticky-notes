@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,10 +15,7 @@ import { APP_SETTINGS } from '../../constants/constants';
 import { Context } from '../context/ContextContext';
 import NoteContainer from './NoteContainer';
 import CANVAS_DIMENSIONS from '../../constants/canvas_dimensions';
-// import CanvasScaleControl from './CanvasScaleControl';
-import { queryClient, QueryClientProvider } from '../../config/queryClient';
-import { CanvasContext } from '../context/CanvasContext';
-import { TokenContext } from '../context/TokenContext';
+import CanvasScaleControl from './CanvasScaleControl';
 import CanvasToolbar from './CanvasToolbar';
 
 const useStyles = makeStyles(() => ({
@@ -56,12 +52,11 @@ const Canvas = () => {
     scrollTop,
   });
 
-  const [canvasScale /* setCanvasScale */] = useState();
+  const [canvasScale, setCanvasScale] = useState();
 
   const scrollContainer = useRef(null);
   const mainContainer = useRef(null);
   const noteContainerRef = useRef(null);
-  const mainStage = useRef(null);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
@@ -99,9 +94,6 @@ const Canvas = () => {
     ticking = true;
   };
 
-  const backgroundImageX = (mainContainer.current?.clientWidth ?? 0) / 2;
-  const backgroundImageY = (mainContainer.current?.clientHeight ?? 0) / 2;
-
   // Scroll to middle of the canvas
   useEffect(() => {
     scrollContainer.current.scrollTop =
@@ -123,49 +115,8 @@ const Canvas = () => {
     />
   );
 
-  // const renderStage = () => (
-  //   <CanvasContext.Consumer>
-  //     {(value) => (
-  //       <TokenContext.Consumer>
-  //         {(valueToken) => (
-  //           <Context.Consumer>
-  //             {(valueContext) => (
-  //               <Stage
-  //                 width={mainContainer.current?.clientWidth}
-  //                 height={mainContainer.current?.clientHeight}
-  //                 onClick={(e) => {
-  //                   noteContainerRef.current?.click(e, mainStage.current);
-  //                 }}
-  //                 ref={mainStage}
-  //               >
-  //                 <QueryClientProvider client={queryClient}>
-  //                   <Context.Provider value={valueContext}>
-  //                     <TokenContext.Provider value={valueToken}>
-  //                       <CanvasContext.Provider value={value}>
-  //                         <Layer>
-  //                           <BackgroundImage
-  //                             x={backgroundImageX}
-  //                             y={backgroundImageY}
-  //                           />
-  //                         </Layer>
-  //                         <NoteContainer
-  //                           scrollLeft={scrollPosition.scrollLeft}
-  //                           scrollTop={scrollPosition.scrollTop}
-  //                           canvasScale={canvasScale}
-  //                           ref={noteContainerRef}
-  //                         />
-  //                       </CanvasContext.Provider>
-  //                     </TokenContext.Provider>
-  //                   </Context.Provider>
-  //                 </QueryClientProvider>
-  //               </Stage>
-  //             )}
-  //           </Context.Consumer>
-  //         )}
-  //       </TokenContext.Consumer>
-  //     )}
-  //   </CanvasContext.Consumer>
-  // );
+  // const [mouseX, setMouseX] = useState(0);
+  // const [mouseY, setMouseY] = useState(0);
 
   return (
     <div
@@ -178,13 +129,16 @@ const Canvas = () => {
         className={classes.mainContainer}
         ref={mainContainer}
         style={{
-          // height: canvasDimensions.height,
-          // width: canvasDimensions.width,
           height: '2160px',
           width: '4096px',
           transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
+        // onMouseMove={(e) => {
+        //   setMouseX(scrollPosition.scrollLeft + e.clientX);
+        //   setMouseY(scrollPosition.scrollTop + e.clientY);
+        // }}
       >
+        {backgroundToggleSetting && <BackgroundImage />}
         {renderStage()}
       </div>
       <CanvasToolbar />
@@ -192,10 +146,10 @@ const Canvas = () => {
         permissionLevel,
       ) && <Settings />}
       <ColorSettings />
-      {/* <CanvasScaleControl
+      <CanvasScaleControl
         canvasScale={canvasScale}
         setCanvasScale={setCanvasScale}
-      /> */}
+      />
     </div>
   );
 };

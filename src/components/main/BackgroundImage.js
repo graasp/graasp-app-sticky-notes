@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PropTypes } from 'prop-types';
-import { Image as ImageK } from 'react-konva';
+import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
 import {
@@ -8,9 +7,16 @@ import {
   DEFAULT_BACKGROUND_SCALE,
 } from '../../config/settings';
 
-const BackgroundImage = ({ x, y }) => {
-  const [image] = useState(new Image());
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+}));
 
+const BackgroundImage = () => {
+  const classes = useStyles();
   const { data: appSettings, isSuccess } = useAppSettings();
   const [scale, setScale] = useState();
   const [enabled, setEnabled] = useState();
@@ -41,28 +47,11 @@ const BackgroundImage = ({ x, y }) => {
   }, [appSettings, isSuccess]);
 
   const imageRef = useRef();
-
-  // const [backgroundImage, setBlob] = useState(null);
-
-  // const fileUrl = 'https://picsum.photos/5000/2000';
-
-  // useEffect(() => {
-  //   const xhr = new XMLHttpRequest();
-  //   xhr.responseType = 'blob';
-  //   xhr.onload = () => {
-  //     setBlob(xhr.response); // xhr.response is a blob
-  //   };
-  //   xhr.open('GET', fileUrl);
-  //   xhr.send();
-  //   image.style.width = canvasDimensions.width;
-  // }, []);
-
-  // const backgroundSetting = true;
+  const [url, setUrl] = useState();
 
   useEffect(() => {
     if (backgroundImage) {
-      const url = URL.createObjectURL(backgroundImage);
-      image.src = url;
+      setUrl(URL.createObjectURL(backgroundImage));
     }
   }, [backgroundImage]);
 
@@ -70,20 +59,20 @@ const BackgroundImage = ({ x, y }) => {
     return null;
   }
   return (
-    <ImageK
+    <div className={classes.container}>
+    <img
+      alt="background"
       ref={imageRef}
-      x={x - (scale * (image?.width ?? 0)) / 2}
-      y={y - (scale * (image?.height ?? 0)) / 2}
-      image={image}
-      scaleX={scale}
-      scaleY={scale}
+      src={url}
+      style={{transform: `scale(${scale}, ${scale})`}}
     />
+    </div>
   );
 };
 
-BackgroundImage.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-};
+// BackgroundImage.propTypes = {
+//   x: PropTypes.number.isRequired,
+//   y: PropTypes.number.isRequired,
+// };
 
 export default BackgroundImage;

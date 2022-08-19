@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
-// import ResizableText from './ResizableText';
 import EditableTextInput from './EditableTextInput';
 
 const RETURN_KEY = 13;
@@ -11,15 +9,11 @@ const ESCAPE_KEY = 27;
 const EditableText = forwardRef(
   (
     {
-      x,
-      y,
       isEditing,
       onToggleEdit,
       onToggleTransform,
       onChange,
       text,
-      width,
-      height,
     },
     ref,
   ) => {
@@ -30,7 +24,7 @@ const EditableText = forwardRef(
 
     const handleEscapeKeys = (e) => {
       if (
-        (e.keyCode === RETURN_KEY && !e.shiftKey) ||
+        (e.keyCode === RETURN_KEY && e.shiftKey) ||
         e.keyCode === ESCAPE_KEY
       ) {
         onToggleEdit(e);
@@ -45,10 +39,6 @@ const EditableText = forwardRef(
       return (
         <EditableTextInput
           ref={ref}
-          x={x}
-          y={y}
-          width={width}
-          height={height}
           value={text}
           onChange={handleTextChange}
           onKeyDown={handleEscapeKeys}
@@ -63,6 +53,7 @@ const EditableText = forwardRef(
         onTap={onToggleTransform}
         onDblClick={onToggleEdit}
         onDblTap={onToggleEdit}
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: cleanText }}
       />
     );
@@ -70,15 +61,11 @@ const EditableText = forwardRef(
 );
 
 EditableText.propTypes = {
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
   isEditing: PropTypes.bool.isRequired,
   onToggleEdit: PropTypes.func.isRequired,
   onToggleTransform: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   text: PropTypes.string,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
 };
 
 EditableText.defaultProps = {

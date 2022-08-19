@@ -1,15 +1,13 @@
-/* eslint-disable no-unused-vars */
 /* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, {
   useState,
   useEffect,
   useContext,
-  useImperativeHandle,
-  forwardRef,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { useAppContext, useAppData } from '../context/appData';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
@@ -31,17 +29,16 @@ const useStyles = makeStyles(() => ({
   noteContainer: {
     width: '100%',
     height: '100%',
-    cursor: 'cell',
+    // cursor: 'cell',
+    position: 'relative',
   },
 }));
 
-const NoteContainer = forwardRef((props, ref) => {
+const NoteContainer = ({scrollLeft, scrollTop, canvasScale}) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
-
-  // const noteContainerRef = useRef();
 
   const {
     userSetColor,
@@ -116,26 +113,21 @@ const NoteContainer = forwardRef((props, ref) => {
     });
   };
 
-  const handleCanvasClick = (event, stage) => {
+  const handleCanvasClick = (event) => {
     if (noteBeingEditedId === null && noteBeingTransformedId === null) {
-      const { x, y } = stage.getPointerPosition();
-      createNewNote(x, y);
+      const { pageX: x, pageY: y } = event;
+      createNewNote(x + scrollLeft, y + scrollTop);
     } else {
       setNoteBeingEditedId(null);
       setNoteBeingTransformedId(null);
     }
   };
 
-  useImperativeHandle(ref, () => ({
-    click: (e, stage) => {
-      handleCanvasClick(e, stage);
-    },
-  }));
-
-  console.log(notes);
-
   return (
-    <>
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
+      className={classes.noteContainer}
+      onClick={handleCanvasClick}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       {notes ? (
         notes.map((note) => (
@@ -150,39 +142,20 @@ const NoteContainer = forwardRef((props, ref) => {
                 }
               ).name
             }
+            scale={canvasScale}
           />
         ))
       ) : (
         <p>{t('Add a note.')}</p>
       )}
-    </>
+    </div>
   );
+};
 
-  // return (
-  //   <>
-  //     {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-  //     <Layer className={classes.noteContainer} ref={ref}>
-  //       {notes ? (
-  //         notes.map((note) => (
-  //           <Note
-  //             note={note.data}
-  //             id={note.id}
-  //             key={note.id}
-  //             userName={
-  //               (
-  //                 members.find((m) => m.id === note.memberId) ?? {
-  //                   name: DEFAULT_ANONYMOUS_USERNAME,
-  //                 }
-  //               ).name
-  //             }
-  //           />
-  //         ))
-  //       ) : (
-  //         <Text text={t('Add a note.')} />
-  //       )}
-  //     </Layer>
-  //   </>
-  // );
-});
+NoteContainer.propTypes = {
+  scrollLeft: PropTypes.number.isRequired,
+  scrollTop: PropTypes.number.isRequired,
+  canvasScale: PropTypes.number.isRequired,
+};
 
 export default NoteContainer;

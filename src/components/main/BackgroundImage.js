@@ -12,7 +12,9 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-},
+    width: '100%',
+    height: '100%',
+  },
 }));
 
 const BackgroundImage = () => {
@@ -60,12 +62,12 @@ const BackgroundImage = () => {
   }
   return (
     <div className={classes.container}>
-    <img
-      alt="background"
-      ref={imageRef}
-      src={url}
-      style={{transform: `scale(${scale}, ${scale})`}}
-    />
+      <img
+        alt="background"
+        ref={imageRef}
+        src={url}
+        style={{ transform: `scale(${scale}, ${scale})` }}
+      />
     </div>
   );
 };

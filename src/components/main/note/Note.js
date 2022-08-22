@@ -3,30 +3,36 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
+import { Transition } from 'react-transition-group';
 import { Typography } from '@material-ui/core';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
 import { ACTION_TYPES } from '../../../config/actionTypes';
-import {
-  DEFAULT_NOTE_COLOR,
-} from '../../../constants/constants';
+import { DEFAULT_NOTE_COLOR } from '../../../constants/constants';
 import EditableText from './EditableText';
+
+const duration = 300;
 
 const useStyles = makeStyles(() => ({
   note: {
     overflow: 'auto',
-    border: 'none',
+    border: '1px solid',
+    borderColor: 'rgba(255, 255, 255, 0)',
     maxWidth: '30em',
     padding: '0.7em 0.8em',
     boxShadow: '3px 3px 4px rgba(33,33,33,.7)',
     cursor: 'move',
-    width: 'auto',
     height: 'fit-content',
     position: 'absolute',
+    transition: `min-width ${duration}ms ease-in-out, min-height ${duration}ms ease-in-out`,
+    '&-entering': { minWidth: '30em', minHeight: '10em' },
+    '&-entered': { minWidth: '30em', minHeight: '10em' },
+    '&-exiting': { minWwidth: '0em', minHeight: '0em' },
+    '&-exited': { minWidth: '0em', minHeight: '0em' },
   },
   selected: {
-    border: '1px solid dodgerblue',
+    borderColor: 'dodgerblue',
   },
 }));
 
@@ -48,6 +54,7 @@ const Note = ({ note, id, userName, scale }) => {
   const [text, setText] = useState(note?.text);
   const [isTransforming, setIsTransforming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isFixedSize, setIsFixedSize] = useState(false);
 
   const classes = useStyles();
   const textRef = useRef(null);
@@ -118,6 +125,7 @@ const Note = ({ note, id, userName, scale }) => {
     if (isEditing) {
       setNoteBeingEditedId(null);
       setIsEditing(false);
+      setIsFixedSize(false);
       const updatedNote = {
         ...note,
         text,
@@ -126,6 +134,7 @@ const Note = ({ note, id, userName, scale }) => {
     } else {
       setNoteBeingEditedId(id);
       setIsEditing(true);
+      setIsFixedSize(true);
     }
   };
 
@@ -162,10 +171,10 @@ const Note = ({ note, id, userName, scale }) => {
 
   const handleClickEvent = (e) => {
     e.stopPropagation();
-    if(isDragging){
+    if (isDragging) {
       return;
     }
-    if(e.detail === 2 && !isEditing){
+    if (e.detail === 2 && !isEditing) {
       toggleEdit();
     } else {
       toggleTransform();
@@ -173,38 +182,46 @@ const Note = ({ note, id, userName, scale }) => {
   };
 
   return (
-    <Draggable
-      defaultPosition={{ x: pageX, y: pageY }}
-      disabled={isEditing}
-      onStart={(e) => {
-        e.stopPropagation();
-      }}
-      onMouseDown={(e) => {
-        e.stopPropagation();
-      }}
-      onDrag={eventControl}
-      onStop={handleDragEnd}
-      scale={scale}
-      >
-      { /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-      <div
-        className={classNames(classes.note, isTransforming && classes.selected )}
-        style={{
-          backgroundColor: color,
-        }}
-        onClick={handleClickEvent}
-      >
-        <EditableText
-          text={text}
-          isEditing={isEditing}
-          onToggleEdit={toggleEdit}
-          onToggleTransform={toggleTransform}
-          onChange={handleTextEdit}
-          ref={textRef}
-        />
-        {!isEditing && <Typography>{`Added by ${userName}`}</Typography>}
-      </div>
-    </Draggable>
+    <Transition in={isFixedSize} timeout={duration}>
+      {(state) => (
+        <Draggable
+          defaultPosition={{ x: pageX, y: pageY }}
+          disabled={isEditing}
+          onStart={(e) => {
+            e.stopPropagation();
+          }}
+          onMouseDown={(e) => {
+            e.stopPropagation();
+          }}
+          onDrag={eventControl}
+          onStop={handleDragEnd}
+          scale={scale}
+        >
+          {/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+          <div
+            className={classNames(
+              classes.note,
+              isTransforming && classes.selected,
+              `${classes.note}-${state}`
+            )}
+            style={{
+              backgroundColor: color,
+            }}
+            onClick={handleClickEvent}
+          >
+            <EditableText
+              text={text}
+              isEditing={isEditing}
+              onToggleEdit={toggleEdit}
+              onToggleTransform={toggleTransform}
+              onChange={handleTextEdit}
+              ref={textRef}
+            />
+            {!isEditing && <Typography>{`Added by ${userName}`}</Typography>}
+          </div>
+        </Draggable>
+      )}
+    </Transition>
   );
 };
 

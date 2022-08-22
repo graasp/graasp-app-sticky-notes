@@ -9668,6 +9668,7 @@ __metadata:
     react-quill: 2.0.0
     react-scripts: ~4.0.3
     react-toastify: ~8.2.0
+    react-transition-group: 4.4.5
     script-ext-html-webpack-plugin: ~2.1.5
     standard-version: ~9.3.2
     stopword: ~2.0.1
@@ -16444,6 +16445,21 @@ __metadata:
     react: ">=16"
     react-dom: ">=16"
   checksum: 670f1176fb9fd247c7ce0cad22e72578cbfa356dd1920a810ec4aa19faa4dab16db9efbdaaf761bdd368c4fad5c3d7f15568d5328b7b3c8699539064e88fcd4b
+  languageName: node
+  linkType: hard
+
+"react-transition-group@npm:4.4.5":
+  version: 4.4.5
+  resolution: "react-transition-group@npm:4.4.5"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    dom-helpers: ^5.0.1
+    loose-envify: ^1.4.0
+    prop-types: ^15.6.2
+  peerDependencies:
+    react: ">=16.6.0"
+    react-dom: ">=16.6.0"
+  checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
   languageName: node
   linkType: hard
 

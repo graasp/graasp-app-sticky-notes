@@ -7,16 +7,7 @@ const RETURN_KEY = 13;
 const ESCAPE_KEY = 27;
 
 const EditableText = forwardRef(
-  (
-    {
-      isEditing,
-      onToggleEdit,
-      onToggleTransform,
-      onChange,
-      text,
-    },
-    ref,
-  ) => {
+  ({ isEditing, onToggleEdit, onToggleTransform, onChange, text }, ref) => {
     const htmlContainer = useRef();
     const cleanText = DOMPurify.sanitize(text, {
       USE_PROFILES: { html: true },

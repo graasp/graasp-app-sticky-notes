@@ -3,49 +3,49 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import PropTypes from 'prop-types';
 
-const EditableTextInput = forwardRef(
-  ({ value, onChange, onKeyDown }, ref) => {
-    const textInput = useRef();
+const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
+  const textInput = useRef();
 
-    const modules = {
-      toolbar: [
-        // [{ 'header': [1, false] }],
-        ['bold', 'italic', 'underline'],
-        [{'list': 'ordered'}, {'list': 'bullet'}],
-        ['link'],
-        ['clean']
-      ],
-    };
-  
-    const formats = [
-      'header',
-      'bold', 'italic', 'underline',
-      'list', 'bullet',
-      'link',
-    ];
+  const modules = {
+    toolbar: [
+      // [{ 'header': [1, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link'],
+      ['clean'],
+    ],
+  };
 
-    const focusOnText = () => {
-      textInput.current.focus();
-    };
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'list',
+    'bullet',
+    'link',
+  ];
 
-    useImperativeHandle(ref, () => ({
-      focus: focusOnText,
-    }));
+  const focusOnText = () => {
+    textInput.current.focus();
+  };
 
-    return (
-      <ReactQuill
-          theme="snow"
-          value={value}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          // style={style}
-          ref={textInput}
-          modules={modules}
-          formats={formats}
-        />
-    );
-  },
-);
+  useImperativeHandle(ref, () => ({
+    focus: focusOnText,
+  }));
+
+  return (
+    <ReactQuill
+      theme="snow"
+      value={value}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
+      ref={textInput}
+      modules={modules}
+      formats={formats}
+    />
+  );
+});
 
 EditableTextInput.propTypes = {
   onKeyDown: PropTypes.func.isRequired,

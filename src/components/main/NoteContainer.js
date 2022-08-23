@@ -114,7 +114,10 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   const handleCanvasClick = (event) => {
     if (noteBeingEditedId === null && noteBeingTransformedId === null) {
       const { pageX: x, pageY: y } = event;
-      createNewNote(x / canvasScale + scrollLeft, y / canvasScale + scrollTop);
+      createNewNote(
+        (x + scrollLeft) / canvasScale,
+        (y + scrollTop) / canvasScale,
+      );
     } else {
       setNoteBeingEditedId(null);
       setNoteBeingTransformedId(null);

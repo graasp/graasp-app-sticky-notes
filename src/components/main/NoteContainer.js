@@ -26,7 +26,9 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     // cursor: 'cell',
-    position: 'relative',
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
   },
 }));
 
@@ -112,7 +114,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   const handleCanvasClick = (event) => {
     if (noteBeingEditedId === null && noteBeingTransformedId === null) {
       const { pageX: x, pageY: y } = event;
-      createNewNote((x/canvasScale) + scrollLeft, (y/canvasScale) + scrollTop);
+      createNewNote(x / canvasScale + scrollLeft, y / canvasScale + scrollTop);
     } else {
       setNoteBeingEditedId(null);
       setNoteBeingTransformedId(null);

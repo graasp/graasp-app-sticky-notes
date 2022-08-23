@@ -2,6 +2,7 @@ import React, { forwardRef, useRef } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import EditableTextInput from './EditableTextInput';
+import './note_style.css';
 
 const RETURN_KEY = 13;
 const ESCAPE_KEY = 27;
@@ -44,6 +45,7 @@ const EditableText = forwardRef(
         onTap={onToggleTransform}
         onDblClick={onToggleEdit}
         onDblTap={onToggleEdit}
+        className="content"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: cleanText }}
       />

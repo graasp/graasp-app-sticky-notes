@@ -31,6 +31,7 @@ const useStyles = makeStyles(() => ({
     // border: '2px solid black',
     transformOrigin: '0 0',
     flexShrink: 0,
+    position: 'relative',
   },
 }));
 
@@ -52,7 +53,7 @@ const Canvas = () => {
     scrollTop,
   });
 
-  const [canvasScale, setCanvasScale] = useState();
+  const [canvasScale, setCanvasScale] = useState(1);
 
   const scrollContainer = useRef(null);
   const mainContainer = useRef(null);

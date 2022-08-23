@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
 import { Transition } from 'react-transition-group';
-import { Typography } from '@material-ui/core';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
@@ -16,7 +15,7 @@ const duration = 300;
 
 const useStyles = makeStyles(() => ({
   note: {
-    overflow: 'auto',
+    overflow: 'visible',
     border: '1px solid',
     borderColor: 'rgba(255, 255, 255, 0)',
     maxWidth: '30em',
@@ -26,13 +25,20 @@ const useStyles = makeStyles(() => ({
     height: 'fit-content',
     position: 'absolute',
     transition: `min-width ${duration}ms ease-in-out, min-height ${duration}ms ease-in-out`,
-    '&-entering': { minWidth: '30em', minHeight: '10em' },
-    '&-entered': { minWidth: '30em', minHeight: '10em' },
+    // zIndex: '0',
+    '&-entering': { minWidth: '30em', minHeight: '10em', zIndex: '1' },
+    '&-entered': { minWidth: '30em', minHeight: '10em', zIndex: '1' },
     '&-exiting': { minWwidth: '0em', minHeight: '0em' },
     '&-exited': { minWidth: '0em', minHeight: '0em' },
   },
   selected: {
     borderColor: 'dodgerblue',
+  },
+  userInfo: {
+    fontFamily: 'Helvetica, Arial, sans-serif',
+    fontSize: '10px',
+    color: 'darkgrey',
+    textAlign: 'right',
   },
 }));
 
@@ -141,6 +147,7 @@ const Note = ({ note, id, userName, scale }) => {
   useEffect(() => {
     if (noteBeingEditedId === id && !isEditing) {
       setIsEditing(true);
+      setIsFixedSize(true);
     } else if (noteBeingEditedId !== id && isEditing) {
       toggleEdit();
     }
@@ -202,7 +209,7 @@ const Note = ({ note, id, userName, scale }) => {
             className={classNames(
               classes.note,
               isTransforming && classes.selected,
-              `${classes.note}-${state}`
+              `${classes.note}-${state}`,
             )}
             style={{
               backgroundColor: color,
@@ -217,7 +224,9 @@ const Note = ({ note, id, userName, scale }) => {
               onChange={handleTextEdit}
               ref={textRef}
             />
-            {!isEditing && <Typography>{`Added by ${userName}`}</Typography>}
+            {!isEditing && (
+              <p className={classes.userInfo}>{`Added by ${userName}`}</p>
+            )}
           </div>
         </Draggable>
       )}

@@ -50,29 +50,30 @@
     "use-image": "~1.0.12"
   },
   "scripts": {
-    "pre-commit": "yarn prettier:check && yarn lint",
-    "start": "npm-run-all --parallel start:local",
+    "start": "yarn start:local",
     "start:local": "env-cmd -f ./.env.local react-scripts start",
-    "build": "react-scripts build",
+    "start:test": "env-cmd -f ./.env.test react-scripts -r @cypress/instrument-cra start",
+    "start:ci": "react-scripts -r @cypress/instrument-cra start",
+    "build": "yarn build:react",
+    "build:react": "react-scripts build",
     "build:local": "env-cmd -f ./.env.local yarn build",
     "build:dev": "env-cmd -f ./.env.dev yarn build",
     "build:prod": "env-cmd -f ./.env.prod yarn build",
     "build:version": "REACT_APP_VERSION=$CI_BRANCH env-cmd --no-override -f ./.env.prod yarn build",
-    "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
-    "hooks:install": "node node_modules/husky/husky.js install",
+    "hooks:uninstall": "husky uninstall",
+    "hooks:install": "husky install",
     "lint": "eslint .",
-    "prettier:check": "prettier --check 'src/**/*.js'",
-    "prettier:write": "prettier --write 'src/**/*.js'",
-    "test": "react-scripts test",
-    "test:once": "cross-env CI=true env-cmd -f ./.env.test react-scripts test --env=jsdom",
-    "test:coverage": "cross-env CI=true env-cmd -f ./.env.test react-scripts test --env=jsdom --coverage",
-    "test:ci": "run-s test:coverage report",
-    "report": "cat ./coverage/lcov.info | env-cmd -f ./.env.test codacy-coverage",
+    "prettier:check": "prettier --check '{src,cypress}/**/*.js'",
+    "prettier:write": "prettier --write '{src,cypress}/**/*.js'",
+    "pre-commit": "yarn prettier:check && yarn lint",
     "eject": "react-scripts eject",
     "release": "standard-version -a",
     "release:first": "standard-version -a --first-release",
     "release:minor": "standard-version -a --release-as minor",
-    "release:major": "standard-version -a --release-as major"
+    "release:major": "standard-version -a --release-as major",
+    "cypress:open": "env-cmd -f ./.env.test cypress open",
+    "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3333 && yarn cypress:run\"",
+    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser chrome --spec \"cypress/**/*.cy.js\""
   },
   "devDependencies": {
     "@babel/eslint-parser": "~7.17.0",
@@ -111,5 +112,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.2"
 }

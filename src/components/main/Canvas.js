@@ -7,14 +7,12 @@ import BackgroundImage from './BackgroundImage';
 import { useAppSettings } from '../context/appData';
 import {
   DEFAULT_BACKGROUND_ENABLED,
-  DEFAULT_CANVAS_DIMENSIONS,
   DEFAULT_PERMISSION,
   PERMISSION_LEVELS,
 } from '../../config/settings';
 import { APP_SETTINGS } from '../../constants/constants';
 import { Context } from '../context/ContextContext';
 import NoteContainer from './NoteContainer';
-import CANVAS_DIMENSIONS from '../../constants/canvas_dimensions';
 import CanvasScaleControl from './CanvasScaleControl';
 import CanvasToolbar from './CanvasToolbar';
 
@@ -39,10 +37,6 @@ const Canvas = () => {
   const classes = useStyles();
   // eslint-disable-next-line no-unused-vars
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [canvasDimensions, setCanvasDimensions] = useState(
-    CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
-  );
   const context = useContext(Context);
 
   let scrollLeft = 0;
@@ -71,10 +65,6 @@ const Canvas = () => {
             ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
           )?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED,
         ),
-      );
-      setCanvasDimensions(
-        appSettings?.find(({ name }) => name === APP_SETTINGS.CANVAS_DIMENSIONS)
-          ?.data ?? CANVAS_DIMENSIONS.get(DEFAULT_CANVAS_DIMENSIONS),
       );
     }
   });
@@ -116,9 +106,6 @@ const Canvas = () => {
     />
   );
 
-  // const [mouseX, setMouseX] = useState(0);
-  // const [mouseY, setMouseY] = useState(0);
-
   return (
     <div
       id="scrollContainer"
@@ -134,10 +121,6 @@ const Canvas = () => {
           width: '4096px',
           transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
-        // onMouseMove={(e) => {
-        //   setMouseX(scrollPosition.scrollLeft + e.clientX);
-        //   setMouseY(scrollPosition.scrollTop + e.clientY);
-        // }}
       >
         {backgroundToggleSetting && <BackgroundImage />}
         {renderStage()}

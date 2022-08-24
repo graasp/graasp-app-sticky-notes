@@ -14,7 +14,6 @@ export const App = () => {
       // show teacher view when in producer (educator) mode
       case PERMISSION_LEVELS.WRITE:
       case PERMISSION_LEVELS.ADMIN:
-        // case permission:
         return <TeacherView />;
 
       // by default go with the consumer (learner) mode

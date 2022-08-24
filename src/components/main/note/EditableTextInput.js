@@ -1,23 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactQuill from 'react-quill';
-import { makeStyles } from '@material-ui/core/styles';
 import 'react-quill/dist/quill.bubble.css';
 import PropTypes from 'prop-types';
 import './note_style.css';
 
-const useStyles = makeStyles(() => ({
-  editingArea: {
-    width: '100%',
-    height: '100%',
-  },
-}));
-
-// eslint-disable-next-line no-unused-vars
 const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
   const textInput = useRef();
-
-  // eslint-disable-next-line no-unused-vars
-  const classes = useStyles();
 
   const modules = {
     toolbar: [
@@ -57,8 +45,6 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
       modules={modules}
       formats={formats}
     />
-    /* <div className={classes.editingArea}/>
-    </ReactQuill> */
   );
 });
 

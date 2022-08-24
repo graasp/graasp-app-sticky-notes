@@ -21,20 +21,6 @@ import {
   ReactQueryDevtools,
 } from '../config/queryClient';
 
-// import {
-//   REACT_APP_GRAASP_DEVELOPER_ID,
-//   REACT_APP_GRAASP_APP_ID,
-//   REACT_APP_VERSION,
-//   REACT_APP_GOOGLE_ANALYTICS_ID,
-// } from '../config/env';
-
-// ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
-// ReactGa.ga(
-//   'send',
-//   'pageview',
-//   `/${REACT_APP_GRAASP_DEVELOPER_ID}/${REACT_APP_GRAASP_APP_ID}/${REACT_APP_VERSION}/`,
-// );
-
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,

@@ -75,9 +75,4 @@ const BackgroundImage = () => {
   );
 };
 
-// BackgroundImage.propTypes = {
-//   x: PropTypes.number.isRequired,
-//   y: PropTypes.number.isRequired,
-// };
-
 export default BackgroundImage;

@@ -11,7 +11,7 @@ import { ACTION_TYPES } from '../../../config/actionTypes';
 import { DEFAULT_NOTE_COLOR } from '../../../constants/constants';
 import EditableText from './EditableText';
 
-const duration = 300;
+const animationDuration = 300;
 
 const useStyles = makeStyles(() => ({
   note: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
     cursor: 'move',
     height: 'fit-content',
     position: 'absolute',
-    transition: `min-width ${duration}ms ease-in-out, min-height ${duration}ms ease-in-out`,
+    transition: `min-width ${animationDuration}ms ease-in-out, min-height ${animationDuration}ms ease-in-out`,
     // zIndex: '0',
     '&-entering': { minWidth: '30em', minHeight: '10em', zIndex: '1' },
     '&-entered': { minWidth: '30em', minHeight: '10em', zIndex: '1' },
@@ -189,7 +189,7 @@ const Note = ({ note, id, userName, scale }) => {
   };
 
   return (
-    <Transition in={isFixedSize} timeout={duration}>
+    <Transition in={isFixedSize} timeout={animationDuration}>
       {(state) => (
         <Draggable
           defaultPosition={{ x: pageX, y: pageY }}

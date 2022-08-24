@@ -1,10 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemIcon } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
@@ -19,11 +16,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  toolsList: {
-    // border: 'solid',
-    // borderRadius: '1em',
-    // borderColor: theme.palette.primary.main,
   },
   tool: {
     display: 'flex',
@@ -40,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CanvasToolbar = (props) => {
-  const { t } = useTranslation();
+const CanvasToolbar = () => {
   const classes = useStyles();
 
   const { noteBeingTransformedId, setNoteBeingTransformedId } =
@@ -66,12 +57,6 @@ const CanvasToolbar = (props) => {
   return (
     <div className={classes.mainContainer}>
       <List className={classes.toolsList}>
-        {/* <ListItem button>
-          <ListItemIcon className={classes.tool}>
-          <InsertPhotoIcon
-            onClick={console.log('Insert photo.')} />
-          </ListItemIcon>
-    </ListItem> */}
         <ListItem button>
           <ListItemIcon className={classes.tool}>
             <DeleteIcon className={classes.toolIcon} onClick={deleteNote} />

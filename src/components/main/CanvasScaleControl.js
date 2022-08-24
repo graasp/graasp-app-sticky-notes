@@ -45,7 +45,6 @@ const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
         marks
         min={0.2}
         max={2}
-        // orientation='vertical'
       />
     </div>
   );

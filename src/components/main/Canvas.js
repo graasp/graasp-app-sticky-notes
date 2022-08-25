@@ -53,7 +53,6 @@ const Canvas = () => {
 
   const scrollContainer = useRef(null);
   const mainContainer = useRef(null);
-  const noteContainerRef = useRef(null);
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
@@ -104,7 +103,6 @@ const Canvas = () => {
       scrollLeft={scrollPosition.scrollLeft}
       scrollTop={scrollPosition.scrollTop}
       canvasScale={canvasScale}
-      ref={noteContainerRef}
     />
   );
 

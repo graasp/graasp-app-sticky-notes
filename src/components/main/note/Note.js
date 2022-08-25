@@ -66,7 +66,6 @@ const Note = ({ note, id, userName, scale }) => {
 
   const classes = useStyles();
   const textRef = useRef(null);
-  const backgroundNoteRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -168,15 +167,6 @@ const Note = ({ note, id, userName, scale }) => {
   const handleTextEdit = (newText) => {
     setText(newText);
   };
-
-  const transformerRef = useRef(null);
-
-  useEffect(() => {
-    if (isTransforming && transformerRef.current !== null) {
-      transformerRef.current.nodes([backgroundNoteRef.current]);
-      transformerRef.current.getLayer().batchDraw();
-    }
-  }, [isTransforming]);
 
   const handleClickEvent = (e) => {
     e.stopPropagation();

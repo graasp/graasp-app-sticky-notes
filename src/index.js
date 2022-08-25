@@ -13,19 +13,19 @@ import {
   SENTRY_ENVIRONMENT,
 } from './config/sentry';
 
-Sentry.init({
-  dsn: SENTRY_DSN,
-  integrations: [new BrowserTracing()],
-  environment: SENTRY_ENVIRONMENT,
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
-});
-
 if (MOCK_API) {
   mockApi();
+} else {
+  Sentry.init({
+    dsn: SENTRY_DSN,
+    integrations: [new BrowserTracing()],
+    environment: SENTRY_ENVIRONMENT,
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+  });
 }
 
 const root = createRoot(document.getElementById('root'));

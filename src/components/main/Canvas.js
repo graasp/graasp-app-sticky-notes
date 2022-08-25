@@ -6,6 +6,8 @@ import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
 import { useAppSettings } from '../context/appData';
 import {
+  CANVAS_HEIGHT_PX,
+  CANVAS_WIDTH_PX,
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_PERMISSION,
   PERMISSION_LEVELS,
@@ -117,8 +119,8 @@ const Canvas = () => {
         className={classes.mainContainer}
         ref={mainContainer}
         style={{
-          height: '2160px',
-          width: '4096px',
+          height: `${CANVAS_HEIGHT_PX}px`,
+          width: `${CANVAS_WIDTH_PX}px`,
           transform: `scale(${canvasScale}, ${canvasScale})`,
         }}
       >

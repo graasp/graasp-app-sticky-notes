@@ -45,3 +45,10 @@ export const MOCK_API = REACT_APP_MOCK_API === 'true';
 export const RE_FETCH_INTERVAL = REACT_APP_REFETCH_INTERVAL_SETTING ?? 1500; // Default: 1500
 
 export const DEFAULT_CANVAS_DIMENSIONS = 'A4';
+
+export const CANVAS_WIDTH_PX = 4096;
+export const CANVAS_HEIGHT_PX = 2160;
+
+export const ZOOM_MAX = 2;
+export const ZOOM_MIN = 0.2;
+export const ZOOM_STEP = 0.2;

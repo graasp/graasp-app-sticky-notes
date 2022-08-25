@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Draggable from 'react-draggable';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { Transition } from 'react-transition-group';
 import { CanvasContext } from '../../context/CanvasContext';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
@@ -52,6 +53,7 @@ const Note = ({ note, id, userName, scale }) => {
   } = useContext(CanvasContext);
 
   const { position, color } = note;
+  const { t } = useTranslation();
 
   const { pageX = 0, pageY = 0 } = position;
   const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
@@ -225,7 +227,7 @@ const Note = ({ note, id, userName, scale }) => {
               ref={textRef}
             />
             {!isEditing && (
-              <p className={classes.userInfo}>{`Added by ${userName}`}</p>
+              <p className={classes.userInfo}>{`${t('Added by')} ${userName}`}</p>
             )}
           </div>
         </Draggable>
@@ -236,17 +238,9 @@ const Note = ({ note, id, userName, scale }) => {
 
 Note.propTypes = {
   note: PropTypes.shape({
-    windowDimensions: PropTypes.shape({
-      innerHeight: PropTypes.number.isRequired,
-      innerWidth: PropTypes.number.isRequired,
-    }),
     position: PropTypes.shape({
       pageX: PropTypes.number.isRequired,
       pageY: PropTypes.number.isRequired,
-    }),
-    size: PropTypes.shape({
-      height: PropTypes.number,
-      width: PropTypes.number,
     }),
     color: PropTypes.string,
     text: PropTypes.string,
@@ -265,10 +259,6 @@ Note.defaultProps = {
   userName: DEFAULT_ANONYMOUS_USERNAME,
   note: {
     color: DEFAULT_NOTE_COLOR,
-    size: {
-      height: 40,
-      width: 40,
-    },
   },
   scale: 1,
 };

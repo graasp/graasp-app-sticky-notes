@@ -22,9 +22,7 @@ export const App = () => {
     }
   };
 
-  return (
-    <CanvasProvider>{renderContent()}</CanvasProvider>
-  );
+  return <CanvasProvider>{renderContent()}</CanvasProvider>;
 };
 
 export default App;

@@ -217,7 +217,9 @@ const Note = ({ note, id, userName, scale }) => {
               ref={textRef}
             />
             {!isEditing && (
-              <p className={classes.userInfo}>{`${t('Added by')} ${userName}`}</p>
+              <p className={classes.userInfo}>{`${t(
+                'Added by',
+              )} ${userName}`}</p>
             )}
           </div>
         </Draggable>

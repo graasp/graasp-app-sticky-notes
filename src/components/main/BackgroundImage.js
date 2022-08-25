@@ -29,9 +29,9 @@ const BackgroundImage = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setBackgroundSetting(appSettings?.find(
-        ({ name }) => name === APP_SETTINGS.BACKGROUND,
-      ));
+      setBackgroundSetting(
+        appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND),
+      );
       const backgroundSettings = appSettings?.find(
         ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
       );

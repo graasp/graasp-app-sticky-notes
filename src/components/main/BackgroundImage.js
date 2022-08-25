@@ -25,20 +25,13 @@ const BackgroundImage = () => {
   const { data: appSettings, isSuccess } = useAppSettings();
   const [scale, setScale] = useState();
   const [enabled, setEnabled] = useState();
-
-  const backgroundSetting = appSettings?.find(
-    ({ name }) => name === APP_SETTINGS.BACKGROUND,
-  );
-  const { data: backgroundImage } = useAppSettingFile(
-    backgroundSetting?.id,
-    Boolean(
-      backgroundSetting?.data?.extra?.file ||
-        backgroundSetting?.data?.extra?.s3File,
-    ),
-  );
+  const [backgroundSetting, setBackgroundSetting] = useState({});
 
   useEffect(() => {
     if (isSuccess) {
+      setBackgroundSetting(appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND,
+      ));
       const backgroundSettings = appSettings?.find(
         ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
       );
@@ -49,7 +42,15 @@ const BackgroundImage = () => {
       setScale(scaleTmp);
       setEnabled(enabledTmp);
     }
-  }, [appSettings, isSuccess]);
+  }, [appSettings, isSuccess, backgroundSetting]);
+
+  const { data: backgroundImage } = useAppSettingFile(
+    backgroundSetting?.id,
+    Boolean(
+      backgroundSetting?.data?.extra?.file ||
+        backgroundSetting?.data?.extra?.s3File,
+    ),
+  );
 
   const imageRef = useRef();
   const [url, setUrl] = useState();

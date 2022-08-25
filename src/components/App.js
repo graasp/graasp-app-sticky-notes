@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import TeacherView from './modes/teacher/TeacherView';
 import StudentView from './modes/student/StudentView';
 import { Context } from './context/ContextContext';
-import { TokenProvider } from './context/TokenContext';
 import { DEFAULT_PERMISSION, PERMISSION_LEVELS } from '../config/settings';
 import { CanvasProvider } from './context/CanvasContext';
 
@@ -24,9 +23,7 @@ export const App = () => {
   };
 
   return (
-    <TokenProvider>
-      <CanvasProvider>{renderContent()}</CanvasProvider>
-    </TokenProvider>
+    <CanvasProvider>{renderContent()}</CanvasProvider>
   );
 };
 

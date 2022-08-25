@@ -68,7 +68,7 @@ const Canvas = () => {
         ),
       );
     }
-  });
+  }, [isSuccess, appSettings]);
 
   let ticking = false;
 

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 import { mockApi } from '@graasp/apps-query-client';
@@ -28,10 +28,10 @@ if (MOCK_API) {
   mockApi();
 }
 
-const root = document.getElementById('root');
+const root = createRoot(document.getElementById('root'));
 
 const renderApp = (RootComponent) => {
-  render(<RootComponent />, root);
+  root.render(<RootComponent />);
 };
 
 renderApp(Root);

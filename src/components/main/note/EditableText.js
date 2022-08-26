@@ -8,7 +8,7 @@ const RETURN_KEY = 13;
 const ESCAPE_KEY = 27;
 
 const EditableText = forwardRef(
-  ({ isEditing, onToggleEdit, onToggleTransform, onChange, text }, ref) => {
+  ({ isEditing, onToggleEdit, onChange, text }, ref) => {
     const htmlContainer = useRef();
     const cleanText = DOMPurify.sanitize(text, {
       USE_PROFILES: { html: true },
@@ -41,10 +41,6 @@ const EditableText = forwardRef(
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
         ref={htmlContainer}
-        onClick={onToggleTransform}
-        onTap={onToggleTransform}
-        onDblClick={onToggleEdit}
-        onDblTap={onToggleEdit}
         className="content"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: cleanText }}
@@ -56,7 +52,6 @@ const EditableText = forwardRef(
 EditableText.propTypes = {
   isEditing: PropTypes.bool.isRequired,
   onToggleEdit: PropTypes.func.isRequired,
-  onToggleTransform: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   text: PropTypes.string,
 };

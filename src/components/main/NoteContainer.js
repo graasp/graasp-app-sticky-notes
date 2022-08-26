@@ -66,15 +66,16 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
     isError: isAppDataError,
   } = useAppData();
 
+  const errorDataMsg = t('Error getting data.');
   useEffect(() => {
     if (isAppDataError) {
-      showErrorToast(t('Error getting data.'));
+      showErrorToast(errorDataMsg);
       return;
     }
     if (isAppDataSuccess) {
       setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
     }
-  }, [appData, isAppDataSuccess]);
+  }, [appData, isAppDataSuccess, errorDataMsg, isAppDataError]);
 
   // Sets the focus to the last created note. The `edit` boolean is set to
   // true whenever a new note is created. When the notes are actually
@@ -85,6 +86,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
       setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
       setEdit(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notes]);
 
   const createNewNote = (pageX, pageY) => {

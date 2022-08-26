@@ -74,7 +74,7 @@ const Note = ({ note, id, userName, scale }) => {
     } else if (noteBeingTransformedId !== id) {
       setIsTransforming(false);
     }
-  }, [noteBeingTransformedId]);
+  }, [noteBeingTransformedId, id, isTransforming]);
 
   const patchNote = (updatedNote, actionType) => {
     const patch = {
@@ -100,6 +100,7 @@ const Note = ({ note, id, userName, scale }) => {
 
       patchNote(updatedNote, ACTION_TYPES.EDIT);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSetColor]);
 
   // eslint-disable-next-line no-unused-vars
@@ -152,6 +153,7 @@ const Note = ({ note, id, userName, scale }) => {
     } else if (noteBeingEditedId !== id && isEditing) {
       toggleEdit();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteBeingEditedId]);
 
   const toggleTransform = () => {

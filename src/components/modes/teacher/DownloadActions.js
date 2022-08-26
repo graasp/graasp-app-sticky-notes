@@ -37,9 +37,10 @@ const DownloadActions = () => {
     isError: isAppActionsError,
   } = useAppActions();
 
+  const errorMsg = t('The app actions could not be loaded.');
   useEffect(() => {
     if (isAppActionsError) {
-      showErrorToast(t('The app actions could not be loaded.'));
+      showErrorToast(errorMsg);
       setEnableDownload(false);
       return;
     }
@@ -47,7 +48,7 @@ const DownloadActions = () => {
       setActions(appActions);
       setEnableDownload(true);
     }
-  }, [appActions, isAppActionsSuccess, isAppActionsError]);
+  }, [appActions, isAppActionsSuccess, isAppActionsError, errorMsg]);
 
   const handleDownload = () => {
     const datetime = new Date().toJSON();

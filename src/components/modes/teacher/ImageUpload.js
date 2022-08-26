@@ -86,6 +86,7 @@ const ImageUpload = () => {
         },
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context]);
 
   if (!uppy) {

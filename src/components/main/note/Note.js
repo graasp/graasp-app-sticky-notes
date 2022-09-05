@@ -109,9 +109,7 @@ const Note = ({ note, id, userName, scale }) => {
       setIsDragging(true);
     }
     if (event.type === 'mouseup' || event.type === 'touchend') {
-      setTimeout(() => {
-        setIsDragging(false);
-      }, 100);
+      setIsDragging(false);
     }
   };
 

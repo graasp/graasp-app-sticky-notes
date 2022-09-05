@@ -7,7 +7,7 @@ import { Button } from '@graasp/ui';
 import { saveAs } from 'file-saver';
 import { useAppActions } from '../../context/appData';
 import { showErrorToast } from '../../../utils/toasts';
-import { Context } from '../../context/ContextContext';
+import { Context } from '@graasp/apps-query-client';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {

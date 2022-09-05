@@ -12,7 +12,7 @@ import {
   PERMISSION_LEVELS,
 } from '../../config/settings';
 import { APP_SETTINGS } from '../../constants/constants';
-import { Context } from '../context/ContextContext';
+import { Context } from '@graasp/apps-query-client';
 import NoteContainer from './NoteContainer';
 import CanvasScaleControl from './CanvasScaleControl';
 import CanvasToolbar from './CanvasToolbar';
@@ -84,14 +84,16 @@ const Canvas = () => {
 
   // Scroll to middle of the canvas
   useEffect(() => {
-    scrollContainer.current.scrollTop =
-      (mainContainer.current.clientHeight -
-        scrollContainer.current.clientHeight) /
-      2;
-    scrollContainer.current.scrollLeft =
-      (mainContainer.current.clientWidth -
-        scrollContainer.current.clientWidth) /
-      2;
+    if (scrollContainer.current) {
+      scrollContainer.current.scrollTop =
+        (mainContainer.current.clientHeight -
+          scrollContainer.current.clientHeight) /
+        2;
+      scrollContainer.current.scrollLeft =
+        (mainContainer.current.clientWidth -
+          scrollContainer.current.clientWidth) /
+        2;
+    }
   }, []);
 
   const renderStage = () => (

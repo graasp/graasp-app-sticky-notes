@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
 import { useAppSettingFile, useAppSettings } from '../context/appData';
@@ -52,7 +52,6 @@ const BackgroundImage = () => {
     ),
   );
 
-  const imageRef = useRef();
   const [url, setUrl] = useState();
 
   useEffect(() => {
@@ -68,7 +67,6 @@ const BackgroundImage = () => {
     <div className={classes.container}>
       <img
         alt="background"
-        ref={imageRef}
         src={url}
         style={{ transform: `scale(${scale}, ${scale})` }}
       />

@@ -1,6 +1,5 @@
 import { useContext } from 'react';
-import { Context } from './ContextContext';
-import { TokenContext } from './TokenContext';
+import { Context, TokenContext } from '@graasp/apps-query-client';
 import { hooks } from '../../config/queryClient';
 import { RE_FETCH_INTERVAL } from '../../config/settings';
 

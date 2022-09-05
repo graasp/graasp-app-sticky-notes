@@ -173,6 +173,7 @@ const Note = ({ note, id, userName, scale }) => {
     if (isDragging) {
       return;
     }
+    // e.detail === 2 checks for double clicks.
     if (e.detail === 2 && !isEditing) {
       toggleEdit();
     } else {
@@ -217,9 +218,9 @@ const Note = ({ note, id, userName, scale }) => {
               ref={textRef}
             />
             {!isEditing && (
-              <p className={classes.userInfo}>{`${t(
-                'Added by',
-              )} ${userName}`}</p>
+              <p className={classes.userInfo}>
+                {t('Added by {{ userName }}', { userName })}
+              </p>
             )}
           </div>
         </Draggable>

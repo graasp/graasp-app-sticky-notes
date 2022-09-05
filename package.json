@@ -11,6 +11,8 @@
   "homepage": ".",
   "license": "AGPL-3.0-only",
   "dependencies": {
+    "@cypress/code-coverage": "3.10.0",
+    "@cypress/instrument-cra": "1.4.0",
     "@graasp/apps-query-client": "github:graasp/graasp-apps-query-client.git",
     "@graasp/ui": "github:graasp/graasp-ui.git",
     "@material-ui/core": "4.12.3",

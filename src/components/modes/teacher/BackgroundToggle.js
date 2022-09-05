@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import clsx from 'clsx';
 import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
 import { useAppSettings } from '../../context/appData';
@@ -74,7 +75,7 @@ const BackgroundToggle = () => {
     }
   }, [appSettings, isSuccess]);
 
-  const toggleDisabled = isLoading || backgroundSettings === null;
+  const toggleDisabled = isLoading || !backgroundSettings;
 
   const handleToggle = () => {
     const newBackgroundToggleSetting = {
@@ -129,9 +130,9 @@ const BackgroundToggle = () => {
     <>
       <div className={classes.toggleContainer}>
         <Typography
-          className={`classes.headerText ${
-            toggleDisabled && classes.headerDisabled
-          }`}
+          className={clsx(classes.headerText, {
+            [classes.headerDisabled]: toggleDisabled,
+          })}
         >
           {t('Show Background Image')}
         </Typography>
@@ -141,7 +142,7 @@ const BackgroundToggle = () => {
             <Switch
               color="primary"
               checked={
-                backgroundSettings?.data?.toggle || DEFAULT_BACKGROUND_ENABLED
+                backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED
               }
               onChange={handleToggle}
             />
@@ -150,9 +151,9 @@ const BackgroundToggle = () => {
       </div>
       <div className={classes.toggleContainer}>
         <Typography
-          className={`classes.headerText ${
-            toggleDisabled && classes.headerDisabled
-          }`}
+          className={clsx(classes.headerText, {
+            [classes.headerDisabled]: toggleDisabled,
+          })}
         >
           {t('Scale background image')}
         </Typography>

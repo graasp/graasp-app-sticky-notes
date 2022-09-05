@@ -38,7 +38,7 @@ const BackgroundImage = () => {
       const scaleTmp =
         backgroundSettings?.data?.scale || DEFAULT_BACKGROUND_SCALE;
       const enabledTmp =
-        backgroundSetting?.data?.toggle || DEFAULT_BACKGROUND_ENABLED;
+        backgroundSetting?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED;
       setScale(scaleTmp);
       setEnabled(enabledTmp);
     }

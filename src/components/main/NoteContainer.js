@@ -1,4 +1,3 @@
-/* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +24,6 @@ const useStyles = makeStyles(() => ({
   noteContainer: {
     width: '100%',
     height: '100%',
-    // cursor: 'cell',
     position: 'absolute',
     top: '0px',
     left: '0px',
@@ -114,7 +112,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   };
 
   const handleCanvasClick = (event) => {
-    if (noteBeingEditedId === null && noteBeingTransformedId === null) {
+    if (!noteBeingEditedId && !noteBeingTransformedId) {
       const { pageX: x, pageY: y } = event;
       createNewNote(
         (x + scrollLeft) / canvasScale,
@@ -137,11 +135,8 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
             id={note.id}
             key={note.id}
             userName={
-              (
-                members.find((m) => m.id === note.memberId) ?? {
-                  name: DEFAULT_ANONYMOUS_USERNAME,
-                }
-              ).name
+              members.find((m) => m.id === note.memberId)?.name ??
+              DEFAULT_ANONYMOUS_USERNAME
             }
             scale={canvasScale}
           />

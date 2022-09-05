@@ -9,7 +9,6 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
 
   const modules = {
     toolbar: [
-      // [{ 'header': [1, false] }],
       ['bold', 'italic', 'underline'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       ['link'],

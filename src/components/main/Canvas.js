@@ -1,4 +1,3 @@
-// Welcome
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Settings from '../modes/teacher/Settings';
@@ -28,7 +27,6 @@ const useStyles = makeStyles(() => ({
   },
   mainContainer: {
     backgroundColor: 'white',
-    // border: '2px solid black',
     transformOrigin: '0 0',
     flexShrink: 0,
     position: 'relative',
@@ -37,16 +35,13 @@ const useStyles = makeStyles(() => ({
 
 const Canvas = () => {
   const classes = useStyles();
-  // eslint-disable-next-line no-unused-vars
+
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
 
-  let scrollLeft = 0;
-  let scrollTop = 0;
-
   const [scrollPosition, setScrollPosition] = useState({
-    scrollLeft,
-    scrollTop,
+    scrollLeft: 0,
+    scrollTop: 0,
   });
 
   const [canvasScale, setCanvasScale] = useState(1);
@@ -73,9 +68,10 @@ const Canvas = () => {
   let ticking = false;
 
   const handleScrollEvent = () => {
-    scrollLeft = scrollContainer.current?.scrollLeft;
-    scrollTop = scrollContainer.current?.scrollTop;
+    const scrollLeft = scrollContainer.current?.scrollLeft;
+    const scrollTop = scrollContainer.current?.scrollTop;
 
+    // Avoid the change of the state to happen more often than the redrawing of the screen.
     if (!ticking) {
       window.requestAnimationFrame(() => {
         setScrollPosition({ scrollLeft, scrollTop });

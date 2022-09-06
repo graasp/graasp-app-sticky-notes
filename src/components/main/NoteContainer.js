@@ -3,8 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { useAppContext, useAppData } from '../context/appData';
-import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
+import { useMutation, MUTATION_KEYS, hooks } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
@@ -48,7 +47,8 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
 
   const [edit, setEdit] = useState(false);
 
-  const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
+  const { data: appContext, isSuccess: isAppContextSuccess } =
+    hooks.useAppContext();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
     isSuccess: isAppDataSuccess,
     isStale: isAppDataStale,
     isError: isAppDataError,
-  } = useAppData();
+  } = hooks.useAppData();
 
   const errorDataMsg = t('Error getting data.');
   useEffect(() => {

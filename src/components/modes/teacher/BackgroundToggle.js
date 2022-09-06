@@ -6,9 +6,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import clsx from 'clsx';
-import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { MUTATION_KEYS, useMutation, hooks } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
-import { useAppSettings } from '../../context/appData';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
@@ -57,7 +56,7 @@ const BackgroundToggle = () => {
     DEFAULT_BACKGROUND_SCALE,
   );
 
-  const { data: appSettings, isSuccess, isLoading } = useAppSettings();
+  const { data: appSettings, isSuccess, isLoading } = hooks.useAppSettings();
 
   useEffect(() => {
     if (isSuccess) {

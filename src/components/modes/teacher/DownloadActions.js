@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Button } from '@graasp/ui';
 import { saveAs } from 'file-saver';
-import { useAppActions } from '../../context/appData';
+import { hooks } from '../../../config/queryClient';
 import { showErrorToast } from '../../../utils/toasts';
 import { Context } from '@graasp/apps-query-client';
 
@@ -35,7 +35,7 @@ const DownloadActions = () => {
     data: appActions,
     isSuccess: isAppActionsSuccess,
     isError: isAppActionsError,
-  } = useAppActions();
+  } = hooks.useAppActions();
 
   const errorMsg = t('The app actions could not be loaded.');
   useEffect(() => {

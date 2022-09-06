@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
-import { useAppSettingFile, useAppSettings } from '../context/appData';
+import { hooks } from '../../config/queryClient';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 
 const BackgroundImage = () => {
   const classes = useStyles();
-  const { data: appSettings, isSuccess } = useAppSettings();
+  const { data: appSettings, isSuccess } = hooks.useAppSettings();
   const [scale, setScale] = useState();
   const [enabled, setEnabled] = useState();
   const [backgroundSetting, setBackgroundSetting] = useState({});
@@ -44,7 +44,7 @@ const BackgroundImage = () => {
     }
   }, [appSettings, isSuccess, backgroundSetting]);
 
-  const { data: backgroundImage } = useAppSettingFile(
+  const { data: backgroundImage } = hooks.useAppSettingFile(
     backgroundSetting?.id,
     Boolean(
       backgroundSetting?.data?.extra?.file ||

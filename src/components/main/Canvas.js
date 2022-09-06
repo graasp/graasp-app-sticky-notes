@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
-import { useAppSettings } from '../context/appData';
 import {
   CANVAS_HEIGHT_PX,
   CANVAS_WIDTH_PX,
@@ -11,6 +10,7 @@ import {
   DEFAULT_PERMISSION,
   PERMISSION_LEVELS,
 } from '../../config/settings';
+import { hooks } from '../../config/queryClient';
 import { APP_SETTINGS } from '../../constants/constants';
 import { Context } from '@graasp/apps-query-client';
 import NoteContainer from './NoteContainer';
@@ -51,7 +51,7 @@ const Canvas = () => {
 
   const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
 
-  const { data: appSettings, isSuccess } = useAppSettings();
+  const { data: appSettings, isSuccess } = hooks.useAppSettings();
 
   useEffect(() => {
     if (isSuccess) {

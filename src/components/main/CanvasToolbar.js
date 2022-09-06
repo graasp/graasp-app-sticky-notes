@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemIcon } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -41,23 +41,35 @@ const CanvasToolbar = () => {
   const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (noteBeingTransformedId) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [noteBeingTransformedId]);
+
   const deleteNote = () => {
-    deleteAppData({
-      id: noteBeingTransformedId,
-    });
-    postAction({
-      type: ACTION_TYPES.DELETE,
-      data: {
+    if (noteBeingTransformedId) {
+      deleteAppData({
         id: noteBeingTransformedId,
-      },
-    });
-    setNoteBeingTransformedId(null);
+      });
+      postAction({
+        type: ACTION_TYPES.DELETE,
+        data: {
+          id: noteBeingTransformedId,
+        },
+      });
+      setNoteBeingTransformedId(null);
+    }
   };
 
   return (
     <div className={classes.mainContainer}>
       <List className={classes.toolsList}>
-        <ListItem button>
+        <ListItem button disabled={disabled}>
           <ListItemIcon className={classes.tool}>
             <DeleteIcon className={classes.toolIcon} onClick={deleteNote} />
           </ListItemIcon>

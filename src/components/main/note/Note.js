@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Draggable from 'react-draggable';
@@ -65,9 +65,9 @@ const Note = ({ note, id, userName, scale }) => {
   const [isFixedSize, setIsFixedSize] = useState(false);
 
   const classes = useStyles();
-  const textRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Update the status of the note (transforming or not) if the noteBeingTransformedId changes.
   useEffect(() => {
     if (noteBeingTransformedId === id && !isTransforming) {
       setIsTransforming(true);
@@ -91,6 +91,7 @@ const Note = ({ note, id, userName, scale }) => {
     });
   };
 
+  // If the user selected color changes and the note is selected (transforming), update the color of the note.
   useEffect(() => {
     if (noteBeingTransformedId === id) {
       const updatedNote = {
@@ -144,6 +145,7 @@ const Note = ({ note, id, userName, scale }) => {
     }
   };
 
+  // Update the status of the note (editing or not) if the noteBeingEditedId changes.
   useEffect(() => {
     if (noteBeingEditedId === id && !isEditing) {
       setIsEditing(true);
@@ -213,9 +215,7 @@ const Note = ({ note, id, userName, scale }) => {
               text={text}
               isEditing={isEditing}
               onToggleEdit={toggleEdit}
-              onToggleTransform={toggleTransform}
               onChange={handleTextEdit}
-              ref={textRef}
             />
             {!isEditing && (
               <p className={classes.userInfo}>
@@ -232,12 +232,11 @@ const Note = ({ note, id, userName, scale }) => {
 Note.propTypes = {
   note: PropTypes.shape({
     position: PropTypes.shape({
-      pageX: PropTypes.number.isRequired,
-      pageY: PropTypes.number.isRequired,
-    }),
+      pageX: PropTypes.number,
+      pageY: PropTypes.number,
+    }).isRequired,
     color: PropTypes.string,
     text: PropTypes.string,
-    rotation: PropTypes.number.isRequired,
   }),
   id: PropTypes.oneOfType([
     PropTypes.object,
@@ -251,7 +250,12 @@ Note.propTypes = {
 Note.defaultProps = {
   userName: DEFAULT_ANONYMOUS_USERNAME,
   note: {
+    position: {
+      pageX: 0,
+      pageY: 0,
+    },
     color: DEFAULT_NOTE_COLOR,
+    text: '',
   },
   scale: 1,
 };

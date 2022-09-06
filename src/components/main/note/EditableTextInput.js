@@ -27,7 +27,7 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
   ];
 
   const focusOnText = () => {
-    textInput.current.focus();
+    textInput.current?.focus();
   };
 
   useImperativeHandle(ref, () => ({

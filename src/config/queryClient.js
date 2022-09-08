@@ -13,6 +13,7 @@ const {
   useMutation,
   ReactQueryDevtools,
   MUTATION_KEYS,
+  API_ROUTES,
 } = configureQueryClient({
   notifier: (data) => {
     /* eslint-disable-next-line no-console */
@@ -36,4 +37,5 @@ export {
   useMutation,
   ReactQueryDevtools,
   MUTATION_KEYS,
+  API_ROUTES,
 };

@@ -56,12 +56,7 @@ const Root = () => {
   const classes = useStyles();
 
   const AppWithContext = withToken(App, {
-    LoadingComponent: (
-      <>
-        <Loader />
-        <p>Token</p>
-      </>
-    ),
+    LoadingComponent: <Loader />,
     useAuthToken: hooks.useAuthToken,
     onError: () => {
       showErrorToast('An error occured while requesting the token.');
@@ -69,12 +64,7 @@ const Root = () => {
   });
 
   const AppWithContextAndToken = withContext(AppWithContext, {
-    LoadingComponent: (
-      <>
-        <Loader />
-        <p>context</p>
-      </>
-    ),
+    LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
     onError: () => {
       showErrorToast('An error occured while fetching the context.');

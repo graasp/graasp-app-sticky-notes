@@ -59,7 +59,7 @@ const Canvas = () => {
       setBackgroundToggleSetting(
         Boolean(
           appSettings?.find(
-            ({ name }) => name === APP_SETTINGS.BACKGROUND_TOGGLE,
+            ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
           )?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED,
         ),
       );

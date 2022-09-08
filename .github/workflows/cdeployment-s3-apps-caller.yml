@@ -13,7 +13,7 @@ jobs:
     name: Graasp app sticky notes
     # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cdeployment-s3-apps.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
+    uses: graasp/graasp-deploy/.github/workflows/cdeployment-s3-apps.yml@907a37f6b47667c55bd6ecba0c6c9f13c17debba
     # Replace input build-folder or version if needed.
     with:
       build-folder: 'build'
@@ -28,3 +28,4 @@ jobs:
       cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_APPS_PROD }}
       app-id: ${{ secrets.APP_ID }}
       graasp-domain: ${{ secrets.PROD_GRAASP_DOMAIN }}
+      sentry-dsn: ${{ secrets.SENTRY_DSN }}

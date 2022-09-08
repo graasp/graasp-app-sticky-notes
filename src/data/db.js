@@ -1,3 +1,4 @@
+import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { CONTEXTS } from '../config/contexts';
 import { PERMISSION_LEVELS } from '../config/settings';
 
@@ -11,7 +12,7 @@ const buildDatabase = (appContext) => ({
         minimized: false,
         title: 'Note 1',
       },
-      type: 'note',
+      type: APP_DATA_TYPES.NOTE,
     },
   ],
   appActions: [],

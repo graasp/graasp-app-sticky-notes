@@ -23,3 +23,32 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import { buildDatabase } from '@graasp/apps-query-client';
+
+const MEMBERS = [
+  {
+    id: '0',
+    name: 'me',
+  },
+  {
+    id: '1',
+    name: 'you',
+  },
+];
+
+const CURRENT_MEMBER = '0';
+
+Cypress.Commands.add(
+  'setUpApi',
+  ({ currentMember = CURRENT_MEMBER, database = {}, appContext } = {}) => {
+    // mock api and database
+    Cypress.on('window:before:load', (win) => {
+      win.database = buildDatabase({
+        members: Object.values(MEMBERS),
+        ...database,
+      });
+      win.appContext = appContext;
+    });
+  },
+);

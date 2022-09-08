@@ -14,7 +14,10 @@ import {
 } from './config/sentry';
 
 if (MOCK_API) {
-  mockApi();
+  mockApi({
+    appContext: window.Cypress ? window.appContext : undefined,
+    database: window.Cypress ? window.database : undefined,
+  });
 } else {
   Sentry.init({
     dsn: SENTRY_DSN,

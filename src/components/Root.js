@@ -56,7 +56,12 @@ const Root = () => {
   const classes = useStyles();
 
   const AppWithContext = withToken(App, {
-    LoadingComponent: <Loader />,
+    LoadingComponent: (
+      <>
+        <Loader />
+        <p>Token</p>
+      </>
+    ),
     useAuthToken: hooks.useAuthToken,
     onError: () => {
       showErrorToast('An error occured while requesting the token.');
@@ -64,7 +69,12 @@ const Root = () => {
   });
 
   const AppWithContextAndToken = withContext(AppWithContext, {
-    LoadingComponent: <Loader />,
+    LoadingComponent: (
+      <>
+        <Loader />
+        <p>context</p>
+      </>
+    ),
     useGetLocalContext: hooks.useGetLocalContext,
     onError: () => {
       showErrorToast('An error occured while fetching the context.');
@@ -78,7 +88,7 @@ const Root = () => {
           <QueryClientProvider client={queryClient}>
             <AppWithContextAndToken />
             {process.env.NODE_ENV === 'development' && (
-              <ReactQueryDevtools initialIsOpen />
+              <ReactQueryDevtools />
             )}
           </QueryClientProvider>
           <ToastContainer />

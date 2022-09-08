@@ -88,7 +88,7 @@ const BackgroundToggle = () => {
       patchAppSetting(newBackgroundToggleSetting);
     } else {
       postAppSetting({
-        name: APP_SETTINGS.BACKGROUND_TOGGLE,
+        name: APP_SETTINGS.BACKGROUND_SETTINGS,
         data: {
           toggle: !DEFAULT_BACKGROUND_ENABLED,
         },

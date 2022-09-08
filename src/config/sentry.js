@@ -1,5 +1,7 @@
-export const SENTRY_DSN =
-  'https://6558f0f2adb64d6593db72a3905cfe49@o244065.ingest.sentry.io/6353030';
+import { REACT_APP_SENTRY_DSN } from './env';
+
+// Could import some verifications
+export const SENTRY_DSN = REACT_APP_SENTRY_DSN;
 
 const generateSentryConfig = () => {
   let SENTRY_ENVIRONMENT = 'development';

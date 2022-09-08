@@ -18,7 +18,7 @@ if (MOCK_API) {
     appContext: window.Cypress ? window.appContext : undefined,
     database: window.Cypress ? window.database : undefined,
   });
-} else {
+} else if (SENTRY_DSN) {
   Sentry.init({
     dsn: SENTRY_DSN,
     integrations: [new BrowserTracing()],

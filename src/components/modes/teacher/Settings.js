@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
+import { SETTINGS_BUTTON_CY, SETTINGS_CY } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -71,7 +72,7 @@ const Settings = () => {
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div onClick={(event) => event.stopPropagation()}>
         <Fab
-          id="settings-button"
+          data-cy={SETTINGS_BUTTON_CY}
           color="primary"
           className={classes.fab}
           onClick={(event) => {
@@ -86,7 +87,7 @@ const Settings = () => {
           onClose={handleModalClose}
           className={classes.modal}
         >
-          <div id="settings" className={classes.modalContainer}>
+          <div data-cy={SETTINGS_CY} className={classes.modalContainer}>
             <Typography className={classes.header}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />

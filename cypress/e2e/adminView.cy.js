@@ -1,9 +1,14 @@
-import { before } from "lodash";
+import {
+  SETTINGS_BUTTON_CY,
+  SETTINGS_CY,
+  SCROLL_CONTAINER_CY,
+  dataCyWrapper,
+} from '../../src/config/selectors';
 
 describe('Tests the basic features.', () => {
   it('loads the app', () => {
     cy.visit('/');
-    cy.get('#scrollContainer');
+    cy.get(dataCyWrapper(SCROLL_CONTAINER_CY)).should('be.visible');
   });
 });
 
@@ -17,8 +22,7 @@ describe('Settings', () => {
     });
     cy.visit('/');
     // cy.get('.ReactQueryDevtools > button').click();
-    cy.get('#settings-button').click();
-    cy.get('#settings');
+    cy.get(dataCyWrapper(SETTINGS_BUTTON_CY)).click();
+    cy.get(dataCyWrapper(SETTINGS_CY)).should('be.visible');
   });
-
 });

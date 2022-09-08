@@ -87,9 +87,7 @@ const Root = () => {
         <I18nextProvider i18n={i18nConfig}>
           <QueryClientProvider client={queryClient}>
             <AppWithContextAndToken />
-            {process.env.NODE_ENV === 'development' && (
-              <ReactQueryDevtools />
-            )}
+            {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
           </QueryClientProvider>
           <ToastContainer />
         </I18nextProvider>

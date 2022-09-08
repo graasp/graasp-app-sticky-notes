@@ -16,6 +16,7 @@ import { Context } from '@graasp/apps-query-client';
 import NoteContainer from './NoteContainer';
 import CanvasScaleControl from './CanvasScaleControl';
 import CanvasToolbar from './CanvasToolbar';
+import { SCROLL_CONTAINER_CY } from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   scrollContainer: {
@@ -106,7 +107,7 @@ const Canvas = () => {
 
   return (
     <div
-      id="scrollContainer"
+      data-cy={SCROLL_CONTAINER_CY}
       className={classes.scrollContainer}
       ref={scrollContainer}
       onScroll={handleScrollEvent}

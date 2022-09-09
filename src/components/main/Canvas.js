@@ -56,13 +56,13 @@ const Canvas = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setBackgroundToggleSetting(
-        Boolean(
-          appSettings?.find(
-            ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
-          )?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED,
-        ),
+      const backgroundSettings = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
       );
+      const toggle = Boolean(
+        backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED,
+      );
+      setBackgroundToggleSetting(toggle);
     }
   }, [isSuccess, appSettings]);
 

@@ -6,6 +6,7 @@ import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../config/settings';
+import { BACKGROUND_IMAGE_CY } from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -38,7 +39,7 @@ const BackgroundImage = () => {
       const scaleTmp =
         backgroundSettings?.data?.scale || DEFAULT_BACKGROUND_SCALE;
       const enabledTmp =
-        backgroundSetting?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED;
+        backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED;
       setScale(scaleTmp);
       setEnabled(enabledTmp);
     }
@@ -66,6 +67,7 @@ const BackgroundImage = () => {
   return (
     <div className={classes.container}>
       <img
+        data-cy={BACKGROUND_IMAGE_CY}
         alt="background"
         src={url}
         style={{ transform: `scale(${scale}, ${scale})` }}

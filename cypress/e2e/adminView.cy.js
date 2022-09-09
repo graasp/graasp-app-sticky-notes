@@ -23,14 +23,13 @@ describe('Settings', () => {
       },
     });
     cy.visit('/');
-    // cy.get('.ReactQueryDevtools > button').click();
     cy.get(dataCyWrapper(SETTINGS_BUTTON_CY)).click();
     cy.get(dataCyWrapper(SETTINGS_CY)).should('be.visible');
   });
 });
 
 describe('Background image', () => {
-  it('test the absence of background image', () => {
+  it('no background image', () => {
     let appSettings;
     cy.fixture('appSettings_withBckImg').then((aS) => {
       cy.setUpApi({

@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](///compare/v0.2.0...v0.3.0) (2022-09-16)
+
+
+### Features
+
+* add animations for edition 21e0f49
+* center scroll when canvas loads 44a2da5
+* en/disable delete button when note selected 345704d
+* enable sentry 7a80eff
+* impl dnd a1511e4
+* resize background image 2430117
+* scrollable canvas 9b38169
+
+
+### Bug Fixes
+
+* add toolbar and delete butten 09518f7
+* background image 2a18549
+* background image 1c0911e
+* background image test c158da0
+* background settings 0561f8d
+* correct data formatting c091a07
+* define input props for background scale 1da14d6
+* fix again background image... f45d48b
+* note format and design 0f146b3
+* position issue when adding note 038577f
+* post background settings 7737c7c
+* provide default value when getting note 467eeb8
+* remove old konvas related props c6b57b9
+* remove size undefined with def value 249b1c0
+* remove useEffect... af46aec
+* scale coordinates for note creation e420efc
+* ui corrections 0577b46
+* update package.json c3b27f4
+* update workflow sha ref 2ea5885
+* upgrade rendering to react 18 4c81d4d
+* useEffect for url background 6a11cad
+* useEffect in background image a48988d
+
 ## [0.2.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.1.8...v0.2.0) (2022-07-18)
 
 

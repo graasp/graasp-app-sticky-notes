@@ -75,7 +75,8 @@
     "release:major": "standard-version -a --release-as major",
     "cypress:open": "env-cmd -f ./.env.test cypress open",
     "cypress": "concurrently \"yarn start:test\" \"wait-on http://localhost:3333 && yarn cypress:run\"",
-    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser firefox --spec \"cypress/**/*.cy.js\""
+    "cypress:run": "env-cmd -f ./.env.test cypress run --headless --browser firefox --spec \"cypress/**/*.cy.js\"",
+    "release:patch": "standard-version -a --release-as patch"
   },
   "devDependencies": {
     "@babel/eslint-parser": "~7.18.9",

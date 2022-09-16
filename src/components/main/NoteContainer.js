@@ -1,11 +1,9 @@
-/* The main <div> element has a child <button> element that allows keyboard interaction */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-
 import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAppContext, useAppData } from '../context/appData';
-import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
+import PropTypes from 'prop-types';
+import { useMutation, MUTATION_KEYS, hooks } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
@@ -16,33 +14,41 @@ import {
 } from '../../config/settings';
 import { generateRandomRotationAngle } from '../../utils/canvas';
 import { showErrorToast } from '../../utils/toasts';
+import {
+  DEFAULT_NOTE_HEIGHT,
+  DEFAULT_NOTE_WIDTH,
+} from '../../constants/constants';
 
 const useStyles = makeStyles(() => ({
   noteContainer: {
     width: '100%',
     height: '100%',
-    cursor: 'cell',
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
   },
 }));
 
-const NoteContainer = () => {
+const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
-  const { userSetColor, noteBeingEditedId } = useContext(CanvasContext);
+  const {
+    userSetColor,
+    noteBeingEditedId,
+    noteBeingTransformedId,
+    setNoteBeingTransformedId,
+  } = useContext(CanvasContext);
+
   const [members, setMembers] = useState([]);
   const [notes, setNotes] = useState(null);
 
-  const [newPageX, setNewPageX] = useState(null);
-  const [newPageY, setNewPageY] = useState(null);
-
   const [edit, setEdit] = useState(false);
 
-  let tmpNewPageX; // Used for the drag-drop animation.
-  let tmpNewPageY; // Used for the drag-drop animation.
-  const { data: appContext, isSuccess: isAppContextSuccess } = useAppContext();
+  const { data: appContext, isSuccess: isAppContextSuccess } =
+    hooks.useAppContext();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   useEffect(() => {
@@ -56,17 +62,18 @@ const NoteContainer = () => {
     isSuccess: isAppDataSuccess,
     isStale: isAppDataStale,
     isError: isAppDataError,
-  } = useAppData();
+  } = hooks.useAppData();
 
+  const errorDataMsg = t('Error getting data.');
   useEffect(() => {
     if (isAppDataError) {
-      showErrorToast(t('Error getting data.'));
+      showErrorToast(errorDataMsg);
       return;
     }
     if (isAppDataSuccess) {
       setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
     }
-  }, [appData, isAppDataSuccess]);
+  }, [appData, isAppDataSuccess, errorDataMsg, isAppDataError]);
 
   // Sets the focus to the last created note. The `edit` boolean is set to
   // true whenever a new note is created. When the notes are actually
@@ -77,85 +84,74 @@ const NoteContainer = () => {
       setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
       setEdit(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notes]);
 
   const createNewNote = (pageX, pageY) => {
-    if (!noteBeingEditedId) {
-      // add a new note to the canvas
-      const { innerHeight, innerWidth } = window;
+    const newNote = {
+      position: { pageX, pageY },
+      size: { height: DEFAULT_NOTE_HEIGHT, width: DEFAULT_NOTE_WIDTH },
+      color: userSetColor,
+      rotation: generateRandomRotationAngle(),
+      minimized: false,
+    };
 
-      const newNote = {
-        windowDimensions: { innerHeight, innerWidth },
-        position: { pageX, pageY },
-        color: userSetColor,
-        rotation: generateRandomRotationAngle(),
-        minimized: false,
-      };
-
-      postAppData({
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: APP_DATA_VISIBLITIES.ITEM,
-      });
-      setEdit(true);
-      postAction({
-        type: ACTION_TYPES.ADD,
-        data: {
-          note: newNote,
-          id: newNote.id,
-        },
-      });
-    }
+    postAppData({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: APP_DATA_VISIBLITIES.ITEM,
+    });
+    setEdit(true);
+    postAction({
+      type: ACTION_TYPES.ADD,
+      data: {
+        ...newNote,
+        id: newNote.id,
+      },
+    });
   };
 
   const handleCanvasClick = (event) => {
-    const { pageX, pageY } = event;
-    createNewNote(pageX, pageY);
+    if (!noteBeingEditedId && !noteBeingTransformedId) {
+      const { pageX: x, pageY: y } = event;
+      createNewNote(
+        (x + scrollLeft) / canvasScale,
+        (y + scrollTop) / canvasScale,
+      );
+    } else {
+      setNoteBeingEditedId(null);
+      setNoteBeingTransformedId(null);
+    }
   };
 
   return (
-    <>
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div className={classes.noteContainer} onClick={handleCanvasClick}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div
-        className={classes.noteContainer}
-        onDragOver={(event) => {
-          event.stopPropagation();
-          event.preventDefault();
-          // when a note is dragged over this main div, the onDragOver event registers the coordinates (pageX, pageY) of the dragged note
-          // these new coordinates are passed down to the note, where, once the drag event is complete, they update the final coordinates (in state + API)
-          tmpNewPageX = event.pageX;
-          tmpNewPageY = event.pageY;
-        }}
-        onDrop={(event) => {
-          event.preventDefault();
-          setNewPageX(tmpNewPageX);
-          setNewPageY(tmpNewPageY);
-        }}
-        onClick={handleCanvasClick}
-      >
-        {notes ? (
-          notes.map((note) => (
-            <Note
-              note={note.data}
-              id={note.id}
-              key={note.id}
-              userName={
-                (
-                  members.find((m) => m.id === note.memberId) ?? {
-                    name: DEFAULT_ANONYMOUS_USERNAME,
-                  }
-                ).name
-              }
-              newPageX={newPageX}
-              newPageY={newPageY}
-            />
-          ))
-        ) : (
-          <div>{t('Add a note.')}</div>
-        )}
-      </div>
-    </>
+      {notes ? (
+        notes.map((note) => (
+          <Note
+            note={note.data}
+            id={note.id}
+            key={note.id}
+            userName={
+              members.find((m) => m.id === note.memberId)?.name ??
+              DEFAULT_ANONYMOUS_USERNAME
+            }
+            scale={canvasScale}
+          />
+        ))
+      ) : (
+        <p>{t('Add a note.')}</p>
+      )}
+    </div>
   );
+};
+
+NoteContainer.propTypes = {
+  scrollLeft: PropTypes.number.isRequired,
+  scrollTop: PropTypes.number.isRequired,
+  canvasScale: PropTypes.number.isRequired,
 };
 
 export default NoteContainer;

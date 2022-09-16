@@ -11,7 +11,7 @@ export const PERMISSION_LEVELS = {
   ADMIN: 'admin',
 };
 
-export const MAX_LENGTH_TITLE = 64;
+export const MAX_LENGTH_TITLE = 1024;
 
 export const DEFAULT_ANONYMOUS_USERNAME = 'Anonymous';
 
@@ -37,8 +37,18 @@ export const APP_DATA_VISIBLITIES = {
   ITEM: 'item',
 };
 
-export const DEFAULT_BACKGROUND_ENABLED = false;
+export const DEFAULT_BACKGROUND_ENABLED = true;
+export const DEFAULT_BACKGROUND_SCALE = 1.0;
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';
 
 export const RE_FETCH_INTERVAL = REACT_APP_REFETCH_INTERVAL_SETTING ?? 1500; // Default: 1500
+
+export const DEFAULT_CANVAS_DIMENSIONS = 'A4';
+
+export const CANVAS_WIDTH_PX = 4096;
+export const CANVAS_HEIGHT_PX = 2160;
+
+export const ZOOM_MAX = 2;
+export const ZOOM_MIN = 0.2;
+export const ZOOM_STEP = 0.2;

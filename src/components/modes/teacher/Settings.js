@@ -8,11 +8,12 @@ import Modal from '@material-ui/core/Modal';
 import Fab from '@material-ui/core/Fab';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Button } from '@graasp/ui';
 import Divider from '@material-ui/core/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
+import { SETTINGS_BUTTON_CY, SETTINGS_CY } from '../../../config/selectors';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -21,14 +22,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '30%',
-    maxHeight: '50%',
+    width: '50%',
+    maxHeight: '70%',
     padding: theme.spacing(3),
     backgroundColor: 'white',
     borderRadius: '5px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    overflowY: 'scroll',
   },
   header: {
     fontSize: '1.5vw',
@@ -70,6 +72,7 @@ const Settings = () => {
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div onClick={(event) => event.stopPropagation()}>
         <Fab
+          data-cy={SETTINGS_BUTTON_CY}
           color="primary"
           className={classes.fab}
           onClick={(event) => {
@@ -84,7 +87,7 @@ const Settings = () => {
           onClose={handleModalClose}
           className={classes.modal}
         >
-          <div className={classes.modalContainer}>
+          <div data-cy={SETTINGS_CY} className={classes.modalContainer}>
             <Typography className={classes.header}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />

@@ -4,7 +4,6 @@ import {
   buildMockParentWindow,
 } from '@graasp/apps-query-client';
 import { REACT_APP_GRAASP_APP_ID } from './env';
-import { mockContext } from '../data/db';
 import { MOCK_API } from './settings';
 
 const {
@@ -13,9 +12,8 @@ const {
   hooks,
   useMutation,
   ReactQueryDevtools,
-  API_ROUTES,
   MUTATION_KEYS,
-  HOOK_KEYS,
+  API_ROUTES,
 } = configureQueryClient({
   notifier: (data) => {
     /* eslint-disable-next-line no-console */
@@ -28,9 +26,7 @@ const {
   GRAASP_APP_ID: REACT_APP_GRAASP_APP_ID,
   targetWindow: MOCK_API
     ? // build mock parent window given cypress context or mock data
-      buildMockParentWindow(
-        buildMockLocalContext(window.appContext ?? mockContext),
-      )
+      buildMockParentWindow(buildMockLocalContext(window.appContext))
     : window.parent,
 });
 
@@ -40,7 +36,6 @@ export {
   hooks,
   useMutation,
   ReactQueryDevtools,
-  API_ROUTES,
   MUTATION_KEYS,
-  HOOK_KEYS,
+  API_ROUTES,
 };

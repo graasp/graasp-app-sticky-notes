@@ -1,56 +1,86 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { APP_SETTINGS } from '../../constants/constants';
-import { useAppSettingFile, useAppSettings } from '../context/appData';
+import { hooks } from '../../config/queryClient';
+import {
+  DEFAULT_BACKGROUND_ENABLED,
+  DEFAULT_BACKGROUND_SCALE,
+} from '../../config/settings';
+import { BACKGROUND_IMAGE_CY } from '../../config/selectors';
 
 const useStyles = makeStyles(() => ({
-  image: {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     height: '100%',
-    display: 'block',
-    backgroundSize: '100% 100%',
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
   },
 }));
 
-const BackgroundImage = ({ children }) => {
+const BackgroundImage = () => {
   const classes = useStyles();
-  const { data: appSettings } = useAppSettings();
-  const backgroundSetting = appSettings?.find(
-    ({ name }) => name === APP_SETTINGS.BACKGROUND,
+  const { data: appSettings, isSuccess } = hooks.useAppSettings();
+  const [scale, setScale] = useState(1.0);
+  const [enabled, setEnabled] = useState();
+  const [backgroundSetting, setBackgroundSetting] = useState({});
+
+  useEffect(() => {
+    if (isSuccess) {
+      setBackgroundSetting(
+        appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND),
+      );
+      const backgroundSettings = appSettings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
+      );
+      const scaleTmp =
+        backgroundSettings?.data?.scale || DEFAULT_BACKGROUND_SCALE;
+      const enabledTmp =
+        backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED;
+      setScale(scaleTmp);
+      setEnabled(enabledTmp);
+    }
+  }, [appSettings, isSuccess, backgroundSetting]);
+
+  console.debug('backgroundSetting:', backgroundSetting);
+  console.debug(
+    Boolean(
+      backgroundSetting?.data?.extra?.file ||
+        backgroundSetting?.data?.extra?.s3File,
+    ),
   );
-  const { data: backgroundImage } = useAppSettingFile(
-    backgroundSetting?.id,
+  const { data: backgroundImage } = hooks.useAppSettingFile(
+    { appSettingId: backgroundSetting?.id },
     Boolean(
       backgroundSetting?.data?.extra?.file ||
         backgroundSetting?.data?.extra?.s3File,
     ),
   );
 
-  if (!backgroundSetting || !backgroundImage) {
+  const [url, setUrl] = useState();
+
+  useEffect(() => {
+    if (backgroundImage) {
+      setUrl(URL.createObjectURL(backgroundImage));
+    }
+  }, [backgroundImage]);
+
+  if (!backgroundSetting || !backgroundImage || !enabled) {
     return null;
   }
-
-  const url = URL.createObjectURL(backgroundImage);
-
   return (
-    <div
-      className={classes.image}
-      style={{
-        backgroundImage: `url(${url})`,
-      }}
-    >
-      {children}
+    <div className={classes.container}>
+      <img
+        data-cy={BACKGROUND_IMAGE_CY}
+        alt="background"
+        src={url}
+        style={{ transform: `scale(${scale}, ${scale})` }}
+      />
     </div>
   );
-};
-
-BackgroundImage.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.elementType),
-};
-
-BackgroundImage.defaultProps = {
-  children: null,
 };
 
 export default BackgroundImage;

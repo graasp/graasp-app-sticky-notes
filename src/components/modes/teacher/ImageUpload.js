@@ -2,17 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
-import Button from '@material-ui/core/Button';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';
 import '../../../index.css';
-import Loader from '../../common/Loader';
-import { Context } from '../../context/ContextContext';
+import { Loader, Button } from '@graasp/ui';
+import { Context, TokenContext } from '@graasp/apps-query-client';
 import configureUppy from '../../../utils/uppy';
 import { MAX_FILE_SIZE } from '../../../config/settings';
-import { TokenContext } from '../../context/TokenContext';
-import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
-import { useAppSettings } from '../../context/appData';
+import { MUTATION_KEYS, useMutation, hooks } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +60,7 @@ const ImageUpload = () => {
   );
 
   // current background
-  const { data: appSettings } = useAppSettings();
+  const { data: appSettings } = hooks.useAppSettings();
   const backgroundSetting = appSettings?.find(
     ({ name }) => name === APP_SETTINGS.BACKGROUND,
   );
@@ -87,6 +84,7 @@ const ImageUpload = () => {
         },
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context]);
 
   if (!uppy) {

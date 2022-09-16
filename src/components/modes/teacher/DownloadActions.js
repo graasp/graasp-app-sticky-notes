@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Button } from '@material-ui/core';
+import { Button } from '@graasp/ui';
 import { saveAs } from 'file-saver';
-import { useAppActions } from '../../context/appData';
+import { hooks } from '../../../config/queryClient';
 import { showErrorToast } from '../../../utils/toasts';
+import { Context } from '@graasp/apps-query-client';
 
 const useStyles = makeStyles(() => ({
   toggleContainer: {
@@ -28,15 +29,18 @@ const DownloadActions = () => {
 
   const [enableDownload, setEnableDownload] = useState(false);
 
+  const context = useContext(Context);
+
   const {
     data: appActions,
     isSuccess: isAppActionsSuccess,
     isError: isAppActionsError,
-  } = useAppActions();
+  } = hooks.useAppActions();
 
+  const errorMsg = t('The app actions could not be loaded.');
   useEffect(() => {
     if (isAppActionsError) {
-      showErrorToast(t('The app actions could not be loaded.'));
+      showErrorToast(errorMsg);
       setEnableDownload(false);
       return;
     }
@@ -44,14 +48,27 @@ const DownloadActions = () => {
       setActions(appActions);
       setEnableDownload(true);
     }
-  }, [appActions, isAppActionsSuccess, isAppActionsError]);
+  }, [appActions, isAppActionsSuccess, isAppActionsError, errorMsg]);
 
   const handleDownload = () => {
-    // The filename should be improved.
-    const blob = new Blob([JSON.stringify(actions)], {
-      type: 'text/json;charset=utf-8',
-    });
-    saveAs(blob, 'app_actions.json');
+    const datetime = new Date().toJSON();
+
+    const blob = new Blob(
+      [
+        JSON.stringify({
+          context: {
+            ...Object.fromEntries(context),
+            datetime,
+          },
+          actions,
+        }),
+      ],
+      {
+        type: 'text/json;charset=utf-8',
+      },
+    );
+    const filename = `app_actions_${datetime}.json`;
+    saveAs(blob, filename);
   };
 
   return (

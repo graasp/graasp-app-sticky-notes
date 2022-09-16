@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 const BackgroundImage = () => {
   const classes = useStyles();
   const { data: appSettings, isSuccess } = hooks.useAppSettings();
-  const [scale, setScale] = useState();
+  const [scale, setScale] = useState(1.0);
   const [enabled, setEnabled] = useState();
   const [backgroundSetting, setBackgroundSetting] = useState({});
 
@@ -45,8 +45,15 @@ const BackgroundImage = () => {
     }
   }, [appSettings, isSuccess, backgroundSetting]);
 
+  console.debug('backgroundSetting:', backgroundSetting);
+  console.debug(
+    Boolean(
+      backgroundSetting?.data?.extra?.file ||
+        backgroundSetting?.data?.extra?.s3File,
+    ),
+  );
   const { data: backgroundImage } = hooks.useAppSettingFile(
-    backgroundSetting?.id,
+    { appSettingId: backgroundSetting?.id },
     Boolean(
       backgroundSetting?.data?.extra?.file ||
         backgroundSetting?.data?.extra?.s3File,

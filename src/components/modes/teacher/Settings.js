@@ -3,13 +3,13 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Fab from '@material-ui/core/Fab';
-import SettingsIcon from '@material-ui/icons/Settings';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@mui/styles';
+import Modal from '@mui/material/Modal';
+import Fab from '@mui/material/Fab';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Typography from '@mui/material/Typography';
 import { Button } from '@graasp/ui';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 import ImageUpload from './ImageUpload';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@mui/styles';
+import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { FileInput } from '@uppy/react';
 import '@uppy/core/dist/style.css';

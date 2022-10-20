@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { makeStyles } from '@mui/styles';
+import Tooltip from '@mui/material/Tooltip';
+import Fab from '@mui/material/Fab';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { AVAILABLE_COLORS } from '../../constants/constants';
 import { CanvasContext } from '../context/CanvasContext';
 

@@ -1,14 +1,10 @@
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
-import {
-  MuiThemeProvider,
-  createTheme,
-  makeStyles,
-} from '@material-ui/core/styles';
-import { ToastContainer } from 'react-toastify';
-import pink from '@material-ui/core/colors/pink';
-import grey from '@material-ui/core/colors/grey';
-import orange from '@material-ui/core/colors/orange';
+import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
+import { StyledEngineProvider } from '@mui/material/styles';
+import pink from '@mui/material/colors/pink';
+import grey from '@mui/material/colors/grey';
+import orange from '@mui/material/colors/orange';
 import 'react-toastify/dist/ReactToastify.css';
 import { withContext, withToken } from '@graasp/apps-query-client';
 import { Loader } from '@graasp/ui';
@@ -23,38 +19,31 @@ import {
 } from '../config/queryClient';
 import { showErrorToast } from '../utils/toasts';
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-    height: '100%',
-  },
-});
-
 const theme = createTheme({
   palette: {
     primary: {
       main: '#5050d2',
     },
     secondary: pink,
-    default: grey,
+    default: grey['500'],
     background: {
       paper: '#fff',
     },
   },
   status: {
     danger: {
-      background: orange,
+      background: orange['400'],
       color: '#fff',
     },
   },
-  typography: {
-    useNextVariants: true,
-  },
+});
+
+const RootDiv = styled('div')({
+  flexGrow: 1,
+  height: '100%',
 });
 
 const Root = () => {
-  const classes = useStyles();
-
   const AppWithContext = withToken(App, {
     LoadingComponent: <Loader />,
     useAuthToken: hooks.useAuthToken,
@@ -72,17 +61,20 @@ const Root = () => {
   });
 
   return (
-    <div className={classes.root}>
-      <MuiThemeProvider theme={theme}>
-        <I18nextProvider i18n={i18nConfig}>
-          <QueryClientProvider client={queryClient}>
-            <AppWithContextAndToken />
-            {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
-          </QueryClientProvider>
-          <ToastContainer />
-        </I18nextProvider>
-      </MuiThemeProvider>
-    </div>
+    <RootDiv>
+      {/* Used to define the order of injected properties between JSS and emotion */}
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <CssBaseline enableColorScheme />
+          <I18nextProvider i18n={i18nConfig}>
+            <QueryClientProvider client={queryClient}>
+              <AppWithContextAndToken />
+              {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
+            </QueryClientProvider>
+          </I18nextProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </RootDiv>
   );
 };
 

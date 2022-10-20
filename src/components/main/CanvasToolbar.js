@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemIcon } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@mui/styles';
+import { List, ListItem, ListItemIcon } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';

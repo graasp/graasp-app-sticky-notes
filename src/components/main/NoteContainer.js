@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from 'prop-types';
 import { useMutation, MUTATION_KEYS, hooks } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';

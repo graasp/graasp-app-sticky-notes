@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import PropTypes from 'prop-types';
-import { Slider, Typography } from '@material-ui/core';
+import { Slider, Typography } from '@mui/material';
 import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../../config/settings';
 
 const useStyles = makeStyles((theme) => ({

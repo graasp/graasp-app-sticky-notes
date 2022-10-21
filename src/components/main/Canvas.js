@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import Settings from '../modes/teacher/Settings';
 import ColorSettings from './ColorSettings';
 import BackgroundImage from './BackgroundImage';
@@ -18,25 +18,22 @@ import CanvasScaleControl from './CanvasScaleControl';
 import CanvasToolbar from './CanvasToolbar';
 import { SCROLL_CONTAINER_CY } from '../../config/selectors';
 
-const useStyles = makeStyles(() => ({
-  scrollContainer: {
-    backgroundColor: 'silver',
-    overflow: 'auto',
-    width: '100%',
-    height: '100%',
-    border: 'none',
-  },
-  mainContainer: {
-    backgroundColor: 'white',
-    transformOrigin: '0 0',
-    flexShrink: 0,
-    position: 'relative',
-  },
+const ScrollContainer = styled('div')(() => ({
+  backgroundColor: 'silver',
+  overflow: 'auto',
+  width: '100%',
+  height: '100%',
+  border: 'none',
+}));
+
+const MainContainer = styled('div')(() => ({
+  backgroundColor: 'white',
+  transformOrigin: '0 0',
+  flexShrink: 0,
+  position: 'relative',
 }));
 
 const Canvas = () => {
-  const classes = useStyles();
-
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
 
@@ -106,14 +103,12 @@ const Canvas = () => {
   );
 
   return (
-    <div
+    <ScrollContainer
       data-cy={SCROLL_CONTAINER_CY}
-      className={classes.scrollContainer}
       ref={scrollContainer}
       onScroll={handleScrollEvent}
     >
-      <div
-        className={classes.mainContainer}
+      <MainContainer
         ref={mainContainer}
         style={{
           height: `${CANVAS_HEIGHT_PX}px`,
@@ -123,7 +118,7 @@ const Canvas = () => {
       >
         {backgroundToggleSetting && <BackgroundImage />}
         {renderStage()}
-      </div>
+      </MainContainer>
       <CanvasToolbar />
       {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
         permissionLevel,
@@ -133,7 +128,7 @@ const Canvas = () => {
         canvasScale={canvasScale}
         setCanvasScale={setCanvasScale}
       />
-    </div>
+    </ScrollContainer>
   );
 };
 

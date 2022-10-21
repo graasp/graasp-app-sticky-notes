@@ -4,17 +4,17 @@ import Tooltip from '@mui/material/Tooltip';
 import Fab from '@mui/material/Fab';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import {styled} from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { AVAILABLE_COLORS } from '../../constants/constants';
 import { CanvasContext } from '../context/CanvasContext';
 
 const MainContainer = styled('div')(() => ({
   position: 'fixed',
-    top: 1,
-    right: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+  top: 1,
+  right: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 }));
 
 const ColorSettingsContainer = styled('div')(() => ({
@@ -22,13 +22,13 @@ const ColorSettingsContainer = styled('div')(() => ({
   flexDirection: 'column',
 }));
 
-const Color =styled('div')(() => ({
+const Color = styled('div')(() => ({
   width: '2vw',
-    height: '2vw',
-    cursor: 'pointer',
-    borderRadius: '50%',
-    background: 'darkgreen',
-    marginBottom: 1,
+  height: '2vw',
+  cursor: 'pointer',
+  borderRadius: '50%',
+  background: 'darkgreen',
+  marginBottom: 1,
 }));
 
 const ColorSettings = () => {
@@ -44,12 +44,7 @@ const ColorSettings = () => {
   return (
     <MainContainer>
       <Tooltip title={t('Set new note color')} placement="left" arrow>
-        <Fab
-          size="small"
-          onClick={handleClick}
-          color="primary"
-          sx={{ mb: 1 }}
-        >
+        <Fab size="small" onClick={handleClick} color="primary" sx={{ mb: 1 }}>
           {colorPaletteOpen ? <MoreHorizIcon /> : <MoreVertIcon />}
         </Fab>
       </Tooltip>

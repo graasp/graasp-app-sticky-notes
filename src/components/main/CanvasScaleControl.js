@@ -7,15 +7,15 @@ import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../../config/settings';
 
 const MainContainer = styled('div')(() => ({
   position: 'fixed',
-    bottom: 2,
-    left: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    maxWidth: '20%',
-    width: '20%',
-    maxHeight: '20%',
+  bottom: 2,
+  left: 1,
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  maxWidth: '20%',
+  width: '20%',
+  maxHeight: '20%',
 }));
 
 const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
@@ -30,7 +30,7 @@ const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
     <MainContainer>
       <Typography>{t('Zoom')}</Typography>
       <Slider
-        sx={{ width: '80% '}}
+        sx={{ width: '80% ' }}
         getAriaLabel={getAriaLabel}
         defaultValue={1}
         value={canvasScale}

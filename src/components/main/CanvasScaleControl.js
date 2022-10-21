@@ -1,15 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Slider, Typography } from '@mui/material';
 import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../../config/settings';
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    left: theme.spacing(1),
+const MainContainer = styled('div')(() => ({
+  position: 'fixed',
+    bottom: 2,
+    left: 1,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -17,15 +16,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '20%',
     width: '20%',
     maxHeight: '20%',
-  },
-  sliderStyle: {
-    width: '80%',
-  },
 }));
 
 const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const getAriaLabel = (val) => `${100 * val}%`;
 
@@ -33,10 +27,10 @@ const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
     setCanvasScale(value);
   };
   return (
-    <div className={classes.mainContainer}>
+    <MainContainer>
       <Typography>{t('Zoom')}</Typography>
       <Slider
-        className={classes.sliderStyle}
+        sx={{ width: '80% '}}
         getAriaLabel={getAriaLabel}
         defaultValue={1}
         value={canvasScale}
@@ -47,7 +41,7 @@ const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
         min={ZOOM_MIN}
         max={ZOOM_MAX}
       />
-    </div>
+    </MainContainer>
   );
 };
 

@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import Fab from '@mui/material/Fab';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -15,47 +15,35 @@ import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
 import { SETTINGS_BUTTON_CY, SETTINGS_CY } from '../../../config/selectors';
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    width: '50%',
-    maxHeight: '70%',
-    padding: theme.spacing(3),
-    backgroundColor: 'white',
-    borderRadius: '5px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    overflowY: 'scroll',
-  },
-  header: {
-    fontSize: '1.5vw',
-  },
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(1),
-    right: theme.spacing(1),
-  },
-  divider: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  closeButton: {
-    width: '20%',
-    fontSize: '1vw',
-  },
+const StyledModal = styled(Modal)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
+
+const ModalContainer = styled('div')(() => ({
+  width: '50%',
+  maxHeight: '70%',
+  padding: 3,
+  backgroundColor: 'white',
+  borderRadius: '5px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  overflowY: 'scroll',
+}));
+
+const ButtonContainer = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'flex-end',
+}));
+
+const CloseButton = styled(Button)(() => ({
+  width: '20%',
+  fontSize: '1vw',
 }));
 
 const Settings = () => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -74,37 +62,32 @@ const Settings = () => {
         <Fab
           data-cy={SETTINGS_BUTTON_CY}
           color="primary"
-          className={classes.fab}
           onClick={(event) => {
             event.stopPropagation();
             handleModalOpen();
           }}
+          sx={{ bottom: 1, right: 1, position: 'fixed' }}
         >
           <SettingsIcon />
         </Fab>
-        <Modal
-          open={modalOpen}
-          onClose={handleModalClose}
-          className={classes.modal}
-        >
-          <div data-cy={SETTINGS_CY} className={classes.modalContainer}>
-            <Typography className={classes.header}>{t('Settings')}</Typography>
+        <StyledModal open={modalOpen} onClose={handleModalClose}>
+          <ModalContainer data-cy={SETTINGS_CY}>
+            <Typography sx={{ fontSize: '1.5vw' }}>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />
             <DownloadActions />
-            <Divider className={classes.divider} />
-            <div className={classes.buttonContainer}>
-              <Button
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <ButtonContainer>
+              <CloseButton
                 variant="contained"
                 color="secondary"
                 onClick={handleModalClose}
-                className={classes.closeButton}
               >
                 {t('Close')}
-              </Button>
-            </div>
-          </div>
-        </Modal>
+              </CloseButton>
+            </ButtonContainer>
+          </ModalContainer>
+        </StyledModal>
       </div>
     </>
   );

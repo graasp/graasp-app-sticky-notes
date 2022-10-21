@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Button } from '@graasp/ui';
@@ -9,20 +9,14 @@ import { hooks } from '../../../config/queryClient';
 import { showErrorToast } from '../../../utils/toasts';
 import { Context } from '@graasp/apps-query-client';
 
-const useStyles = makeStyles(() => ({
-  toggleContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  headerText: {
-    fontSize: '1.05vw',
-  },
+const ToggleContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
 }));
 
 const DownloadActions = () => {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const [actions, setActions] = useState([]);
@@ -72,8 +66,8 @@ const DownloadActions = () => {
   };
 
   return (
-    <div className={classes.toggleContainer}>
-      <Typography className={classes.headerText}>
+    <ToggleContainer>
+      <Typography sx={{ fontSize: '1.05vw' }}>
         {t('Download learning analytics.')}
       </Typography>
       <FormControlLabel
@@ -88,7 +82,7 @@ const DownloadActions = () => {
           </Button>
         }
       />
-    </div>
+    </ToggleContainer>
   );
 };
 

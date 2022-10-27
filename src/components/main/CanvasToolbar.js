@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
-import { Button } from '@graasp/ui';
-
-const ToolButton = styled(Button)(() => ({}));
+import IconButton from '@mui/material/IconButton';
 
 const CanvasToolbar = () => {
   const { noteBeingTransformedId, setNoteBeingTransformedId } =
@@ -48,9 +45,9 @@ const CanvasToolbar = () => {
       spacing={2}
       sx={{ position: 'fixed', bottom: 2, top: 2, right: 2 }}
     >
-      <ToolButton onClick={deleteNote} disabled={disabled}>
+      <IconButton onClick={deleteNote} disabled={disabled}>
         <DeleteIcon />
-      </ToolButton>
+      </IconButton>
     </Stack>
   );
 };

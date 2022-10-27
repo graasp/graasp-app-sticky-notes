@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Fab from '@mui/material/Fab';
 import SettingsIcon from '@mui/icons-material/Settings';

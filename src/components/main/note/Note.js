@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import lightBlue from '@mui/material/colors/lightBlue';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';

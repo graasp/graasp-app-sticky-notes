@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Slider, Typography } from '@mui/material';
 import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../../config/settings';

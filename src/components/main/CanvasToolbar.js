@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';

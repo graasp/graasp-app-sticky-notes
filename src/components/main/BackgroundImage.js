@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import { APP_SETTINGS } from '../../constants/constants';
 import { hooks } from '../../config/queryClient';
 import {

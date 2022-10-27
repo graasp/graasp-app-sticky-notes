@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { FileInput } from '@uppy/react';

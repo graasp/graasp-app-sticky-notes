@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Fab from '@mui/material/Fab';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import { AVAILABLE_COLORS } from '../../constants/constants';
 import { CanvasContext } from '../context/CanvasContext';
 

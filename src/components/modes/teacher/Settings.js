@@ -76,7 +76,7 @@ const Settings = () => {
             <ImageUpload />
             <BackgroundToggle />
             <DownloadActions />
-            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Divider sx={{ my: 2 }} />
             <ButtonContainer>
               <CloseButton
                 variant="contained"

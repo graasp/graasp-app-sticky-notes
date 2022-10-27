@@ -43,7 +43,10 @@ const CanvasToolbar = () => {
       direction="column"
       justifyContent="center"
       spacing={2}
-      sx={{ position: 'fixed', bottom: 2, top: 2, right: 2 }}
+      position="fixed"
+      bottom={2}
+      top={2}
+      right={2}
     >
       <IconButton onClick={deleteNote} disabled={disabled}>
         <DeleteIcon />

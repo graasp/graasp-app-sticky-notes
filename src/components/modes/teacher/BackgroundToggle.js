@@ -119,7 +119,7 @@ const BackgroundToggle = () => {
     <>
       <ToggleContainer>
         <Typography
-          sx={{ fontSize: '1.05vw', color: toggleDisabled ?? grey[500] }}
+          sx={{ fontSize: '1.1em', color: toggleDisabled ?? grey[500] }}
         >
           {t('Show Background Image')}
         </Typography>
@@ -138,7 +138,7 @@ const BackgroundToggle = () => {
       </ToggleContainer>
       <ToggleContainer>
         <Typography
-          sx={{ fontSize: '1.05vw', color: toggleDisabled ?? grey[500] }}
+          sx={{ fontSize: '1.1em', color: toggleDisabled ?? grey[500] }}
         >
           {t('Scale background image')}
         </Typography>

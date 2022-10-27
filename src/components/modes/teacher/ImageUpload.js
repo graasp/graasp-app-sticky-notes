@@ -24,7 +24,6 @@ const ImageUploadContainer = styled('div')(() => ({
 
 const CloseButton = styled(Button)(() => ({
   width: '20%',
-  fontSize: '1vw',
 }));
 
 const ImageUpload = () => {
@@ -106,13 +105,13 @@ const ImageUpload = () => {
   return (
     <ImageUploadContainer>
       <Stack direction="column">
-        <Typography sx={{ fontSize: '1.05vw' }}>
+        <Typography sx={{ fontSize: '1.1em' }}>
           {t('Set Background Image')}
         </Typography>
-        <Typography sx={{ fontSize: '0.8vw', color: '#383838' }}>
+        <Typography sx={{ color: '#383838' }}>
           {t('Permitted file types: .jpg, .jpeg, .png')}
         </Typography>
-        <Typography sx={{ fontSize: '0.8vw', color: '#383838' }}>
+        <Typography sx={{ color: '#383838' }}>
           {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
         </Typography>
       </Stack>

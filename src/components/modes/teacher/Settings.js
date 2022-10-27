@@ -22,9 +22,9 @@ const StyledModal = styled(Modal)(() => ({
 }));
 
 const ModalContainer = styled('div')(() => ({
-  width: '50%',
-  maxHeight: '70%',
-  padding: 3,
+  width: '60%',
+  maxHeight: '90%',
+  padding: 10,
   backgroundColor: 'white',
   borderRadius: '5px',
   display: 'flex',
@@ -40,7 +40,6 @@ const ButtonContainer = styled('div')(() => ({
 
 const CloseButton = styled(Button)(() => ({
   width: '20%',
-  fontSize: '1vw',
 }));
 
 const Settings = () => {
@@ -72,7 +71,7 @@ const Settings = () => {
         </Fab>
         <StyledModal open={modalOpen} onClose={handleModalClose}>
           <ModalContainer data-cy={SETTINGS_CY}>
-            <Typography sx={{ fontSize: '1.5vw' }}>{t('Settings')}</Typography>
+            <Typography variant='h3'>{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />
             <DownloadActions />

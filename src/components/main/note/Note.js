@@ -14,23 +14,29 @@ import EditableText from './EditableText';
 
 const animationDuration = 300;
 
-const NoteContainer = styled('div')(({ state }) => {
-  return {
-    overflow: 'visible',
-    border: '1px solid',
-    borderColor: 'rgba(255, 255, 255, 0)',
-    maxWidth: '30em',
-    padding: '0.7em 0.8em',
-    boxShadow: '3px 3px 4px rgba(33,33,33,.7)',
-    cursor: 'move',
-    height: 'fit-content',
-    position: 'absolute',
-    transition: `min-width ${animationDuration}ms ease-in-out, min-height ${animationDuration}ms ease-in-out`,
-    minWidth: state === 'entering' || state === 'entered' ? '30em' : '0em',
-    minHeight: state === 'entering' || state === 'entered' ? '10em' : '0em',
-    zIndex: state === 'entering' || state === 'entered' ? '1' : '0em',
-  };
-});
+const NoteContainer = styled('div')(({ state }) => ({
+  overflow: 'visible',
+  border: '1px solid',
+  borderColor: 'rgba(255, 255, 255, 0)',
+  maxWidth: '30em',
+  padding: '0.7em 0.8em',
+  boxShadow: '3px 3px 4px rgba(33,33,33,.7)',
+  cursor: 'move',
+  height: 'fit-content',
+  position: 'absolute',
+  transition: `min-width ${animationDuration}ms ease-in-out, min-height ${animationDuration}ms ease-in-out`,
+  ...(state === 'entering' || state === 'entered'
+    ? {
+        minWidth: '30em',
+        minHeight: '10em',
+        zIndex: '1',
+      }
+    : {
+        minWidth: '0em',
+        minHeight: '0em',
+        zIndex: '0',
+      }),
+}));
 
 const UserInfo = styled('p')(() => ({
   fontFamily: 'Helvetica, Arial, sans-serif',

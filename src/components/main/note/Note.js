@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material';
+import lightBlue from '@mui/material/colors/lightBlue';
 import Draggable from 'react-draggable';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Transition } from 'react-transition-group';
 import { CanvasContext } from '../../context/CanvasContext';
@@ -14,33 +14,35 @@ import EditableText from './EditableText';
 
 const animationDuration = 300;
 
-const useStyles = makeStyles(() => ({
-  note: {
-    overflow: 'visible',
-    border: '1px solid',
-    borderColor: 'rgba(255, 255, 255, 0)',
-    maxWidth: '30em',
-    padding: '0.7em 0.8em',
-    boxShadow: '3px 3px 4px rgba(33,33,33,.7)',
-    cursor: 'move',
-    height: 'fit-content',
-    position: 'absolute',
-    transition: `min-width ${animationDuration}ms ease-in-out, min-height ${animationDuration}ms ease-in-out`,
-    // zIndex: '0',
-    '&-entering': { minWidth: '30em', minHeight: '10em', zIndex: '1' },
-    '&-entered': { minWidth: '30em', minHeight: '10em', zIndex: '1' },
-    '&-exiting': { minWwidth: '0em', minHeight: '0em' },
-    '&-exited': { minWidth: '0em', minHeight: '0em' },
-  },
-  selected: {
-    borderColor: 'dodgerblue',
-  },
-  userInfo: {
-    fontFamily: 'Helvetica, Arial, sans-serif',
-    fontSize: '10px',
-    color: 'darkgrey',
-    textAlign: 'right',
-  },
+const NoteContainer = styled('div')(({ state }) => ({
+  overflow: 'visible',
+  border: '1px solid',
+  borderColor: 'rgba(255, 255, 255, 0)',
+  maxWidth: '30em',
+  padding: '0.7em 0.8em',
+  boxShadow: '3px 3px 4px rgba(33,33,33,.7)',
+  cursor: 'move',
+  height: 'fit-content',
+  position: 'absolute',
+  transition: `min-width ${animationDuration}ms ease-in-out, min-height ${animationDuration}ms ease-in-out`,
+  ...(state === 'entering' || state === 'entered'
+    ? {
+        minWidth: '30em',
+        minHeight: '10em',
+        zIndex: '1',
+      }
+    : {
+        minWidth: '0em',
+        minHeight: '0em',
+        zIndex: '0',
+      }),
+}));
+
+const UserInfo = styled('p')(() => ({
+  fontFamily: 'Helvetica, Arial, sans-serif',
+  fontSize: '10px',
+  color: 'darkgrey',
+  textAlign: 'right',
 }));
 
 const Note = ({ note, id, userName, scale }) => {
@@ -64,7 +66,6 @@ const Note = ({ note, id, userName, scale }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isFixedSize, setIsFixedSize] = useState(false);
 
-  const classes = useStyles();
   const [isDragging, setIsDragging] = useState(false);
 
   // Update the status of the note (transforming or not) if the noteBeingTransformedId changes.
@@ -200,14 +201,11 @@ const Note = ({ note, id, userName, scale }) => {
           scale={scale}
         >
           {/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <div
-            className={classNames(
-              classes.note,
-              isTransforming && classes.selected,
-              `${classes.note}-${state}`,
-            )}
-            style={{
+          <NoteContainer
+            state={state}
+            sx={{
               backgroundColor: color,
+              borderColor: isTransforming ? lightBlue[500] : 'none',
             }}
             onClick={handleClickEvent}
           >
@@ -218,11 +216,9 @@ const Note = ({ note, id, userName, scale }) => {
               onChange={handleTextEdit}
             />
             {!isEditing && (
-              <p className={classes.userInfo}>
-                {t('Added by {{ userName }}', { userName })}
-              </p>
+              <UserInfo>{t('Added by {{ userName }}', { userName })}</UserInfo>
             )}
-          </div>
+          </NoteContainer>
         </Draggable>
       )}
     </Transition>

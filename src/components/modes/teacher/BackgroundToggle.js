@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
-import clsx from 'clsx';
+import { styled } from '@mui/material';
+import grey from '@mui/material/colors/grey';
+import Typography from '@mui/material/Typography';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
 import { MUTATION_KEYS, useMutation, hooks } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../../config/settings';
-
-const useStyles = makeStyles(() => ({
-  toggleContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  headerText: {
-    fontSize: '1.05vw',
-  },
-  headerDisabled: {
-    color: 'grey',
-  },
+const ToggleContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
 }));
 
 const DEFAULT_BACKGROUND_SETTINGS = {
@@ -37,7 +28,6 @@ const DEFAULT_BACKGROUND_SETTINGS = {
 };
 
 const BackgroundToggle = () => {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const [scaleError, setScaleError] = useState(false);
@@ -127,11 +117,9 @@ const BackgroundToggle = () => {
 
   return (
     <>
-      <div className={classes.toggleContainer}>
+      <ToggleContainer>
         <Typography
-          className={clsx(classes.headerText, {
-            [classes.headerDisabled]: toggleDisabled,
-          })}
+          sx={{ fontSize: '1.1em', color: toggleDisabled ?? grey[500] }}
         >
           {t('Show Background Image')}
         </Typography>
@@ -147,12 +135,10 @@ const BackgroundToggle = () => {
             />
           }
         />
-      </div>
-      <div className={classes.toggleContainer}>
+      </ToggleContainer>
+      <ToggleContainer>
         <Typography
-          className={clsx(classes.headerText, {
-            [classes.headerDisabled]: toggleDisabled,
-          })}
+          sx={{ fontSize: '1.1em', color: toggleDisabled ?? grey[500] }}
         >
           {t('Scale background image')}
         </Typography>
@@ -177,7 +163,7 @@ const BackgroundToggle = () => {
             />
           }
         />
-      </div>
+      </ToggleContainer>
     </>
   );
 };

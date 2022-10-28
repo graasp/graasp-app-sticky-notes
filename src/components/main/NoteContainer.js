@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useMutation, MUTATION_KEYS, hooks } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
@@ -19,19 +19,16 @@ import {
   DEFAULT_NOTE_WIDTH,
 } from '../../constants/constants';
 
-const useStyles = makeStyles(() => ({
-  noteContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-  },
+const StyledNoteContainer = styled('div')(() => ({
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: '0px',
+  left: '0px',
 }));
 
 const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
   const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
@@ -126,7 +123,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className={classes.noteContainer} onClick={handleCanvasClick}>
+    <StyledNoteContainer onClick={handleCanvasClick}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       {notes ? (
         notes.map((note) => (
@@ -144,7 +141,7 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
       ) : (
         <p>{t('Add a note.')}</p>
       )}
-    </div>
+    </StyledNoteContainer>
   );
 };
 

@@ -1,41 +1,37 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import Tooltip from '@mui/material/Tooltip';
+import Fab from '@mui/material/Fab';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { styled } from '@mui/material';
 import { AVAILABLE_COLORS } from '../../constants/constants';
 import { CanvasContext } from '../context/CanvasContext';
 
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    position: 'fixed',
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  fab: {
-    marginBottom: theme.spacing(1),
-  },
-  colorSettingsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  color: {
-    width: '2vw',
-    height: '2vw',
-    cursor: 'pointer',
-    borderRadius: '50%',
-    background: 'darkgreen',
-    marginBottom: theme.spacing(1),
-  },
+const MainContainer = styled('div')(() => ({
+  position: 'fixed',
+  top: 1,
+  right: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+}));
+
+const ColorSettingsContainer = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
+
+const Color = styled('div')(() => ({
+  width: '2vw',
+  height: '2vw',
+  cursor: 'pointer',
+  borderRadius: '50%',
+  background: 'darkgreen',
+  marginBottom: 1,
 }));
 
 const ColorSettings = () => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const { userSetColor, setUserSetColor } = useContext(CanvasContext);
   const [colorPaletteOpen, setColorPaletteOpen] = useState(false);
@@ -46,28 +42,22 @@ const ColorSettings = () => {
   };
 
   return (
-    <div className={classes.mainContainer}>
+    <MainContainer>
       <Tooltip title={t('Set new note color')} placement="left" arrow>
-        <Fab
-          className={classes.fab}
-          size="small"
-          onClick={handleClick}
-          color="primary"
-        >
+        <Fab size="small" onClick={handleClick} color="primary" sx={{ mb: 1 }}>
           {colorPaletteOpen ? <MoreHorizIcon /> : <MoreVertIcon />}
         </Fab>
       </Tooltip>
       {colorPaletteOpen && (
-        <div className={classes.colorSettingsContainer}>
+        <ColorSettingsContainer>
           {AVAILABLE_COLORS.map((color) => (
             <>
               {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-              <div
-                style={{
+              <Color
+                sx={{
                   background: color,
                   border: userSetColor === color && '1px solid grey',
                 }}
-                className={classes.color}
                 key={color}
                 onClick={(event) => {
                   event.stopPropagation();
@@ -82,9 +72,9 @@ const ColorSettings = () => {
               />
             </>
           ))}
-        </div>
+        </ColorSettingsContainer>
       )}
-    </div>
+    </MainContainer>
   );
 };
 

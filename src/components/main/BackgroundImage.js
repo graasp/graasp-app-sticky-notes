@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material';
 import { APP_SETTINGS } from '../../constants/constants';
 import { hooks } from '../../config/queryClient';
 import {
@@ -8,21 +8,18 @@ import {
 } from '../../config/settings';
 import { BACKGROUND_IMAGE_CY } from '../../config/selectors';
 
-const useStyles = makeStyles(() => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-  },
+const Container = styled('div')(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: '0px',
+  left: '0px',
 }));
 
 const BackgroundImage = () => {
-  const classes = useStyles();
   const { data: appSettings, isSuccess } = hooks.useAppSettings();
   const [scale, setScale] = useState(1.0);
   const [enabled, setEnabled] = useState();
@@ -72,14 +69,14 @@ const BackgroundImage = () => {
     return null;
   }
   return (
-    <div className={classes.container}>
+    <Container>
       <img
         data-cy={BACKGROUND_IMAGE_CY}
         alt="background"
         src={url}
         style={{ transform: `scale(${scale}, ${scale})` }}
       />
-    </div>
+    </Container>
   );
 };
 

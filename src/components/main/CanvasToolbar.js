@@ -1,40 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemIcon } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
-
-const useStyles = makeStyles((theme) => ({
-  mainContainer: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    top: theme.spacing(2),
-    right: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  tool: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: '50%',
-    width: '3.5em',
-    height: '3.5em',
-  },
-  toolIcon: {
-    color: 'white',
-  },
-}));
+import IconButton from '@mui/material/IconButton';
 
 const CanvasToolbar = () => {
-  const classes = useStyles();
-
   const { noteBeingTransformedId, setNoteBeingTransformedId } =
     useContext(CanvasContext);
 
@@ -67,15 +39,19 @@ const CanvasToolbar = () => {
   };
 
   return (
-    <div className={classes.mainContainer}>
-      <List className={classes.toolsList}>
-        <ListItem button disabled={disabled}>
-          <ListItemIcon className={classes.tool}>
-            <DeleteIcon className={classes.toolIcon} onClick={deleteNote} />
-          </ListItemIcon>
-        </ListItem>
-      </List>
-    </div>
+    <Stack
+      direction="column"
+      justifyContent="center"
+      spacing={2}
+      position="fixed"
+      bottom={2}
+      top={2}
+      right={2}
+    >
+      <IconButton onClick={deleteNote} disabled={disabled}>
+        <DeleteIcon />
+      </IconButton>
+    </Stack>
   );
 };
 

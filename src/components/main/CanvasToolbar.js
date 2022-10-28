@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
 import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
 import { CanvasContext } from '../context/CanvasContext';
 import { ACTION_TYPES } from '../../config/actionTypes';
-import IconButton from '@mui/material/IconButton';
 
 const CanvasToolbar = () => {
   const { noteBeingTransformedId, setNoteBeingTransformedId } =
@@ -43,14 +44,20 @@ const CanvasToolbar = () => {
       direction="column"
       justifyContent="center"
       spacing={2}
+      bottom={0}
+      top={0}
+      right={0}
       position="fixed"
-      bottom={2}
-      top={2}
-      right={2}
+      component="aside"
+      mr={4}
     >
-      <IconButton onClick={deleteNote} disabled={disabled}>
-        <DeleteIcon />
-      </IconButton>
+      <Paper elevation={1}>
+        <Stack direction="column" justifyContent="center" spacing={1}>
+          <IconButton onClick={deleteNote} disabled={disabled}>
+            <DeleteIcon />
+          </IconButton>
+        </Stack>
+      </Paper>
     </Stack>
   );
 };

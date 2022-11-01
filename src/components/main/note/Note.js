@@ -52,6 +52,7 @@ const Note = ({ note, id, userName, scale }) => {
     setNoteBeingEditedId,
     noteBeingTransformedId,
     setNoteBeingTransformedId,
+    setUserSetColor,
   } = useContext(CanvasContext);
 
   const { position, color } = note;
@@ -164,6 +165,7 @@ const Note = ({ note, id, userName, scale }) => {
     } else {
       setNoteBeingTransformedId(id);
       setIsTransforming(true);
+      setUserSetColor(color);
     }
   };
 

@@ -71,7 +71,7 @@ const Settings = () => {
         </Fab>
         <StyledModal open={modalOpen} onClose={handleModalClose}>
           <ModalContainer data-cy={SETTINGS_CY}>
-            <Typography variant='h3'>{t('Settings')}</Typography>
+            <Typography variant="h3">{t('Settings')}</Typography>
             <ImageUpload />
             <BackgroundToggle />
             <DownloadActions />

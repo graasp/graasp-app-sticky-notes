@@ -11,8 +11,16 @@ const EditableText = forwardRef(
   ({ isEditing, onToggleEdit, onChange, text }, ref) => {
     const htmlContainer = useRef();
     const cleanText = DOMPurify.sanitize(text, {
-      USE_PROFILES: { html: true },
+      USE_PROFILES: { html: true }, RETURN_DOM_FRAGMENT: true
     });
+
+    cleanText.querySelectorAll('a').forEach((a) => {
+      a?.setAttribute('target', "_blank");
+      a?.setAttribute('rel', "noopener noreferrer");
+    });
+
+    const content = document.createElement('div');
+    content.appendChild(cleanText);
 
     const handleEscapeKeys = (e) => {
       if ((e.key === RETURN_KEY && e.shiftKey) || e.key === ESCAPE_KEY) {
@@ -41,7 +49,7 @@ const EditableText = forwardRef(
         // The class content is styled in `note_style.css`
         className="content"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: cleanText }}
+        dangerouslySetInnerHTML={{ __html: content.innerHTML }}
       />
     );
   },

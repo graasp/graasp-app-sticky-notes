@@ -6,7 +6,7 @@ import { Transition } from 'react-transition-group';
 import { styled } from '@mui/material';
 import lightBlue from '@mui/material/colors/lightBlue';
 
-import { ACTION_TYPES } from '../../../config/actionTypes';
+import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
 import { NoteDataType } from '../../../config/appDataTypes';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { CanvasContext } from '../../context/CanvasContext';
@@ -87,7 +87,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   // TODO: remove.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const patchNote = (updatedNote: NoteDataType, actionType: string): void => {
+  const patchNote = (updatedNote: NoteDataType, actionType: APP_ACTION_TYPES): void => {
     const patch = {
       data: updatedNote,
       id,
@@ -111,7 +111,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
         color: userSetColor,
       };
 
-      patchNote(updatedNote, ACTION_TYPES.EDIT);
+      patchNote(updatedNote, APP_ACTION_TYPES.EDIT);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSetColor]);
@@ -137,7 +137,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
       },
     };
 
-    patchNote(updatedNote, ACTION_TYPES.MOVE);
+    patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
   };
 
   const toggleEdit = (): void => {
@@ -149,7 +149,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
         ...note,
         text,
       };
-      patchNote(updatedNote, ACTION_TYPES.EDIT);
+      patchNote(updatedNote, APP_ACTION_TYPES.EDIT);
     } else {
       setNoteBeingEditedId(id);
       setIsEditing(true);

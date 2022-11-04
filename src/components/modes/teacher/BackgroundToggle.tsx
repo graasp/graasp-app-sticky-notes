@@ -13,7 +13,7 @@ import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../../config/settings';
-import { APP_SETTINGS } from '../../../constants/constants';
+import { APP_SETTINGS } from '../../../config/constants';
 import { useAppSettingContext } from '../../context/AppSettingContext';
 
 const ToggleContainer = styled('div')(() => ({

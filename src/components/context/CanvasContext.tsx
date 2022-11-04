@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { FC, PropsWithChildren, useState } from 'react';
 
-import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
+import { DEFAULT_NOTE_COLOR } from '../../config/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
 const uselessFunc = (_a: any): void => {};

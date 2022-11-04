@@ -1,7 +1,6 @@
 import { PermissionLevel } from '@graasp/sdk';
 
-import { CONTEXTS } from './contexts';
-import { REACT_APP_MOCK_API, REACT_APP_REFETCH_INTERVAL_SETTING } from './env';
+import { REACT_APP_REFETCH_INTERVAL_SETTING } from './env';
 
 export const DEFAULT_LANG = 'en';
 

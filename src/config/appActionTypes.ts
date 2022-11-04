@@ -1,5 +1,4 @@
 enum APP_ACTION_TYPES {
-  SAVE = 'save',
   ADD = 'add',
   MOVE = 'move',
   EDIT = 'edit',

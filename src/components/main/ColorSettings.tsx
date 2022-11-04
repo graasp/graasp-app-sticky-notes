@@ -7,7 +7,7 @@ import { styled } from '@mui/material';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
-import { AVAILABLE_COLORS } from '../../constants/constants';
+import { AVAILABLE_COLORS } from '../../config/constants';
 import { CanvasContext } from '../context/CanvasContext';
 
 const MainContainer = styled('div')(() => ({

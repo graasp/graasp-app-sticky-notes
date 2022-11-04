@@ -5,7 +5,7 @@ import XHRUpload from '@uppy/xhr-upload';
 
 import { API_ROUTES } from '../config/queryClient';
 import { MAX_FILE_SIZE, MAX_NUM_FILES } from '../config/settings';
-import { APP_SETTINGS } from '../constants/constants';
+import { APP_SETTINGS } from '../config/constants';
 import { showErrorToast, showSuccessToast } from './toasts';
 
 const { buildUploadAppSettingFilesRoute } = API_ROUTES;

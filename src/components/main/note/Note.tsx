@@ -8,6 +8,7 @@ import lightBlue from '@mui/material/colors/lightBlue';
 
 import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
 import { NoteDataType } from '../../../config/appDataTypes';
+import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { CanvasContext } from '../../context/CanvasContext';
 import EditableText from './EditableText';
@@ -68,6 +69,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const { pageX = 0, pageY = 0 } = position;
 
   const { patchAppData } = useAppDataContext();
+  const { postAppAction } = useAppActionContext();
 
   const [text, setText] = useState(note?.text);
   const [isTransforming, setIsTransforming] = useState(false);
@@ -85,8 +87,6 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     }
   }, [noteBeingTransformedId, id, isTransforming]);
 
-  // TODO: remove.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const patchNote = (
     updatedNote: NoteDataType,
     actionType: APP_ACTION_TYPES,
@@ -96,14 +96,13 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
       id,
     };
     patchAppData(patch);
-    // TODO: reimplement actions
-    // postAction({
-    //   type: actionType,
-    //   data: {
-    //     ...updatedNote,
-    //     id,
-    //   },
-    // });
+    postAppAction({
+      type: actionType,
+      data: {
+        ...updatedNote,
+        id,
+      },
+    });
   };
 
   // If the user selected color changes and the note is selected (transforming), update the color of the note.
@@ -119,7 +118,6 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSetColor]);
 
-  // eslint-disable-next-line no-unused-vars
   const eventControl = (event: DraggableEvent): void => {
     if (event.type === 'mousemove' || event.type === 'touchmove') {
       setIsDragging(true);

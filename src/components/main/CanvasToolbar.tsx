@@ -5,6 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
+import { APP_ACTION_TYPES } from '../../config/appActionTypes';
+import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CanvasContext } from '../context/CanvasContext';
 
@@ -13,6 +15,7 @@ const CanvasToolbar = (): JSX.Element => {
     useContext(CanvasContext);
 
   const { deleteAppData } = useAppDataContext();
+  const { postAppAction } = useAppActionContext();
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
@@ -28,13 +31,12 @@ const CanvasToolbar = (): JSX.Element => {
       deleteAppData({
         id: noteBeingTransformedId,
       });
-      // TODO: reimplement actions
-      // postAction({
-      //   type: ACTION_TYPES.DELETE,
-      //   data: {
-      //     id: noteBeingTransformedId,
-      //   },
-      // });
+      postAppAction({
+        type: APP_ACTION_TYPES.DELETE,
+        data: {
+          id: noteBeingTransformedId,
+        },
+      });
       setNoteBeingTransformedId(null);
     }
   };

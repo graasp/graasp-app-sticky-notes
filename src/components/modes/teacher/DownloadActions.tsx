@@ -1,18 +1,16 @@
 import { saveAs } from 'file-saver';
-import { List } from 'immutable';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AppAction, Context } from '@graasp/apps-query-client';
+import { Context } from '@graasp/apps-query-client';
 import { Button } from '@graasp/ui';
 
 import { styled } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 
-import { hooks } from '../../../config/queryClient';
-import { showErrorToast } from '../../../utils/toasts';
+import { useAppActionContext } from '../../context/AppActionContext';
 
 const ToggleContainer = styled('div')(() => ({
   display: 'flex',
@@ -24,30 +22,9 @@ const ToggleContainer = styled('div')(() => ({
 const DownloadActions = (): JSX.Element => {
   const { t } = useTranslation();
 
-  const [actions, setActions] = useState<List<AppAction>>();
-
-  const [enableDownload, setEnableDownload] = useState(false);
-
   const context = useContext(Context);
 
-  const {
-    data: appActions,
-    isSuccess: isAppActionsSuccess,
-    isError: isAppActionsError,
-  } = hooks.useAppActions();
-
-  const errorMsg = t('The app actions could not be loaded.');
-  useEffect(() => {
-    if (isAppActionsError) {
-      showErrorToast(errorMsg);
-      setEnableDownload(false);
-      return;
-    }
-    if (isAppActionsSuccess && !appActions?.isEmpty()) {
-      setActions(appActions);
-      setEnableDownload(true);
-    }
-  }, [appActions, isAppActionsSuccess, isAppActionsError, errorMsg]);
+  const { appActionArray } = useAppActionContext();
 
   const handleDownload = (): void => {
     const datetime = new Date().toJSON();
@@ -59,7 +36,7 @@ const DownloadActions = (): JSX.Element => {
             ...Object.fromEntries(context),
             datetime,
           },
-          actions,
+          appActionArray,
         }),
       ],
       {
@@ -78,7 +55,6 @@ const DownloadActions = (): JSX.Element => {
       <FormControlLabel
         control={
           <Button
-            disabled={!enableDownload}
             variant="contained"
             color="secondary"
             onClick={handleDownload}

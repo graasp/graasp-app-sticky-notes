@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
 
+import { APP_ACTION_TYPES } from '../../config/appActionTypes';
 import {
   APP_DATA_TYPES,
   ExistingNoteType,
@@ -13,6 +14,7 @@ import {
 } from '../../config/appDataTypes';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
 import { APP_DATA_VISIBILITY } from '../../types/appData';
+import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
 import { CanvasContext } from '../context/CanvasContext';
 import { useMembersContext } from '../context/MembersContext';
@@ -51,6 +53,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   const { postAppData, appDataArray: appData } = useAppDataContext();
+  const { postAppAction } = useAppActionContext();
 
   useEffect(() => {
     setNotes(
@@ -85,13 +88,12 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
       visibility: APP_DATA_VISIBILITY.ITEM,
     });
     setEdit(true);
-    // TODO: reimplement actions.
-    // postAction({
-    //   type: ACTION_TYPES.ADD,
-    //   data: {
-    //     ...newNote,
-    //   },
-    // });
+    postAppAction({
+      type: APP_ACTION_TYPES.ADD,
+      data: {
+        ...newNote,
+      },
+    });
   };
 
   const handleCanvasClick = (event: React.MouseEvent): void => {

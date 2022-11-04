@@ -49,26 +49,25 @@ const BackgroundImage = (): JSX.Element => {
 
   const [url, setUrl] = useState<string>('');
 
+  const { data: backgroundImage } = hooks.useAppSettingFile(
+    { appSettingId: backgroundSetting?.id || '' },
+    {
+      enabled: Boolean(
+        backgroundSetting?.data?.extra?.file ||
+          backgroundSetting?.data?.extra?.s3File,
+      ),
+    },
+  );
+
   useEffect(() => {
-    if (backgroundSetting?.id) {
-      const { data: backgroundImage } = hooks.useAppSettingFile(
-        { appSettingId: backgroundSetting.id },
-        {
-          enabled: Boolean(
-            backgroundSetting?.data?.extra?.file ||
-              backgroundSetting?.data?.extra?.s3File,
-          ),
-        },
-      );
-      if (backgroundImage) {
-        setUrl(URL.createObjectURL(backgroundImage));
-      }
+    if (backgroundImage) {
+      setUrl(URL.createObjectURL(backgroundImage));
     } else {
       setUrl('');
     }
-  }, [backgroundSetting]);
+  }, [backgroundImage]);
 
-  if (!backgroundSetting || url?.length > 0 || !enabled) {
+  if (!backgroundSetting || url?.length === 0 || !enabled) {
     return <Container />;
   }
   return (

@@ -1,17 +1,20 @@
 /* eslint-disable import/no-import-module-exports */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+
+import { mockApi } from '@graasp/apps-query-client';
+
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-import { mockApi } from '@graasp/apps-query-client';
+
 import Root from './components/Root';
-import './index.css';
-import { MOCK_API } from './config/settings';
 import {
   SENTRY_DSN,
-  SENTRY_TRACE_SAMPLE_RATE,
   SENTRY_ENVIRONMENT,
+  SENTRY_TRACE_SAMPLE_RATE,
 } from './config/sentry';
+import { MOCK_API } from './config/settings';
+import './index.css';
 
 if (MOCK_API) {
   mockApi({

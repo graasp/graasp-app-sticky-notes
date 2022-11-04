@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
+
+import React, { useState } from 'react';
+
 import { DEFAULT_NOTE_COLOR } from '../../constants/constants';
 
 const CanvasContext = React.createContext();

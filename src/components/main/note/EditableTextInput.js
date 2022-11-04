@@ -1,12 +1,15 @@
+import PropTypes from 'prop-types';
+
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import DoneIcon from '@mui/icons-material/Done'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
-import PropTypes from 'prop-types';
-import './note_style.css';
+
+import DoneIcon from '@mui/icons-material/Done';
 import { Container } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+
+import './note_style.css';
 
 const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
   const textInput = useRef();
@@ -39,7 +42,7 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
   }));
 
   return (
-    <Stack direction="row" justifyContent='space-between'>
+    <Stack direction="row" justifyContent="space-between">
       <ReactQuill
         theme="bubble"
         value={value}
@@ -50,9 +53,9 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
         formats={formats}
       />
       <Container>
-      <IconButton>
-        <DoneIcon />
-      </IconButton>
+        <IconButton>
+          <DoneIcon />
+        </IconButton>
       </Container>
     </Stack>
   );

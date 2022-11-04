@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { styled } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
-import { FileInput } from '@uppy/react';
-import Stack from '@mui/material/Stack';
-import '@uppy/core/dist/style.css';
-import '../../../index.css';
-import { Loader, Button } from '@graasp/ui';
+
 import { Context, TokenContext } from '@graasp/apps-query-client';
-import configureUppy from '../../../utils/uppy';
+import { Button, Loader } from '@graasp/ui';
+
+import { styled } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+import '@uppy/core/dist/style.css';
+import { FileInput } from '@uppy/react';
+
+import { MUTATION_KEYS, hooks, useMutation } from '../../../config/queryClient';
 import { MAX_FILE_SIZE } from '../../../config/settings';
-import { MUTATION_KEYS, useMutation, hooks } from '../../../config/queryClient';
 import { APP_SETTINGS } from '../../../constants/constants';
+import '../../../index.css';
+import configureUppy from '../../../utils/uppy';
 
 const ImageUploadContainer = styled('div')(() => ({
   display: 'flex',

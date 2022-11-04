@@ -1,23 +1,25 @@
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
-import { StyledEngineProvider } from '@mui/material/styles';
-import pink from '@mui/material/colors/pink';
-import grey from '@mui/material/colors/grey';
-import orange from '@mui/material/colors/orange';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { withContext, withToken } from '@graasp/apps-query-client';
 import { Loader } from '@graasp/ui';
-import i18nConfig from '../config/i18n';
-import App from './App';
 
+import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
+import grey from '@mui/material/colors/grey';
+import orange from '@mui/material/colors/orange';
+import pink from '@mui/material/colors/pink';
+import { StyledEngineProvider } from '@mui/material/styles';
+
+import i18nConfig from '../config/i18n';
 import {
-  queryClient,
   QueryClientProvider,
   ReactQueryDevtools,
   hooks,
+  queryClient,
 } from '../config/queryClient';
 import { showErrorToast } from '../utils/toasts';
+import App from './App';
 
 const theme = createTheme({
   palette: {

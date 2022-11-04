@@ -1,9 +1,9 @@
 import {
+  BACKGROUND_IMAGE_CY,
+  SCROLL_CONTAINER_CY,
   SETTINGS_BUTTON_CY,
   SETTINGS_CY,
-  SCROLL_CONTAINER_CY,
   dataCyWrapper,
-  BACKGROUND_IMAGE_CY,
 } from '../../src/config/selectors';
 import { APP_SETTINGS } from '../../src/constants/constants';
 

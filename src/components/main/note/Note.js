@@ -1,15 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material';
-import lightBlue from '@mui/material/colors/lightBlue';
+
+import React, { useContext, useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Transition } from 'react-transition-group';
-import { CanvasContext } from '../../context/CanvasContext';
-import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
-import { useMutation, MUTATION_KEYS } from '../../../config/queryClient';
+
+import { styled } from '@mui/material';
+import lightBlue from '@mui/material/colors/lightBlue';
+
 import { ACTION_TYPES } from '../../../config/actionTypes';
+import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
 import { DEFAULT_NOTE_COLOR } from '../../../constants/constants';
+import { CanvasContext } from '../../context/CanvasContext';
 import EditableText from './EditableText';
 
 const animationDuration = 300;

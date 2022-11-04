@@ -1,23 +1,26 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useEffect, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useMutation, MUTATION_KEYS, hooks } from '../../config/queryClient';
-import { CanvasContext } from '../context/CanvasContext';
+
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { styled } from '@mui/material';
+
 import { ACTION_TYPES } from '../../config/actionTypes';
 import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import Note from './note/Note';
+import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import {
-  DEFAULT_ANONYMOUS_USERNAME,
   APP_DATA_VISIBLITIES,
+  DEFAULT_ANONYMOUS_USERNAME,
 } from '../../config/settings';
-import { generateRandomRotationAngle } from '../../utils/canvas';
-import { showErrorToast } from '../../utils/toasts';
 import {
   DEFAULT_NOTE_HEIGHT,
   DEFAULT_NOTE_WIDTH,
 } from '../../constants/constants';
+import { generateRandomRotationAngle } from '../../utils/canvas';
+import { showErrorToast } from '../../utils/toasts';
+import { CanvasContext } from '../context/CanvasContext';
+import Note from './note/Note';
 
 const StyledNoteContainer = styled('div')(() => ({
   width: '100%',

@@ -1,9 +1,10 @@
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
-import { MAX_NUM_FILES, MAX_FILE_SIZE } from '../config/settings';
+
 import { API_ROUTES } from '../config/queryClient';
-import { showErrorToast, showSuccessToast } from './toasts';
+import { MAX_FILE_SIZE, MAX_NUM_FILES } from '../config/settings';
 import { APP_SETTINGS } from '../constants/constants';
+import { showErrorToast, showSuccessToast } from './toasts';
 
 const { buildUploadAppSettingFilesRoute } = API_ROUTES;
 

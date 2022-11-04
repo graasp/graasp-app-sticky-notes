@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+
 import { styled } from '@mui/material';
-import { APP_SETTINGS } from '../../constants/constants';
+
 import { hooks } from '../../config/queryClient';
+import { BACKGROUND_IMAGE_CY } from '../../config/selectors';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../config/settings';
-import { BACKGROUND_IMAGE_CY } from '../../config/selectors';
+import { APP_SETTINGS } from '../../constants/constants';
 
 const Container = styled('div')(() => ({
   display: 'flex',

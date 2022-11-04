@@ -1,8 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+
+import { Context } from '@graasp/apps-query-client';
+
 import { styled } from '@mui/material';
-import Settings from '../modes/teacher/Settings';
-import ColorSettings from './ColorSettings';
-import BackgroundImage from './BackgroundImage';
+
+import { hooks } from '../../config/queryClient';
+import { SCROLL_CONTAINER_CY } from '../../config/selectors';
 import {
   CANVAS_HEIGHT_PX,
   CANVAS_WIDTH_PX,
@@ -10,13 +13,13 @@ import {
   DEFAULT_PERMISSION,
   PERMISSION_LEVELS,
 } from '../../config/settings';
-import { hooks } from '../../config/queryClient';
 import { APP_SETTINGS } from '../../constants/constants';
-import { Context } from '@graasp/apps-query-client';
-import NoteContainer from './NoteContainer';
+import Settings from '../modes/teacher/Settings';
+import BackgroundImage from './BackgroundImage';
 import CanvasScaleControl from './CanvasScaleControl';
 import CanvasToolbar from './CanvasToolbar';
-import { SCROLL_CONTAINER_CY } from '../../config/selectors';
+import ColorSettings from './ColorSettings';
+import NoteContainer from './NoteContainer';
 
 const ScrollContainer = styled('div')(() => ({
   backgroundColor: 'silver',

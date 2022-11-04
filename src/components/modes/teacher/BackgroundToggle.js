@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { styled } from '@mui/material';
-import grey from '@mui/material/colors/grey';
-import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
-import { MUTATION_KEYS, useMutation, hooks } from '../../../config/queryClient';
-import { APP_SETTINGS } from '../../../constants/constants';
+import Typography from '@mui/material/Typography';
+import grey from '@mui/material/colors/grey';
+
+import { MUTATION_KEYS, hooks, useMutation } from '../../../config/queryClient';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../../config/settings';
+import { APP_SETTINGS } from '../../../constants/constants';
+
 const ToggleContainer = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',

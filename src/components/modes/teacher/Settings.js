@@ -1,19 +1,22 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* The click event is used only to prevent its propagation to the canvas. */
 
+/* The click event is used only to prevent its propagation to the canvas. */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/material';
-import Modal from '@mui/material/Modal';
-import Fab from '@mui/material/Fab';
-import SettingsIcon from '@mui/icons-material/Settings';
-import Typography from '@mui/material/Typography';
+
 import { Button } from '@graasp/ui';
+
+import SettingsIcon from '@mui/icons-material/Settings';
+import { styled } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import ImageUpload from './ImageUpload';
+import Fab from '@mui/material/Fab';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+
+import { SETTINGS_BUTTON_CY, SETTINGS_CY } from '../../../config/selectors';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
-import { SETTINGS_BUTTON_CY, SETTINGS_CY } from '../../../config/selectors';
+import ImageUpload from './ImageUpload';
 
 const StyledModal = styled(Modal)(() => ({
   display: 'flex',

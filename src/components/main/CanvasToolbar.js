@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Stack from '@mui/material/Stack';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { useMutation, MUTATION_KEYS } from '../../config/queryClient';
-import { CanvasContext } from '../context/CanvasContext';
+import Stack from '@mui/material/Stack';
+
 import { ACTION_TYPES } from '../../config/actionTypes';
+import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { CanvasContext } from '../context/CanvasContext';
 
 const CanvasToolbar = () => {
   const { noteBeingTransformedId, setNoteBeingTransformedId } =

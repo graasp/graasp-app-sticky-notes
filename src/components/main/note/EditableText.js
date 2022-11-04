@@ -1,6 +1,8 @@
-import React, { forwardRef, useRef } from 'react';
-import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
+import PropTypes from 'prop-types';
+
+import React, { forwardRef, useRef } from 'react';
+
 import EditableTextInput from './EditableTextInput';
 import './note_style.css';
 
@@ -11,12 +13,13 @@ const EditableText = forwardRef(
   ({ isEditing, onToggleEdit, onChange, text }, ref) => {
     const htmlContainer = useRef();
     const cleanText = DOMPurify.sanitize(text, {
-      USE_PROFILES: { html: true }, RETURN_DOM_FRAGMENT: true
+      USE_PROFILES: { html: true },
+      RETURN_DOM_FRAGMENT: true,
     });
 
     cleanText.querySelectorAll('a').forEach((a) => {
-      a?.setAttribute('target', "_blank");
-      a?.setAttribute('rel', "noopener noreferrer");
+      a?.setAttribute('target', '_blank');
+      a?.setAttribute('rel', 'noopener noreferrer');
     });
 
     const content = document.createElement('div');

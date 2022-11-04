@@ -1,10 +1,12 @@
 import _ from 'lodash';
+
 import { toast } from 'react-toastify';
+
 import {
-  FAILED_TO_FETCH_MESSAGE_RAW,
   FAILED_TO_FETCH_MESSAGE_PRETTY,
-  UNEXPECTED_ERROR_MESSAGE,
+  FAILED_TO_FETCH_MESSAGE_RAW,
   SUCCESS_MESSAGE,
+  UNEXPECTED_ERROR_MESSAGE,
 } from '../constants/messages';
 
 const showErrorToast = (payload) => {

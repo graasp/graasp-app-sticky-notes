@@ -87,7 +87,10 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   // TODO: remove.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const patchNote = (updatedNote: NoteDataType, actionType: APP_ACTION_TYPES): void => {
+  const patchNote = (
+    updatedNote: NoteDataType,
+    actionType: APP_ACTION_TYPES,
+  ): void => {
     const patch = {
       data: updatedNote,
       id,

@@ -5,6 +5,7 @@ import { PermissionLevel } from '@graasp/sdk';
 
 import { styled } from '@mui/material';
 
+import { APP_SETTINGS } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
 import { SCROLL_CONTAINER_CY } from '../../config/selectors';
 import {
@@ -13,7 +14,6 @@ import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_PERMISSION,
 } from '../../config/settings';
-import { APP_SETTINGS } from '../../config/constants';
 import Settings from '../modes/teacher/Settings';
 import BackgroundImage from './BackgroundImage';
 import CanvasScaleControl from './CanvasScaleControl';

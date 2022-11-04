@@ -9,11 +9,11 @@ import Typography from '@mui/material/Typography';
 import grey from '@mui/material/colors/grey';
 
 import { BackgroundSettingsType } from '../../../config/appSettingTypes';
+import { APP_SETTINGS } from '../../../config/constants';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../../config/settings';
-import { APP_SETTINGS } from '../../../config/constants';
 import { useAppSettingContext } from '../../context/AppSettingContext';
 
 const ToggleContainer = styled('div')(() => ({

@@ -3,9 +3,9 @@ import { TFunction } from 'react-i18next';
 import Uppy, { UploadResult } from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 
+import { APP_SETTINGS } from '../config/constants';
 import { API_ROUTES } from '../config/queryClient';
 import { MAX_FILE_SIZE, MAX_NUM_FILES } from '../config/settings';
-import { APP_SETTINGS } from '../config/constants';
 import { showErrorToast, showSuccessToast } from './toasts';
 
 const { buildUploadAppSettingFilesRoute } = API_ROUTES;

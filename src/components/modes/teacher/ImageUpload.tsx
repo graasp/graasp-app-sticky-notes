@@ -12,9 +12,9 @@ import Uppy from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import { FileInput } from '@uppy/react';
 
+import { APP_SETTINGS } from '../../../config/constants';
 import { MUTATION_KEYS, hooks, useMutation } from '../../../config/queryClient';
 import { MAX_FILE_SIZE } from '../../../config/settings';
-import { APP_SETTINGS } from '../../../config/constants';
 import '../../../index.css';
 import configureUppy from '../../../utils/uppy';
 import { useAppSettingContext } from '../../context/AppSettingContext';

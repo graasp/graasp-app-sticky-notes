@@ -1,9 +1,10 @@
-import { REACT_APP_SENTRY_DSN } from './env';
+interface SentryConfigType {
+  dsn: string;
+  environment: string;
+  tracesSampleRate: number;
+}
 
-// Could import some verifications
-export const SENTRY_DSN = REACT_APP_SENTRY_DSN;
-
-const generateSentryConfig = () => {
+const generateSentryConfig = (): SentryConfigType => {
   let SENTRY_ENVIRONMENT = 'development';
   let SENTRY_TRACE_SAMPLE_RATE = 1.0;
   switch (process.env.NODE_ENV) {
@@ -20,8 +21,11 @@ const generateSentryConfig = () => {
     default:
   }
 
-  return { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE };
+  return {
+    dsn: (!window.Cypress && process.env.SENTRY_DSN) || '',
+    environment: SENTRY_ENVIRONMENT,
+    tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
+  };
 };
 
-export const { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } =
-  generateSentryConfig();
+export { generateSentryConfig };

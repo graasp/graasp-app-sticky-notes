@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
@@ -8,12 +8,13 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import grey from '@mui/material/colors/grey';
 
-import { MUTATION_KEYS, hooks, useMutation } from '../../../config/queryClient';
+import { BackgroundSettingsType } from '../../../config/appSettingTypes';
 import {
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_BACKGROUND_SCALE,
 } from '../../../config/settings';
 import { APP_SETTINGS } from '../../../constants/constants';
+import { useAppSettingContext } from '../../context/AppSettingContext';
 
 const ToggleContainer = styled('div')(() => ({
   display: 'flex',
@@ -30,58 +31,52 @@ const DEFAULT_BACKGROUND_SETTINGS = {
   },
 };
 
-const BackgroundToggle = () => {
+const BackgroundToggle = (): JSX.Element => {
   const { t } = useTranslation();
 
   const [scaleError, setScaleError] = useState(false);
 
-  const { mutate: postAppSetting } = useMutation(
-    MUTATION_KEYS.POST_APP_SETTING,
-  );
+  const {
+    appSettingArray: settings,
+    postAppSetting,
+    patchAppSetting,
+  } = useAppSettingContext();
 
-  const { mutate: patchAppSetting } = useMutation(
-    MUTATION_KEYS.PATCH_APP_SETTING,
-  );
-
-  const [backgroundSettings, setBackgroundSettings] = useState(null);
+  const [backgroundSettings, setBackgroundSettings] =
+    useState<BackgroundSettingsType>();
 
   const [backgroundScale, setBackgroundScale] = useState(
     DEFAULT_BACKGROUND_SCALE,
   );
 
-  const { data: appSettings, isSuccess, isLoading } = hooks.useAppSettings();
-
   useEffect(() => {
-    if (isSuccess) {
-      const backgroundSetting = appSettings?.find(
-        ({ name }) => name === APP_SETTINGS.BACKGROUND,
-      );
-      if (backgroundSetting) {
-        const backSet =
-          appSettings?.find(
-            ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
-          ) || DEFAULT_BACKGROUND_SETTINGS;
-        setBackgroundSettings(backSet);
-        setBackgroundScale(backSet?.data?.scale || DEFAULT_BACKGROUND_SCALE);
-      }
+    const backgroundSetting = settings?.find(
+      ({ name }) => name === APP_SETTINGS.BACKGROUND,
+    );
+    if (backgroundSetting) {
+      const backSet = settings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
+      ) as BackgroundSettingsType;
+      setBackgroundSettings(backSet);
+      setBackgroundScale(backSet?.data?.scale || DEFAULT_BACKGROUND_SCALE);
     }
-  }, [appSettings, isSuccess]);
+  }, [settings]);
 
-  const toggleDisabled = isLoading || !backgroundSettings;
+  const toggleDisabled = !backgroundSettings;
 
-  const handleToggle = () => {
-    const newBackgroundToggleSetting = {
-      ...(backgroundSettings ?? DEFAULT_BACKGROUND_SETTINGS),
-      data: {
-        ...(backgroundSettings ?? DEFAULT_BACKGROUND_SETTINGS).data,
-        toggle: Boolean(!backgroundSettings?.data?.toggle),
-      },
-    };
+  const handleToggle = (): void => {
     if (backgroundSettings?.id) {
+      const newBackgroundToggleSetting = {
+        ...backgroundSettings,
+        data: {
+          ...backgroundSettings.data,
+          toggle: Boolean(!backgroundSettings.data.toggle),
+        },
+      };
       patchAppSetting(newBackgroundToggleSetting);
     } else {
       postAppSetting({
-        name: APP_SETTINGS.BACKGROUND_SETTINGS,
+        ...DEFAULT_BACKGROUND_SETTINGS,
         data: {
           toggle: !DEFAULT_BACKGROUND_ENABLED,
         },
@@ -89,10 +84,12 @@ const BackgroundToggle = () => {
     }
   };
 
-  const handleScaleChange = (event) => {
+  const handleScaleChange = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ): void => {
     let newScaleFloat = 1.0;
     try {
-      newScaleFloat = parseFloat(event.target.value);
+      newScaleFloat = parseFloat(event.target?.value);
       if (typeof newScaleFloat !== 'number') return;
     } catch (error) {
       setScaleError(true);
@@ -101,17 +98,22 @@ const BackgroundToggle = () => {
     setBackgroundScale(newScaleFloat);
     setScaleError(false);
     if (newScaleFloat > 0.0001) {
-      const newBackgroundSettings = {
-        ...(backgroundSettings ?? DEFAULT_BACKGROUND_SETTINGS),
-        data: {
-          ...(backgroundSettings ?? DEFAULT_BACKGROUND_SETTINGS).data,
-          scale: newScaleFloat,
-        },
-      };
       if (backgroundSettings?.id) {
+        const newBackgroundSettings = {
+          ...backgroundSettings,
+          data: {
+            ...backgroundSettings.data,
+            scale: newScaleFloat,
+          },
+        };
         patchAppSetting(newBackgroundSettings);
       } else {
-        postAppSetting(newBackgroundSettings);
+        postAppSetting({
+          ...DEFAULT_BACKGROUND_SETTINGS,
+          data: {
+            scale: newScaleFloat,
+          },
+        });
       }
     } else {
       setScaleError(true);
@@ -122,7 +124,8 @@ const BackgroundToggle = () => {
     <>
       <ToggleContainer>
         <Typography
-          sx={{ fontSize: '1.1em', color: toggleDisabled ?? grey[500] }}
+          sx={{ fontSize: '1.1em' }}
+          style={{ color: toggleDisabled ? grey[500] : 'black' }}
         >
           {t('Show Background Image')}
         </Typography>
@@ -137,11 +140,13 @@ const BackgroundToggle = () => {
               onChange={handleToggle}
             />
           }
+          label={undefined}
         />
       </ToggleContainer>
       <ToggleContainer>
         <Typography
-          sx={{ fontSize: '1.1em', color: toggleDisabled ?? grey[500] }}
+          sx={{ fontSize: '1.1em' }}
+          style={{ color: toggleDisabled ? grey[500] : 'black' }}
         >
           {t('Scale background image')}
         </Typography>
@@ -165,6 +170,7 @@ const BackgroundToggle = () => {
               onChange={handleScaleChange}
             />
           }
+          label={undefined}
         />
       </ToggleContainer>
     </>

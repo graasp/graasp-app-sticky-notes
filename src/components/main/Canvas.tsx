@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { Context } from '@graasp/apps-query-client';
+import { PermissionLevel } from '@graasp/sdk';
 
 import { styled } from '@mui/material';
 
@@ -11,7 +12,6 @@ import {
   CANVAS_WIDTH_PX,
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_PERMISSION,
-  PERMISSION_LEVELS,
 } from '../../config/settings';
 import { APP_SETTINGS } from '../../constants/constants';
 import Settings from '../modes/teacher/Settings';
@@ -36,7 +36,7 @@ const MainContainer = styled('div')(() => ({
   position: 'relative',
 }));
 
-const Canvas = () => {
+const Canvas = (): JSX.Element => {
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
 
@@ -47,10 +47,11 @@ const Canvas = () => {
 
   const [canvasScale, setCanvasScale] = useState(1);
 
-  const scrollContainer = useRef(null);
-  const mainContainer = useRef(null);
+  const scrollContainer = useRef<HTMLDivElement | null>(null);
+  const mainContainer = useRef<HTMLDivElement | null>(null);
 
-  const permissionLevel = context?.get('permission', DEFAULT_PERMISSION);
+  const permissionLevel =
+    (context?.get('permission') as PermissionLevel) || DEFAULT_PERMISSION;
 
   const { data: appSettings, isSuccess } = hooks.useAppSettings();
 
@@ -68,9 +69,9 @@ const Canvas = () => {
 
   let ticking = false;
 
-  const handleScrollEvent = () => {
-    const scrollLeft = scrollContainer.current?.scrollLeft;
-    const scrollTop = scrollContainer.current?.scrollTop;
+  const handleScrollEvent = (): void => {
+    const scrollLeft = scrollContainer.current?.scrollLeft || 0;
+    const scrollTop = scrollContainer.current?.scrollTop || 0;
 
     // Avoid the change of the state to happen more often than the redrawing of the screen.
     if (!ticking) {
@@ -87,17 +88,15 @@ const Canvas = () => {
   useEffect(() => {
     if (scrollContainer.current) {
       scrollContainer.current.scrollTop =
-        (mainContainer.current.clientHeight -
-          scrollContainer.current.clientHeight) /
-        2;
+        (mainContainer.current?.clientHeight ||
+          0 - scrollContainer.current.clientHeight) / 2;
       scrollContainer.current.scrollLeft =
-        (mainContainer.current.clientWidth -
-          scrollContainer.current.clientWidth) /
-        2;
+        (mainContainer.current?.clientWidth ||
+          0 - scrollContainer.current.clientWidth) / 2;
     }
   }, []);
 
-  const renderStage = () => (
+  const renderStage = (): JSX.Element => (
     <NoteContainer
       scrollLeft={scrollPosition.scrollLeft}
       scrollTop={scrollPosition.scrollTop}
@@ -123,7 +122,7 @@ const Canvas = () => {
         {renderStage()}
       </MainContainer>
       <CanvasToolbar />
-      {[PERMISSION_LEVELS.WRITE, PERMISSION_LEVELS.ADMIN].includes(
+      {[PermissionLevel.Write, PermissionLevel.Admin].includes(
         permissionLevel,
       ) && <Settings />}
       <ColorSettings />

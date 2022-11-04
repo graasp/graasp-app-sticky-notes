@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { withContext, withToken } from '@graasp/apps-query-client';
-import { Loader } from '@graasp/ui';
+import { Loader, theme as graaspTheme } from '@graasp/ui';
 
 import { CssBaseline, ThemeProvider, createTheme, styled } from '@mui/material';
-import grey from '@mui/material/colors/grey';
-import orange from '@mui/material/colors/orange';
-import pink from '@mui/material/colors/pink';
+import { grey, orange, pink } from '@mui/material/colors';
 import { StyledEngineProvider } from '@mui/material/styles';
 
 import i18nConfig from '../config/i18n';
+import {
+  CONTEXT_FETCHING_ERROR_MESSAGE,
+  TOKEN_REQUEST_ERROR_MESSAGE,
+} from '../config/messages';
 import {
   QueryClientProvider,
   ReactQueryDevtools,
@@ -21,15 +22,41 @@ import {
 import { showErrorToast } from '../utils/toasts';
 import App from './App';
 
+// declare the module to enable theme modification
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: { background: string; color: string };
+    };
+  }
+
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    status?: {
+      danger?: { background: string; color: string };
+    };
+  }
+
+  interface PaletteOptions {
+    default: string;
+  }
+}
+
 const theme = createTheme({
+  ...graaspTheme,
   palette: {
-    primary: {
-      main: '#5050d2',
-    },
     secondary: pink,
     default: grey['500'],
     background: {
       paper: '#fff',
+    },
+  },
+  typography: {
+    h2: {
+      fontSize: '2rem',
+    },
+    h3: {
+      fontSize: '1.8rem',
     },
   },
   status: {
@@ -45,23 +72,25 @@ const RootDiv = styled('div')({
   height: '100%',
 });
 
-const Root = () => {
+const Root: FC = () => {
   const AppWithContext = withToken(App, {
     LoadingComponent: <Loader />,
     useAuthToken: hooks.useAuthToken,
-    onError: () => {
-      showErrorToast('An error occured while requesting the token.');
-    },
+    onError:
+      /* istanbul ignore next */
+      () => {
+        showErrorToast(TOKEN_REQUEST_ERROR_MESSAGE);
+      },
   });
-
   const AppWithContextAndToken = withContext(AppWithContext, {
     LoadingComponent: <Loader />,
     useGetLocalContext: hooks.useGetLocalContext,
-    onError: () => {
-      showErrorToast('An error occured while fetching the context.');
-    },
+    onError:
+      /* istanbul ignore next */
+      () => {
+        showErrorToast(CONTEXT_FETCHING_ERROR_MESSAGE);
+      },
   });
-
   return (
     <RootDiv>
       {/* Used to define the order of injected properties between JSS and emotion */}

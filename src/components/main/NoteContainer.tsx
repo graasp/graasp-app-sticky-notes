@@ -1,25 +1,21 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import PropTypes from 'prop-types';
+import { List } from 'immutable';
 
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
 
-import { ACTION_TYPES } from '../../config/actionTypes';
-import { APP_DATA_TYPES } from '../../config/appDataTypes';
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
 import {
-  APP_DATA_VISIBLITIES,
-  DEFAULT_ANONYMOUS_USERNAME,
-} from '../../config/settings';
-import {
-  DEFAULT_NOTE_HEIGHT,
-  DEFAULT_NOTE_WIDTH,
-} from '../../constants/constants';
-import { generateRandomRotationAngle } from '../../utils/canvas';
-import { showErrorToast } from '../../utils/toasts';
+  APP_DATA_TYPES,
+  ExistingNoteType,
+  NoteDataType,
+} from '../../config/appDataTypes';
+import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
+import { APP_DATA_VISIBILITY } from '../../types/appData';
+import { useAppDataContext } from '../context/AppDataContext';
 import { CanvasContext } from '../context/CanvasContext';
+import { useMembersContext } from '../context/MembersContext';
 import Note from './note/Note';
 
 const StyledNoteContainer = styled('div')(() => ({
@@ -30,10 +26,15 @@ const StyledNoteContainer = styled('div')(() => ({
   left: '0px',
 }));
 
-const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
+interface NoteContainerInterface {
+  scrollLeft: number;
+  scrollTop: number;
+  canvasScale: number;
+}
+
+const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
+  const { scrollLeft, scrollTop, canvasScale } = props;
   const { t } = useTranslation();
-  const { mutate: postAppData } = useMutation(MUTATION_KEYS.POST_APP_DATA);
-  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
 
   const {
     userSetColor,
@@ -42,76 +43,58 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
     setNoteBeingTransformedId,
   } = useContext(CanvasContext);
 
-  const [members, setMembers] = useState([]);
-  const [notes, setNotes] = useState(null);
+  const members = useMembersContext();
+  const [notes, setNotes] = useState<List<ExistingNoteType>>();
 
   const [edit, setEdit] = useState(false);
 
-  const { data: appContext, isSuccess: isAppContextSuccess } =
-    hooks.useAppContext();
   const { setNoteBeingEditedId } = useContext(CanvasContext);
 
-  useEffect(() => {
-    if (isAppContextSuccess) {
-      setMembers(appContext?.get('members'));
-    }
-  }, [appContext, isAppContextSuccess]);
+  const { postAppData, appDataArray: appData } = useAppDataContext();
 
-  const {
-    data: appData,
-    isSuccess: isAppDataSuccess,
-    isStale: isAppDataStale,
-    isError: isAppDataError,
-  } = hooks.useAppData();
-
-  const errorDataMsg = t('Error getting data.');
   useEffect(() => {
-    if (isAppDataError) {
-      showErrorToast(errorDataMsg);
-      return;
-    }
-    if (isAppDataSuccess) {
-      setNotes(appData.filter(({ type }) => type === APP_DATA_TYPES.NOTE));
-    }
-  }, [appData, isAppDataSuccess, errorDataMsg, isAppDataError]);
+    setNotes(
+      appData.filter(
+        ({ type }) => type === APP_DATA_TYPES.NOTE,
+      ) as unknown as List<ExistingNoteType>,
+    );
+  }, [appData]);
 
   // Sets the focus to the last created note. The `edit` boolean is set to
   // true whenever a new note is created. When the notes are actually
   // refetched, the focus is set to the newest one and the `edit` bool is
   // set back to false.
   useEffect(() => {
-    if (edit && !notes?.isEmpty() && isAppDataStale && notes) {
+    if (edit && !notes?.isEmpty() && notes) {
       setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
       setEdit(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notes]);
 
-  const createNewNote = (pageX, pageY) => {
-    const newNote = {
+  const createNewNote = (pageX: number, pageY: number): void => {
+    const newNote: NoteDataType = {
       position: { pageX, pageY },
-      size: { height: DEFAULT_NOTE_HEIGHT, width: DEFAULT_NOTE_WIDTH },
       color: userSetColor,
-      rotation: generateRandomRotationAngle(),
-      minimized: false,
+      text: '',
     };
 
     postAppData({
       data: newNote,
       type: APP_DATA_TYPES.NOTE,
-      visibility: APP_DATA_VISIBLITIES.ITEM,
+      visibility: APP_DATA_VISIBILITY.ITEM,
     });
     setEdit(true);
-    postAction({
-      type: ACTION_TYPES.ADD,
-      data: {
-        ...newNote,
-        id: newNote.id,
-      },
-    });
+    // TODO: reimplement actions.
+    // postAction({
+    //   type: ACTION_TYPES.ADD,
+    //   data: {
+    //     ...newNote,
+    //   },
+    // });
   };
 
-  const handleCanvasClick = (event) => {
+  const handleCanvasClick = (event: React.MouseEvent): void => {
     if (!noteBeingEditedId && !noteBeingTransformedId) {
       const { pageX: x, pageY: y } = event;
       createNewNote(
@@ -146,12 +129,6 @@ const NoteContainer = ({ scrollLeft, scrollTop, canvasScale }) => {
       )}
     </StyledNoteContainer>
   );
-};
-
-NoteContainer.propTypes = {
-  scrollLeft: PropTypes.number.isRequired,
-  scrollTop: PropTypes.number.isRequired,
-  canvasScale: PropTypes.number.isRequired,
 };
 
 export default NoteContainer;

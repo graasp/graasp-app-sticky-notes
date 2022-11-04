@@ -5,17 +5,14 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { ACTION_TYPES } from '../../config/actionTypes';
-import { MUTATION_KEYS, useMutation } from '../../config/queryClient';
+import { useAppDataContext } from '../context/AppDataContext';
 import { CanvasContext } from '../context/CanvasContext';
 
-const CanvasToolbar = () => {
+const CanvasToolbar = (): JSX.Element => {
   const { noteBeingTransformedId, setNoteBeingTransformedId } =
     useContext(CanvasContext);
 
-  const { mutate: deleteAppData } = useMutation(MUTATION_KEYS.DELETE_APP_DATA);
-  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
-
+  const { deleteAppData } = useAppDataContext();
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
@@ -26,17 +23,18 @@ const CanvasToolbar = () => {
     }
   }, [noteBeingTransformedId]);
 
-  const deleteNote = () => {
+  const deleteNote = (): void => {
     if (noteBeingTransformedId) {
       deleteAppData({
         id: noteBeingTransformedId,
       });
-      postAction({
-        type: ACTION_TYPES.DELETE,
-        data: {
-          id: noteBeingTransformedId,
-        },
-      });
+      // TODO: reimplement actions
+      // postAction({
+      //   type: ACTION_TYPES.DELETE,
+      //   data: {
+      //     id: noteBeingTransformedId,
+      //   },
+      // });
       setNoteBeingTransformedId(null);
     }
   };

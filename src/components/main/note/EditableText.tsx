@@ -1,17 +1,26 @@
 import DOMPurify from 'dompurify';
-import PropTypes from 'prop-types';
 
 import React, { forwardRef, useRef } from 'react';
 
-import EditableTextInput from './EditableTextInput';
+import EditableTextInput, {
+  EditableTextInputRefType,
+} from './EditableTextInput';
 import './note_style.css';
 
 const RETURN_KEY = 'Enter';
 const ESCAPE_KEY = 'Escape';
 
-const EditableText = forwardRef(
-  ({ isEditing, onToggleEdit, onChange, text }, ref) => {
-    const htmlContainer = useRef();
+interface EditableTextProps {
+  isEditing: boolean;
+  onToggleEdit: () => void;
+  onChange: (t: string) => void;
+  text: string;
+}
+
+const EditableText = forwardRef<EditableTextInputRefType, EditableTextProps>(
+  (props: EditableTextProps, ref): JSX.Element => {
+    const { isEditing, onToggleEdit, onChange, text } = props;
+    const htmlContainer = useRef<HTMLDivElement>(null);
     const cleanText = DOMPurify.sanitize(text, {
       USE_PROFILES: { html: true },
       RETURN_DOM_FRAGMENT: true,
@@ -25,13 +34,13 @@ const EditableText = forwardRef(
     const content = document.createElement('div');
     content.appendChild(cleanText);
 
-    const handleEscapeKeys = (e) => {
+    const handleEscapeKeys = (e: React.KeyboardEvent): void => {
       if ((e.key === RETURN_KEY && e.shiftKey) || e.key === ESCAPE_KEY) {
         onToggleEdit();
       }
     };
 
-    const handleTextChange = (e) => {
+    const handleTextChange = (e: string): void => {
       onChange(e);
     };
 
@@ -58,15 +67,6 @@ const EditableText = forwardRef(
   },
 );
 
-EditableText.propTypes = {
-  isEditing: PropTypes.bool.isRequired,
-  onToggleEdit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  text: PropTypes.string,
-};
-
-EditableText.defaultProps = {
-  text: 'Edit me...',
-};
+EditableText.displayName = 'EditableText';
 
 export default EditableText;

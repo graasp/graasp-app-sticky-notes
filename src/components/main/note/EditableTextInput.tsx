@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
@@ -11,8 +9,22 @@ import Stack from '@mui/material/Stack';
 
 import './note_style.css';
 
-const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
-  const textInput = useRef();
+interface EditableTextInputProps {
+  value: string;
+  onChange: (t: string) => void;
+  onKeyDown: (e: React.KeyboardEvent) => void;
+}
+
+export type EditableTextInputRefType = {
+  focus: () => void;
+};
+
+const EditableTextInput = forwardRef<
+  EditableTextInputRefType,
+  EditableTextInputProps
+>((props: EditableTextInputProps, ref) => {
+  const { value, onChange, onKeyDown } = props;
+  const textInput = useRef<ReactQuill>(null);
 
   const modules = {
     toolbar: [
@@ -33,12 +45,12 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
     'link',
   ];
 
-  const focusOnText = () => {
+  const focus = (): void => {
     textInput.current?.focus();
   };
 
   useImperativeHandle(ref, () => ({
-    focus: focusOnText,
+    focus,
   }));
 
   return (
@@ -61,10 +73,6 @@ const EditableTextInput = forwardRef(({ value, onChange, onKeyDown }, ref) => {
   );
 });
 
-EditableTextInput.propTypes = {
-  onKeyDown: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-};
+EditableTextInput.displayName = 'EditableTextInput';
 
 export default EditableTextInput;

@@ -8,6 +8,7 @@ import { styled } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import Uppy from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import { FileInput } from '@uppy/react';
 
@@ -16,6 +17,7 @@ import { MAX_FILE_SIZE } from '../../../config/settings';
 import { APP_SETTINGS } from '../../../constants/constants';
 import '../../../index.css';
 import configureUppy from '../../../utils/uppy';
+import { useAppSettingContext } from '../../context/AppSettingContext';
 
 const ImageUploadContainer = styled('div')(() => ({
   display: 'flex',
@@ -30,16 +32,15 @@ const CloseButton = styled(Button)(() => ({
   width: '20%',
 }));
 
-const ImageUpload = () => {
+const ImageUpload = (): JSX.Element => {
   const { t } = useTranslation();
-  const [uppy, setUppy] = useState(null);
+  const [uppy, setUppy] = useState<Uppy>();
   const context = useContext(Context);
   const token = useContext(TokenContext);
   const itemId = context?.get('itemId');
-  const { mutate: deleteAppSetting } = useMutation(
-    MUTATION_KEYS.DELETE_APP_SETTING,
-  );
-  const { mutate: onFileUploadComplete } = useMutation(
+  const { deleteAppSetting } = useAppSettingContext();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { mutate: onFileUploadComplete }: any = useMutation(
     MUTATION_KEYS.APP_SETTING_FILE_UPLOAD,
   );
 
@@ -53,8 +54,7 @@ const ImageUpload = () => {
     setUppy(
       configureUppy({
         t,
-        offline: context?.get('offline'),
-        standalone: context?.get('standalone'),
+        standalone: context?.get('standalone') || false,
         itemId,
         apiHost: context?.get('apiHost'),
         token,
@@ -75,11 +75,13 @@ const ImageUpload = () => {
     return <Loader />;
   }
 
-  const deleteBackground = () => {
-    deleteAppSetting({ id: backgroundSetting.id });
+  const deleteBackground = (): void => {
+    if (backgroundSetting?.id) {
+      deleteAppSetting({ id: backgroundSetting.id });
+    }
   };
 
-  const renderInput = () => {
+  const renderInput = (): JSX.Element => {
     // if image is already set, show delete button
     if (backgroundSetting) {
       return (

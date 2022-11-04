@@ -33,12 +33,12 @@ const Color = styled('div')(() => ({
   marginBottom: 1,
 }));
 
-const ColorSettings = () => {
+const ColorSettings = (): JSX.Element => {
   const { t } = useTranslation();
   const { userSetColor, setUserSetColor } = useContext(CanvasContext);
   const [colorPaletteOpen, setColorPaletteOpen] = useState(false);
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
     setColorPaletteOpen(!colorPaletteOpen);
   };
@@ -58,7 +58,7 @@ const ColorSettings = () => {
               <Color
                 sx={{
                   background: color,
-                  border: userSetColor === color && '1px solid grey',
+                  border: userSetColor === color ? '1px solid grey' : 'none',
                 }}
                 key={color}
                 onClick={(event) => {

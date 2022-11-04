@@ -1,9 +1,10 @@
 import { saveAs } from 'file-saver';
+import { List } from 'immutable';
 
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Context } from '@graasp/apps-query-client';
+import { AppAction, Context } from '@graasp/apps-query-client';
 import { Button } from '@graasp/ui';
 
 import { styled } from '@mui/material';
@@ -20,10 +21,10 @@ const ToggleContainer = styled('div')(() => ({
   width: '100%',
 }));
 
-const DownloadActions = () => {
+const DownloadActions = (): JSX.Element => {
   const { t } = useTranslation();
 
-  const [actions, setActions] = useState([]);
+  const [actions, setActions] = useState<List<AppAction>>();
 
   const [enableDownload, setEnableDownload] = useState(false);
 
@@ -48,7 +49,7 @@ const DownloadActions = () => {
     }
   }, [appActions, isAppActionsSuccess, isAppActionsError, errorMsg]);
 
-  const handleDownload = () => {
+  const handleDownload = (): void => {
     const datetime = new Date().toJSON();
 
     const blob = new Blob(
@@ -85,6 +86,7 @@ const DownloadActions = () => {
             {t('Download')}
           </Button>
         }
+        label={undefined}
       />
     </ToggleContainer>
   );

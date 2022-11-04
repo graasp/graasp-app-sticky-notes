@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import isObject from 'lodash.isobject';
+import isString from 'lodash.isstring';
 
 import { toast } from 'react-toastify';
 
@@ -7,13 +8,17 @@ import {
   FAILED_TO_FETCH_MESSAGE_RAW,
   SUCCESS_MESSAGE,
   UNEXPECTED_ERROR_MESSAGE,
-} from '../constants/messages';
+} from '../config/messages';
 
-const showErrorToast = (payload) => {
+type Payload = {
+  message: string;
+};
+
+const showErrorToast = (payload: string | Payload): void => {
   let message = UNEXPECTED_ERROR_MESSAGE;
-  if (_.isString(payload)) {
+  if (isString(payload)) {
     message = payload;
-  } else if (_.isObject(payload)) {
+  } else if (isObject(payload)) {
     if (payload.message) {
       ({ message } = payload);
     }
@@ -25,16 +30,15 @@ const showErrorToast = (payload) => {
 
   toast.error(message, {
     toastId: message,
-    autoClose: true,
     position: 'bottom-right',
   });
 };
 
-const showSuccessToast = (payload) => {
+const showSuccessToast = (payload: string | Payload): void => {
   let message = SUCCESS_MESSAGE;
-  if (_.isString(payload)) {
+  if (isString(payload)) {
     message = payload;
-  } else if (_.isObject(payload)) {
+  } else if (isObject(payload)) {
     if (payload.message) {
       ({ message } = payload);
     }
@@ -42,7 +46,6 @@ const showSuccessToast = (payload) => {
 
   toast.success(message, {
     toastId: message,
-    autoClose: true,
     position: 'bottom-right',
   });
 };

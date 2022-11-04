@@ -4,6 +4,8 @@ export const {
   REACT_APP_VERSION,
   REACT_APP_GOOGLE_ANALYTICS_ID,
   REACT_APP_MOCK_API,
+  REACT_APP_API_HOST,
   REACT_APP_REFETCH_INTERVAL_SETTING,
-  REACT_APP_SENTRY_DSN,
-} = process.env;
+} = window.Cypress ? Cypress.env() : process.env;
+
+export const MOCK_API = REACT_APP_MOCK_API === 'true';

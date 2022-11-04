@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
-import { Slider, Typography } from '@mui/material';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
 
 import { ZOOM_MAX, ZOOM_MIN, ZOOM_STEP } from '../../config/settings';
 
@@ -21,13 +20,25 @@ const MainContainer = styled('div')(() => ({
   maxHeight: '20%',
 }));
 
-const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
+interface CanvasScaleControlInterface {
+  canvasScale: number;
+  setCanvasScale: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const CanvasScaleControl = (
+  props: CanvasScaleControlInterface,
+): JSX.Element => {
+  const { canvasScale, setCanvasScale } = props;
   const { t } = useTranslation();
 
-  const getAriaLabel = (val) => `${100 * val}%`;
+  const getAriaLabel = (val: number): string => `${100 * val}%`;
 
-  const handleChange = (event, value) => {
-    setCanvasScale(value);
+  const handleChange = (_event: Event, value: number | number[]): void => {
+    if (typeof value === 'number') {
+      setCanvasScale(value);
+    } else {
+      setCanvasScale(value[0]);
+    }
   };
   return (
     <MainContainer>
@@ -46,11 +57,6 @@ const CanvasScaleControl = ({ canvasScale, setCanvasScale }) => {
       />
     </MainContainer>
   );
-};
-
-CanvasScaleControl.propTypes = {
-  canvasScale: PropTypes.number.isRequired,
-  setCanvasScale: PropTypes.func.isRequired,
 };
 
 export default CanvasScaleControl;

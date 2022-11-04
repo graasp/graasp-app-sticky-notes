@@ -1,4 +1,6 @@
-import Uppy from '@uppy/core';
+import { TFunction } from 'react-i18next';
+
+import Uppy, { UploadResult } from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 
 import { API_ROUTES } from '../config/queryClient';
@@ -8,14 +10,17 @@ import { showErrorToast, showSuccessToast } from './toasts';
 
 const { buildUploadAppSettingFilesRoute } = API_ROUTES;
 
-const configureUppy = ({
-  t,
-  standalone,
-  itemId,
-  apiHost,
-  token,
-  onComplete,
-}) => {
+interface configureUppyInterface {
+  t: TFunction;
+  standalone: boolean;
+  itemId: string;
+  apiHost: string;
+  token: string;
+  onComplete: (result: UploadResult<Record<string, unknown>>) => void;
+}
+
+const configureUppy = (args: configureUppyInterface): Uppy => {
+  const { t, standalone, itemId, apiHost, token, onComplete } = args;
   const uppy = new Uppy({
     restrictions: {
       maxNumberOfFiles: MAX_NUM_FILES,
@@ -31,7 +36,7 @@ const configureUppy = ({
     endpoint: `${apiHost}/${buildUploadAppSettingFilesRoute(itemId)}`,
     withCredentials: true,
     formData: true,
-    allowMetaFields: ['name'],
+    allowedMetaFields: ['name'],
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -56,7 +61,7 @@ const configureUppy = ({
     onComplete(result);
   });
 
-  uppy.on('error', (file, error) => {
+  uppy.on('error', (error) => {
     if (standalone) {
       showErrorToast(t('This is just a preview. No files can be uploaded.'));
     } else {
@@ -67,8 +72,9 @@ const configureUppy = ({
   uppy.on('upload-error', (file, error, response) => {
     if (standalone) {
       showErrorToast(t('This is just a preview. No files can be uploaded.'));
-    } else {
-      showErrorToast(response);
+    } else if (response) {
+      const { status, body } = response;
+      showErrorToast(t(`Status: ${status}\n${body}`));
     }
   });
 

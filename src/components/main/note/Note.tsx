@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
-
 import React, { useContext, useEffect, useState } from 'react';
-import Draggable from 'react-draggable';
+import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Transition } from 'react-transition-group';
 
@@ -9,15 +7,14 @@ import { styled } from '@mui/material';
 import lightBlue from '@mui/material/colors/lightBlue';
 
 import { ACTION_TYPES } from '../../../config/actionTypes';
-import { MUTATION_KEYS, useMutation } from '../../../config/queryClient';
-import { DEFAULT_ANONYMOUS_USERNAME } from '../../../config/settings';
-import { DEFAULT_NOTE_COLOR } from '../../../constants/constants';
+import { NoteDataType } from '../../../config/appDataTypes';
+import { useAppDataContext } from '../../context/AppDataContext';
 import { CanvasContext } from '../../context/CanvasContext';
 import EditableText from './EditableText';
 
 const animationDuration = 300;
 
-const NoteContainer = styled('div')(({ state }) => ({
+const NoteContainer = styled('div')(({ state }: { state: string }) => ({
   overflow: 'visible',
   border: '1px solid',
   borderColor: 'rgba(255, 255, 255, 0)',
@@ -48,7 +45,14 @@ const UserInfo = styled('p')(() => ({
   textAlign: 'right',
 }));
 
-const Note = ({ note, id, userName, scale }) => {
+interface NoteProps {
+  note: NoteDataType;
+  id: string;
+  userName: string;
+  scale: number;
+}
+
+const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const {
     userSetColor,
     noteBeingEditedId,
@@ -62,8 +66,8 @@ const Note = ({ note, id, userName, scale }) => {
   const { t } = useTranslation();
 
   const { pageX = 0, pageY = 0 } = position;
-  const { mutate: patchAppData } = useMutation(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: postAction } = useMutation(MUTATION_KEYS.POST_APP_ACTION);
+
+  const { patchAppData } = useAppDataContext();
 
   const [text, setText] = useState(note?.text);
   const [isTransforming, setIsTransforming] = useState(false);
@@ -81,19 +85,22 @@ const Note = ({ note, id, userName, scale }) => {
     }
   }, [noteBeingTransformedId, id, isTransforming]);
 
-  const patchNote = (updatedNote, actionType) => {
+  // TODO: remove.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const patchNote = (updatedNote: NoteDataType, actionType: string): void => {
     const patch = {
       data: updatedNote,
       id,
     };
     patchAppData(patch);
-    postAction({
-      type: actionType,
-      data: {
-        ...updatedNote,
-        id,
-      },
-    });
+    // TODO: reimplement actions
+    // postAction({
+    //   type: actionType,
+    //   data: {
+    //     ...updatedNote,
+    //     id,
+    //   },
+    // });
   };
 
   // If the user selected color changes and the note is selected (transforming), update the color of the note.
@@ -110,7 +117,7 @@ const Note = ({ note, id, userName, scale }) => {
   }, [userSetColor]);
 
   // eslint-disable-next-line no-unused-vars
-  const eventControl = (event, data) => {
+  const eventControl = (event: DraggableEvent): void => {
     if (event.type === 'mousemove' || event.type === 'touchmove') {
       setIsDragging(true);
     }
@@ -119,8 +126,8 @@ const Note = ({ note, id, userName, scale }) => {
     }
   };
 
-  const handleDragEnd = (event, data) => {
-    eventControl(event, data);
+  const handleDragEnd = (event: DraggableEvent, data: DraggableData): void => {
+    eventControl(event);
     const { x, y } = data;
     const updatedNote = {
       ...note,
@@ -133,7 +140,7 @@ const Note = ({ note, id, userName, scale }) => {
     patchNote(updatedNote, ACTION_TYPES.MOVE);
   };
 
-  const toggleEdit = () => {
+  const toggleEdit = (): void => {
     if (isEditing) {
       setNoteBeingEditedId(null);
       setIsEditing(false);
@@ -161,7 +168,7 @@ const Note = ({ note, id, userName, scale }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteBeingEditedId]);
 
-  const toggleTransform = () => {
+  const toggleTransform = (): void => {
     if (isTransforming) {
       setNoteBeingTransformedId(null);
       setIsTransforming(false);
@@ -172,11 +179,11 @@ const Note = ({ note, id, userName, scale }) => {
     }
   };
 
-  const handleTextEdit = (newText) => {
+  const handleTextEdit = (newText: string): void => {
     setText(newText);
   };
 
-  const handleClickEvent = (e) => {
+  const handleClickEvent = (e: React.MouseEvent): void => {
     e.stopPropagation();
     if (isDragging) {
       return;
@@ -228,37 +235,6 @@ const Note = ({ note, id, userName, scale }) => {
       )}
     </Transition>
   );
-};
-
-Note.propTypes = {
-  note: PropTypes.shape({
-    position: PropTypes.shape({
-      pageX: PropTypes.number,
-      pageY: PropTypes.number,
-    }).isRequired,
-    color: PropTypes.string,
-    text: PropTypes.string,
-  }),
-  id: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  userName: PropTypes.string,
-  scale: PropTypes.number,
-};
-
-Note.defaultProps = {
-  userName: DEFAULT_ANONYMOUS_USERNAME,
-  note: {
-    position: {
-      pageX: 0,
-      pageY: 0,
-    },
-    color: DEFAULT_NOTE_COLOR,
-    text: '',
-  },
-  scale: 1,
 };
 
 export default Note;

@@ -10,7 +10,7 @@ export const MAX_LENGTH_TITLE = 1024;
 
 export const DEFAULT_ANONYMOUS_USERNAME = 'Anonymous';
 
-export const DEFAULT_PERMISSION = PermissionLevel.Read;
+export const DEFAULT_PERMISSION: PermissionLevel = PermissionLevel.Read;
 
 export const PUBLIC_VISIBILITY = 'public';
 export const DEFAULT_VISIBILITY = PUBLIC_VISIBILITY;

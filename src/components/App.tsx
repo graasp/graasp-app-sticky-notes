@@ -22,8 +22,7 @@ const App: FC = () => {
   const context: RecordOf<LocalContext> = useLocalContext();
 
   const permissionLevel: PermissionLevel =
-    (context?.get('permission', DEFAULT_PERMISSION) as PermissionLevel) ||
-    DEFAULT_PERMISSION;
+    (context?.get('permission') as PermissionLevel) || DEFAULT_PERMISSION;
 
   useEffect(() => {
     // handle a change of language

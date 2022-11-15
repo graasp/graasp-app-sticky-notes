@@ -1,8 +1,8 @@
 import { RecordOf } from 'immutable';
 
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
-import { Context, LocalContext } from '@graasp/apps-query-client';
+import { LocalContext, useLocalContext } from '@graasp/apps-query-client';
 import { PermissionLevel } from '@graasp/sdk';
 
 import { DEFAULT_CONTEXT_LANGUAGE } from '../config/appSettings';
@@ -19,9 +19,9 @@ import TeacherView from './modes/teacher/TeacherView';
 const App: FC = () => {
   // context describes the item context, i.e. has the item id, current member id (memberId),
   // the language and current view (builder, player, ...), the current permission (admin, write, read)
-  const context: RecordOf<LocalContext> = useContext(Context);
+  const context: RecordOf<LocalContext> = useLocalContext();
 
-  const permissionLevel =
+  const permissionLevel: PermissionLevel =
     (context?.get('permission', DEFAULT_PERMISSION) as PermissionLevel) ||
     DEFAULT_PERMISSION;
 

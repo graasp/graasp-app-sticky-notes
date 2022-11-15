@@ -1,28 +1,40 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { FC, PropsWithChildren, useState } from 'react';
+import React, { FC, PropsWithChildren, useContext, useState } from 'react';
 
 import { DEFAULT_NOTE_COLOR } from '../../config/constants';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
-const uselessFunc = (_a: any): void => {};
+type CanvasContextType = {
+  noteBeingEditedId: string | null;
+  setNoteBeingEditedId: (id: string | null) => void;
+  userSetColor: string;
+  setUserSetColor: (color: string) => void;
+  highlightNoteBeingEdited: boolean;
+  setHighlightNoteBeingEdited: (highlight: boolean) => void;
+  noteBeingTransformedId: string | null;
+  setNoteBeingTransformedId: (id: string | null) => void;
+};
 
-const CanvasContext = React.createContext({
+const CanvasContext = React.createContext<CanvasContextType>({
   noteBeingEditedId: null,
-  setNoteBeingEditedId: uselessFunc,
+  setNoteBeingEditedId: () => null,
   userSetColor: DEFAULT_NOTE_COLOR,
-  setUserSetColor: uselessFunc,
+  setUserSetColor: () => null,
   highlightNoteBeingEdited: false,
-  setHighlightNoteBeingEdited: uselessFunc,
+  setHighlightNoteBeingEdited: () => null,
   noteBeingTransformedId: null,
-  setNoteBeingTransformedId: uselessFunc,
+  setNoteBeingTransformedId: () => null,
 });
 
 const CanvasProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [noteBeingEditedId, setNoteBeingEditedId] = useState(null);
-  const [noteBeingTransformedId, setNoteBeingTransformedId] = useState(null);
-  const [userSetColor, setUserSetColor] = useState(DEFAULT_NOTE_COLOR);
+  const [noteBeingEditedId, setNoteBeingEditedId] = useState<string | null>(
+    null,
+  );
+  const [noteBeingTransformedId, setNoteBeingTransformedId] = useState<
+    string | null
+  >(null);
+  const [userSetColor, setUserSetColor] = useState<string>(DEFAULT_NOTE_COLOR);
   const [highlightNoteBeingEdited, setHighlightNoteBeingEdited] =
-    useState(false);
+    useState<boolean>(false);
 
   return (
     <CanvasContext.Provider
@@ -42,4 +54,6 @@ const CanvasProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export { CanvasContext, CanvasProvider };
+const useCanvasContext = (): CanvasContextType => useContext(CanvasContext);
+
+export { useCanvasContext, CanvasProvider };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
@@ -8,11 +8,11 @@ import Stack from '@mui/material/Stack';
 import { APP_ACTION_TYPES } from '../../config/appActionTypes';
 import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
-import { CanvasContext } from '../context/CanvasContext';
+import { useCanvasContext } from '../context/CanvasContext';
 
 const CanvasToolbar = (): JSX.Element => {
   const { noteBeingTransformedId, setNoteBeingTransformedId } =
-    useContext(CanvasContext);
+    useCanvasContext();
 
   const { deleteAppData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();

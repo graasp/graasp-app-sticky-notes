@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { List } from 'immutable';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
@@ -16,7 +16,7 @@ import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
 import { APP_DATA_VISIBILITY } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
-import { CanvasContext } from '../context/CanvasContext';
+import { useCanvasContext } from '../context/CanvasContext';
 import { useMembersContext } from '../context/MembersContext';
 import Note from './note/Note';
 
@@ -41,16 +41,15 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   const {
     userSetColor,
     noteBeingEditedId,
+    setNoteBeingEditedId,
     noteBeingTransformedId,
     setNoteBeingTransformedId,
-  } = useContext(CanvasContext);
+  } = useCanvasContext();
 
   const members = useMembersContext();
   const [notes, setNotes] = useState<List<ExistingNoteType>>();
 
   const [edit, setEdit] = useState(false);
-
-  const { setNoteBeingEditedId } = useContext(CanvasContext);
 
   const { postAppData, appDataArray: appData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();

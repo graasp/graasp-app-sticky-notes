@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -8,7 +8,7 @@ import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
 import { AVAILABLE_COLORS } from '../../config/constants';
-import { CanvasContext } from '../context/CanvasContext';
+import { useCanvasContext } from '../context/CanvasContext';
 
 const MainContainer = styled('div')(() => ({
   position: 'fixed',
@@ -35,7 +35,7 @@ const Color = styled('div')(() => ({
 
 const ColorSettings = (): JSX.Element => {
   const { t } = useTranslation();
-  const { userSetColor, setUserSetColor } = useContext(CanvasContext);
+  const { userSetColor, setUserSetColor } = useCanvasContext();
   const [colorPaletteOpen, setColorPaletteOpen] = useState(false);
 
   const handleClick = (event: React.MouseEvent): void => {

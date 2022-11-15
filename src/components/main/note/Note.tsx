@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 import { Transition } from 'react-transition-group';
@@ -10,7 +10,7 @@ import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
 import { NoteDataType } from '../../../config/appDataTypes';
 import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
-import { CanvasContext } from '../../context/CanvasContext';
+import { useCanvasContext } from '../../context/CanvasContext';
 import EditableText from './EditableText';
 
 const animationDuration = 300;
@@ -61,7 +61,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     noteBeingTransformedId,
     setNoteBeingTransformedId,
     setUserSetColor,
-  } = useContext(CanvasContext);
+  } = useCanvasContext();
 
   const { position, color } = note;
   const { t } = useTranslation();

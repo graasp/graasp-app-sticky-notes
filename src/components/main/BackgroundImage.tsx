@@ -1,3 +1,5 @@
+import { t } from 'i18next';
+
 import React, { useEffect, useState } from 'react';
 
 import { styled } from '@mui/material';
@@ -28,8 +30,8 @@ const Container = styled('div')(() => ({
 
 const BackgroundImage = (): JSX.Element => {
   const { appSettingArray: appSettings } = useAppSettingContext();
-  const [scale, setScale] = useState(1.0);
-  const [enabled, setEnabled] = useState(false);
+  const [scale, setScale] = useState(DEFAULT_BACKGROUND_SCALE);
+  const [enabled, setEnabled] = useState(DEFAULT_BACKGROUND_ENABLED);
   const [backgroundSetting, setBackgroundSetting] = useState<BackgroundType>();
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const BackgroundImage = (): JSX.Element => {
     <Container>
       <img
         data-cy={BACKGROUND_IMAGE_CY}
-        alt="background"
+        alt={t('Background')}
         src={url}
         style={{ transform: `scale(${scale}, ${scale})` }}
       />

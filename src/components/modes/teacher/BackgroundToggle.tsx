@@ -124,8 +124,8 @@ const BackgroundToggle = (): JSX.Element => {
     <>
       <ToggleContainer>
         <Typography
-          sx={{ fontSize: '1.1em' }}
-          style={{ color: toggleDisabled ? grey[500] : 'black' }}
+          fontSize="1.1em"
+          color={toggleDisabled ? grey[500] : 'black'}
         >
           {t('Show Background Image')}
         </Typography>
@@ -145,32 +145,27 @@ const BackgroundToggle = (): JSX.Element => {
       </ToggleContainer>
       <ToggleContainer>
         <Typography
-          sx={{ fontSize: '1.1em' }}
-          style={{ color: toggleDisabled ? grey[500] : 'black' }}
+          fontSize="1.1em"
+          color={toggleDisabled ? grey[500] : 'black'}
         >
           {t('Scale background image')}
         </Typography>
-        <FormControlLabel
+        <TextField
           disabled={toggleDisabled}
-          control={
-            <TextField
-              value={backgroundScale}
-              error={scaleError}
-              color="primary"
-              id="outlined-number"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                max: 40,
-                min: 0.1,
-                step: 0.1,
-              }}
-              onChange={handleScaleChange}
-            />
-          }
-          label={undefined}
+          value={backgroundScale}
+          error={scaleError}
+          color="primary"
+          id="outlined-number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          inputProps={{
+            max: 40,
+            min: 0.1,
+            step: 0.1,
+          }}
+          onChange={handleScaleChange}
         />
       </ToggleContainer>
     </>

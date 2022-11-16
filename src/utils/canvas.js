@@ -1,7 +1,7 @@
 import {
   DEFAULT_MAXIMUM_ROTATION_ANGLE,
   DEFAULT_MINIMUM_ROTATION_ANGLE,
-} from '../constants/constants';
+} from '../config/constants';
 
 /* eslint-disable import/prefer-default-export */
 export const generateRandomRotationAngle = (

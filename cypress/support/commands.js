@@ -23,7 +23,6 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
 import { buildDatabase } from '@graasp/apps-query-client';
 
 const MEMBERS = [

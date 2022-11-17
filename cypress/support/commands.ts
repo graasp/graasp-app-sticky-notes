@@ -1,3 +1,8 @@
+/// <reference types="../../src/window" />
+import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
+import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
+import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,31 +28,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { buildDatabase } from '@graasp/apps-query-client';
-
-const MEMBERS = [
-  {
-    id: '0',
-    name: 'me',
-  },
-  {
-    id: '1',
-    name: 'you',
-  },
-];
-
-const CURRENT_MEMBER = '0';
 
 Cypress.Commands.add(
   'setUpApi',
-  ({ currentMember = CURRENT_MEMBER, database = {}, appContext } = {}) => {
+  ({ currentMember = CURRENT_MEMBER, database, appContext } = {}) => {
     // mock api and database
-    Cypress.on('window:before:load', (win) => {
-      win.database = buildDatabase({
+    Cypress.on('window:before:load', (win: Window) => {
+      // eslint-disable-next-line no-param-reassign
+      win.database = {
+        appData: [],
+        appActions: [],
+        appSettings: [],
         members: Object.values(MEMBERS),
         ...database,
-      });
-      win.appContext = appContext;
+      };
+      // eslint-disable-next-line no-param-reassign
+      win.appContext = {
+        memberId: currentMember.id,
+        itemId: MOCK_SERVER_ITEM.id,
+        apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
+        ...appContext,
+      };
     });
   },
 );

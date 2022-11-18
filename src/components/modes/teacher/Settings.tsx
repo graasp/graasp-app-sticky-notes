@@ -45,15 +45,15 @@ const CloseButton = styled(Button)(() => ({
   width: '20%',
 }));
 
-const Settings = () => {
+const Settings = (): JSX.Element => {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleModalOpen = () => {
+  const handleModalOpen = (): void => {
     setModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const handleModalClose = (): void => {
     setModalOpen(false);
   };
 

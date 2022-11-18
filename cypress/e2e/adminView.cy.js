@@ -1,3 +1,4 @@
+import { APP_SETTINGS } from '../../src/config/constants';
 import {
   BACKGROUND_IMAGE_CY,
   SCROLL_CONTAINER_CY,
@@ -5,7 +6,6 @@ import {
   SETTINGS_CY,
   dataCyWrapper,
 } from '../../src/config/selectors';
-import { APP_SETTINGS } from '../../src/constants/constants';
 
 describe('Tests the basic features.', () => {
   it('loads the app', () => {

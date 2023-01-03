@@ -102,13 +102,11 @@ const EditDialog = (props: EditDialogProps): JSX.Element => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button variant="text" color="secondary" onClick={() => onCancel()}>
+        <Button variant="text" color="secondary" onClick={onCancel}>
           {t('Cancel')}
         </Button>
         <Button
-          onClick={() => {
-            onSave(value, color);
-          }}
+          onClick={() => onSave(value, color)}
         >
           {t('Save')}
         </Button>

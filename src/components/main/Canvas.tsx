@@ -1,12 +1,21 @@
+import { RecordOf } from 'immutable';
+
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import { Context } from '@graasp/apps-query-client';
+import {
+  Context,
+  LocalContext,
+  useLocalContext,
+} from '@graasp/apps-query-client';
 import { PermissionLevel } from '@graasp/sdk';
 
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { styled } from '@mui/material';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 
 import { APP_SETTINGS } from '../../config/constants';
-import { hooks } from '../../config/queryClient';
+import { hooks, queryClient } from '../../config/queryClient';
 import { SCROLL_CONTAINER_CY } from '../../config/selectors';
 import {
   CANVAS_HEIGHT_PX,
@@ -39,6 +48,8 @@ const MainContainer = styled('div')(() => ({
 const Canvas = (): JSX.Element => {
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
+  const localContext: RecordOf<LocalContext> = useLocalContext();
+  const itemId = localContext.get('itemId') || '';
 
   const [scrollPosition, setScrollPosition] = useState({
     scrollLeft: 0,
@@ -122,9 +133,27 @@ const Canvas = (): JSX.Element => {
         {renderStage()}
       </MainContainer>
       <CanvasToolbar />
-      {[PermissionLevel.Write, PermissionLevel.Admin].includes(
-        permissionLevel,
-      ) && <Settings />}
+      <Box
+        sx={{
+          bottom: 1,
+          right: 1,
+          position: 'fixed',
+          '& > :not(style)': { m: 1 },
+        }}
+      >
+        <Fab
+          color="primary"
+          size="small"
+          onClick={() => {
+            queryClient.invalidateQueries([itemId]);
+          }}
+        >
+          <RefreshIcon />
+        </Fab>
+        {[PermissionLevel.Write, PermissionLevel.Admin].includes(
+          permissionLevel,
+        ) && <Settings />}
+      </Box>
       <ColorSettings />
       <CanvasScaleControl
         canvasScale={canvasScale}

@@ -225,7 +225,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
             onClick={handleClickEvent}
           >
             <EditableText text={text} />
-            <UserInfo>{t('Added by {{ userName }}', { userName })}</UserInfo>
+            <UserInfo>{t('ADDED_BY_TEXT', { userName })}</UserInfo>
           </NoteContainer>
         </Draggable>
       </Transition>

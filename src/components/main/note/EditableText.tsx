@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
 
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 
 import './note_style.css';
 
@@ -8,8 +8,7 @@ interface EditableTextProps {
   text: string;
 }
 
-const EditableText = (props: EditableTextProps): JSX.Element => {
-  const { text } = props;
+const EditableText: FC<EditableTextProps> = ({ text }) => {
   const htmlContainer = useRef<HTMLDivElement>(null);
   const cleanText = DOMPurify.sanitize(text, {
     USE_PROFILES: { html: true },
@@ -24,18 +23,7 @@ const EditableText = (props: EditableTextProps): JSX.Element => {
   const content = document.createElement('div');
   content.appendChild(cleanText);
 
-  // if (isEditing) {
-  //   return (
-  //     <EditableTextInput
-  //       ref={ref}
-  //       value={text}
-  //       onChange={handleTextChange}
-  //       onKeyDown={handleEscapeKeys}
-  //     />
-  //   );
-  // }
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       ref={htmlContainer}
       // The class content is styled in `note_style.css`

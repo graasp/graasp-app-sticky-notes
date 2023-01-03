@@ -1,12 +1,6 @@
-import { RecordOf } from 'immutable';
-
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import {
-  Context,
-  LocalContext,
-  useLocalContext,
-} from '@graasp/apps-query-client';
+import { Context, useLocalContext } from '@graasp/apps-query-client';
 import { PermissionLevel } from '@graasp/sdk';
 
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -48,7 +42,7 @@ const MainContainer = styled('div')(() => ({
 const Canvas = (): JSX.Element => {
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
   const context = useContext(Context);
-  const localContext: RecordOf<LocalContext> = useLocalContext();
+  const localContext = useLocalContext();
   const itemId = localContext.get('itemId') || '';
 
   const [scrollPosition, setScrollPosition] = useState({

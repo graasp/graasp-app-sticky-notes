@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 
 import { Button } from '@graasp/ui';
 
-import { Stack, Typography, styled } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,15 +13,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { NoteDataType } from '../../../config/appDataTypes';
 import { AVAILABLE_COLORS } from '../../../config/constants';
-
-const Color = styled('div')(() => ({
-  width: '1.5vw',
-  height: '1.5vw',
-  cursor: 'pointer',
-  borderRadius: '50%',
-  background: 'darkgreen',
-  marginBottom: 1,
-}));
+import ColorItem from '../../common/ColorItem';
 
 interface EditDialogProps extends DialogProps {
   note: NoteDataType;
@@ -64,7 +56,7 @@ const EditDialog = (props: EditDialogProps): JSX.Element => {
       <DialogContent>
         <Stack spacing={1}>
           <Typography variant="subtitle2">
-            {`${t('Added by:')} ${userName}`}
+            {t('ADDED_BY_TEXT', { userName })}
           </Typography>
           <ReactQuill
             theme="snow"
@@ -76,25 +68,13 @@ const EditDialog = (props: EditDialogProps): JSX.Element => {
           />
           <Stack direction="row" spacing={1}>
             <Typography variant="caption">{t('Note color:')}</Typography>
-            {AVAILABLE_COLORS.map((colorItem) => (
+            {AVAILABLE_COLORS.map((itemColor) => (
               <>
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                <Color
-                  sx={{
-                    background: colorItem,
-                    border: color === colorItem ? '1px solid grey' : 'none',
-                  }}
-                  key={color}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setColor(colorItem);
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      event.stopPropagation();
-                      setColor(colorItem);
-                    }
-                  }}
+                <ColorItem
+                  selectedColor={color}
+                  itemColor={itemColor}
+                  setColor={setColor}
                 />
               </>
             ))}
@@ -105,11 +85,7 @@ const EditDialog = (props: EditDialogProps): JSX.Element => {
         <Button variant="text" color="secondary" onClick={onCancel}>
           {t('Cancel')}
         </Button>
-        <Button
-          onClick={() => onSave(value, color)}
-        >
-          {t('Save')}
-        </Button>
+        <Button onClick={() => onSave(value, color)}>{t('Save')}</Button>
       </DialogActions>
     </Dialog>
   );

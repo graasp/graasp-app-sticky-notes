@@ -8,6 +8,7 @@ import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
 import { AVAILABLE_COLORS } from '../../config/constants';
+import ColorItem from '../common/ColorItem';
 import { useCanvasContext } from '../context/CanvasContext';
 
 const MainContainer = styled('div')(() => ({
@@ -22,15 +23,6 @@ const MainContainer = styled('div')(() => ({
 const ColorSettingsContainer = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
-}));
-
-const Color = styled('div')(() => ({
-  width: '2vw',
-  height: '2vw',
-  cursor: 'pointer',
-  borderRadius: '50%',
-  background: 'darkgreen',
-  marginBottom: 1,
 }));
 
 const ColorSettings = (): JSX.Element => {
@@ -52,25 +44,13 @@ const ColorSettings = (): JSX.Element => {
       </Tooltip>
       {colorPaletteOpen && (
         <ColorSettingsContainer>
-          {AVAILABLE_COLORS.map((color) => (
+          {AVAILABLE_COLORS.map((itemColor) => (
             <>
               {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-              <Color
-                sx={{
-                  background: color,
-                  border: userSetColor === color ? '1px solid grey' : 'none',
-                }}
-                key={color}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setUserSetColor(color);
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    event.stopPropagation();
-                    setUserSetColor(color);
-                  }
-                }}
+              <ColorItem
+                selectedColor={userSetColor}
+                itemColor={itemColor}
+                setColor={setUserSetColor}
               />
             </>
           ))}

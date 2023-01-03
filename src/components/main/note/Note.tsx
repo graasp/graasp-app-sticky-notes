@@ -11,11 +11,12 @@ import { NoteDataType } from '../../../config/appDataTypes';
 import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { useCanvasContext } from '../../context/CanvasContext';
+import EditDialog from './EditDialog';
 import EditableText from './EditableText';
 
 const animationDuration = 300;
 
-const NoteContainer = styled('div')(({ state }: { state: string }) => ({
+const NoteContainer = styled('div')(() => ({
   overflow: 'visible',
   border: '1px solid',
   borderColor: 'rgba(255, 255, 255, 0)',
@@ -25,18 +26,9 @@ const NoteContainer = styled('div')(({ state }: { state: string }) => ({
   cursor: 'move',
   height: 'fit-content',
   position: 'absolute',
-  transition: `min-width ${animationDuration}ms ease-in-out, min-height ${animationDuration}ms ease-in-out`,
-  ...(state === 'entering' || state === 'entered'
-    ? {
-        minWidth: '30em',
-        minHeight: '10em',
-        zIndex: '1',
-      }
-    : {
-        minWidth: '0em',
-        minHeight: '0em',
-        zIndex: '0',
-      }),
+  minWidth: '0em',
+  minHeight: '0em',
+  zIndex: '0',
 }));
 
 const UserInfo = styled('p')(() => ({
@@ -63,7 +55,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     setUserSetColor,
   } = useCanvasContext();
 
-  const { position, color } = note;
+  const { text: initialText, position, color } = note;
   const { t } = useTranslation();
 
   const { pageX = 0, pageY = 0 } = position;
@@ -71,7 +63,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const { patchAppData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();
 
-  const [text, setText] = useState(note?.text);
+  const [text, setText] = useState(initialText);
   const [isTransforming, setIsTransforming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isFixedSize, setIsFixedSize] = useState(false);
@@ -141,16 +133,19 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
   };
 
-  const toggleEdit = (): void => {
-    if (isEditing) {
+  const toggleEdit = (force?: boolean): void => {
+    if (typeof force !== 'undefined') {
+      if (force) {
+        setNoteBeingEditedId(id);
+        setIsEditing(true);
+      } else {
+        setNoteBeingEditedId(null);
+        setIsEditing(false);
+      }
+    } else if (isEditing) {
       setNoteBeingEditedId(null);
       setIsEditing(false);
       setIsFixedSize(false);
-      const updatedNote = {
-        ...note,
-        text,
-      };
-      patchNote(updatedNote, APP_ACTION_TYPES.EDIT);
     } else {
       setNoteBeingEditedId(id);
       setIsEditing(true);
@@ -180,8 +175,16 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     }
   };
 
-  const handleTextEdit = (newText: string): void => {
+  const handleUpdate = (newText: string, newColor?: string): void => {
     setText(newText);
+    const updatedNote = {
+      ...note,
+      text: newText,
+    };
+    if (typeof newColor !== 'undefined') {
+      updatedNote.color = newColor;
+    }
+    patchNote(updatedNote, APP_ACTION_TYPES.EDIT);
   };
 
   const handleClickEvent = (e: React.MouseEvent): void => {
@@ -198,8 +201,8 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   };
 
   return (
-    <Transition in={isFixedSize} timeout={animationDuration}>
-      {(state) => (
+    <>
+      <Transition in={isFixedSize} timeout={animationDuration}>
         <Draggable
           defaultPosition={{ x: pageX, y: pageY }}
           disabled={isEditing}
@@ -215,26 +218,29 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
         >
           {/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <NoteContainer
-            state={state}
             sx={{
               backgroundColor: color,
               borderColor: isTransforming ? lightBlue[500] : 'none',
             }}
             onClick={handleClickEvent}
           >
-            <EditableText
-              text={text}
-              isEditing={isEditing}
-              onToggleEdit={toggleEdit}
-              onChange={handleTextEdit}
-            />
-            {!isEditing && (
-              <UserInfo>{t('Added by {{ userName }}', { userName })}</UserInfo>
-            )}
+            <EditableText text={text} />
+            <UserInfo>{t('Added by {{ userName }}', { userName })}</UserInfo>
           </NoteContainer>
         </Draggable>
-      )}
-    </Transition>
+      </Transition>
+      <EditDialog
+        open={isEditing}
+        note={note}
+        id={id}
+        userName={userName}
+        onCancel={() => toggleEdit(false)}
+        onSave={(newText, newColor?) => {
+          handleUpdate(newText, newColor);
+          toggleEdit(false);
+        }}
+      />
+    </>
   );
 };
 

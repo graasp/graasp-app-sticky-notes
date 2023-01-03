@@ -35,6 +35,7 @@ const BackgroundToggle = (): JSX.Element => {
   const { t } = useTranslation();
 
   const [scaleError, setScaleError] = useState(false);
+  const [toggleDisabled, setToggleDisabled] = useState<boolean>(true);
 
   const {
     appSettingArray: settings,
@@ -59,10 +60,9 @@ const BackgroundToggle = (): JSX.Element => {
       ) as BackgroundSettingsType;
       setBackgroundSettings(backSet);
       setBackgroundScale(backSet?.data?.scale || DEFAULT_BACKGROUND_SCALE);
+      setToggleDisabled(false);
     }
   }, [settings]);
-
-  const toggleDisabled = !backgroundSettings;
 
   const handleToggle = (): void => {
     if (backgroundSettings?.id) {

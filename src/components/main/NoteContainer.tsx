@@ -96,14 +96,14 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   };
 
   const handleCanvasClick = (event: React.MouseEvent): void => {
-    if (!noteBeingEditedId && !noteBeingTransformedId) {
+    // `event.detail === 2` checks that the event is a double click.
+    if (!noteBeingEditedId && !noteBeingTransformedId && event.detail === 2) {
       const { pageX: x, pageY: y } = event;
       createNewNote(
         (x + scrollLeft) / canvasScale,
         (y + scrollTop) / canvasScale,
       );
     } else {
-      setNoteBeingEditedId(null);
       setNoteBeingTransformedId(null);
     }
   };

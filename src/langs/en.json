@@ -1,3 +1,5 @@
 {
-  "translations": {}
+  "translations": {
+    "ADDED_BY_TEXT": "Added by: {{userName}}"
+  }
 }

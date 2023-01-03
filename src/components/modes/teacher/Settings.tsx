@@ -59,38 +59,38 @@ const Settings = (): JSX.Element => {
 
   return (
     <>
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div onClick={(event) => event.stopPropagation()}>
-        <Fab
-          data-cy={SETTINGS_BUTTON_CY}
-          color="primary"
-          onClick={(event) => {
-            event.stopPropagation();
-            handleModalOpen();
-          }}
-          sx={{ bottom: 1, right: 1, position: 'fixed' }}
-        >
-          <SettingsIcon />
-        </Fab>
-        <StyledModal open={modalOpen} onClose={handleModalClose}>
-          <ModalContainer data-cy={SETTINGS_CY}>
-            <Typography variant="h3">{t('Settings')}</Typography>
-            <ImageUpload />
-            <BackgroundToggle />
-            <DownloadActions />
-            <Divider sx={{ my: 2 }} />
-            <ButtonContainer>
-              <CloseButton
-                variant="contained"
-                color="secondary"
-                onClick={handleModalClose}
-              >
-                {t('Close')}
-              </CloseButton>
-            </ButtonContainer>
-          </ModalContainer>
-        </StyledModal>
-      </div>
+      <Fab
+        data-cy={SETTINGS_BUTTON_CY}
+        color="primary"
+        onClick={(event) => {
+          event.stopPropagation();
+          handleModalOpen();
+        }}
+      >
+        <SettingsIcon />
+      </Fab>
+      <StyledModal
+        open={modalOpen}
+        onClose={handleModalClose}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <ModalContainer data-cy={SETTINGS_CY}>
+          <Typography variant="h3">{t('Settings')}</Typography>
+          <ImageUpload />
+          <BackgroundToggle />
+          <DownloadActions />
+          <Divider sx={{ my: 2 }} />
+          <ButtonContainer>
+            <CloseButton
+              variant="contained"
+              color="secondary"
+              onClick={handleModalClose}
+            >
+              {t('Close')}
+            </CloseButton>
+          </ButtonContainer>
+        </ModalContainer>
+      </StyledModal>
     </>
   );
 };

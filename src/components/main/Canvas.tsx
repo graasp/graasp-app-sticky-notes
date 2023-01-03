@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { Context, useLocalContext } from '@graasp/apps-query-client';
+import { useLocalContext } from '@graasp/apps-query-client';
 import { PermissionLevel } from '@graasp/sdk';
 
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -41,7 +41,6 @@ const MainContainer = styled('div')(() => ({
 
 const Canvas = (): JSX.Element => {
   const [backgroundToggleSetting, setBackgroundToggleSetting] = useState(false);
-  const context = useContext(Context);
   const localContext = useLocalContext();
   const itemId = localContext.get('itemId') || '';
 
@@ -56,7 +55,7 @@ const Canvas = (): JSX.Element => {
   const mainContainer = useRef<HTMLDivElement | null>(null);
 
   const permissionLevel =
-    (context?.get('permission') as PermissionLevel) || DEFAULT_PERMISSION;
+    (localContext?.get('permission') as PermissionLevel) || DEFAULT_PERMISSION;
 
   const { data: appSettings, isSuccess } = hooks.useAppSettings();
 

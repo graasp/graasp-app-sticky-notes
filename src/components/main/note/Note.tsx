@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { useTranslation } from 'react-i18next';
-import { Transition } from 'react-transition-group';
 
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { styled } from '@mui/material';
+import Fade from '@mui/material/Fade';
+import IconButton from '@mui/material/IconButton';
 import lightBlue from '@mui/material/colors/lightBlue';
 
 import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
 import { NoteDataType } from '../../../config/appDataTypes';
+import { FADE_ANIMATION_TIME } from '../../../config/constants';
 import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { useCanvasContext } from '../../context/CanvasContext';
 import EditDialog from './EditDialog';
 import EditableText from './EditableText';
-
-const animationDuration = 300;
 
 const NoteContainer = styled('div')(() => ({
   overflow: 'visible',
@@ -29,6 +31,12 @@ const NoteContainer = styled('div')(() => ({
   minWidth: '0em',
   minHeight: '0em',
   zIndex: '0',
+  '& .action-button': {
+    display: 'none',
+  },
+  '&:hover .action-button': {
+    display: 'block',
+  },
 }));
 
 const UserInfo = styled('p')(() => ({
@@ -36,6 +44,12 @@ const UserInfo = styled('p')(() => ({
   fontSize: '10px',
   color: 'darkgrey',
   textAlign: 'right',
+}));
+
+const SmallActionButton = styled(IconButton)(() => ({
+  borderRadius: '50%',
+  position: 'absolute',
+  scale: [0.5, 0.5, 1],
 }));
 
 interface NoteProps {
@@ -62,11 +76,12 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   const { patchAppData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();
+  const { deleteAppData } = useAppDataContext();
 
   const [text, setText] = useState(initialText);
   const [isTransforming, setIsTransforming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isFixedSize, setIsFixedSize] = useState(false);
+  const [exist, setExist] = useState(true);
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -145,11 +160,9 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     } else if (isEditing) {
       setNoteBeingEditedId(null);
       setIsEditing(false);
-      setIsFixedSize(false);
     } else {
       setNoteBeingEditedId(id);
       setIsEditing(true);
-      setIsFixedSize(true);
     }
   };
 
@@ -157,7 +170,6 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   useEffect(() => {
     if (noteBeingEditedId === id && !isEditing) {
       setIsEditing(true);
-      setIsFixedSize(true);
     } else if (noteBeingEditedId !== id && isEditing) {
       toggleEdit();
     }
@@ -187,6 +199,17 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     patchNote(updatedNote, APP_ACTION_TYPES.EDIT);
   };
 
+  const handleDelete = (): void => {
+    setExist(false);
+    setTimeout(() => {
+      deleteAppData({ id });
+      postAppAction({
+        type: APP_ACTION_TYPES.DELETE,
+        data: { id },
+      });
+    }, FADE_ANIMATION_TIME);
+  };
+
   const handleClickEvent = (e: React.MouseEvent): void => {
     e.stopPropagation();
     if (isDragging) {
@@ -202,20 +225,20 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   return (
     <>
-      <Transition in={isFixedSize} timeout={animationDuration}>
-        <Draggable
-          defaultPosition={{ x: pageX, y: pageY }}
-          disabled={isEditing}
-          onStart={(e) => {
-            e.stopPropagation();
-          }}
-          onMouseDown={(e) => {
-            e.stopPropagation();
-          }}
-          onDrag={eventControl}
-          onStop={handleDragEnd}
-          scale={scale}
-        >
+      <Draggable
+        defaultPosition={{ x: pageX, y: pageY }}
+        disabled={isEditing}
+        onStart={(e) => {
+          e.stopPropagation();
+        }}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+        }}
+        onDrag={eventControl}
+        onStop={handleDragEnd}
+        scale={scale}
+      >
+        <Fade in={exist} timeout={FADE_ANIMATION_TIME}>
           {/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <NoteContainer
             sx={{
@@ -226,9 +249,25 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
           >
             <EditableText text={text} />
             <UserInfo>{t('ADDED_BY_TEXT', { userName })}</UserInfo>
+            <SmallActionButton
+              className="action-button"
+              size="small"
+              sx={{ top: 1, right: 1 }}
+              onClick={handleDelete}
+            >
+              <DeleteOutlineOutlinedIcon />
+            </SmallActionButton>
+            <SmallActionButton
+              className="action-button"
+              size="small"
+              sx={{ bottom: 1, left: 1 }}
+              onClick={() => toggleEdit(true)}
+            >
+              <EditOutlinedIcon />
+            </SmallActionButton>
           </NoteContainer>
-        </Draggable>
-      </Transition>
+        </Fade>
+      </Draggable>
       <EditDialog
         open={isEditing}
         note={note}

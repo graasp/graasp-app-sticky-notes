@@ -8,7 +8,6 @@ enum APP_SETTINGS_TYPES {
 export type BackgroundSettingsType = AppSetting & {
   data: {
     toggle: boolean;
-    scale: number;
   };
 };
 

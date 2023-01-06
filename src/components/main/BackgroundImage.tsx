@@ -1,6 +1,6 @@
 import { t } from 'i18next';
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { styled } from '@mui/material';
 
@@ -11,10 +11,7 @@ import {
 } from '../../config/appSettingTypes';
 import { hooks } from '../../config/queryClient';
 import { BACKGROUND_IMAGE_CY } from '../../config/selectors';
-import {
-  DEFAULT_BACKGROUND_ENABLED,
-  DEFAULT_BACKGROUND_SCALE,
-} from '../../config/settings';
+import { DEFAULT_BACKGROUND_ENABLED } from '../../config/settings';
 import { useAppSettingContext } from '../context/AppSettingContext';
 
 const Container = styled('div')(() => ({
@@ -28,9 +25,8 @@ const Container = styled('div')(() => ({
   left: '0px',
 }));
 
-const BackgroundImage = (): JSX.Element => {
+const BackgroundImage: FC = () => {
   const { appSettingArray: appSettings } = useAppSettingContext();
-  const [scale, setScale] = useState(DEFAULT_BACKGROUND_SCALE);
   const [enabled, setEnabled] = useState(DEFAULT_BACKGROUND_ENABLED);
   const [backgroundSetting, setBackgroundSetting] = useState<BackgroundType>();
 
@@ -41,11 +37,8 @@ const BackgroundImage = (): JSX.Element => {
     const backgroundSettings = appSettings?.find(
       ({ name }) => name === APP_SETTINGS_TYPES.BACKGROUND_SETTINGS,
     ) as BackgroundSettingsType;
-    const scaleTmp =
-      backgroundSettings?.data?.scale || DEFAULT_BACKGROUND_SCALE;
     const enabledTmp =
       backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED;
-    setScale(scaleTmp);
     setEnabled(enabledTmp);
   }, [appSettings, backgroundSetting]);
 
@@ -74,12 +67,7 @@ const BackgroundImage = (): JSX.Element => {
   }
   return (
     <Container>
-      <img
-        data-cy={BACKGROUND_IMAGE_CY}
-        alt={t('Background')}
-        src={url}
-        style={{ transform: `scale(${scale}, ${scale})` }}
-      />
+      <img data-cy={BACKGROUND_IMAGE_CY} alt={t('Background')} src={url} />
     </Container>
   );
 };

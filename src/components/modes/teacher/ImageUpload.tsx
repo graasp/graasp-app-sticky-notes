@@ -14,7 +14,11 @@ import { FileInput } from '@uppy/react';
 
 import { APP_SETTINGS } from '../../../config/constants';
 import { MUTATION_KEYS, hooks, useMutation } from '../../../config/queryClient';
-import { MAX_FILE_SIZE } from '../../../config/settings';
+import {
+  CANVAS_HEIGHT_PX,
+  CANVAS_WIDTH_PX,
+  MAX_FILE_SIZE,
+} from '../../../config/settings';
 import '../../../index.css';
 import configureUppy from '../../../utils/uppy';
 import { useAppSettingContext } from '../../context/AppSettingContext';
@@ -119,6 +123,12 @@ const ImageUpload = (): JSX.Element => {
         </Typography>
         <Typography sx={{ color: '#383838' }}>
           {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
+        </Typography>
+        <Typography sx={{ color: '#383838' }}>
+          {t(
+            'Recommended image size for full background: {{ CANVAS_WIDTH_PX }}x{{ CANVAS_HEIGHT_PX }} px.',
+            { CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX },
+          )}
         </Typography>
       </Stack>
       {renderInput()}

@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 import { Button } from '@graasp/ui';
 
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { Stack, Typography } from '@mui/material';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,10 +21,17 @@ interface EditDialogProps extends DialogProps {
   userName: string;
   onCancel: () => void;
   onSave: (text: string, color?: string) => void;
+  onDelete: () => void;
 }
 
-const EditDialog = (props: EditDialogProps): JSX.Element => {
-  const { note, userName, open, onCancel, onSave } = props;
+const EditDialog: FC<EditDialogProps> = ({
+  note,
+  userName,
+  open,
+  onCancel,
+  onSave,
+  onDelete,
+}) => {
   const { t } = useTranslation();
   const { text, color: initialColor } = note;
 
@@ -81,11 +89,20 @@ const EditDialog = (props: EditDialogProps): JSX.Element => {
           </Stack>
         </Stack>
       </DialogContent>
-      <DialogActions>
-        <Button variant="text" color="secondary" onClick={onCancel}>
-          {t('Cancel')}
+      <DialogActions sx={{ justifyContent: 'space-between' }}>
+        <Button
+          color="error"
+          onClick={onDelete}
+          endIcon={<DeleteOutlinedIcon />}
+        >
+          {t('Delete')}
         </Button>
-        <Button onClick={() => onSave(value, color)}>{t('Save')}</Button>
+        <div>
+          <Button variant="text" color="secondary" onClick={onCancel}>
+            {t('Cancel')}
+          </Button>
+          <Button onClick={() => onSave(value, color)}>{t('Save')}</Button>
+        </div>
       </DialogActions>
     </Dialog>
   );

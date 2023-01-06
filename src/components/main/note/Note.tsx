@@ -278,6 +278,10 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
           handleUpdate(newText, newColor);
           toggleEdit(false);
         }}
+        onDelete={() => {
+          toggleEdit(false);
+          handleDelete();
+        }}
       />
     </>
   );

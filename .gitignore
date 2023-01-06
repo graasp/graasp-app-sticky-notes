@@ -48,3 +48,6 @@ cypress/screenshots
 cypress/videos
 
 .vscode
+
+# draft code
+src/components/main/CanvasToolbar.tsx

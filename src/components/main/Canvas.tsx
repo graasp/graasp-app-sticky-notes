@@ -20,7 +20,6 @@ import {
 import Settings from '../modes/teacher/Settings';
 import BackgroundImage from './BackgroundImage';
 import CanvasScaleControl from './CanvasScaleControl';
-import CanvasToolbar from './CanvasToolbar';
 import ColorSettings from './ColorSettings';
 import NoteContainer from './NoteContainer';
 
@@ -126,7 +125,6 @@ const Canvas = (): JSX.Element => {
         {backgroundToggleSetting && <BackgroundImage />}
         {renderStage()}
       </MainContainer>
-      <CanvasToolbar />
       <Box
         sx={{
           bottom: 1,

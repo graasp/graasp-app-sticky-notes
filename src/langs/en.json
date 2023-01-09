@@ -1,5 +1,27 @@
 {
   "translations": {
-    "ADDED_BY_TEXT": "Added by: {{userName}}"
+    "ADDED_BY_TEXT": "Added by: {{userName}}",
+    "Delete Background": "Delete Background",
+    "Browse Your Computer": "Browse Your Computer",
+    "Set Background Image": "Set Background Image",
+    "Permitted file types: .jpg, .jpeg, .png": "Permitted file types: .jpg, .jpeg, .png",
+    "MAX_FILE_SIZE_TEXT": "Max file size: {{ MAX_FILE_SIZE_MB }}mb",
+    "RECOMMENDED_IMAGE_SIZE": "Recommended image size for full background: {{ CANVAS_WIDTH_PX }}x{{ CANVAS_HEIGHT_PX }} px.",
+    "File added.": "File added.",
+    "Upload complete.": "Upload complete.",
+    "PREVIEW_NO_UPLOAD": "This is just a preview. No files can be uploaded.",
+    "UPLOAD_ERROR_STATUS": "Status: {{ status }}\n{{ body }}",
+    "Zoom": "Zoom",
+    "Set new note color": "Set new note color",
+    "Settings": "Settings",
+    "Close": "Close",
+    "Download": "Download",
+    "Download learning analytics.": "Download learning analytics.",
+    "Show Background Image": "Show Background Image",
+    "Add a note.": "Add a note.",
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "Edit note": "Edit note",
+    "Note color:": "Note color:"
   }
 }

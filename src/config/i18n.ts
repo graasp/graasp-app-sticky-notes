@@ -5,24 +5,30 @@ import { initReactI18next } from 'react-i18next';
 import en from '../langs/en.json';
 import fr from '../langs/fr.json';
 
+export const defaultNS = 'translations';
+export const resources = {
+  en,
+  fr,
+} as const;
+
+declare module 'react-i18next' {
+  interface CustomTypeOptions {
+    defaultNS: typeof defaultNS;
+    resources: typeof resources['en'];
+  }
+}
+
 i18n.use(initReactI18next).init({
-  resources: {
-    en,
-    fr,
-  },
-  fallbackLng: 'en',
+  resources,
+  lng: 'en',
   // debug only when not in production
   debug: process.env.NODE_ENV !== 'production',
-  ns: ['translations'],
-  defaultNS: 'translations',
+  ns: [defaultNS],
+  defaultNS,
   keySeparator: false,
-  nsSeparator: false,
   interpolation: {
     escapeValue: false,
     formatSeparator: ',',
-  },
-  react: {
-    wait: true,
   },
 });
 

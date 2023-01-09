@@ -124,13 +124,10 @@ const ImageUpload = (): JSX.Element => {
           {t('Permitted file types: .jpg, .jpeg, .png')}
         </SubTypography>
         <SubTypography>
-          {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
+          {t('MAX_FILE_SIZE_TEXT', { MAX_FILE_SIZE_MB: MAX_FILE_SIZE / 1e6 })}
         </SubTypography>
         <SubTypography>
-          {t(
-            'Recommended image size for full background: {{ CANVAS_WIDTH_PX }}x{{ CANVAS_HEIGHT_PX }} px.',
-            { CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX },
-          )}
+          {t('RECOMMENDED_IMAGE_SIZE', { CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX })}
         </SubTypography>
       </Stack>
       {renderInput()}

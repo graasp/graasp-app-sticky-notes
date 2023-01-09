@@ -63,7 +63,7 @@ const configureUppy = (args: configureUppyInterface): Uppy => {
 
   uppy.on('error', (error) => {
     if (standalone) {
-      showErrorToast(t('This is just a preview. No files can be uploaded.'));
+      showErrorToast(t('PREVIEW_NO_UPLOAD'));
     } else {
       showErrorToast(error);
     }
@@ -71,16 +71,16 @@ const configureUppy = (args: configureUppyInterface): Uppy => {
 
   uppy.on('upload-error', (file, error, response) => {
     if (standalone) {
-      showErrorToast(t('This is just a preview. No files can be uploaded.'));
+      showErrorToast(t('PREVIEW_NO_UPLOAD'));
     } else if (response) {
       const { status, body } = response;
-      showErrorToast(t(`Status: ${status}\n${body}`));
+      showErrorToast(t('UPLOAD_ERROR_STATUS', { status, body }));
     }
   });
 
   uppy.on('restriction-failed', (file, error) => {
     if (standalone) {
-      showErrorToast(t('This is just a preview. No files can be uploaded.'));
+      showErrorToast(t('PREVIEW_NO_UPLOAD'));
     } else {
       showErrorToast(error);
     }

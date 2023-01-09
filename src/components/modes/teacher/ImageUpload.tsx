@@ -32,7 +32,7 @@ const ImageUploadContainer = styled('div')(() => ({
   marginBottom: 1,
 }));
 
-const SubTypography = styled(Typography)(() => ({ color: '#383838' }));
+const SubTypography = styled(Typography)({ color: '#383838' });
 
 const CloseButton = styled(Button)(() => ({
   width: '20%',

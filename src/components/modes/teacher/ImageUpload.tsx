@@ -32,6 +32,8 @@ const ImageUploadContainer = styled('div')(() => ({
   marginBottom: 1,
 }));
 
+const SubTypography = styled(Typography)(() => ({ color: '#383838' }));
+
 const CloseButton = styled(Button)(() => ({
   width: '20%',
 }));
@@ -118,18 +120,18 @@ const ImageUpload = (): JSX.Element => {
         <Typography sx={{ fontSize: '1.1em' }}>
           {t('Set Background Image')}
         </Typography>
-        <Typography sx={{ color: '#383838' }}>
+        <SubTypography>
           {t('Permitted file types: .jpg, .jpeg, .png')}
-        </Typography>
-        <Typography sx={{ color: '#383838' }}>
+        </SubTypography>
+        <SubTypography>
           {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
-        </Typography>
-        <Typography sx={{ color: '#383838' }}>
+        </SubTypography>
+        <SubTypography>
           {t(
             'Recommended image size for full background: {{ CANVAS_WIDTH_PX }}x{{ CANVAS_HEIGHT_PX }} px.',
             { CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX },
           )}
-        </Typography>
+        </SubTypography>
       </Stack>
       {renderInput()}
     </ImageUploadContainer>

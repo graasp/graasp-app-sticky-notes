@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import grey from '@mui/material/colors/grey';
@@ -77,18 +76,11 @@ const BackgroundToggle = (): JSX.Element => {
       <Typography fontSize="1.1em" color={toggleDisabled ? grey[500] : 'black'}>
         {t('Show Background Image')}
       </Typography>
-      <FormControlLabel
+      <Switch
         disabled={toggleDisabled}
-        control={
-          <Switch
-            color="primary"
-            checked={
-              backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED
-            }
-            onChange={handleToggle}
-          />
-        }
-        label={undefined}
+        color="primary"
+        checked={backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED}
+        onChange={handleToggle}
       />
     </ToggleContainer>
   );

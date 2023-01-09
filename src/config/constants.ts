@@ -4,6 +4,8 @@ export const DEFAULT_NOTE_COLOR_DARKER = '#FDDA0D';
 export const DEFAULT_NOTE_WIDTH = 40;
 export const DEFAULT_NOTE_HEIGHT = 40;
 
+export const FADE_ANIMATION_TIME = 300; // ms
+
 export const AVAILABLE_COLORS = [
   DEFAULT_NOTE_COLOR,
   '#f275ad',

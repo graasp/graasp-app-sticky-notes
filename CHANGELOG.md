@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.4.2...v0.5.0) (2023-01-10)
+
+
+### Features
+
+* add buttons in the notes ([5910370](https://github.com/graasp/graasp-app-sticky-notes/commit/5910370c1f58fc6288e25fe8fd12b7f80a94449a))
+* add delete button in edit dialog ([c511b28](https://github.com/graasp/graasp-app-sticky-notes/commit/c511b28c058def61e2a64c6f3f719692fb319477))
+* add indication for background image size ([116a79c](https://github.com/graasp/graasp-app-sticky-notes/commit/116a79c7e9eac201f21a73b32afc9ba8427cc492))
+* add refresh button ([a0e4413](https://github.com/graasp/graasp-app-sticky-notes/commit/a0e44139336d8e58ab66cb59b9d990d5bd4b3fb2)), closes [#73](https://github.com/graasp/graasp-app-sticky-notes/issues/73)
+* configure i18n and add translation keys for EN ([f8eea92](https://github.com/graasp/graasp-app-sticky-notes/commit/f8eea924770149b007a4454939d69d2b3771db75))
+* edit dialog for notes ([ea3f2f8](https://github.com/graasp/graasp-app-sticky-notes/commit/ea3f2f80512d43e655ac78f861c77e59503b0ed8))
+
+
+### Bug Fixes
+
+* add missing translation ([362f6dd](https://github.com/graasp/graasp-app-sticky-notes/commit/362f6dd37e45d569537e736d83a7987c108407e8))
+* enable bckgnd settings when bckgnd uploaded ([331ec85](https://github.com/graasp/graasp-app-sticky-notes/commit/331ec85d388367401fec4aad154b17b813b7698e))
+* use graasp theme colors ([e7f224c](https://github.com/graasp/graasp-app-sticky-notes/commit/e7f224ca2061fb7d1ffff77424c8120a6cce21a7))
+
 ### 0.4.2 (2022-11-18)
 
 ### 0.4.1 (2022-11-03)

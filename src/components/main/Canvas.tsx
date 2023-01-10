@@ -24,7 +24,7 @@ import ColorSettings from './ColorSettings';
 import NoteContainer from './NoteContainer';
 
 const ScrollContainer = styled('div')(() => ({
-  backgroundColor: 'silver',
+  backgroundColor: 'white',
   overflow: 'auto',
   width: '100%',
   height: '100%',
@@ -32,7 +32,7 @@ const ScrollContainer = styled('div')(() => ({
 }));
 
 const MainContainer = styled('div')(() => ({
-  backgroundColor: 'white',
+  backgroundColor: 'rgba(80, 80, 210, 0.08)', // same color as selected items in lists in Graasp frontend
   transformOrigin: '0 0',
   flexShrink: 0,
   position: 'relative',

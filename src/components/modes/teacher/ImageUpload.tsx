@@ -14,7 +14,11 @@ import { FileInput } from '@uppy/react';
 
 import { APP_SETTINGS } from '../../../config/constants';
 import { MUTATION_KEYS, hooks, useMutation } from '../../../config/queryClient';
-import { MAX_FILE_SIZE } from '../../../config/settings';
+import {
+  CANVAS_HEIGHT_PX,
+  CANVAS_WIDTH_PX,
+  MAX_FILE_SIZE,
+} from '../../../config/settings';
 import '../../../index.css';
 import configureUppy from '../../../utils/uppy';
 import { useAppSettingContext } from '../../context/AppSettingContext';
@@ -27,6 +31,8 @@ const ImageUploadContainer = styled('div')(() => ({
   marginTop: 2,
   marginBottom: 1,
 }));
+
+const SubTypography = styled(Typography)({ color: '#383838' });
 
 const CloseButton = styled(Button)(() => ({
   width: '20%',
@@ -114,12 +120,15 @@ const ImageUpload = (): JSX.Element => {
         <Typography sx={{ fontSize: '1.1em' }}>
           {t('Set Background Image')}
         </Typography>
-        <Typography sx={{ color: '#383838' }}>
+        <SubTypography>
           {t('Permitted file types: .jpg, .jpeg, .png')}
-        </Typography>
-        <Typography sx={{ color: '#383838' }}>
-          {t(`Max file size: ${MAX_FILE_SIZE / 1e6}mb`)}
-        </Typography>
+        </SubTypography>
+        <SubTypography>
+          {t('MAX_FILE_SIZE_TEXT', { MAX_FILE_SIZE_MB: MAX_FILE_SIZE / 1e6 })}
+        </SubTypography>
+        <SubTypography>
+          {t('RECOMMENDED_IMAGE_SIZE', { CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX })}
+        </SubTypography>
       </Stack>
       {renderInput()}
     </ImageUploadContainer>

@@ -1,5 +1,9 @@
 # Sticky Notes app for Graasp
 
+![typescript version](https://img.shields.io/github/package-json/dependency-version/graasp/graasp-app-sticky-notes/typescript)
+[![Latest version released on Github](https://img.shields.io/github/package-json/v/graasp/graasp-app-sticky-notes?color=deepskyblue&logo=github)](https://github.com/graasp/graasp-app-sticky-notes/releases/latest)
+
+
 [![Deploy to development environment](https://github.com/graasp/graasp-app-sticky-notes/actions/workflows/cintegration-s3-apps-caller.yml/badge.svg)](https://github.com/graasp/graasp-app-sticky-notes/actions/workflows/cintegration-s3-apps-caller.yml)
 [![Deploy to staging environment](https://github.com/graasp/graasp-app-sticky-notes/actions/workflows/cdelivery-s3-apps-caller.yml/badge.svg)](https://github.com/graasp/graasp-app-sticky-notes/actions/workflows/cdelivery-s3-apps-caller.yml)
 [![Deploy to graasp.org](https://github.com/graasp/graasp-app-sticky-notes/actions/workflows/cdeployment-s3-apps-caller.yml/badge.svg)](https://github.com/graasp/graasp-app-sticky-notes/actions/workflows/cdeployment-s3-apps-caller.yml)

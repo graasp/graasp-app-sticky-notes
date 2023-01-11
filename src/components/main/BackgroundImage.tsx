@@ -1,6 +1,5 @@
-import { t } from 'i18next';
-
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
 
@@ -26,6 +25,7 @@ const Container = styled('div')(() => ({
 }));
 
 const BackgroundImage: FC = () => {
+  const { t } = useTranslation();
   const { appSettingArray: appSettings } = useAppSettingContext();
   const [enabled, setEnabled] = useState(DEFAULT_BACKGROUND_ENABLED);
   const [backgroundSetting, setBackgroundSetting] = useState<BackgroundType>();
@@ -67,7 +67,11 @@ const BackgroundImage: FC = () => {
   }
   return (
     <Container>
-      <img data-cy={BACKGROUND_IMAGE_CY} alt={t('Background')} src={url} />
+      <img
+        data-cy={BACKGROUND_IMAGE_CY}
+        alt={t('Background', 'Background')}
+        src={url}
+      />
     </Container>
   );
 };

@@ -11,13 +11,6 @@ export const resources = {
   fr,
 } as const;
 
-declare module 'react-i18next' {
-  interface CustomTypeOptions {
-    defaultNS: typeof defaultNS;
-    resources: typeof resources['en'];
-  }
-}
-
 i18n.use(initReactI18next).init({
   resources,
   lng: 'en',
@@ -30,6 +23,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
     formatSeparator: ',',
   },
+  returnNull: false,
 });
 
 export default i18n;

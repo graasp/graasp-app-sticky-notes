@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -19,9 +17,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["node","cypress"]
+    "types": ["node", "cypress", "i18next"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

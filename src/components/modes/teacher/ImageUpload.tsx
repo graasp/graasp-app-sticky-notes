@@ -107,7 +107,7 @@ const ImageUpload = (): JSX.Element => {
         uppy={uppy}
         locale={{
           strings: {
-            chooseFiles: t('Browse Your Computer'),
+            chooseFiles: t('Browse Your Computer', 'Browse your computer'),
           },
         }}
       />

@@ -12,6 +12,7 @@ import {
   ExistingNoteType,
   NoteDataType,
 } from '../../config/appDataTypes';
+import { NOTE_CONTAINER_CY } from '../../config/selectors';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
 import { APP_DATA_VISIBILITY } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
@@ -110,7 +111,10 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <StyledNoteContainer onClick={handleCanvasClick}>
+    <StyledNoteContainer
+      data-cy={NOTE_CONTAINER_CY}
+      onClick={handleCanvasClick}
+    >
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       {notes ? (
         notes.map((note) => (

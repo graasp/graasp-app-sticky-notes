@@ -13,7 +13,11 @@ import Fab from '@mui/material/Fab';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 
-import { SETTINGS_BUTTON_CY, SETTINGS_CY } from '../../../config/selectors';
+import {
+  SETTINGS_BUTTON_CY,
+  SETTINGS_CLOSE_BTN_CY,
+  SETTINGS_CY,
+} from '../../../config/selectors';
 import BackgroundToggle from './BackgroundToggle';
 import DownloadActions from './DownloadActions';
 import ImageUpload from './ImageUpload';
@@ -85,6 +89,7 @@ const Settings = (): JSX.Element => {
               variant="contained"
               color="secondary"
               onClick={handleModalClose}
+              data-cy={SETTINGS_CLOSE_BTN_CY}
             >
               {t('Close')}
             </CloseButton>

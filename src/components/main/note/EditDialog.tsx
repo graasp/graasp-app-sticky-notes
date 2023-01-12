@@ -14,6 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { NoteDataType } from '../../../config/appDataTypes';
 import { AVAILABLE_COLORS } from '../../../config/constants';
+import { NOTE_EDIT_DIALOG } from '../../../config/selectors';
 import ColorItem from '../../common/ColorItem';
 
 interface EditDialogProps extends DialogProps {
@@ -59,7 +60,7 @@ const EditDialog: FC<EditDialogProps> = ({
   ];
 
   return (
-    <Dialog open={open} fullWidth maxWidth="md">
+    <Dialog open={open} fullWidth maxWidth="md" data-cy={NOTE_EDIT_DIALOG}>
       <DialogTitle>{t('Edit note')}</DialogTitle>
       <DialogContent>
         <Stack spacing={1}>

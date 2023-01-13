@@ -1,7 +1,12 @@
 /// <reference types="cypress" />
 import { mount } from 'cypress/react18';
 
-import { Database, LocalContext, Member } from '@graasp/apps-query-client';
+import {
+  AppData,
+  Database,
+  LocalContext,
+  Member,
+} from '@graasp/apps-query-client';
 
 declare global {
   namespace Cypress {
@@ -15,10 +20,12 @@ declare global {
         database,
         currentMember,
         appContext,
+        appData,
       }: {
         database?: Partial<Database>;
         currentMember?: Member;
         appContext?: Partial<LocalContext>;
+        appData?: AppData[];
       }): Chainable<Element>;
     }
   }

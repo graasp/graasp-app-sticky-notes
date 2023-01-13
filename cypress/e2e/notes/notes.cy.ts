@@ -1,6 +1,7 @@
 import { Context } from '@graasp/sdk';
 
 import {
+  CONFIRM_DELETE_DIALOG_CY,
   NOTE_CONTAINER_CY,
   NOTE_CONTENT_CY,
   NOTE_CY,
@@ -40,9 +41,25 @@ describe('Notes and interactions', () => {
           .dblclick();
         // cy.wait(1000);
         cy.get(`#delete-button-in-dialog`).click();
+        cy.get(dataCyWrapper(CONFIRM_DELETE_DIALOG_CY)).within(() => {
+          cy.get('#confirm-delete-button').click();
+        });
         cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`)).should(
           'not.exist',
         );
+      });
+      it('cancels note deletion', () => {
+        cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`))
+          .should('be.visible')
+          .dblclick();
+        // cy.wait(1000);
+        cy.get(`#delete-button-in-dialog`).click();
+        cy.get(dataCyWrapper(CONFIRM_DELETE_DIALOG_CY)).within(() => {
+          cy.get('#cancel-delete-button').click();
+        });
+        cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`)).should(
+          'exist',
+        ); // TODO: improve - close dialog and check for note visibility
       });
       it('edits one note', () => {
         const typedContent = 'Hello world';

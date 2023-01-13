@@ -16,6 +16,7 @@ import { NOTE_CY } from '../../../config/selectors';
 import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { useCanvasContext } from '../../context/CanvasContext';
+import DeleteConfirmDialog from './DeleteConfirmDialog';
 import EditDialog from './EditDialog';
 import EditableText from './EditableText';
 
@@ -82,6 +83,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const [text, setText] = useState(initialText);
   const [isTransforming, setIsTransforming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isAskingToDelete, setIsAskingToDelete] = useState(false);
   const [exist, setExist] = useState(true);
 
   const [isDragging, setIsDragging] = useState(false);
@@ -201,6 +203,8 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   };
 
   const handleDelete = (): void => {
+    toggleEdit(false);
+    setIsAskingToDelete(false);
     setExist(false);
     setTimeout(() => {
       deleteAppData({ id });
@@ -255,7 +259,9 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
               className="action-button"
               size="small"
               sx={{ top: 1, right: 1 }}
-              onClick={handleDelete}
+              onClick={() => {
+                setIsAskingToDelete(true);
+              }}
             >
               <DeleteOutlineOutlinedIcon />
             </SmallActionButton>
@@ -281,9 +287,15 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
           toggleEdit(false);
         }}
         onDelete={() => {
-          toggleEdit(false);
-          handleDelete();
+          setIsAskingToDelete(true);
         }}
+      />
+      <DeleteConfirmDialog
+        open={isAskingToDelete}
+        onCancel={() => {
+          setIsAskingToDelete(false);
+        }}
+        onDelete={handleDelete}
       />
     </>
   );

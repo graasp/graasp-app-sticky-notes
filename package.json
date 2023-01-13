@@ -60,7 +60,7 @@
   },
   "scripts": {
     "start": "env-cmd -f ./.env.local react-scripts --max_old_space_size=4096 -r @cypress/instrument-cra start",
-    "start:dev": "env-cmd -f ./.env.development react-scripts--max_old_space_size=4096 -r @cypress/instrument-cra start",
+    "start:dev": "env-cmd -f ./.env.development react-scripts --max_old_space_size=4096 -r @cypress/instrument-cra start",
     "start:test": "env-cmd -f ./.env.test react-scripts --max_old_space_size=4096 -r @cypress/instrument-cra start",
     "start:ci": "react-scripts --max_old_space_size=4096 -r @cypress/instrument-cra start",
     "build": "react-scripts --max_old_space_size=4096 build",

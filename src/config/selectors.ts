@@ -12,3 +12,6 @@ export const RELOAD_BUTTON_CY = 'reloadButton';
 export const DELETE_BUTTON_IN_DIALOG_CY = 'deleteButtonInDialog';
 export const QUILL_DIALOG_CY = 'quillDialog';
 export const NOTE_CONTENT_CY = 'noteContent';
+export const CONFIRM_DELETE_DIALOG_CY = 'confirmDeleteDialog';
+export const CANCEL_DELETE_BUTTON_CY = 'cancelDeleteButton';
+export const CONFIRM_DELETE_BUTTON_CY = 'confirmDeleteButton';

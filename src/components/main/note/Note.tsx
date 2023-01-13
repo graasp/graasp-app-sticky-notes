@@ -12,6 +12,7 @@ import lightBlue from '@mui/material/colors/lightBlue';
 import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
 import { NoteDataType } from '../../../config/appDataTypes';
 import { FADE_ANIMATION_TIME } from '../../../config/constants';
+import { NOTE_CY } from '../../../config/selectors';
 import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { useCanvasContext } from '../../context/CanvasContext';
@@ -246,6 +247,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
               borderColor: isTransforming ? lightBlue[500] : 'none',
             }}
             onClick={handleClickEvent}
+            data-cy={`${NOTE_CY}-${id}`}
           >
             <EditableText text={text} />
             <UserInfo>{t('ADDED_BY_TEXT', { userName })}</UserInfo>

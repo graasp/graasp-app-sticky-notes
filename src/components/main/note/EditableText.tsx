@@ -2,6 +2,7 @@ import DOMPurify from 'dompurify';
 
 import React, { FC, useRef } from 'react';
 
+import { NOTE_CONTENT_CY } from '../../../config/selectors';
 import './note_style.css';
 
 interface EditableTextProps {
@@ -26,6 +27,7 @@ const EditableText: FC<EditableTextProps> = ({ text }) => {
   return (
     <div
       ref={htmlContainer}
+      data-cy={NOTE_CONTENT_CY}
       // The class content is styled in `note_style.css`
       className="content"
       // eslint-disable-next-line react/no-danger

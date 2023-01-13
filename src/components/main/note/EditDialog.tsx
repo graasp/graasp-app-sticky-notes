@@ -14,7 +14,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { NoteDataType } from '../../../config/appDataTypes';
 import { AVAILABLE_COLORS } from '../../../config/constants';
-import { NOTE_EDIT_DIALOG } from '../../../config/selectors';
+import {
+  DELETE_BUTTON_IN_DIALOG_CY,
+  NOTE_EDIT_DIALOG,
+  QUILL_DIALOG_CY,
+} from '../../../config/selectors';
 import ColorItem from '../../common/ColorItem';
 
 interface EditDialogProps extends DialogProps {
@@ -74,6 +78,8 @@ const EditDialog: FC<EditDialogProps> = ({
             ref={textInput}
             modules={modules}
             formats={formats}
+            data-cy={QUILL_DIALOG_CY}
+            id="quill-dialog"
           />
           <Stack direction="row" spacing={1}>
             <Typography variant="caption">{t('Note color:')}</Typography>
@@ -95,6 +101,8 @@ const EditDialog: FC<EditDialogProps> = ({
           color="error"
           onClick={onDelete}
           endIcon={<DeleteOutlinedIcon />}
+          data-cy={DELETE_BUTTON_IN_DIALOG_CY} // TODO: fix this. It doesn't work for testing...
+          id="delete-button-in-dialog"
         >
           {t('Delete')}
         </Button>
@@ -102,7 +110,12 @@ const EditDialog: FC<EditDialogProps> = ({
           <Button variant="text" color="secondary" onClick={onCancel}>
             {t('Cancel')}
           </Button>
-          <Button onClick={() => onSave(value, color)}>{t('Save')}</Button>
+          <Button
+            id="save-button-in-dialog"
+            onClick={() => onSave(value, color)}
+          >
+            {t('Save')}
+          </Button>
         </div>
       </DialogActions>
     </Dialog>

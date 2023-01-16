@@ -1,11 +1,15 @@
 import { Context } from '@graasp/sdk';
 
 import {
+  CANCEL_DELETE_BUTTON_CY,
+  CONFIRM_DELETE_BUTTON_CY,
   CONFIRM_DELETE_DIALOG_CY,
+  DELETE_BUTTON_IN_DIALOG_CY,
   NOTE_CONTAINER_CY,
   NOTE_CONTENT_CY,
   NOTE_CY,
   NOTE_EDIT_DIALOG,
+  SAVE_DIALOG_CY,
   SCROLL_CONTAINER_CY,
   dataCyWrapper,
 } from '../../../src/config/selectors';
@@ -40,9 +44,9 @@ describe('Notes and interactions', () => {
           .should('be.visible')
           .dblclick();
         // cy.wait(1000);
-        cy.get(`#delete-button-in-dialog`).click();
+        cy.get(dataCyWrapper(DELETE_BUTTON_IN_DIALOG_CY)).click();
         cy.get(dataCyWrapper(CONFIRM_DELETE_DIALOG_CY)).within(() => {
-          cy.get('#confirm-delete-button').click();
+          cy.get(dataCyWrapper(CONFIRM_DELETE_BUTTON_CY)).click();
         });
         cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`)).should(
           'not.exist',
@@ -53,9 +57,9 @@ describe('Notes and interactions', () => {
           .should('be.visible')
           .dblclick();
         // cy.wait(1000);
-        cy.get(`#delete-button-in-dialog`).click();
+        cy.get(dataCyWrapper(DELETE_BUTTON_IN_DIALOG_CY)).click();
         cy.get(dataCyWrapper(CONFIRM_DELETE_DIALOG_CY)).within(() => {
-          cy.get('#cancel-delete-button').click();
+          cy.get(dataCyWrapper(CANCEL_DELETE_BUTTON_CY)).click();
         });
         cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`)).should(
           'exist',
@@ -70,7 +74,7 @@ describe('Notes and interactions', () => {
           cy.get('#quill-dialog').within(() => {
             cy.get('.ql-editor').clear().type(typedContent);
           });
-          cy.get('#save-button-in-dialog').click();
+          cy.get(dataCyWrapper(SAVE_DIALOG_CY)).click();
         });
         cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`)).within(
           () => {
@@ -84,33 +88,3 @@ describe('Notes and interactions', () => {
     });
   });
 });
-
-// describe('Background image', () => {
-//   it('has no background image', () => {
-//     let appSettings;
-//     cy.fixture('appSettings_withBckImg').then((aS) => {
-//       cy.setUpApi({
-//         appContext: {
-//           permission: 'admin',
-//           context: 'builder',
-//         },
-//         database: {
-//           appSettings: aS,
-//         },
-//       });
-//       appSettings = aS;
-//     });
-//     cy.visit('/');
-
-//     // TODO: check this.
-//     if (
-//       appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS)
-//         ?.data?.toggle &&
-//       appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND)
-//     ) {
-//       cy.get(dataCyWrapper(BACKGROUND_IMAGE_CY)).should('be.visible');
-//     } else {
-//       cy.get(dataCyWrapper(BACKGROUND_IMAGE_CY)).should('not.exist');
-//     }
-//   });
-// });

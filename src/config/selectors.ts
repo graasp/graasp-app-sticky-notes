@@ -15,3 +15,5 @@ export const NOTE_CONTENT_CY = 'noteContent';
 export const CONFIRM_DELETE_DIALOG_CY = 'confirmDeleteDialog';
 export const CANCEL_DELETE_BUTTON_CY = 'cancelDeleteButton';
 export const CONFIRM_DELETE_BUTTON_CY = 'confirmDeleteButton';
+export const CANCEL_DIALOG_CY = 'cancelDialog';
+export const SAVE_DIALOG_CY = 'saveDialog';

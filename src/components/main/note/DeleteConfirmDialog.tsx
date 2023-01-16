@@ -37,8 +37,8 @@ const DeleteConfirmDialog: FC<DeleteConfirmDialogProps> = ({
           variant="text"
           color="secondary"
           onClick={onCancel}
-          id="cancel-delete-button"
-          data-cy={CANCEL_DELETE_BUTTON_CY}
+          // id="cancel-delete-button"
+          dataCy={CANCEL_DELETE_BUTTON_CY}
         >
           {t('Cancel')}
         </Button>
@@ -46,8 +46,8 @@ const DeleteConfirmDialog: FC<DeleteConfirmDialogProps> = ({
           color="error"
           onClick={onDelete}
           endIcon={<DeleteOutlinedIcon />}
-          id="confirm-delete-button"
-          data-cy={CONFIRM_DELETE_BUTTON_CY}
+          // id="confirm-delete-button"
+          dataCy={CONFIRM_DELETE_BUTTON_CY}
         >
           {t('Delete')}
         </Button>

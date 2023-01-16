@@ -15,9 +15,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { NoteDataType } from '../../../config/appDataTypes';
 import { AVAILABLE_COLORS } from '../../../config/constants';
 import {
+  CANCEL_DIALOG_CY,
   DELETE_BUTTON_IN_DIALOG_CY,
   NOTE_EDIT_DIALOG,
   QUILL_DIALOG_CY,
+  SAVE_DIALOG_CY,
 } from '../../../config/selectors';
 import ColorItem from '../../common/ColorItem';
 
@@ -101,18 +103,24 @@ const EditDialog: FC<EditDialogProps> = ({
           color="error"
           onClick={onDelete}
           endIcon={<DeleteOutlinedIcon />}
-          data-cy={DELETE_BUTTON_IN_DIALOG_CY} // TODO: fix this. It doesn't work for testing...
+          dataCy={DELETE_BUTTON_IN_DIALOG_CY} // TODO: fix this. It doesn't work for testing...
           id="delete-button-in-dialog"
         >
           {t('Delete')}
         </Button>
         <div>
-          <Button variant="text" color="secondary" onClick={onCancel}>
+          <Button
+            variant="text"
+            color="secondary"
+            onClick={onCancel}
+            dataCy={CANCEL_DIALOG_CY}
+          >
             {t('Cancel')}
           </Button>
           <Button
             id="save-button-in-dialog"
             onClick={() => onSave(value, color)}
+            dataCy={SAVE_DIALOG_CY}
           >
             {t('Save')}
           </Button>

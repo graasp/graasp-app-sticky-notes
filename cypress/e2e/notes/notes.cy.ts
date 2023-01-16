@@ -20,7 +20,9 @@ describe('Notes and interactions', () => {
     describe(`In ${context} view`, () => {
       beforeEach(() => {
         cy.setUpApi({
-          appData: NOTES_TOP_LEFT,
+          database: {
+            appData: NOTES_TOP_LEFT,
+          },
           appContext: {
             permission: 'admin',
             context,

@@ -28,14 +28,6 @@ describe('Builder view with admin rights', () => {
       cy.get(dataCyWrapper(SETTINGS_BUTTON_CY)).click();
       cy.get(dataCyWrapper(SETTINGS_CY)).should('be.visible');
     });
-    // TODO: fix this test
-    // it('opens then close the settings', () => {
-    //   cy.visit('/');
-    //   cy.get(dataCyWrapper(SETTINGS_BUTTON_CY)).click();
-    //   cy.get(dataCyWrapper(SETTINGS_CY)).should('be.visible');
-    //   cy.get(dataCyWrapper(SETTINGS_CLOSE_BTN_CY)).click();
-    //   cy.get(dataCyWrapper(SETTINGS_CY)).should('be.hidden');
-    // });
   });
   describe('Notes', () => {
     it('add a note', () => {
@@ -45,33 +37,3 @@ describe('Builder view with admin rights', () => {
     });
   });
 });
-
-// describe('Background image', () => {
-//   it('has no background image', () => {
-//     let appSettings;
-//     cy.fixture('appSettings_withBckImg').then((aS) => {
-//       cy.setUpApi({
-//         appContext: {
-//           permission: 'admin',
-//           context: 'builder',
-//         },
-//         database: {
-//           appSettings: aS,
-//         },
-//       });
-//       appSettings = aS;
-//     });
-//     cy.visit('/');
-
-//     // TODO: check this.
-//     if (
-//       appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS)
-//         ?.data?.toggle &&
-//       appSettings?.find(({ name }) => name === APP_SETTINGS.BACKGROUND)
-//     ) {
-//       cy.get(dataCyWrapper(BACKGROUND_IMAGE_CY)).should('be.visible');
-//     } else {
-//       cy.get(dataCyWrapper(BACKGROUND_IMAGE_CY)).should('not.exist');
-//     }
-//   });
-// });

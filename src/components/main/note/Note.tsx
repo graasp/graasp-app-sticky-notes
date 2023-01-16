@@ -286,15 +286,11 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
           handleUpdate(newText, newColor);
           toggleEdit(false);
         }}
-        onDelete={() => {
-          setIsAskingToDelete(true);
-        }}
+        onDelete={() => setIsAskingToDelete(true)}
       />
       <DeleteConfirmDialog
         open={isAskingToDelete}
-        onCancel={() => {
-          setIsAskingToDelete(false);
-        }}
+        onCancel={() => setIsAskingToDelete(false)}
         onDelete={handleDelete}
       />
     </>

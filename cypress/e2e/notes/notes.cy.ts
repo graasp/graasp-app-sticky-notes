@@ -45,7 +45,6 @@ describe('Notes and interactions', () => {
         cy.get(dataCyWrapper(`${NOTE_CY}-${NOTES_TOP_LEFT[0].id}`))
           .should('be.visible')
           .dblclick();
-        // cy.wait(1000);
         cy.get(dataCyWrapper(DELETE_BUTTON_IN_DIALOG_CY)).click();
         cy.get(dataCyWrapper(CONFIRM_DELETE_DIALOG_CY)).within(() => {
           cy.get(dataCyWrapper(CONFIRM_DELETE_BUTTON_CY)).click();

@@ -103,7 +103,7 @@ const EditDialog: FC<EditDialogProps> = ({
           color="error"
           onClick={onDelete}
           endIcon={<DeleteOutlinedIcon />}
-          dataCy={DELETE_BUTTON_IN_DIALOG_CY} // TODO: fix this. It doesn't work for testing...
+          dataCy={DELETE_BUTTON_IN_DIALOG_CY}
           id="delete-button-in-dialog"
         >
           {t('Delete')}

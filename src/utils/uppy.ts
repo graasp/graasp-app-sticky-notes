@@ -1,4 +1,4 @@
-import { TFunction } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 import Uppy, { UploadResult } from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
@@ -48,7 +48,7 @@ const configureUppy = (args: configureUppyInterface): Uppy => {
   // uppy.on('file-added', (file) => dispatch(addImage(file)));
   uppy.on('file-added', (file) => {
     // set name of the settings alongside the file
-    showSuccessToast(t('File added.'));
+    showSuccessToast(t('File added.') ?? 'File');
     uppy.setFileMeta(file.id, {
       size: file.size,
       name: APP_SETTINGS.BACKGROUND,
@@ -56,14 +56,19 @@ const configureUppy = (args: configureUppyInterface): Uppy => {
   });
 
   uppy.on('complete', async (result) => {
-    showSuccessToast(t('Upload complete.'));
+    showSuccessToast(t('Upload complete.', 'Upload complete.'));
     // run mutation to invalidate app setting key
     onComplete(result);
   });
 
   uppy.on('error', (error) => {
     if (standalone) {
-      showErrorToast(t('PREVIEW_NO_UPLOAD'));
+      showErrorToast(
+        t(
+          'PREVIEW_NO_UPLOAD',
+          'This is just a preview. No files can be uploaded.',
+        ),
+      );
     } else {
       showErrorToast(error);
     }
@@ -71,16 +76,31 @@ const configureUppy = (args: configureUppyInterface): Uppy => {
 
   uppy.on('upload-error', (file, error, response) => {
     if (standalone) {
-      showErrorToast(t('PREVIEW_NO_UPLOAD'));
+      showErrorToast(
+        t(
+          'PREVIEW_NO_UPLOAD',
+          'This is just a preview. No files can be uploaded.',
+        ),
+      );
     } else if (response) {
       const { status, body } = response;
-      showErrorToast(t('UPLOAD_ERROR_STATUS', { status, body }));
+      showErrorToast(
+        t('UPLOAD_ERROR_STATUS', 'Status: {{ status }}\n{{ body }}', {
+          status,
+          body,
+        }),
+      );
     }
   });
 
   uppy.on('restriction-failed', (file, error) => {
     if (standalone) {
-      showErrorToast(t('PREVIEW_NO_UPLOAD'));
+      showErrorToast(
+        t(
+          'PREVIEW_NO_UPLOAD',
+          'This is just a preview. No files can be uploaded.',
+        ),
+      );
     } else {
       showErrorToast(error);
     }

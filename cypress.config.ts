@@ -10,4 +10,10 @@ export default defineConfig({
     },
     baseUrl: `http://localhost:${process.env.PORT || 3000}`,
   },
+  component: {
+    devServer: {
+      framework: 'create-react-app',
+      bundler: 'webpack',
+    },
+  },
 });

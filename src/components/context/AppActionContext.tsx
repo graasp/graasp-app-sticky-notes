@@ -26,7 +26,7 @@ const AppActionContext =
   createContext<AppActionContextType>(defaultContextValue);
 
 export const AppActionProvider: FC<PropsWithChildren> = ({ children }) => {
-  const appAction = hooks.useAppActions();
+  const appAction = hooks.useAppActions({ enabled: true });
 
   const { mutate: postAppAction } = useMutation<
     unknown,

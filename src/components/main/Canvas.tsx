@@ -10,7 +10,7 @@ import Fab from '@mui/material/Fab';
 
 import { APP_SETTINGS } from '../../config/constants';
 import { hooks, queryClient } from '../../config/queryClient';
-import { SCROLL_CONTAINER_CY } from '../../config/selectors';
+import { RELOAD_BUTTON_CY, SCROLL_CONTAINER_CY } from '../../config/selectors';
 import {
   CANVAS_HEIGHT_PX,
   CANVAS_WIDTH_PX,
@@ -139,6 +139,7 @@ const Canvas = (): JSX.Element => {
           onClick={() => {
             queryClient.invalidateQueries([itemId]);
           }}
+          data-cy={RELOAD_BUTTON_CY}
         >
           <RefreshIcon />
         </Fab>

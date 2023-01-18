@@ -14,6 +14,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { NoteDataType } from '../../../config/appDataTypes';
 import { AVAILABLE_COLORS } from '../../../config/constants';
+import {
+  CANCEL_DIALOG_CY,
+  DELETE_BUTTON_IN_DIALOG_CY,
+  NOTE_EDIT_DIALOG,
+  QUILL_DIALOG_CY,
+  SAVE_DIALOG_CY,
+} from '../../../config/selectors';
 import ColorItem from '../../common/ColorItem';
 
 interface EditDialogProps extends DialogProps {
@@ -59,7 +66,7 @@ const EditDialog: FC<EditDialogProps> = ({
   ];
 
   return (
-    <Dialog open={open} fullWidth maxWidth="md">
+    <Dialog open={open} fullWidth maxWidth="md" data-cy={NOTE_EDIT_DIALOG}>
       <DialogTitle>{t('Edit note')}</DialogTitle>
       <DialogContent>
         <Stack spacing={1}>
@@ -73,6 +80,8 @@ const EditDialog: FC<EditDialogProps> = ({
             ref={textInput}
             modules={modules}
             formats={formats}
+            data-cy={QUILL_DIALOG_CY}
+            id="quill-dialog"
           />
           <Stack direction="row" spacing={1}>
             <Typography variant="caption">{t('Note color:')}</Typography>
@@ -94,14 +103,27 @@ const EditDialog: FC<EditDialogProps> = ({
           color="error"
           onClick={onDelete}
           endIcon={<DeleteOutlinedIcon />}
+          dataCy={DELETE_BUTTON_IN_DIALOG_CY}
+          id="delete-button-in-dialog"
         >
           {t('Delete')}
         </Button>
         <div>
-          <Button variant="text" color="secondary" onClick={onCancel}>
+          <Button
+            variant="text"
+            color="secondary"
+            onClick={onCancel}
+            dataCy={CANCEL_DIALOG_CY}
+          >
             {t('Cancel')}
           </Button>
-          <Button onClick={() => onSave(value, color)}>{t('Save')}</Button>
+          <Button
+            id="save-button-in-dialog"
+            onClick={() => onSave(value, color)}
+            dataCy={SAVE_DIALOG_CY}
+          >
+            {t('Save')}
+          </Button>
         </div>
       </DialogActions>
     </Dialog>

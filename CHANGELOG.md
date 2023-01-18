@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.5.0...v0.6.0) (2023-01-18)
+
+
+### Features
+
+* asks for confirmation before deleting note ([fbf06f7](https://github.com/graasp/graasp-app-sticky-notes/commit/fbf06f7e27ff85d8b2631a304b5b366ccd8fc455))
+
+
+### Bug Fixes
+
+* **api:** update call to action hook ([8362b9d](https://github.com/graasp/graasp-app-sticky-notes/commit/8362b9d7cfd006d2ee5a4fe7812261f627317846))
+* remove buggy and useless type declarations ([6e8b8f3](https://github.com/graasp/graasp-app-sticky-notes/commit/6e8b8f3dd477795a3eac292ed2771264a8952795))
+
+
+### Documentation
+
+* **README:** Add badges to README ([bd3a5dc](https://github.com/graasp/graasp-app-sticky-notes/commit/bd3a5dc4c958702845972ecb31bb4d4267a735a9))
+
+
+### Tests
+
+* add configure code coverage\ntest: add cypress workflow ([131c45d](https://github.com/graasp/graasp-app-sticky-notes/commit/131c45d2c10ee4096b673ed7c0efb4838c665471))
+* add new tests for builder and admin ([5201297](https://github.com/graasp/graasp-app-sticky-notes/commit/520129754ab786dc4a1fec67746b286507bb0573))
+* add tests for notes interactions ([ba76eef](https://github.com/graasp/graasp-app-sticky-notes/commit/ba76eef05051203748e4843d01bd211fe28469f8))
+* reconfigure cypress ([5201297](https://github.com/graasp/graasp-app-sticky-notes/commit/520129754ab786dc4a1fec67746b286507bb0573))
+* **refactor:** use appData from database argument ([bd75c94](https://github.com/graasp/graasp-app-sticky-notes/commit/bd75c94ebc94d42d787197cee91012cccee0c69d))
+* use dataCy prop as selector with Graasp UI btn ([ce72016](https://github.com/graasp/graasp-app-sticky-notes/commit/ce720161cec9eeb35a0f7d2bf6b3ada21275f646))
+
 ## [0.5.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.4.2...v0.5.0) (2023-01-10)
 
 

@@ -1,3 +1,29 @@
 {
-  "translations": {}
+  "translations": {
+    "ADDED_BY_TEXT": "Ajouté par: {{userName}}",
+    "Delete Background": "Effacer l'image de fond",
+    "Browse Your Computer": "Parcourir votre ordinateur",
+    "Set Background Image": "Appliquer l'image de fond",
+    "Permitted file types: .jpg, .jpeg, .png": "Types de fichiers permis : .jpg, .jpeg, .png",
+    "MAX_FILE_SIZE_TEXT": "Taille de fichier maximale : {{ MAX_FILE_SIZE_MB }}mb",
+    "RECOMMENDED_IMAGE_SIZE": "Taille d'image recommandée pour couvrir tout le canvas : {{ CANVAS_WIDTH_PX }}x{{ CANVAS_HEIGHT_PX }} px.",
+    "File added.": "Fichier ajouté.",
+    "Upload complete.": "Téléversement terminé.",
+    "PREVIEW_NO_UPLOAD": "Ceci est juste un aperçu. Aucun fichier ne peut être ajouté.",
+    "UPLOAD_ERROR_STATUS": "Status : {{ status }}\n{{ body }}",
+    "Zoom": "Zoom",
+    "Set new note color": "Choisir la nouvelle couleur",
+    "Settings": "Paramétres",
+    "Close": "Fermer",
+    "Download": "Télécharger",
+    "Download learning analytics.": "Télécharger les données d'apprentissage.",
+    "Show Background Image": "Montrer l'image de fond",
+    "Add a note.": "Ajouter une note.",
+    "Save": "Sauvegarder",
+    "Cancel": "Annuler",
+    "Edit note": "Éditer la note",
+    "Note color:": "Couleur de la note :",
+    "Delete": "Supprimer",
+    "CONFIRM_DELETE": "Voulez-vous vraiment supprimer cette note ?"
+  }
 }

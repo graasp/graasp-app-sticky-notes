@@ -24,6 +24,8 @@
     "Edit note": "Edit note",
     "Note color:": "Note color:",
     "Delete": "Delete",
-    "CONFIRM_DELETE": "Do you really want to delete this note?"
+    "CONFIRM_DELETE": "Do you really want to delete this note?",
+    "ZOOM_IN": "Zoom in",
+    "ZOOM_OUT": "Zoom out"
   }
 }

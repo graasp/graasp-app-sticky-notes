@@ -22,6 +22,7 @@ import {
   SAVE_DIALOG_CY,
 } from '../../../config/selectors';
 import ColorItem from '../../common/ColorItem';
+import NoteAvatars from '../../common/NoteAvatars';
 
 interface EditDialogProps extends DialogProps {
   note: NoteDataType;
@@ -70,9 +71,7 @@ const EditDialog: FC<EditDialogProps> = ({
       <DialogTitle>{t('Edit note')}</DialogTitle>
       <DialogContent>
         <Stack spacing={1}>
-          <Typography variant="subtitle2">
-            {t('ADDED_BY_TEXT', { userName })}
-          </Typography>
+          <NoteAvatars userName={userName} />
           <ReactQuill
             theme="snow"
             value={value}

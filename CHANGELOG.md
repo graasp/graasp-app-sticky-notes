@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.6.0...v0.7.0) (2023-02-17)
+
+
+### Features
+
+* **actions:** add data of new note when adding it ([6a3dc1a](https://github.com/graasp/graasp-app-sticky-notes/commit/6a3dc1a1da790a7bad5276263b25e202af46e6f7))
+* **i18n:** add french translations ([efd089c](https://github.com/graasp/graasp-app-sticky-notes/commit/efd089c8bce239f05099157bf5060eec6959027b))
+* **UI:** add avatars (letters only) to show note creators ([30ccacf](https://github.com/graasp/graasp-app-sticky-notes/commit/30ccacfe41639261f14546009b87a3a1c2cf8b19))
+
+
+### Bug Fixes
+
+* **actions:** add AppActions context to the app ([2427363](https://github.com/graasp/graasp-app-sticky-notes/commit/2427363f1f22dc0e873d06c69f25d190146e6e0a))
+* **UI:** remove comma between letters ([c3ecb1d](https://github.com/graasp/graasp-app-sticky-notes/commit/c3ecb1d62583ee5d96263db25c94b0657134d700))
+
+
+### Documentation
+
+* add infos for contributors ([3ca593d](https://github.com/graasp/graasp-app-sticky-notes/commit/3ca593d67d9dd05e4af5dfc1d73670c70d0702b2))
+* update screenshots ([9387685](https://github.com/graasp/graasp-app-sticky-notes/commit/9387685773cb3199b784fddeaddc5db464f7a9c6))
+
 ## [0.6.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.5.0...v0.6.0) (2023-01-18)
 
 

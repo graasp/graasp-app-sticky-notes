@@ -1,9 +1,9 @@
 import { saveAs } from 'file-saver';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Context } from '@graasp/apps-query-client';
+import { useLocalContext } from '@graasp/apps-query-client';
 import { Button } from '@graasp/ui';
 
 import { styled } from '@mui/material';
@@ -22,7 +22,7 @@ const ToggleContainer = styled('div')(() => ({
 const DownloadActions = (): JSX.Element => {
   const { t } = useTranslation();
 
-  const context = useContext(Context);
+  const context = useLocalContext();
 
   const { appActionArray } = useAppActionContext();
 

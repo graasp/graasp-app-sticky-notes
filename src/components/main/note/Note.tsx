@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
-import { useTranslation } from 'react-i18next';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { styled } from '@mui/material';
+import { Stack, styled } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import lightBlue from '@mui/material/colors/lightBlue';
@@ -13,6 +12,7 @@ import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
 import { NoteDataType } from '../../../config/appDataTypes';
 import { FADE_ANIMATION_TIME } from '../../../config/constants';
 import { NOTE_CY } from '../../../config/selectors';
+import NoteAvatars from '../../common/NoteAvatars';
 import { useAppActionContext } from '../../context/AppActionContext';
 import { useAppDataContext } from '../../context/AppDataContext';
 import { useCanvasContext } from '../../context/CanvasContext';
@@ -41,13 +41,6 @@ const NoteContainer = styled('div')(() => ({
   },
 }));
 
-const UserInfo = styled('p')(() => ({
-  fontFamily: 'Helvetica, Arial, sans-serif',
-  fontSize: '10px',
-  color: 'darkgrey',
-  textAlign: 'right',
-}));
-
 const SmallActionButton = styled(IconButton)(() => ({
   borderRadius: '50%',
   position: 'absolute',
@@ -72,7 +65,6 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   } = useCanvasContext();
 
   const { text: initialText, position, color } = note;
-  const { t } = useTranslation();
 
   const { pageX = 0, pageY = 0 } = position;
 
@@ -254,7 +246,13 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
             data-cy={`${NOTE_CY}-${id}`}
           >
             <EditableText text={text} />
-            <UserInfo>{t('ADDED_BY_TEXT', { userName })}</UserInfo>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <NoteAvatars userName={userName} small />
+            </Stack>
             <SmallActionButton
               className="action-button"
               size="small"

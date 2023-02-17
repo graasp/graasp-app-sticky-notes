@@ -2,22 +2,37 @@
   "name": "graasp-app-sticky-notes",
   "version": "0.6.0",
   "private": true,
-  "author": "Graasp",
+  "author": "Graasp <contact@graasp.org> (https://graasp.org/)",
   "contributors": [
-    "Juan Carlos Farah",
-    "Jérémy La Scala",
-    "Kim Lan Phan Hoang"
+    {
+      "name": "Juan Carlos Farah",
+      "email": "juancarlos.farah@epfl.ch",
+      "url": "https://github.com/juancarlosfarah"
+    },
+    {
+      "name": "Kim Lan Phan Hoang",
+      "email": "kim.phanhoang@epfl.ch",
+      "url": "https://github.com/pyphilia"
+    },
+    {
+      "name": "Jérémy La Scala",
+      "email": "jeremy.lascala@epfl.ch",
+      "url": "https://github.com/swouf"
+    }
   ],
   "homepage": ".",
   "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/graasp/graasp-app-sticky-notes/issues"
+  },
   "dependencies": {
     "@cypress/code-coverage": "3.10.0",
     "@cypress/instrument-cra": "1.4.0",
     "@emotion/react": "~11.10.5",
     "@emotion/styled": "~11.10.5",
-    "@graasp/apps-query-client": "0.4.1",
-    "@graasp/sdk": "0.2.0",
-    "@graasp/ui": "0.7.0",
+    "@graasp/apps-query-client": "0.4.2",
+    "@graasp/sdk": "0.4.1",
+    "@graasp/ui": "0.11.1",
     "@mui/icons-material": "~5.11.0",
     "@mui/lab": "~5.0.0-alpha.115",
     "@mui/material": "~5.11.4",
@@ -30,20 +45,12 @@
     "@uppy/progress-bar": "3.0.1",
     "@uppy/react": "~3.0.2",
     "@uppy/xhr-upload": "~3.0.4",
-    "bson-objectid": "~2.0.4",
-    "classnames": "2.3.2",
-    "clsx": "~1.2.1",
     "dompurify": "2.4.3",
-    "enzyme": "3.11.0",
     "file-saver": "~2.0.5",
     "i18next": "~22.4.9",
-    "immutable": "4.1.0",
-    "json2csv": "~5.0.7",
-    "lodash": "~4.17.21",
+    "immutable": "~4.1.0",
     "lodash.isobject": "~3.0.2",
     "lodash.isstring": "~4.0.1",
-    "prop-types": "~15.8.1",
-    "qs": "~6.11.0",
     "react": "~18.2.0",
     "react-dom": "~18.2.0",
     "react-draggable": "4.4.5",
@@ -53,9 +60,7 @@
     "react-scripts": "~5.0.1",
     "react-toastify": "~9.1.1",
     "react-transition-group": "4.4.5",
-    "stopword": "~2.0.5",
     "typescript": "~4.8.4",
-    "use-image": "~1.1.0",
     "uuid": "9.0.0"
   },
   "scripts": {

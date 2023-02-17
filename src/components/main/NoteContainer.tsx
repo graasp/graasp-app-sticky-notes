@@ -82,18 +82,22 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
       text: '',
     };
 
-    postAppData({
-      data: newNote,
-      type: APP_DATA_TYPES.NOTE,
-      visibility: AppDataVisibility.ITEM,
-    });
-    setEdit(true);
-    postAppAction({
-      type: APP_ACTION_TYPES.ADD,
-      data: {
-        ...newNote,
+    postAppData(
+      {
+        data: newNote,
+        type: APP_DATA_TYPES.NOTE,
+        visibility: AppDataVisibility.ITEM,
       },
-    });
+      {
+        onSuccess: (data) => {
+          postAppAction({
+            type: APP_ACTION_TYPES.ADD,
+            data,
+          });
+        },
+      },
+    );
+    setEdit(true);
   };
 
   const handleCanvasClick = (event: React.MouseEvent): void => {

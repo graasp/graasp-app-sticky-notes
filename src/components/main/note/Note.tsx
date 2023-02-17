@@ -109,7 +109,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   // If the user selected color changes and the note is selected (transforming), update the color of the note.
   useEffect(() => {
-    if (noteBeingTransformedId === id) {
+    if (noteBeingTransformedId === id && color !== userSetColor) {
       const updatedNote = {
         ...note,
         color: userSetColor,
@@ -132,15 +132,17 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const handleDragEnd = (event: DraggableEvent, data: DraggableData): void => {
     eventControl(event);
     const { x, y } = data;
-    const updatedNote = {
-      ...note,
-      position: {
-        pageX: x,
-        pageY: y,
-      },
-    };
+    if (pageX !== x || pageY !== y) {
+      const updatedNote = {
+        ...note,
+        position: {
+          pageX: x,
+          pageY: y,
+        },
+      };
 
-    patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
+      patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
+    }
   };
 
   const toggleEdit = (force?: boolean): void => {

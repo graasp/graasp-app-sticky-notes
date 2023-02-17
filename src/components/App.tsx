@@ -7,6 +7,7 @@ import { DEFAULT_CONTEXT_LANGUAGE } from '../config/appSettings';
 import i18n from '../config/i18n';
 import { DEFAULT_PERMISSION } from '../config/settings';
 import '../index.css';
+import { AppActionProvider } from './context/AppActionContext';
 import { AppDataProvider } from './context/AppDataContext';
 import { AppSettingProvider } from './context/AppSettingContext';
 import { CanvasProvider } from './context/CanvasContext';
@@ -48,7 +49,9 @@ const App: FC = () => {
     <MembersProvider>
       <AppDataProvider>
         <AppSettingProvider>
-          <CanvasProvider>{renderContent()}</CanvasProvider>
+          <AppActionProvider>
+            <CanvasProvider>{renderContent()}</CanvasProvider>
+          </AppActionProvider>
         </AppSettingProvider>
       </AppDataProvider>
     </MembersProvider>

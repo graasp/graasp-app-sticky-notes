@@ -13,7 +13,12 @@ import {
 } from '../../types/appData';
 
 export type AppDataContextType = {
-  postAppData: (payload: PostAppDataType) => void;
+  postAppData: (
+    variables: PostAppDataType,
+    options?: {
+      onSuccess: (data: AppData, variables?: PostAppDataType) => void;
+    },
+  ) => void;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   appDataArray: List<AppData>;
@@ -32,7 +37,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const appData = hooks.useAppData();
 
   const { mutate: postAppData } = useMutation<
-    unknown,
+    AppData,
     unknown,
     PostAppDataType
   >(MUTATION_KEYS.POST_APP_DATA);
@@ -49,9 +54,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const contextValue: AppDataContextType = useMemo(
     () => ({
-      postAppData: (payload: PostAppDataType) => {
-        postAppData(payload);
-      },
+      postAppData,
       patchAppData,
       deleteAppData,
       appDataArray: appData.data || List<AppData>(),

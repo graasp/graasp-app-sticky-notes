@@ -4,6 +4,7 @@ import { AppData } from '@graasp/apps-query-client';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { DEFAULT_NOTE_COLOR } from '../../src/config/constants';
+import { AppDataVisibility } from '../../src/types/appData';
 import { CURRENT_MEMBER, MEMBERS } from './members';
 import { MOCK_SERVER_ITEM } from './mockItem';
 
@@ -24,6 +25,7 @@ export const NOTES_TOP_LEFT: AppData[] = [
     createdAt: new Date('2020-01-01').toISOString(),
     updatedAt: new Date('2020-01-01').toISOString(),
     type: APP_DATA_TYPES.NOTE,
+    visibility: AppDataVisibility.ITEM,
   },
   {
     id: uuid(),
@@ -38,6 +40,7 @@ export const NOTES_TOP_LEFT: AppData[] = [
     createdAt: new Date('2020-01-01').toISOString(),
     updatedAt: new Date('2020-01-01').toISOString(),
     type: APP_DATA_TYPES.NOTE,
+    visibility: AppDataVisibility.ITEM,
   },
   {
     id: uuid(),
@@ -52,6 +55,7 @@ export const NOTES_TOP_LEFT: AppData[] = [
     createdAt: new Date('2020-01-01').toISOString(),
     updatedAt: new Date('2020-01-01').toISOString(),
     type: APP_DATA_TYPES.NOTE,
+    visibility: AppDataVisibility.ITEM,
   },
   {
     id: uuid(),
@@ -66,5 +70,6 @@ export const NOTES_TOP_LEFT: AppData[] = [
     createdAt: new Date('2020-01-01').toISOString(),
     updatedAt: new Date('2020-01-01').toISOString(),
     type: APP_DATA_TYPES.NOTE,
+    visibility: AppDataVisibility.ITEM,
   },
 ];

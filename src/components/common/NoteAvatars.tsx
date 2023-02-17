@@ -12,15 +12,13 @@ interface NoteAvatarsProps {
 
 const NoteAvatars: FC<NoteAvatarsProps> = ({ userName, small = false }) => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const stringAvatar = (name: string) => {
-    const initials = name.length > 0 ? name.split(' ').map((n) => n[0]) : '?';
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${initials}`,
-    };
-  };
+  const stringAvatar = (name: string) =>
+    name.length > 0
+      ? name
+          .split(' ')
+          .map((n) => n[0])
+          .join('')
+      : '?';
 
   const style = small
     ? { width: '14pt', height: '14pt', fontSize: '0.4em' }
@@ -28,7 +26,12 @@ const NoteAvatars: FC<NoteAvatarsProps> = ({ userName, small = false }) => {
 
   return (
     <Tooltip title={userName}>
-      <Avatar alt={userName} {...stringAvatar(userName)} sx={style} />
+      <Avatar
+        alt={userName}
+        sx={{ ...style, bgcolor: stringToColor(userName) }}
+      >
+        {stringAvatar(userName)}
+      </Avatar>
     </Tooltip>
   );
 };

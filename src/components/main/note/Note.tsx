@@ -132,15 +132,17 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const handleDragEnd = (event: DraggableEvent, data: DraggableData): void => {
     eventControl(event);
     const { x, y } = data;
-    const updatedNote = {
-      ...note,
-      position: {
-        pageX: x,
-        pageY: y,
-      },
-    };
+    if (pageX !== x || pageY !== y) {
+      const updatedNote = {
+        ...note,
+        position: {
+          pageX: x,
+          pageY: y,
+        },
+      };
 
-    patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
+      patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
+    }
   };
 
   const toggleEdit = (force?: boolean): void => {

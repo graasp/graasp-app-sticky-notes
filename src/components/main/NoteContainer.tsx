@@ -14,7 +14,7 @@ import {
 } from '../../config/appDataTypes';
 import { NOTE_CONTAINER_CY } from '../../config/selectors';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
-import { APP_DATA_VISIBILITY } from '../../types/appData';
+import { AppDataVisibility } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCanvasContext } from '../context/CanvasContext';
@@ -85,7 +85,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
     postAppData({
       data: newNote,
       type: APP_DATA_TYPES.NOTE,
-      visibility: APP_DATA_VISIBILITY.ITEM,
+      visibility: AppDataVisibility.ITEM,
     });
     setEdit(true);
     postAppAction({

@@ -109,7 +109,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   // If the user selected color changes and the note is selected (transforming), update the color of the note.
   useEffect(() => {
-    if (noteBeingTransformedId === id) {
+    if (noteBeingTransformedId === id && color !== userSetColor) {
       const updatedNote = {
         ...note,
         color: userSetColor,

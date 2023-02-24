@@ -31,7 +31,7 @@ describe('Notes and interactions', () => {
       });
 
       it('add a note', () => {
-        cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick(5, 5);
+        cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick('center');
         cy.get(dataCyWrapper(NOTE_EDIT_DIALOG)).should('be.visible');
       });
       it('checks for existing notes', () => {

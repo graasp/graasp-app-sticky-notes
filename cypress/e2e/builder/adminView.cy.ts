@@ -29,7 +29,7 @@ describe('Builder view with admin rights', () => {
   });
   describe('Notes', () => {
     it('add a note', () => {
-      cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick(10, 10);
+      cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick('center');
       cy.get(dataCyWrapper(NOTE_EDIT_DIALOG)).should('be.visible');
     });
   });

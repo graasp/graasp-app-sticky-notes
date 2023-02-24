@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { Context, useLocalContext } from '@graasp/apps-query-client';
 import { PermissionLevel } from '@graasp/sdk';
@@ -10,12 +11,14 @@ import Fab from '@mui/material/Fab';
 
 import { APP_SETTINGS } from '../../config/constants';
 import { hooks, queryClient } from '../../config/queryClient';
-import { RELOAD_BUTTON_CY, SCROLL_CONTAINER_CY } from '../../config/selectors';
+import { RELOAD_BUTTON_CY } from '../../config/selectors';
 import {
   CANVAS_HEIGHT_PX,
   CANVAS_WIDTH_PX,
   DEFAULT_BACKGROUND_ENABLED,
   DEFAULT_PERMISSION,
+  ZOOM_MAX,
+  ZOOM_MIN,
 } from '../../config/settings';
 import Settings from '../modes/teacher/Settings';
 import BackgroundImage from './BackgroundImage';
@@ -23,9 +26,8 @@ import CanvasScaleControl from './CanvasScaleControl';
 import ColorSettings from './ColorSettings';
 import NoteContainer from './NoteContainer';
 
-const ScrollContainer = styled('div')(() => ({
+const TransformContainer = styled(TransformWrapper)(() => ({
   backgroundColor: 'white',
-  overflow: 'auto',
   width: '100%',
   height: '100%',
   border: 'none',
@@ -33,9 +35,9 @@ const ScrollContainer = styled('div')(() => ({
 
 const MainContainer = styled('div')(() => ({
   backgroundColor: 'rgba(80, 80, 210, 0.08)', // same color as selected items in lists in Graasp frontend
-  transformOrigin: '0 0',
-  flexShrink: 0,
-  position: 'relative',
+  // transformOrigin: '0 0',
+  // flexShrink: 0,
+  // position: 'relative',
 }));
 
 const Canvas = (): JSX.Element => {
@@ -43,13 +45,6 @@ const Canvas = (): JSX.Element => {
   const context = useContext(Context);
   const localContext = useLocalContext();
   const itemId = localContext.get('itemId') || '';
-
-  const [scrollPosition, setScrollPosition] = useState({
-    scrollLeft: 0,
-    scrollTop: 0,
-  });
-
-  const [canvasScale, setCanvasScale] = useState(1);
 
   const scrollContainer = useRef<HTMLDivElement | null>(null);
   const mainContainer = useRef<HTMLDivElement | null>(null);
@@ -71,23 +66,6 @@ const Canvas = (): JSX.Element => {
     }
   }, [isSuccess, appSettings]);
 
-  let ticking = false;
-
-  const handleScrollEvent = (): void => {
-    const scrollLeft = scrollContainer.current?.scrollLeft || 0;
-    const scrollTop = scrollContainer.current?.scrollTop || 0;
-
-    // Avoid the change of the state to happen more often than the redrawing of the screen.
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        setScrollPosition({ scrollLeft, scrollTop });
-        ticking = false;
-      });
-    }
-
-    ticking = true;
-  };
-
   // Scroll to middle of the canvas
   useEffect(() => {
     if (scrollContainer.current) {
@@ -100,59 +78,72 @@ const Canvas = (): JSX.Element => {
     }
   }, []);
 
-  const renderStage = (): JSX.Element => (
+  const renderStage = (
+    scale: number,
+    positionX: number,
+    positionY: number,
+  ): JSX.Element => (
     <NoteContainer
-      scrollLeft={scrollPosition.scrollLeft}
-      scrollTop={scrollPosition.scrollTop}
-      canvasScale={canvasScale}
+      scrollLeft={positionX}
+      scrollTop={positionY}
+      canvasScale={scale}
     />
   );
 
   return (
-    <ScrollContainer
-      data-cy={SCROLL_CONTAINER_CY}
-      ref={scrollContainer}
-      onScroll={handleScrollEvent}
+    <TransformContainer
+      doubleClick={{ disabled: true }}
+      minScale={ZOOM_MIN}
+      maxScale={ZOOM_MAX}
     >
-      <MainContainer
-        ref={mainContainer}
-        style={{
-          height: `${CANVAS_HEIGHT_PX}px`,
-          width: `${CANVAS_WIDTH_PX}px`,
-          transform: `scale(${canvasScale}, ${canvasScale})`,
-        }}
-      >
-        {backgroundToggleSetting && <BackgroundImage />}
-        {renderStage()}
-      </MainContainer>
-      <Box
-        sx={{
-          bottom: 1,
-          right: 1,
-          position: 'fixed',
-          '& > :not(style)': { m: 1 },
-        }}
-      >
-        <Fab
-          color="primary"
-          size="small"
-          onClick={() => {
-            queryClient.invalidateQueries([itemId]);
-          }}
-          data-cy={RELOAD_BUTTON_CY}
-        >
-          <RefreshIcon />
-        </Fab>
-        {[PermissionLevel.Write, PermissionLevel.Admin].includes(
-          permissionLevel,
-        ) && <Settings />}
-      </Box>
-      <ColorSettings />
-      <CanvasScaleControl
-        canvasScale={canvasScale}
-        setCanvasScale={setCanvasScale}
-      />
-    </ScrollContainer>
+      {({ state: { scale, positionX, positionY }, zoomIn, zoomOut }) => (
+        <>
+          <TransformComponent
+            wrapperStyle={{ maxWidth: '100%', maxHeight: '100%' }}
+          >
+            <MainContainer
+              // ref={mainContainer}
+              style={{
+                height: `${CANVAS_HEIGHT_PX}px`,
+                width: `${CANVAS_WIDTH_PX}px`,
+                // transform: `scale(${canvasScale}, ${canvasScale})`,
+              }}
+            >
+              {backgroundToggleSetting && <BackgroundImage />}
+              {renderStage(scale, positionX, positionY)}
+            </MainContainer>
+          </TransformComponent>
+          <Box
+            sx={{
+              bottom: 1,
+              right: 1,
+              position: 'fixed',
+              '& > :not(style)': { m: 1 },
+            }}
+          >
+            <Fab
+              color="primary"
+              size="small"
+              onClick={() => {
+                queryClient.invalidateQueries([itemId]);
+              }}
+              data-cy={RELOAD_BUTTON_CY}
+            >
+              <RefreshIcon />
+            </Fab>
+            {[PermissionLevel.Write, PermissionLevel.Admin].includes(
+              permissionLevel,
+            ) && <Settings />}
+          </Box>
+          <ColorSettings />
+          <CanvasScaleControl
+            canvasScale={scale}
+            zoomIn={zoomIn}
+            zoomOut={zoomOut}
+          />
+        </>
+      )}
+    </TransformContainer>
   );
 };
 

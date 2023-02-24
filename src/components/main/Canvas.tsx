@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 import { Context, useLocalContext } from '@graasp/apps-query-client';
@@ -35,9 +35,6 @@ const TransformContainer = styled(TransformWrapper)(() => ({
 
 const MainContainer = styled('div')(() => ({
   backgroundColor: 'rgba(80, 80, 210, 0.08)', // same color as selected items in lists in Graasp frontend
-  // transformOrigin: '0 0',
-  // flexShrink: 0,
-  // position: 'relative',
 }));
 
 const Canvas = (): JSX.Element => {
@@ -45,9 +42,6 @@ const Canvas = (): JSX.Element => {
   const context = useContext(Context);
   const localContext = useLocalContext();
   const itemId = localContext.get('itemId') || '';
-
-  const scrollContainer = useRef<HTMLDivElement | null>(null);
-  const mainContainer = useRef<HTMLDivElement | null>(null);
 
   const permissionLevel =
     (context?.get('permission') as PermissionLevel) || DEFAULT_PERMISSION;
@@ -66,18 +60,6 @@ const Canvas = (): JSX.Element => {
     }
   }, [isSuccess, appSettings]);
 
-  // Scroll to middle of the canvas
-  useEffect(() => {
-    if (scrollContainer.current) {
-      scrollContainer.current.scrollTop =
-        (mainContainer.current?.clientHeight ||
-          0 - scrollContainer.current.clientHeight) / 2;
-      scrollContainer.current.scrollLeft =
-        (mainContainer.current?.clientWidth ||
-          0 - scrollContainer.current.clientWidth) / 2;
-    }
-  }, []);
-
   const renderStage = (
     scale: number,
     positionX: number,
@@ -95,18 +77,22 @@ const Canvas = (): JSX.Element => {
       doubleClick={{ disabled: true }}
       minScale={ZOOM_MIN}
       maxScale={ZOOM_MAX}
+      centerOnInit
     >
-      {({ state: { scale, positionX, positionY }, zoomIn, zoomOut }) => (
+      {({
+        state: { scale, positionX, positionY },
+        zoomIn,
+        zoomOut,
+        centerView,
+      }) => (
         <>
           <TransformComponent
             wrapperStyle={{ maxWidth: '100%', maxHeight: '100%' }}
           >
             <MainContainer
-              // ref={mainContainer}
               style={{
                 height: `${CANVAS_HEIGHT_PX}px`,
                 width: `${CANVAS_WIDTH_PX}px`,
-                // transform: `scale(${canvasScale}, ${canvasScale})`,
               }}
             >
               {backgroundToggleSetting && <BackgroundImage />}
@@ -140,6 +126,7 @@ const Canvas = (): JSX.Element => {
             canvasScale={scale}
             zoomIn={zoomIn}
             zoomOut={zoomOut}
+            zoomReset={() => centerView(1)}
           />
         </>
       )}

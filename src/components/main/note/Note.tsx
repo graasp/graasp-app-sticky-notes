@@ -45,6 +45,7 @@ const SmallActionButton = styled(IconButton)(() => ({
   borderRadius: '50%',
   position: 'absolute',
   scale: [0.5, 0.5, 1],
+  fontSize: '0rem', // Ensures button remains square.
 }));
 
 interface NoteProps {

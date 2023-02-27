@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.7.0...v0.8.0) (2023-02-27)
+
+
+### Features
+
+* add reset view button ([8a24b74](https://github.com/graasp/graasp-app-sticky-notes/commit/8a24b745da5dec380c5f5f4bbb79351a431fc453))
+* **UI:** add pan and zoom ([a29a4f8](https://github.com/graasp/graasp-app-sticky-notes/commit/a29a4f851b30e4502278659aa9846ee3c1177192))
+
+
+### Tests
+
+* refactor tests for centered view ([b72299d](https://github.com/graasp/graasp-app-sticky-notes/commit/b72299d114530cf736eaef22062b0b8540192978))
+* remove scrolling from tests ([05e0f8b](https://github.com/graasp/graasp-app-sticky-notes/commit/05e0f8b944ac68fdfd124d2e7d70271c56129a1a))
+
 ## [0.7.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.6.0...v0.7.0) (2023-02-17)
 
 

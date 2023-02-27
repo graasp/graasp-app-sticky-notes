@@ -66,7 +66,6 @@ const CanvasScaleControl = (
             color="primary"
             aria-label={t('ZOOM_IN')}
             onClick={() => zoomReset()}
-            disabled={Math.abs(canvasScale - 1) < 0.05}
           >
             <FitScreenIcon />
           </IconButton>

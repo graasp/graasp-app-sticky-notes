@@ -10,7 +10,6 @@ import {
   NOTE_CY,
   NOTE_EDIT_DIALOG,
   SAVE_DIALOG_CY,
-  SCROLL_CONTAINER_CY,
   dataCyWrapper,
 } from '../../../src/config/selectors';
 import { NOTES_TOP_LEFT } from '../../fixtures/appData';
@@ -29,11 +28,10 @@ describe('Notes and interactions', () => {
           },
         });
         cy.visit('/');
-        cy.get(dataCyWrapper(SCROLL_CONTAINER_CY)).scrollTo(0, 0);
       });
 
       it('add a note', () => {
-        cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick(5, 5);
+        cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick('center');
         cy.get(dataCyWrapper(NOTE_EDIT_DIALOG)).should('be.visible');
       });
       it('checks for existing notes', () => {

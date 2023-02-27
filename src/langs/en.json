@@ -26,6 +26,7 @@
     "Delete": "Delete",
     "CONFIRM_DELETE": "Do you really want to delete this note?",
     "ZOOM_IN": "Zoom in",
-    "ZOOM_OUT": "Zoom out"
+    "ZOOM_OUT": "Zoom out",
+    "RESET_VIEW": "Reset view"
   }
 }

@@ -105,8 +105,8 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
     if (!noteBeingEditedId && !noteBeingTransformedId && event.detail === 2) {
       const { pageX: x, pageY: y } = event;
       createNewNote(
-        (x + scrollLeft) / canvasScale,
-        (y + scrollTop) / canvasScale,
+        (x - scrollLeft) / canvasScale,
+        (y - scrollTop) / canvasScale,
       );
     } else {
       setNoteBeingTransformedId(null);

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
+import { useTranslation } from 'react-i18next';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Stack, styled } from '@mui/material';
+import { Stack, Tooltip, styled } from '@mui/material';
 import Fade from '@mui/material/Fade';
 import IconButton from '@mui/material/IconButton';
 import lightBlue from '@mui/material/colors/lightBlue';
@@ -56,6 +57,7 @@ interface NoteProps {
 }
 
 const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
+  const { t } = useTranslation();
   const {
     userSetColor,
     noteBeingEditedId,
@@ -256,24 +258,28 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
             >
               <NoteAvatars userName={userName} small />
             </Stack>
-            <SmallActionButton
-              className="action-button"
-              size="small"
-              sx={{ top: 1, right: 1 }}
-              onClick={() => {
-                setIsAskingToDelete(true);
-              }}
-            >
-              <DeleteOutlineOutlinedIcon />
-            </SmallActionButton>
-            <SmallActionButton
-              className="action-button"
-              size="small"
-              sx={{ bottom: 1, left: 1 }}
-              onClick={() => toggleEdit(true)}
-            >
-              <EditOutlinedIcon />
-            </SmallActionButton>
+            <Tooltip title={t('Delete')}>
+              <SmallActionButton
+                className="action-button"
+                size="small"
+                sx={{ top: 1, right: 1 }}
+                onClick={() => {
+                  setIsAskingToDelete(true);
+                }}
+              >
+                <DeleteOutlineOutlinedIcon />
+              </SmallActionButton>
+            </Tooltip>
+            <Tooltip title={t('EDIT')}>
+              <SmallActionButton
+                className="action-button"
+                size="small"
+                sx={{ bottom: 1, left: 1 }}
+                onClick={() => toggleEdit(true)}
+              >
+                <EditOutlinedIcon />
+              </SmallActionButton>
+            </Tooltip>
           </NoteContainer>
         </Fade>
       </Draggable>

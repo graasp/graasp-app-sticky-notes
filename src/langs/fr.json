@@ -28,6 +28,7 @@
     "ZOOM_IN": "Zoomer",
     "ZOOM_OUT": "Dézoomer",
     "RESET_VIEW": "Réinitialiser la vue",
-    "REFRESH": "Rafraîchir"
+    "REFRESH": "Rafraîchir",
+    "EDIT": "Éditer"
   }
 }

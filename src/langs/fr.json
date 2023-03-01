@@ -26,6 +26,9 @@
     "Delete": "Supprimer",
     "CONFIRM_DELETE": "Voulez-vous vraiment supprimer cette note ?",
     "ZOOM_IN": "Zoomer",
-    "ZOOM_OUT": "Dézoomer"
+    "ZOOM_OUT": "Dézoomer",
+    "RESET_VIEW": "Réinitialiser la vue",
+    "REFRESH": "Rafraîchir",
+    "EDIT": "Éditer"
   }
 }

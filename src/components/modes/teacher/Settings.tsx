@@ -11,6 +11,7 @@ import { styled } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
 import Modal from '@mui/material/Modal';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import {
@@ -63,16 +64,18 @@ const Settings = (): JSX.Element => {
 
   return (
     <>
-      <Fab
-        data-cy={SETTINGS_BUTTON_CY}
-        color="primary"
-        onClick={(event) => {
-          event.stopPropagation();
-          handleModalOpen();
-        }}
-      >
-        <SettingsIcon />
-      </Fab>
+      <Tooltip title={t('Settings')}>
+        <Fab
+          data-cy={SETTINGS_BUTTON_CY}
+          color="primary"
+          onClick={(event) => {
+            event.stopPropagation();
+            handleModalOpen();
+          }}
+        >
+          <SettingsIcon />
+        </Fab>
+      </Tooltip>
       <StyledModal
         open={modalOpen}
         onClose={handleModalClose}

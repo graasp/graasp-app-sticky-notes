@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.8.0...v0.9.0) (2023-03-17)
+
+
+### Features
+
+* **UI:** add tooltip on edit and delete buttons ([7674bd7](https://github.com/graasp/graasp-app-sticky-notes/commit/7674bd78ea95431975f6ed6b17340c80be7d563f))
+* **UI:** add tooltip on refresh button ([4a58760](https://github.com/graasp/graasp-app-sticky-notes/commit/4a587602ddc8d6ecb1293d6f6f3b98f979be98f9))
+* **UI:** add tooltip on settings button ([a16eecd](https://github.com/graasp/graasp-app-sticky-notes/commit/a16eecd9e40bb7810611915b0c60844f89204ee1))
+
 ## [0.8.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.7.0...v0.8.0) (2023-02-27)
 
 

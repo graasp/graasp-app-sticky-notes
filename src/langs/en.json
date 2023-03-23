@@ -29,6 +29,7 @@
     "ZOOM_OUT": "Zoom out",
     "RESET_VIEW": "Reset view",
     "REFRESH": "Refresh",
-    "EDIT": "Edit"
+    "EDIT": "Edit",
+    "INSTRUCTIONS_ADD_NOTE": "Double click on the canvas to add a new note."
   }
 }

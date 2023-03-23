@@ -3879,6 +3879,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mocha@npm:10.0.1":
+  version: 10.0.1
+  resolution: "@types/mocha@npm:10.0.1"
+  checksum: 224ea9fce7b1734ccdb9aa99a622d902a538ce1847bca7fd22c5fb38adcf3ed536f50f48f587085db988a4bb3c2eb68f4b98e1cd6a38bc5547bd3bbbedc54495
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*, @types/node@npm:18.11.18":
   version: 18.11.18
   resolution: "@types/node@npm:18.11.18"
@@ -10002,6 +10009,7 @@ __metadata:
     "@types/jest": 29.2.5
     "@types/lodash.isobject": 3.0.7
     "@types/lodash.isstring": 4.0.7
+    "@types/mocha": 10.0.1
     "@types/node": 18.11.18
     "@types/react": 18.0.26
     "@types/react-beautiful-dnd": 13.1.3

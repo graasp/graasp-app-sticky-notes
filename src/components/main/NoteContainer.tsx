@@ -12,7 +12,10 @@ import {
   ExistingNoteType,
   NoteDataType,
 } from '../../config/appDataTypes';
-import { NOTE_CONTAINER_CY } from '../../config/selectors';
+import {
+  BACKDROP_INSTRUCTIONS_CY,
+  NOTE_CONTAINER_CY,
+} from '../../config/selectors';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
 import { AppDataVisibility } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
@@ -122,7 +125,9 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   };
 
   const renderInstructions = (): JSX.Element => (
-    <Typography>{t('INSTRUCTIONS_ADD_NOTE')}</Typography>
+    <Typography data-cy={BACKDROP_INSTRUCTIONS_CY} variant="h2">
+      {t('INSTRUCTIONS_ADD_NOTE')}
+    </Typography>
   );
 
   return (

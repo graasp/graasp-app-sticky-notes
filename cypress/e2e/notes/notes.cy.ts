@@ -1,6 +1,7 @@
 import { Context } from '@graasp/sdk';
 
 import {
+  BACKDROP_INSTRUCTIONS_CY,
   CANCEL_DELETE_BUTTON_CY,
   CONFIRM_DELETE_BUTTON_CY,
   CONFIRM_DELETE_DIALOG_CY,
@@ -29,7 +30,13 @@ describe('Notes and interactions', () => {
         });
         cy.visit('/');
       });
-
+      if (NOTES_TOP_LEFT.length > 0) {
+        it('checks that the instructions are not shown', () => {
+          cy.get(dataCyWrapper(BACKDROP_INSTRUCTIONS_CY)).should(
+            'not.be.visible',
+          );
+        });
+      }
       it('add a note', () => {
         cy.get(dataCyWrapper(NOTE_CONTAINER_CY)).dblclick('center');
         cy.get(dataCyWrapper(NOTE_EDIT_DIALOG)).should('be.visible');

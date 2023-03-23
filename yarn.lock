@@ -4330,7 +4330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/companion-client@npm:^3.0.2":
+"@uppy/companion-client@npm:^3.1.1":
   version: 3.1.1
   resolution: "@uppy/companion-client@npm:3.1.1"
   dependencies:
@@ -4340,32 +4340,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/core@npm:~3.0.6":
-  version: 3.0.6
-  resolution: "@uppy/core@npm:3.0.6"
+"@uppy/core@npm:~3.1.1":
+  version: 3.1.1
+  resolution: "@uppy/core@npm:3.1.1"
   dependencies:
     "@transloadit/prettier-bytes": 0.0.9
     "@uppy/store-default": ^3.0.2
-    "@uppy/utils": ^5.1.2
+    "@uppy/utils": ^5.1.3
     lodash.throttle: ^4.1.1
     mime-match: ^1.0.2
     namespace-emitter: ^2.0.1
     nanoid: ^4.0.0
     preact: ^10.5.13
-  checksum: 56578817f4155afd68ae3b6625968131e5cb6a81a37a778afd1a2610d91ba213ee1d7c906b70645bc32c92f1fb4f2f39e7b8ed4644468f40c72d3bfcbdf9c316
+  checksum: f42f4e03e4ad17fa3264e5fac6642b2b455124bc15783e51a8506845725e01c2e9da04df42909f7b60a4a19ac8eaecd1068a4d87c86369269a63c80213fda559
   languageName: node
   linkType: hard
 
-"@uppy/dashboard@npm:~3.2.2":
-  version: 3.2.2
-  resolution: "@uppy/dashboard@npm:3.2.2"
+"@uppy/dashboard@npm:~3.3.1":
+  version: 3.3.1
+  resolution: "@uppy/dashboard@npm:3.3.1"
   dependencies:
     "@transloadit/prettier-bytes": 0.0.7
     "@uppy/informer": ^3.0.1
-    "@uppy/provider-views": ^3.0.2
+    "@uppy/provider-views": ^3.1.0
     "@uppy/status-bar": ^3.0.1
     "@uppy/thumbnail-generator": ^3.0.2
-    "@uppy/utils": ^5.1.2
+    "@uppy/utils": ^5.1.3
     classnames: ^2.2.6
     is-shallow-equal: ^1.0.1
     lodash.debounce: ^4.0.8
@@ -4373,8 +4373,8 @@ __metadata:
     nanoid: ^4.0.0
     preact: ^10.5.13
   peerDependencies:
-    "@uppy/core": ^3.0.6
-  checksum: 4bfd2136f7d8a23dff2ea7f94f6e8fbb1e74c4669d485465b7f57581009fa118d14f39650c95e89f564898c543e377dfdf58af161ed98b7093d9cff156899356
+    "@uppy/core": ^3.1.1
+  checksum: d6e7d0f901029739bfe5521acc2e209992daf4593a9ab368f0a6a8a1be4f78acd62ca964ffcb05a56d2026449e63ccf3e42b883449d7a7dd49d9f70751aa9140
   languageName: node
   linkType: hard
 
@@ -4426,28 +4426,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/provider-views@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@uppy/provider-views@npm:3.0.2"
+"@uppy/provider-views@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@uppy/provider-views@npm:3.1.0"
   dependencies:
-    "@uppy/utils": ^5.0.2
+    "@uppy/utils": ^5.1.3
     classnames: ^2.2.6
     preact: ^10.5.13
   peerDependencies:
-    "@uppy/core": ^3.0.4
-  checksum: bc88b5142db78f632b4b8cda586d785f214f4bc4655007531a136367fbb678c99125ae1767841f1f56a7e37c712aee233f7acfa4b050a4c7d16e850c98e1a32f
+    "@uppy/core": ^3.1.0
+  checksum: 05426c9be40b3e537411190b42d309a3d0dfff6e3f06821a8d2e9ffe667d1205719667c8ba3ba42cc2838cae63ec775eea15f58858e6e9f068290161afe97eea
   languageName: node
   linkType: hard
 
-"@uppy/react@npm:~3.0.2":
-  version: 3.0.2
-  resolution: "@uppy/react@npm:3.0.2"
+"@uppy/react@npm:~3.1.0":
+  version: 3.1.0
+  resolution: "@uppy/react@npm:3.1.0"
   dependencies:
-    "@uppy/utils": ^5.0.2
+    "@uppy/utils": ^5.1.2
     prop-types: ^15.6.1
   peerDependencies:
-    "@uppy/core": ^3.0.2
-    "@uppy/dashboard": ^3.1.0
+    "@uppy/core": ^3.0.5
+    "@uppy/dashboard": ^3.2.1
     "@uppy/drag-drop": ^3.0.1
     "@uppy/file-input": ^3.0.1
     "@uppy/progress-bar": ^3.0.1
@@ -4464,7 +4464,7 @@ __metadata:
       optional: true
     "@uppy/status-bar":
       optional: true
-  checksum: 70e7a08223a34a82d036e5fce6e716f8749707bfc373ad6daf417cec535cad9b47af7efcf93966b67d827f15daa2bcaa070584fcb2d0c9039223fa8a91e0042b
+  checksum: af69b89ea736b53ac3a47a178a9c8a3f06251de666b8262ba5eeff950b509db97b90503fc94b5469598a82f1c7a00ba0ea70fdee60295d79bb750b49bef96766
   languageName: node
   linkType: hard
 
@@ -4502,7 +4502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/utils@npm:^5.0.2, @uppy/utils@npm:^5.1.1, @uppy/utils@npm:^5.1.2":
+"@uppy/utils@npm:^5.0.2, @uppy/utils@npm:^5.1.1, @uppy/utils@npm:^5.1.2, @uppy/utils@npm:^5.1.3":
   version: 5.1.3
   resolution: "@uppy/utils@npm:5.1.3"
   dependencies:
@@ -4511,16 +4511,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/xhr-upload@npm:~3.0.4":
-  version: 3.0.4
-  resolution: "@uppy/xhr-upload@npm:3.0.4"
+"@uppy/xhr-upload@npm:~3.1.0":
+  version: 3.1.0
+  resolution: "@uppy/xhr-upload@npm:3.1.0"
   dependencies:
-    "@uppy/companion-client": ^3.0.2
-    "@uppy/utils": ^5.0.2
+    "@uppy/companion-client": ^3.1.1
+    "@uppy/utils": ^5.1.2
     nanoid: ^4.0.0
   peerDependencies:
-    "@uppy/core": ^3.0.4
-  checksum: 0357f71699ca99eda15f0a24c94a318d59053fbd671f1799fe04c422e9eb76eef6568fb9b8bde65e8a02c36151714dc6fb07b47c38bfaf40b2634873b2c9a244
+    "@uppy/core": ^3.0.6
+  checksum: 1ea2b1cedb2f65bdaaf02e0c06290cc25fc3a5db85c873d35fe31e09807c89c61c617097442749bb712d3acdd4ed31d4295f2139ccf6af415c7f2d4bbbae8678
   languageName: node
   linkType: hard
 
@@ -10164,13 +10164,13 @@ __metadata:
     "@types/uuid": ^9.0.1
     "@typescript-eslint/eslint-plugin": 5.56.0
     "@typescript-eslint/parser": 5.56.0
-    "@uppy/core": ~3.0.6
-    "@uppy/dashboard": ~3.2.2
+    "@uppy/core": ~3.1.1
+    "@uppy/dashboard": ~3.3.1
     "@uppy/drag-drop": ~3.0.1
     "@uppy/file-input": ~3.0.1
     "@uppy/progress-bar": 3.0.1
-    "@uppy/react": ~3.0.2
-    "@uppy/xhr-upload": ~3.0.4
+    "@uppy/react": ~3.1.0
+    "@uppy/xhr-upload": ~3.1.0
     codacy-coverage: 3.4.0
     concurrently: 7.6.0
     cross-env: 7.0.3

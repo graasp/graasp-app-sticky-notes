@@ -24,6 +24,7 @@ i18n.use(initReactI18next).init({
     formatSeparator: ',',
   },
   returnNull: false,
+  fallbackLng: 'en',
 });
 
 export default i18n;

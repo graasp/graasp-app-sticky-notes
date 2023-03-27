@@ -22,6 +22,7 @@ import {
   ZOOM_MAX,
   ZOOM_MIN,
 } from '../../config/settings';
+import InstructionsBackdrop from '../common/InstructionsBackdrop';
 import Settings from '../modes/teacher/Settings';
 import BackgroundImage from './BackgroundImage';
 import CanvasScaleControl from './CanvasScaleControl';
@@ -102,6 +103,7 @@ const Canvas = (): JSX.Element => {
               {renderStage(scale, positionX, positionY)}
             </MainContainer>
           </TransformComponent>
+          <InstructionsBackdrop />
           <Box
             sx={{
               bottom: 1,

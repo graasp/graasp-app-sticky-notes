@@ -2,9 +2,8 @@
 import { List } from 'immutable';
 
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { Backdrop, Typography, styled } from '@mui/material';
+import { styled } from '@mui/material';
 
 import { APP_ACTION_TYPES } from '../../config/appActionTypes';
 import {
@@ -12,10 +11,7 @@ import {
   ExistingNoteType,
   NoteDataType,
 } from '../../config/appDataTypes';
-import {
-  BACKDROP_INSTRUCTIONS_CY,
-  NOTE_CONTAINER_CY,
-} from '../../config/selectors';
+import { NOTE_CONTAINER_CY } from '../../config/selectors';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
 import { AppDataVisibility } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
@@ -40,7 +36,6 @@ interface NoteContainerInterface {
 
 const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   const { scrollLeft, scrollTop, canvasScale } = props;
-  const { t } = useTranslation();
 
   const {
     userSetColor,
@@ -54,7 +49,6 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   const [notes, setNotes] = useState<List<ExistingNoteType>>();
 
   const [edit, setEdit] = useState(false);
-  const [openBackdrop, setOpenBackdrop] = useState(true);
 
   const { postAppData, appDataArray: appData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();
@@ -72,8 +66,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   // refetched, the focus is set to the newest one and the `edit` bool is
   // set back to false.
   useEffect(() => {
-    if (!notes?.isEmpty() && notes) {
-      setOpenBackdrop(false);
+    if (notes && !notes.isEmpty()) {
       if (edit) {
         setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
         setEdit(false);
@@ -120,16 +113,6 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
     }
   };
 
-  const handleCloseBackdrop = (): void => {
-    setOpenBackdrop(false);
-  };
-
-  const renderInstructions = (): JSX.Element => (
-    <Typography data-cy={BACKDROP_INSTRUCTIONS_CY} variant="h2">
-      {t('INSTRUCTIONS_ADD_NOTE')}
-    </Typography>
-  );
-
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <StyledNoteContainer
@@ -137,27 +120,18 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
       onClick={handleCanvasClick}
     >
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      {notes
-        ? notes.map((note) => (
-            <Note
-              note={note.data}
-              id={note.id}
-              key={note.id}
-              userName={
-                members.find((m) => m.id === note.memberId)?.name ??
-                DEFAULT_ANONYMOUS_USERNAME
-              }
-              scale={canvasScale}
-            />
-          ))
-        : renderInstructions()}
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openBackdrop}
-        onClick={handleCloseBackdrop}
-      >
-        {renderInstructions()}
-      </Backdrop>
+      {notes?.map((note) => (
+        <Note
+          note={note.data}
+          id={note.id}
+          key={note.id}
+          userName={
+            members.find((m) => m.id === note.memberId)?.name ??
+            DEFAULT_ANONYMOUS_USERNAME
+          }
+          scale={canvasScale}
+        />
+      ))}
     </StyledNoteContainer>
   );
 };

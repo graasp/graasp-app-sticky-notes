@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.2](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.9.1...v0.9.2) (2023-03-28)
+
+
+### Tests
+
+* adapt test to backdrop on top ([11f2324](https://github.com/graasp/graasp-app-sticky-notes/commit/11f23243e57fb310d99d1baa7f5657290a097c00))
+
 ## [0.9.1](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.9.0...v0.9.1) (2023-03-23)
 
 ### Bug Fixes

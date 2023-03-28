@@ -17,3 +17,4 @@ export const CANCEL_DELETE_BUTTON_CY = 'cancelDeleteButton';
 export const CONFIRM_DELETE_BUTTON_CY = 'confirmDeleteButton';
 export const CANCEL_DIALOG_CY = 'cancelDialog';
 export const SAVE_DIALOG_CY = 'saveDialog';
+export const BACKDROP_INSTRUCTIONS_CY = 'backdropInstructions';

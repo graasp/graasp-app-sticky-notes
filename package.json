@@ -96,6 +96,7 @@
     "@types/jest": "29.5.0",
     "@types/lodash.isobject": "3.0.7",
     "@types/lodash.isstring": "4.0.7",
+    "@types/mocha": "10.0.1",
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-beautiful-dnd": "13.1.4",

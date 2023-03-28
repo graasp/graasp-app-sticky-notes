@@ -2,7 +2,6 @@
 import { List } from 'immutable';
 
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
 
@@ -37,7 +36,6 @@ interface NoteContainerInterface {
 
 const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   const { scrollLeft, scrollTop, canvasScale } = props;
-  const { t } = useTranslation();
 
   const {
     userSetColor,
@@ -68,9 +66,11 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   // refetched, the focus is set to the newest one and the `edit` bool is
   // set back to false.
   useEffect(() => {
-    if (edit && !notes?.isEmpty() && notes) {
-      setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
-      setEdit(false);
+    if (notes && !notes.isEmpty()) {
+      if (edit) {
+        setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
+        setEdit(false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notes]);
@@ -120,22 +120,18 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
       onClick={handleCanvasClick}
     >
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      {notes ? (
-        notes.map((note) => (
-          <Note
-            note={note.data}
-            id={note.id}
-            key={note.id}
-            userName={
-              members.find((m) => m.id === note.memberId)?.name ??
-              DEFAULT_ANONYMOUS_USERNAME
-            }
-            scale={canvasScale}
-          />
-        ))
-      ) : (
-        <p>{t('Add a note.')}</p>
-      )}
+      {notes?.map((note) => (
+        <Note
+          note={note.data}
+          id={note.id}
+          key={note.id}
+          userName={
+            members.find((m) => m.id === note.memberId)?.name ??
+            DEFAULT_ANONYMOUS_USERNAME
+          }
+          scale={canvasScale}
+        />
+      ))}
     </StyledNoteContainer>
   );
 };

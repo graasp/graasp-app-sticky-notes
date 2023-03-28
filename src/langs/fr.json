@@ -29,6 +29,7 @@
     "ZOOM_OUT": "Dézoomer",
     "RESET_VIEW": "Réinitialiser la vue",
     "REFRESH": "Rafraîchir",
-    "EDIT": "Éditer"
+    "EDIT": "Éditer",
+    "INSTRUCTIONS_ADD_NOTE": "Double cliquez sur le canevas pour ajouter une note."
   }
 }

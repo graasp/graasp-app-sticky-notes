@@ -6,6 +6,7 @@ export const {
   REACT_APP_MOCK_API,
   REACT_APP_API_HOST,
   REACT_APP_REFETCH_INTERVAL_SETTING,
+  REACT_APP_GRAASP_APP_KEY,
 } = window.Cypress ? Cypress.env() : process.env;
 
 export const MOCK_API = REACT_APP_MOCK_API === 'true';

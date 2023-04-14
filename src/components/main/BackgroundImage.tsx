@@ -48,8 +48,7 @@ const BackgroundImage: FC = () => {
     { appSettingId: backgroundSetting?.id || '' },
     {
       enabled: Boolean(
-        backgroundSetting?.data?.extra?.file ||
-          backgroundSetting?.data?.extra?.s3File,
+        backgroundSetting?.data?.file || backgroundSetting?.data?.s3File,
       ),
     },
   );

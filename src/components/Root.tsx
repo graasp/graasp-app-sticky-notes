@@ -89,13 +89,14 @@ const Root: FC = () => {
   });
   const AppWithContextAndToken = withContext(AppWithContext, {
     LoadingComponent: <Loader />,
-    useGetLocalContext: hooks.useGetLocalContext,
+    useGetLocalContext: hooks.useGetLocalContext as any,
     onError:
       /* istanbul ignore next */
       () => {
         showErrorToast(CONTEXT_FETCHING_ERROR_MESSAGE);
       },
   });
+
   return (
     <RootDiv>
       {/* Used to define the order of injected properties between JSS and emotion */}

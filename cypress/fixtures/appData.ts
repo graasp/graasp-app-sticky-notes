@@ -1,11 +1,10 @@
 import { v4 as uuid } from 'uuid';
 
-import { AppData } from '@graasp/apps-query-client';
+import { AppData, AppDataVisibility } from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../../src/config/appDataTypes';
 import { DEFAULT_NOTE_COLOR } from '../../src/config/constants';
 import { CANVAS_HEIGHT_PX, CANVAS_WIDTH_PX } from '../../src/config/settings';
-import { AppDataVisibility } from '../../src/types/appData';
 import { CURRENT_MEMBER, MEMBERS } from './members';
 import { MOCK_SERVER_ITEM } from './mockItem';
 
@@ -23,13 +22,13 @@ export const NOTES_TOP_LEFT: AppData[] = [
       color: DEFAULT_NOTE_COLOR,
       position: { pageX: 10 + X_CENTER, pageY: 10 + Y_CENTER },
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date('2020-01-01').toISOString(),
-    updatedAt: new Date('2020-01-01').toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date('2020-01-01'),
+    updatedAt: new Date('2020-01-01'),
     type: APP_DATA_TYPES.NOTE,
-    visibility: AppDataVisibility.ITEM,
+    visibility: AppDataVisibility.Item,
   },
   {
     id: uuid(),
@@ -38,13 +37,13 @@ export const NOTES_TOP_LEFT: AppData[] = [
       color: DEFAULT_NOTE_COLOR,
       position: { pageX: 10 + X_CENTER, pageY: 300 + Y_CENTER },
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date('2020-01-01').toISOString(),
-    updatedAt: new Date('2020-01-01').toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date('2020-01-01'),
+    updatedAt: new Date('2020-01-01'),
     type: APP_DATA_TYPES.NOTE,
-    visibility: AppDataVisibility.ITEM,
+    visibility: AppDataVisibility.Item,
   },
   {
     id: uuid(),
@@ -53,13 +52,13 @@ export const NOTES_TOP_LEFT: AppData[] = [
       color: DEFAULT_NOTE_COLOR,
       position: { pageX: 300 + X_CENTER, pageY: 10 + Y_CENTER },
     },
-    memberId: MEMBERS.BOB.id,
-    creator: MEMBERS.BOB.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date('2020-01-01').toISOString(),
-    updatedAt: new Date('2020-01-01').toISOString(),
+    member: MEMBERS.BOB,
+    creator: MEMBERS.BOB,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date('2020-01-01'),
+    updatedAt: new Date('2020-01-01'),
     type: APP_DATA_TYPES.NOTE,
-    visibility: AppDataVisibility.ITEM,
+    visibility: AppDataVisibility.Item,
   },
   {
     id: uuid(),
@@ -68,12 +67,12 @@ export const NOTES_TOP_LEFT: AppData[] = [
       color: DEFAULT_NOTE_COLOR,
       position: { pageX: 300 + X_CENTER, pageY: 300 + Y_CENTER },
     },
-    memberId: CURRENT_MEMBER.id,
-    creator: CURRENT_MEMBER.id,
-    itemId: MOCK_SERVER_ITEM.id,
-    createdAt: new Date('2020-01-01').toISOString(),
-    updatedAt: new Date('2020-01-01').toISOString(),
+    member: CURRENT_MEMBER,
+    creator: CURRENT_MEMBER,
+    item: MOCK_SERVER_ITEM,
+    createdAt: new Date('2020-01-01'),
+    updatedAt: new Date('2020-01-01'),
     type: APP_DATA_TYPES.NOTE,
-    visibility: AppDataVisibility.ITEM,
+    visibility: AppDataVisibility.Item,
   },
 ];

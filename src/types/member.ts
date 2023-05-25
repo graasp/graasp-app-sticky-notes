@@ -1,5 +1,5 @@
-import { Member as MemberAppsQueryClient } from '@graasp/apps-query-client';
+import { Member as GraaspMember } from '@graasp/sdk';
 
-export type Member = MemberAppsQueryClient & {
+export type Member = GraaspMember & {
   color: string;
 };

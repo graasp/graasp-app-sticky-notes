@@ -1,7 +1,8 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { List } from 'immutable';
 
 import React, { useEffect, useState } from 'react';
+
+import { AppDataVisibility } from '@graasp/sdk';
 
 import { styled } from '@mui/material';
 
@@ -13,7 +14,6 @@ import {
 } from '../../config/appDataTypes';
 import { NOTE_CONTAINER_CY } from '../../config/selectors';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
-import { AppDataVisibility } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCanvasContext } from '../context/CanvasContext';
@@ -50,7 +50,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
 
   const [edit, setEdit] = useState(false);
 
-  const { postAppData, appDataArray: appData } = useAppDataContext();
+  const { postAppDataAsync, appDataArray: appData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();
 
   useEffect(() => {
@@ -82,21 +82,16 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
       text: '',
     };
 
-    postAppData(
-      {
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: AppDataVisibility.ITEM,
-      },
-      {
-        onSuccess: (data) => {
-          postAppAction({
-            type: APP_ACTION_TYPES.ADD,
-            data,
-          });
-        },
-      },
-    );
+    postAppDataAsync({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: AppDataVisibility.Item,
+    }).then((data) => {
+      postAppAction({
+        type: APP_ACTION_TYPES.ADD,
+        data,
+      });
+    });
     setEdit(true);
   };
 
@@ -126,7 +121,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
           id={note.id}
           key={note.id}
           userName={
-            members.find((m) => m.id === note.memberId)?.name ??
+            members.find((m) => m.id === note.member.id)?.name ??
             DEFAULT_ANONYMOUS_USERNAME
           }
           scale={canvasScale}

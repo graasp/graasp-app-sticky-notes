@@ -2,7 +2,7 @@ import { List } from 'immutable';
 
 import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
-import { AppAction } from '@graasp/apps-query-client';
+import { AppActionRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
 import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
@@ -14,12 +14,12 @@ type PostAppActionType = {
 
 export type AppActionContextType = {
   postAppAction: (payload: PostAppActionType) => void;
-  appActionArray: List<AppAction>;
+  appActionArray: List<AppActionRecord>;
 };
 
 const defaultContextValue = {
   postAppAction: () => null,
-  appActionArray: List<AppAction>(),
+  appActionArray: List<AppActionRecord>(),
 };
 
 const AppActionContext =
@@ -39,7 +39,7 @@ export const AppActionProvider: FC<PropsWithChildren> = ({ children }) => {
       postAppAction: (payload: PostAppActionType) => {
         postAppAction(payload);
       },
-      appActionArray: appAction.data || List<AppAction>(),
+      appActionArray: appAction.data || List<AppActionRecord>(),
     }),
     [appAction.data, postAppAction],
   );

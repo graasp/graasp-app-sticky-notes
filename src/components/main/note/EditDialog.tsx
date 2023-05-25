@@ -88,6 +88,7 @@ const EditDialog: FC<EditDialogProps> = ({
               <>
                 {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
                 <ColorItem
+                  key={itemColor}
                   selectedColor={color}
                   itemColor={itemColor}
                   setColor={setColor}

@@ -1,7 +1,4 @@
-export enum AppDataVisibility {
-  MEMBER = 'member',
-  ITEM = 'item',
-}
+import { AppDataVisibility } from '@graasp/sdk';
 
 export type PostAppDataType = {
   data: { [key: string]: unknown };

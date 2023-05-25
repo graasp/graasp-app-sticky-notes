@@ -1,41 +1,66 @@
 import { v4 } from 'uuid';
 
-import type { Database, LocalContext, Member } from '@graasp/apps-query-client';
-import { Context, PermissionLevel } from '@graasp/sdk';
+import type { Database, LocalContext } from '@graasp/apps-query-client';
+import {
+  AppDataVisibility,
+  AppItemType,
+  Context,
+  ItemType,
+  Member,
+  MemberType,
+  PermissionLevel,
+} from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
 import { REACT_APP_API_HOST } from '../config/env';
-import { AppDataVisibility } from '../types/appData';
-
-export const mockContext: LocalContext = {
-  apiHost: REACT_APP_API_HOST,
-  permission: PermissionLevel.Admin,
-  context: Context.BUILDER,
-  itemId: '1234-1234-123456-8123-123456',
-  memberId: 'mock-member-id',
-};
 
 export const mockMembers: Member[] = [
   {
-    id: mockContext.memberId || '',
+    id: 'mock-member-id',
     name: 'current-member',
     email: 'current@graasp.org',
     extra: {},
+    type: MemberType.Individual,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 'mock-member-id-2',
     name: 'mock-member-2',
     email: 'other-member@graasp.org',
     extra: {},
+    type: MemberType.Individual,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 
-const now = new Date();
+const mockItem: AppItemType = {
+  id: 'my-app-id',
+  path: 'my_app_id',
+  name: 'my app',
+  type: ItemType.APP,
+  extra: {
+    [ItemType.APP]: {
+      url: 'someurl',
+    },
+  },
+  settings: {},
+  description: '',
+  creator: mockMembers[0],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
 
-const buildDatabase = (
-  appContext: Partial<LocalContext>,
-  members?: Member[],
-): Database => ({
+export const mockContext: LocalContext = {
+  apiHost: REACT_APP_API_HOST,
+  permission: PermissionLevel.Admin,
+  context: Context.Builder,
+  itemId: mockItem.id,
+  memberId: mockMembers[0].id,
+};
+
+const buildDatabase = (): Database => ({
   appData: [
     {
       data: {
@@ -45,17 +70,18 @@ const buildDatabase = (
       },
       id: v4(),
       type: APP_DATA_TYPES.NOTE,
-      createdAt: now.toISOString(),
-      updatedAt: now.toISOString(),
-      creator: mockContext.memberId || v4(),
-      memberId: mockContext.memberId || 'm1',
-      itemId: mockContext.itemId,
-      visibility: AppDataVisibility.ITEM,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      creator: mockMembers[0],
+      member: mockMembers[0],
+      item: mockItem,
+      visibility: AppDataVisibility.Item,
     },
   ],
   appActions: [],
-  members: members ?? mockMembers,
+  members: mockMembers,
   appSettings: [],
+  items: [mockItem],
 });
 
 export default buildDatabase;

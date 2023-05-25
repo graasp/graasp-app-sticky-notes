@@ -43,9 +43,9 @@ const BackgroundToggle = (): JSX.Element => {
       ({ name }) => name === APP_SETTINGS.BACKGROUND,
     );
     if (backgroundSetting) {
-      const backSet = settings?.find(
-        ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
-      ) as BackgroundSettingsType;
+      const backSet = settings
+        ?.find(({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS)
+        ?.toJS() as BackgroundSettingsType;
       setBackgroundSettings(backSet);
       setToggleDisabled(false);
     }

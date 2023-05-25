@@ -1,4 +1,4 @@
-import { AppSetting } from '@graasp/apps-query-client';
+import { AppSetting } from '@graasp/sdk';
 
 enum APP_SETTINGS_TYPES {
   BACKGROUND_SETTINGS = 'background-settings',

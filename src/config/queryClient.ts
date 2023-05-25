@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   buildMockLocalContext,
   buildMockParentWindow,
@@ -15,11 +16,8 @@ const {
   ReactQueryDevtools,
   API_ROUTES,
   MUTATION_KEYS,
+  mutations,
 } = configureQueryClient({
-  notifier: (data) => {
-    // eslint-disable-next-line no-console
-    console.log('notifier: ', data);
-  },
   keepPreviousData: true,
   // avoid refetching when same data are closely fetched
   staleTime: 1000, // ms
@@ -30,6 +28,10 @@ const {
         buildMockLocalContext(window.Cypress ? window.appContext : mockContext),
       ) as Window)
     : window.parent,
+  // retry: (e) => {
+  //   console.log('ijkfmn', e)
+  //   return false;
+  // }
 });
 
 export {
@@ -40,4 +42,5 @@ export {
   ReactQueryDevtools,
   API_ROUTES,
   MUTATION_KEYS,
+  mutations,
 };

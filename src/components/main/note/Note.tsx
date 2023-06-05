@@ -10,7 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import lightBlue from '@mui/material/colors/lightBlue';
 
 import { APP_ACTION_TYPES } from '../../../config/appActionTypes';
-import { NoteDataType } from '../../../config/appDataTypes';
+import {
+  ExistingNoteTypeRecord,
+  NoteDataType,
+} from '../../../config/appDataTypes';
 import { FADE_ANIMATION_TIME } from '../../../config/constants';
 import { NOTE_CY } from '../../../config/selectors';
 import NoteAvatars from '../../common/NoteAvatars';
@@ -50,7 +53,7 @@ const SmallActionButton = styled(IconButton)(() => ({
 }));
 
 interface NoteProps {
-  note: NoteDataType;
+  note: ExistingNoteTypeRecord['data'];
   id: string;
   userName: string;
   scale: number;
@@ -114,7 +117,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   useEffect(() => {
     if (noteBeingTransformedId === id && color !== userSetColor) {
       const updatedNote = {
-        ...note,
+        ...(note.toJS() as NoteDataType),
         color: userSetColor,
       };
 
@@ -137,13 +140,12 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     const { x, y } = data;
     if (pageX !== x || pageY !== y) {
       const updatedNote = {
-        ...note,
+        ...note.toJS(),
         position: {
           pageX: x,
           pageY: y,
         },
       };
-
       patchNote(updatedNote, APP_ACTION_TYPES.MOVE);
     }
   };
@@ -190,7 +192,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   const handleUpdate = (newText: string, newColor?: string): void => {
     setText(newText);
     const updatedNote = {
-      ...note,
+      ...(note.toJS() as NoteDataType),
       text: newText,
     };
     if (typeof newColor !== 'undefined') {

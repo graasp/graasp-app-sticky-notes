@@ -1,4 +1,5 @@
 import { AppSetting } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 enum APP_SETTINGS_TYPES {
   BACKGROUND_SETTINGS = 'background-settings',
@@ -10,6 +11,9 @@ export type BackgroundSettingsType = AppSetting & {
     toggle: boolean;
   };
 };
+
+export type BackgroundSettingsTypeRecord =
+  ImmutableCast<BackgroundSettingsType>;
 
 export type BackgroundType = AppSetting & {
   data: {

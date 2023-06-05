@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -12,7 +12,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { NoteDataType } from '../../../config/appDataTypes';
+import { ExistingNoteTypeRecord } from '../../../config/appDataTypes';
 import { AVAILABLE_COLORS } from '../../../config/constants';
 import {
   CANCEL_DIALOG_CY,
@@ -25,7 +25,7 @@ import ColorItem from '../../common/ColorItem';
 import NoteAvatars from '../../common/NoteAvatars';
 
 interface EditDialogProps extends DialogProps {
-  note: NoteDataType;
+  note: ExistingNoteTypeRecord['data'];
   userName: string;
   onCancel: () => void;
   onSave: (text: string, color?: string) => void;

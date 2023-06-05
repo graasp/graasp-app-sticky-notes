@@ -1,7 +1,14 @@
 import { List } from 'immutable';
 
-import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react';
 
+import { AppData } from '@graasp/sdk';
 import { AppDataRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
@@ -14,7 +21,7 @@ import {
 
 export type AppDataContextType = {
   postAppData: (variables: PostAppDataType) => void;
-  postAppDataAsync: (variables: PostAppDataType) => Promise<AppDataRecord>;
+  postAppDataAsync: (variables: PostAppDataType) => Promise<AppData>;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
   appDataArray: List<AppDataRecord>;
@@ -22,8 +29,7 @@ export type AppDataContextType = {
 
 const defaultContextValue = {
   postAppData: () => null,
-  // todo: fix type
-  postAppDataAsync: async () => ({} as any),
+  postAppDataAsync: async () => ({} as unknown as AppData),
   patchAppData: () => null,
   deleteAppData: () => null,
   appDataArray: List<AppDataRecord>(),
@@ -32,7 +38,7 @@ const defaultContextValue = {
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
 export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
-  const appData = hooks.useAppData();
+  const { data: appData, isLoading } = hooks.useAppData();
 
   const { mutate: postAppData, mutateAsync: postAppDataAsync } =
     mutations.usePostAppData();
@@ -45,12 +51,12 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
       postAppData,
       patchAppData,
       deleteAppData,
-      appDataArray: appData.data || List<AppDataRecord>(),
+      appDataArray: appData || List<AppDataRecord>(),
     }),
-    [appData.data, deleteAppData, patchAppData, postAppData, postAppDataAsync],
+    [appData, deleteAppData, patchAppData, postAppData, postAppDataAsync],
   );
 
-  if (appData.isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -62,4 +68,4 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const useAppDataContext = (): AppDataContextType =>
-  React.useContext<AppDataContextType>(AppDataContext);
+  useContext<AppDataContextType>(AppDataContext);

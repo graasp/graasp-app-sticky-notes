@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   buildMockLocalContext,
   buildMockParentWindow,
@@ -28,10 +27,6 @@ const {
         buildMockLocalContext(window.Cypress ? window.appContext : mockContext),
       ) as Window)
     : window.parent,
-  // retry: (e) => {
-  //   console.log('ijkfmn', e)
-  //   return false;
-  // }
 });
 
 export {

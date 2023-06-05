@@ -38,7 +38,7 @@ const ColorSettings = (): JSX.Element => {
   return (
     <MainContainer>
       <Tooltip title={t('Set new note color')} placement="left" arrow>
-        <Fab size="small" onClick={handleClick} color="primary" sx={{ mb: 1 }}>
+        <Fab size="small" onClick={handleClick} color="primary" sx={{ m: 1 }}>
           {colorPaletteOpen ? <MoreHorizIcon /> : <MoreVertIcon />}
         </Fab>
       </Tooltip>

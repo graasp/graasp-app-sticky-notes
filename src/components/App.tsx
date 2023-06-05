@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 import { useLocalContext } from '@graasp/apps-query-client';
 import { PermissionLevel } from '@graasp/sdk';
@@ -21,11 +21,11 @@ const App: FC = () => {
   const context = useLocalContext();
 
   const permissionLevel: PermissionLevel =
-    (context?.get('permission') as PermissionLevel) || DEFAULT_PERMISSION;
+    context?.permission || DEFAULT_PERMISSION;
 
   useEffect(() => {
     // handle a change of language
-    const lang = context?.get('lang') ?? DEFAULT_CONTEXT_LANGUAGE;
+    const lang = context?.lang ?? DEFAULT_CONTEXT_LANGUAGE;
     if (i18n.language !== lang) {
       i18n.changeLanguage(lang);
     }

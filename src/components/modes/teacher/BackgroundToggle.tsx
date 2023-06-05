@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { styled } from '@mui/material';
@@ -6,7 +6,7 @@ import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import grey from '@mui/material/colors/grey';
 
-import { BackgroundSettingsType } from '../../../config/appSettingTypes';
+import { BackgroundSettingsTypeRecord } from '../../../config/appSettingTypes';
 import { APP_SETTINGS } from '../../../config/constants';
 import { DEFAULT_BACKGROUND_ENABLED } from '../../../config/settings';
 import { useAppSettingContext } from '../../context/AppSettingContext';
@@ -36,16 +36,16 @@ const BackgroundToggle = (): JSX.Element => {
   } = useAppSettingContext();
 
   const [backgroundSettings, setBackgroundSettings] =
-    useState<BackgroundSettingsType>();
+    useState<BackgroundSettingsTypeRecord>();
 
   useEffect(() => {
     const backgroundSetting = settings?.find(
       ({ name }) => name === APP_SETTINGS.BACKGROUND,
     );
     if (backgroundSetting) {
-      const backSet = settings
-        ?.find(({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS)
-        ?.toJS() as BackgroundSettingsType;
+      const backSet = settings?.find(
+        ({ name }) => name === APP_SETTINGS.BACKGROUND_SETTINGS,
+      ) as BackgroundSettingsTypeRecord;
       setBackgroundSettings(backSet);
       setToggleDisabled(false);
     }
@@ -53,13 +53,10 @@ const BackgroundToggle = (): JSX.Element => {
 
   const handleToggle = (): void => {
     if (backgroundSettings?.id) {
-      const newBackgroundToggleSetting = {
-        ...backgroundSettings,
-        data: {
-          ...backgroundSettings.data,
-          toggle: Boolean(!backgroundSettings.data.toggle),
-        },
-      };
+      const newBackgroundToggleSetting = backgroundSettings.setIn(
+        ['data', 'toggle'],
+        Boolean(!backgroundSettings.data.toggle),
+      );
       patchAppSetting(newBackgroundToggleSetting);
     } else {
       postAppSetting({

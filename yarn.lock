@@ -2294,23 +2294,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:0.9.2":
-  version: 0.9.2
-  resolution: "@graasp/sdk@npm:0.9.2"
-  dependencies:
-    "@fastify/secure-session": 5.3.0
-    aws-sdk: 2.1310.0
-    fastify: 3.29.5
-    fluent-json-schema: 3.1.0
-    immutable: 4.2.4
-    js-cookie: 3.0.1
-    qs: 6.11.0
-    slonik: 28.1.1
-    uuid: 9.0.0
-  checksum: 49daf48b8877b1a0bdd0612c5a88be22860de4e94c494978732add26d38b5d0a6784df8eb8caedd7972b2767c78258c056c89889c73eeeb3971f2ff989a7f1e0
-  languageName: node
-  linkType: hard
-
 "@graasp/sdk@npm:0.9.3":
   version: 0.9.3
   resolution: "@graasp/sdk@npm:0.9.3"
@@ -2328,11 +2311,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/ui@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@graasp/ui@npm:2.2.0"
+"@graasp/ui@npm:2.2.1":
+  version: 2.2.1
+  resolution: "@graasp/ui@npm:2.2.1"
   dependencies:
-    "@graasp/sdk": 0.9.2
+    "@graasp/sdk": 0.9.3
     clsx: 1.1.1
     http-status-codes: 2.2.0
     immutable: 4.2.4
@@ -2363,7 +2346,7 @@ __metadata:
       optional: true
     ag-grid-react:
       optional: true
-  checksum: 0c87e2a73c223430723fabe02a5186ea44e3815f665bc0c5ba0213eb382925d9437ae3369c715dab02ee1441321ae02a1de233e303e29dd512b58016ff9976cc
+  checksum: 0a497f92c5eb1de2c67bf9bfa0108b9ead00b12f81fce6a3f18f7fe0f70eff6d7f7392ad7d8a4fa5121f4b80451bc929f93f1655757e40290659f3af937c42b5
   languageName: node
   linkType: hard
 
@@ -10044,7 +10027,7 @@ __metadata:
     "@emotion/styled": ~11.10.6
     "@graasp/apps-query-client": 0.4.2
     "@graasp/sdk": 0.9.3
-    "@graasp/ui": 2.2.0
+    "@graasp/ui": 2.2.1
     "@mui/icons-material": ~5.11.11
     "@mui/lab": ~5.0.0-alpha.124
     "@mui/material": ~5.11.14

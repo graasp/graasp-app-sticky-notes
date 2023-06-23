@@ -39,7 +39,11 @@ const InstructionsBackdrop: FC = () => {
       open={showBackdrop}
       onClick={handleCloseBackdrop}
     >
-      <Typography data-cy={BACKDROP_INSTRUCTIONS_CY} variant="h2">
+      <Typography
+        data-cy={BACKDROP_INSTRUCTIONS_CY}
+        variant="h3"
+        textAlign="center"
+      >
         {t('INSTRUCTIONS_ADD_NOTE')}
       </Typography>
     </Backdrop>

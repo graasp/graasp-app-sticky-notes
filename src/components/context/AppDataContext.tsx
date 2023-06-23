@@ -1,11 +1,18 @@
 import { List } from 'immutable';
 
-import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react';
 
-import { AppData } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
+import { AppDataRecord } from '@graasp/sdk/frontend';
 import { Loader } from '@graasp/ui';
 
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 import {
   DeleteAppDataType,
   PatchAppDataType,
@@ -13,56 +20,43 @@ import {
 } from '../../types/appData';
 
 export type AppDataContextType = {
-  postAppData: (
-    variables: PostAppDataType,
-    options?: {
-      onSuccess: (data: AppData, variables?: PostAppDataType) => void;
-    },
-  ) => void;
+  postAppData: (variables: PostAppDataType) => void;
+  postAppDataAsync: (variables: PostAppDataType) => Promise<AppData>;
   patchAppData: (payload: PatchAppDataType) => void;
   deleteAppData: (payload: DeleteAppDataType) => void;
-  appDataArray: List<AppData>;
+  appDataArray: List<AppDataRecord>;
 };
 
 const defaultContextValue = {
   postAppData: () => null,
+  postAppDataAsync: async () => ({} as unknown as AppData),
   patchAppData: () => null,
   deleteAppData: () => null,
-  appDataArray: List<AppData>(),
+  appDataArray: List<AppDataRecord>(),
 };
 
 const AppDataContext = createContext<AppDataContextType>(defaultContextValue);
 
 export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
-  const appData = hooks.useAppData();
+  const { data: appData, isLoading } = hooks.useAppData();
 
-  const { mutate: postAppData } = useMutation<
-    AppData,
-    unknown,
-    PostAppDataType
-  >(MUTATION_KEYS.POST_APP_DATA);
-  const { mutate: patchAppData } = useMutation<
-    unknown,
-    unknown,
-    PatchAppDataType
-  >(MUTATION_KEYS.PATCH_APP_DATA);
-  const { mutate: deleteAppData } = useMutation<
-    unknown,
-    unknown,
-    DeleteAppDataType
-  >(MUTATION_KEYS.DELETE_APP_DATA);
+  const { mutate: postAppData, mutateAsync: postAppDataAsync } =
+    mutations.usePostAppData();
+  const { mutate: patchAppData } = mutations.usePatchAppData();
+  const { mutate: deleteAppData } = mutations.useDeleteAppData();
 
   const contextValue: AppDataContextType = useMemo(
     () => ({
+      postAppDataAsync,
       postAppData,
       patchAppData,
       deleteAppData,
-      appDataArray: appData.data || List<AppData>(),
+      appDataArray: appData || List<AppDataRecord>(),
     }),
-    [appData.data, deleteAppData, patchAppData, postAppData],
+    [appData, deleteAppData, patchAppData, postAppData, postAppDataAsync],
   );
 
-  if (appData.isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -74,4 +68,4 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const useAppDataContext = (): AppDataContextType =>
-  React.useContext<AppDataContextType>(AppDataContext);
+  useContext<AppDataContextType>(AppDataContext);

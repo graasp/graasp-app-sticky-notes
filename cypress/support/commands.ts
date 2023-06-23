@@ -39,6 +39,7 @@ Cypress.Commands.add(
         appData: [],
         appActions: [],
         appSettings: [],
+        items: [MOCK_SERVER_ITEM],
         members: Object.values(MEMBERS),
         ...database,
       };

@@ -30,6 +30,7 @@
     "RESET_VIEW": "Reset view",
     "REFRESH": "Refresh",
     "EDIT": "Edit",
-    "INSTRUCTIONS_ADD_NOTE": "Double click on the canvas to add a new note."
+    "INSTRUCTIONS_ADD_NOTE": "Double click on the canvas to add a new note.",
+    "PUBLIC_ALERT": "You are not authenticated. You cannot save any data"
   }
 }

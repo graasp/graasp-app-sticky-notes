@@ -32,11 +32,13 @@ const BackgroundImage: FC = () => {
 
   useEffect(() => {
     setBackgroundSetting(
-      appSettings?.find(({ name }) => name === APP_SETTINGS_TYPES.BACKGROUND),
+      appSettings
+        ?.find(({ name }) => name === APP_SETTINGS_TYPES.BACKGROUND)
+        ?.toJS() as BackgroundType,
     );
-    const backgroundSettings = appSettings?.find(
-      ({ name }) => name === APP_SETTINGS_TYPES.BACKGROUND_SETTINGS,
-    ) as BackgroundSettingsType;
+    const backgroundSettings = appSettings
+      ?.find(({ name }) => name === APP_SETTINGS_TYPES.BACKGROUND_SETTINGS)
+      ?.toJS() as BackgroundSettingsType;
     const enabledTmp =
       backgroundSettings?.data?.toggle ?? DEFAULT_BACKGROUND_ENABLED;
     setEnabled(enabledTmp);
@@ -48,8 +50,7 @@ const BackgroundImage: FC = () => {
     { appSettingId: backgroundSetting?.id || '' },
     {
       enabled: Boolean(
-        backgroundSetting?.data?.extra?.file ||
-          backgroundSetting?.data?.extra?.s3File,
+        backgroundSetting?.data?.file || backgroundSetting?.data?.s3File,
       ),
     },
   );

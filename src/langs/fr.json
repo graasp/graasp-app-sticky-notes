@@ -30,6 +30,7 @@
     "RESET_VIEW": "Réinitialiser la vue",
     "REFRESH": "Rafraîchir",
     "EDIT": "Éditer",
-    "INSTRUCTIONS_ADD_NOTE": "Double cliquez sur le canevas pour ajouter une note."
+    "INSTRUCTIONS_ADD_NOTE": "Double cliquez sur le canevas pour ajouter une note.",
+    "PUBLIC_ALERT": "You are not authenticated. You cannot save any data"
   }
 }

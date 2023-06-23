@@ -1,11 +1,16 @@
 import { List } from 'immutable';
 
-import React, { FC, PropsWithChildren, createContext, useMemo } from 'react';
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react';
 
-import { AppAction } from '@graasp/apps-query-client';
-import { Loader } from '@graasp/ui';
+import { AppActionRecord } from '@graasp/sdk/frontend';
 
-import { MUTATION_KEYS, hooks, useMutation } from '../../config/queryClient';
+import { hooks, mutations } from '../../config/queryClient';
 
 type PostAppActionType = {
   data: { [key: string]: unknown };
@@ -14,39 +19,31 @@ type PostAppActionType = {
 
 export type AppActionContextType = {
   postAppAction: (payload: PostAppActionType) => void;
-  appActionArray: List<AppAction>;
+  appActionArray: List<AppActionRecord>;
 };
 
 const defaultContextValue = {
   postAppAction: () => null,
-  appActionArray: List<AppAction>(),
+  appActionArray: List<AppActionRecord>(),
 };
 
 const AppActionContext =
   createContext<AppActionContextType>(defaultContextValue);
 
 export const AppActionProvider: FC<PropsWithChildren> = ({ children }) => {
-  const appAction = hooks.useAppActions({ enabled: true });
+  const { data: appAction } = hooks.useAppActions({ enabled: true });
 
-  const { mutate: postAppAction } = useMutation<
-    unknown,
-    unknown,
-    PostAppActionType
-  >(MUTATION_KEYS.POST_APP_ACTION);
+  const { mutate: postAppAction } = mutations.usePostAppAction();
 
   const contextValue: AppActionContextType = useMemo(
     () => ({
       postAppAction: (payload: PostAppActionType) => {
         postAppAction(payload);
       },
-      appActionArray: appAction.data || List<AppAction>(),
+      appActionArray: appAction || List<AppActionRecord>(),
     }),
-    [appAction.data, postAppAction],
+    [appAction, postAppAction],
   );
-
-  if (appAction.isLoading) {
-    return <Loader />;
-  }
 
   return (
     <AppActionContext.Provider value={contextValue}>
@@ -56,4 +53,4 @@ export const AppActionProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const useAppActionContext = (): AppActionContextType =>
-  React.useContext<AppActionContextType>(AppActionContext);
+  useContext<AppActionContextType>(AppActionContext);

@@ -1,4 +1,5 @@
-import { AppData } from '@graasp/apps-query-client';
+import { AppData } from '@graasp/sdk';
+import { ImmutableCast } from '@graasp/sdk/frontend';
 
 import { PostAppDataType } from '../types/appData';
 
@@ -11,12 +12,17 @@ export type NoteDataType = {
   color: string;
   position: { pageX: number; pageY: number };
 };
+export type NoteDataTypeRecord = ImmutableCast<NoteDataType>;
 
 export type NoteType = PostAppDataType & {
   data: NoteDataType;
 };
+export type NoteTypeRecord = ImmutableCast<NoteType>;
+
 export type ExistingNoteType = AppData & {
   data: NoteDataType;
 };
+
+export type ExistingNoteTypeRecord = ImmutableCast<ExistingNoteType>;
 
 export { APP_DATA_TYPES };

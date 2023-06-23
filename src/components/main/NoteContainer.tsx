@@ -1,19 +1,19 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { List } from 'immutable';
 
 import React, { useEffect, useState } from 'react';
 
-import { styled } from '@mui/material';
+import { AppDataVisibility } from '@graasp/sdk';
+
+import { SxProps, styled } from '@mui/material';
 
 import { APP_ACTION_TYPES } from '../../config/appActionTypes';
 import {
   APP_DATA_TYPES,
-  ExistingNoteType,
+  ExistingNoteTypeRecord,
   NoteDataType,
 } from '../../config/appDataTypes';
 import { NOTE_CONTAINER_CY } from '../../config/selectors';
 import { DEFAULT_ANONYMOUS_USERNAME } from '../../config/settings';
-import { AppDataVisibility } from '../../types/appData';
 import { useAppActionContext } from '../context/AppActionContext';
 import { useAppDataContext } from '../context/AppDataContext';
 import { useCanvasContext } from '../context/CanvasContext';
@@ -32,10 +32,11 @@ interface NoteContainerInterface {
   scrollLeft: number;
   scrollTop: number;
   canvasScale: number;
+  sx?: SxProps;
 }
 
 const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
-  const { scrollLeft, scrollTop, canvasScale } = props;
+  const { scrollLeft, scrollTop, canvasScale, sx } = props;
 
   const {
     userSetColor,
@@ -46,18 +47,18 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   } = useCanvasContext();
 
   const members = useMembersContext();
-  const [notes, setNotes] = useState<List<ExistingNoteType>>();
+  const [notes, setNotes] = useState<List<ExistingNoteTypeRecord>>();
 
   const [edit, setEdit] = useState(false);
 
-  const { postAppData, appDataArray: appData } = useAppDataContext();
+  const { postAppDataAsync, appDataArray: appData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();
 
   useEffect(() => {
     setNotes(
       appData.filter(
         ({ type }) => type === APP_DATA_TYPES.NOTE,
-      ) as unknown as List<ExistingNoteType>,
+      ) as unknown as List<ExistingNoteTypeRecord>,
     );
   }, [appData]);
 
@@ -68,7 +69,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
   useEffect(() => {
     if (notes && !notes.isEmpty()) {
       if (edit) {
-        setNoteBeingEditedId(notes.get(-1, { id: null })?.id);
+        setNoteBeingEditedId(notes.get(-1)?.id ?? null);
         setEdit(false);
       }
     }
@@ -82,21 +83,16 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
       text: '',
     };
 
-    postAppData(
-      {
-        data: newNote,
-        type: APP_DATA_TYPES.NOTE,
-        visibility: AppDataVisibility.ITEM,
-      },
-      {
-        onSuccess: (data) => {
-          postAppAction({
-            type: APP_ACTION_TYPES.ADD,
-            data,
-          });
-        },
-      },
-    );
+    postAppDataAsync({
+      data: newNote,
+      type: APP_DATA_TYPES.NOTE,
+      visibility: AppDataVisibility.Item,
+    }).then((data) => {
+      postAppAction({
+        type: APP_ACTION_TYPES.ADD,
+        data,
+      });
+    });
     setEdit(true);
   };
 
@@ -118,6 +114,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
     <StyledNoteContainer
       data-cy={NOTE_CONTAINER_CY}
       onClick={handleCanvasClick}
+      sx={sx}
     >
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       {notes?.map((note) => (
@@ -126,7 +123,7 @@ const NoteContainer = (props: NoteContainerInterface): JSX.Element => {
           id={note.id}
           key={note.id}
           userName={
-            members.find((m) => m.id === note.memberId)?.name ??
+            members.find((m) => m.id === note.member?.id)?.name ??
             DEFAULT_ANONYMOUS_USERNAME
           }
           scale={canvasScale}

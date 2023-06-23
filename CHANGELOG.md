@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.9.2...v1.0.0) (2023-06-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* apply changes for typeorm
+
+### Features
+
+* apply changes for typeorm ([ca6efeb](https://github.com/graasp/graasp-app-sticky-notes/commit/ca6efeb84c2f6ec7401b44497388e8e684b32bff))
+* update app for typeorm migration ([fc91d8d](https://github.com/graasp/graasp-app-sticky-notes/commit/fc91d8d40845d35c974d3e76c2f8a47151299b89))
+
 ## [0.9.2](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.9.1...v0.9.2) (2023-03-28)
 
 

@@ -26,7 +26,7 @@
     "url": "https://github.com/graasp/graasp-app-sticky-notes/issues"
   },
   "dependencies": {
-    "@cypress/code-coverage": "3.10.0",
+    "@cypress/code-coverage": "3.10.9",
     "@cypress/instrument-cra": "1.4.0",
     "@emotion/react": "~11.10.6",
     "@emotion/styled": "~11.10.6",

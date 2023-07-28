@@ -9,7 +9,7 @@ import { BrowserTracing } from '@sentry/tracing';
 import Root from './components/Root';
 import { MOCK_API } from './config/env';
 import { generateSentryConfig } from './config/sentry';
-import buildDatabase, { mockContext } from './data/db';
+import buildDatabase, { mockContext, mockMembers } from './data/db';
 import './index.css';
 
 Sentry.init({
@@ -24,9 +24,13 @@ Sentry.init({
 // setup mocked api for cypress or standalone app
 /* istanbul ignore next */
 if (MOCK_API) {
+  // eslint-disable-next-line no-console
+  console.info('API mocked.');
   mockApi({
     appContext: window.Cypress ? window.appContext : mockContext,
-    database: window.Cypress ? window.database : buildDatabase(),
+    database: window.Cypress
+      ? window.database
+      : buildDatabase(mockContext, mockMembers),
   });
 }
 
@@ -34,4 +38,8 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-root.render(<Root />);
+root.render(
+  <React.StrictMode>
+    <Root />
+  </React.StrictMode>,
+);

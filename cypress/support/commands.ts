@@ -1,33 +1,30 @@
 /// <reference types="../../src/window" />
-import { MOCK_SERVER_API_HOST } from '../fixtures/appData';
+import { Database, LocalContext } from '@graasp/apps-query-client';
+import { Member } from '@graasp/sdk';
+
 import { CURRENT_MEMBER, MEMBERS } from '../fixtures/members';
 import { MOCK_SERVER_ITEM } from '../fixtures/mockItem';
 
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to select DOM element by data-cy attribute.
+       * @example cy.dataCy('greeting')
+       */
+      setUpApi({
+        database,
+        currentMember,
+        appContext,
+      }: {
+        database?: Partial<Database>;
+        currentMember?: Member;
+        appContext?: Partial<LocalContext>;
+      }): Chainable<Element>;
+    }
+  }
+}
 
 Cypress.Commands.add(
   'setUpApi',
@@ -39,17 +36,19 @@ Cypress.Commands.add(
         appData: [],
         appActions: [],
         appSettings: [],
-        items: [MOCK_SERVER_ITEM],
         members: Object.values(MEMBERS),
         ...database,
+        items: [MOCK_SERVER_ITEM],
       };
       // eslint-disable-next-line no-param-reassign
       win.appContext = {
         memberId: currentMember.id,
         itemId: MOCK_SERVER_ITEM.id,
-        apiHost: Cypress.env('REACT_APP_API_HOST') || MOCK_SERVER_API_HOST,
+        apiHost: Cypress.env('VITE_API_HOST'),
         ...appContext,
       };
     });
+
+    // setup mocks here
   },
 );

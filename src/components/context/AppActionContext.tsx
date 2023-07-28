@@ -40,7 +40,7 @@ export const AppActionProvider: FC<PropsWithChildren> = ({ children }) => {
       postAppAction: (payload: PostAppActionType) => {
         postAppAction(payload);
       },
-      appActionArray: appAction || List<AppActionRecord>(),
+      appActionArray: appAction || defaultContextValue.appActionArray,
     }),
     [appAction, postAppAction],
   );

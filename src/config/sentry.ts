@@ -1,4 +1,4 @@
-import { REACT_APP_SENTRY_DSN } from './env';
+import { SENTRY_DSN } from './env';
 
 interface SentryConfigType {
   dsn: string;
@@ -24,7 +24,7 @@ const generateSentryConfig = (): SentryConfigType => {
   }
 
   return {
-    dsn: (!window.Cypress && REACT_APP_SENTRY_DSN) || '',
+    dsn: (!window.Cypress && SENTRY_DSN) || '',
     environment: SENTRY_ENVIRONMENT,
     tracesSampleRate: SENTRY_TRACE_SAMPLE_RATE,
   };

@@ -1,4 +1,4 @@
-import { Context } from '@graasp/sdk';
+import { Context, PermissionLevel } from '@graasp/sdk';
 
 import {
   BACKDROP_INSTRUCTIONS_CY,
@@ -16,7 +16,7 @@ import {
 import { NOTES_TOP_LEFT } from '../../fixtures/appData';
 
 describe('Notes and interactions', () => {
-  [Context.BUILDER, Context.PLAYER].forEach((context) => {
+  [Context.Builder, Context.Player].forEach((context) => {
     describe(`In ${context} view`, () => {
       beforeEach(() => {
         cy.setUpApi({
@@ -24,7 +24,7 @@ describe('Notes and interactions', () => {
             appData: NOTES_TOP_LEFT,
           },
           appContext: {
-            permission: 'admin',
+            permission: PermissionLevel.Admin,
             context,
           },
         });
@@ -79,7 +79,7 @@ describe('Notes and interactions', () => {
         cy.get(dataCyWrapper(NOTE_EDIT_DIALOG)).within(() => {
           cy.get('#quill-dialog').within(() => {
             cy.get('.ql-editor').clear();
-            cy.get('ql-editor').type(typedContent);
+            cy.get('.ql-editor').type(typedContent);
           });
           cy.get(dataCyWrapper(SAVE_DIALOG_CY)).click();
         });

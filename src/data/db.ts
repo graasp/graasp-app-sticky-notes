@@ -12,7 +12,7 @@ import {
 } from '@graasp/sdk';
 
 import { APP_DATA_TYPES } from '../config/appDataTypes';
-import { REACT_APP_API_HOST } from '../config/env';
+import { API_HOST } from '../config/env';
 
 export const mockMembers: Member[] = [
   {
@@ -53,14 +53,17 @@ const mockItem: AppItemType = {
 };
 
 export const mockContext: LocalContext = {
-  apiHost: REACT_APP_API_HOST,
+  apiHost: API_HOST,
   permission: PermissionLevel.Admin,
   context: Context.Builder,
   itemId: mockItem.id,
   memberId: mockMembers[0].id,
 };
 
-const buildDatabase = (): Database => ({
+const buildDatabase = (
+  appContext: Partial<LocalContext>,
+  members?: Member[],
+): Database => ({
   appData: [
     {
       data: {
@@ -79,7 +82,7 @@ const buildDatabase = (): Database => ({
     },
   ],
   appActions: [],
-  members: mockMembers,
+  members: members ?? mockMembers,
   appSettings: [],
   items: [mockItem],
 });

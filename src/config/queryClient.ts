@@ -17,9 +17,14 @@ const {
   MUTATION_KEYS,
   mutations,
 } = configureQueryClient({
+  notifier: (data) => {
+    // eslint-disable-next-line no-console
+    console.log('notifier: ', data);
+  },
   keepPreviousData: true,
   // avoid refetching when same data are closely fetched
   staleTime: 1000, // ms
+  cacheTime: 2000, // ms
   GRAASP_APP_KEY: REACT_APP_GRAASP_APP_KEY,
   targetWindow: MOCK_API
     ? // build mock parent window given cypress (app) context or mock data

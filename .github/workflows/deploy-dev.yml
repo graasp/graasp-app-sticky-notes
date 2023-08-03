@@ -1,11 +1,5 @@
 name: Deploy to development environment
 
-#######################################
-# DEPRECATED                          #
-# Will be deleted in future releases  #
-# Kept for integration purpose        #
-#######################################
-
 # Controls when the action will run
 on:
   # Triggers the workflow on push events only for the main branch
@@ -36,13 +30,14 @@ jobs:
           VITE_SENTRY_ENV: development
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           VITE_VERSION: ${{ github.sha }}
+          # add any env variable needed by your app here
         run: yarn build
         shell: bash
 
       - name: Deploy
         uses: graasp/graasp-deploy/.github/actions/deploy-s3-app@v1
-        # Replace input build-folder or version if needed
         with:
+          # Replace input build-folder or version if needed
           build-folder: 'build'
           graasp-app-id: ${{ secrets.APP_ID }}
           version: 'latest'

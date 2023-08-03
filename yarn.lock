@@ -3096,9 +3096,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/apps-query-client@npm:2.0.1":
+"@graasp/apps-query-client@graasp/graasp-apps-query-client#141-websockets":
   version: 2.0.1
-  resolution: "@graasp/apps-query-client@npm:2.0.1"
+  resolution: "@graasp/apps-query-client@https://github.com/graasp/graasp-apps-query-client.git#commit=30f036cfe36c5608ed29711f8459d650391bee1e"
   dependencies:
     "@graasp/sdk": 1.1.2
     axios: 1.4.0
@@ -3112,7 +3112,7 @@ __metadata:
     "@tanstack/react-query-devtools": ^4.28.0
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 111a378033db78fbcf0ff72456a381f81f2aaa5dcbcdeaf81ce7551a04c18b4cec0cf16628f4e360239546e774cd19464e4de170ef02844a5d54e3b801b92c47
+  checksum: 83fc5ad1ecf3ec4b0cd6e5ff8d9afb42f79b3773a5a04fb2d057c508adb4e2cf02bf50114a1c9a5efb53f5d9af70b549cf3e23d3ecdbbd911f803323ecaf0174
   languageName: node
   linkType: hard
 
@@ -8557,7 +8557,7 @@ __metadata:
     "@cypress/instrument-cra": 1.4.0
     "@emotion/react": ~11.11.1
     "@emotion/styled": ~11.11.0
-    "@graasp/apps-query-client": 2.0.1
+    "@graasp/apps-query-client": "graasp/graasp-apps-query-client#141-websockets"
     "@graasp/sdk": 1.1.3
     "@graasp/ui": 3.2.7
     "@mui/icons-material": ~5.14.1

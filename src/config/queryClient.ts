@@ -5,7 +5,7 @@ import {
 } from '@graasp/apps-query-client';
 
 import { mockContext } from '../data/db';
-import { GRAASP_APP_KEY, MOCK_API } from './env';
+import { API_HOST, GRAASP_APP_KEY, MOCK_API } from './env';
 
 const {
   queryClient,
@@ -32,6 +32,8 @@ const {
         buildMockLocalContext(window.Cypress ? window.appContext : mockContext),
       ) as Window)
     : window.parent,
+  enableWebsocket: true,
+  WS_HOST: `ws://${API_HOST}/ws`,
 });
 
 export {

@@ -30,7 +30,7 @@
     "@cypress/instrument-cra": "1.4.0",
     "@emotion/react": "~11.11.1",
     "@emotion/styled": "~11.11.0",
-    "@graasp/apps-query-client": "2.0.1",
+    "@graasp/apps-query-client": "graasp/graasp-apps-query-client#141-websockets",
     "@graasp/sdk": "1.1.3",
     "@graasp/ui": "3.2.7",
     "@mui/icons-material": "~5.14.1",

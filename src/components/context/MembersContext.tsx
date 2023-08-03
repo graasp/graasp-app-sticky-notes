@@ -17,7 +17,7 @@ type Prop = {
 export const MembersProvider: FC<Prop> = ({ children }) => {
   const appContext = hooks.useAppContext();
 
-  const members = useMemo(() => {
+  const members = useMemo<List<MemberRecord>>(() => {
     const updatedMembers = appContext.data?.members;
 
     return updatedMembers ?? defaultContextValue;

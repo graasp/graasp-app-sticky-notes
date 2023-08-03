@@ -32,12 +32,11 @@ const AppActionContext =
 
 export const AppActionProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data: appAction } = hooks.useAppActions({ enabled: true });
-
   const { mutate: postAppAction } = mutations.usePostAppAction();
 
-  const contextValue: AppActionContextType = useMemo(
+  const contextValue: AppActionContextType = useMemo<AppActionContextType>(
     () => ({
-      postAppAction: (payload: PostAppActionType) => {
+      postAppAction: (payload: PostAppActionType): void => {
         postAppAction(payload);
       },
       appActionArray: appAction || defaultContextValue.appActionArray,

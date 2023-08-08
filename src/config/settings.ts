@@ -1,6 +1,6 @@
 import { PermissionLevel } from '@graasp/sdk';
 
-import { REACT_APP_REFETCH_INTERVAL_SETTING } from './env';
+import { REFETCH_INTERVAL_SETTING } from './env';
 
 export const DEFAULT_LANG = 'en';
 
@@ -24,7 +24,7 @@ export const MAX_FILE_SIZE = 5 * 1000 * 1000;
 export const DEFAULT_BACKGROUND_ENABLED = true;
 export const DEFAULT_BACKGROUND_SCALE = 1.0;
 
-export const RE_FETCH_INTERVAL = REACT_APP_REFETCH_INTERVAL_SETTING ?? 1500; // Default: 1500
+export const RE_FETCH_INTERVAL: number = REFETCH_INTERVAL_SETTING ?? 1500; // Default: 1500
 
 export const DEFAULT_CANVAS_DIMENSIONS = 'A4';
 

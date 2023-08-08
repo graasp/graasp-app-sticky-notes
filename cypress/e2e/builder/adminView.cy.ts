@@ -1,3 +1,5 @@
+import { PermissionLevel } from '@graasp/sdk';
+
 import {
   BACKDROP_INSTRUCTIONS_CY,
   NOTE_CONTAINER_CY,
@@ -12,7 +14,7 @@ describe('Builder view with admin rights', () => {
   beforeEach(() => {
     cy.setUpApi({
       appContext: {
-        permission: 'admin',
+        permission: PermissionLevel.Admin,
         context: 'builder',
       },
     });

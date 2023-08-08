@@ -45,7 +45,7 @@ export const AppDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const { mutate: patchAppData } = mutations.usePatchAppData();
   const { mutate: deleteAppData } = mutations.useDeleteAppData();
 
-  const contextValue: AppDataContextType = useMemo(
+  const contextValue: AppDataContextType = useMemo<AppDataContextType>(
     () => ({
       postAppDataAsync,
       postAppData,

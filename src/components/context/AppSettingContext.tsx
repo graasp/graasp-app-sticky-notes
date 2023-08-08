@@ -36,7 +36,7 @@ export const AppSettingProvider: FC<PropsWithChildren> = ({ children }) => {
   const { mutate: patchAppSetting } = mutations.usePatchAppSetting();
   const { mutate: deleteAppSetting } = mutations.useDeleteAppSetting();
 
-  const contextValue: AppSettingContextType = useMemo(
+  const contextValue: AppSettingContextType = useMemo<AppSettingContextType>(
     () => ({
       postAppSetting,
       patchAppSetting,

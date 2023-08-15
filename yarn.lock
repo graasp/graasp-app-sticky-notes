@@ -2310,7 +2310,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.22.10
   resolution: "@babel/runtime@npm:7.22.10"
   dependencies:
@@ -8625,7 +8625,7 @@ __metadata:
     file-saver: ~2.0.5
     html-webpack-plugin: ~5.5.3
     husky: ~8.0.3
-    i18next: ~22.4.15
+    i18next: ~23.4.4
     immutable: 4.3.0
     lodash.isobject: ~3.0.2
     lodash.isstring: ~4.0.1
@@ -8635,7 +8635,7 @@ __metadata:
     react: ~18.2.0
     react-dom: ~18.2.0
     react-draggable: 4.4.5
-    react-i18next: ~12.2.2
+    react-i18next: ~13.1.2
     react-quill: 2.0.0
     react-router-dom: ~6.15.0
     react-toastify: ~9.1.3
@@ -8963,12 +8963,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:~22.4.15":
-  version: 22.4.15
-  resolution: "i18next@npm:22.4.15"
+"i18next@npm:~23.4.4":
+  version: 23.4.4
+  resolution: "i18next@npm:23.4.4"
   dependencies:
-    "@babel/runtime": ^7.20.6
-  checksum: fced898227983e439c59e7aa6e7b87e53ad1b8a1c85f0613a968881418266e5336e9443831125590559796075d516fe3dbf8118679c894094a0a404be78b02a2
+    "@babel/runtime": ^7.22.5
+  checksum: faa968dcba328528231e3cd140d5a0f4b9b472b75874b7cbf8415e2dbff48397f1cdcc36a739ea6915f6970c367fdd7f985f120e63e1c30a839c53e366d851fd
   languageName: node
   linkType: hard
 
@@ -11541,21 +11541,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:~12.2.2":
-  version: 12.2.2
-  resolution: "react-i18next@npm:12.2.2"
+"react-i18next@npm:~13.1.2":
+  version: 13.1.2
+  resolution: "react-i18next@npm:13.1.2"
   dependencies:
-    "@babel/runtime": ^7.20.6
+    "@babel/runtime": ^7.22.5
     html-parse-stringify: ^3.0.1
   peerDependencies:
-    i18next: ">= 19.0.0"
+    i18next: ">= 23.2.3"
     react: ">= 16.8.0"
   peerDependenciesMeta:
     react-dom:
       optional: true
     react-native:
       optional: true
-  checksum: 460e32779f6abba287d63be6054f855202c2e365cbceca36673c8f37a497c2ac5a21a8577d20fcc0b3fcd4825f89427dc4fdf00136365963d27dac7d997c3c74
+  checksum: 105a17fe24a554af2fe8e44fefb279e0a044197aafaa8a46a046f655db2fdf094c68a70e0a6b23ed818c68a622c80f09f6cf2d94373a7ebe55bfcd993168a811
   languageName: node
   linkType: hard
 

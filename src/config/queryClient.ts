@@ -5,7 +5,7 @@ import {
 } from '@graasp/apps-query-client';
 
 import { mockContext } from '../data/db';
-import { API_HOST, GRAASP_APP_KEY, MOCK_API } from './env';
+import { GRAASP_APP_KEY, MOCK_API, WS_HOST } from './env';
 
 const {
   queryClient,
@@ -33,7 +33,7 @@ const {
       ) as Window)
     : window.parent,
   enableWebsocket: true,
-  WS_HOST: `ws://${API_HOST}/ws`,
+  WS_HOST,
 });
 
 export {

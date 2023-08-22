@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_VERSION?: string;
   readonly VITE_SENTRY_ENV?: string;
   readonly VITE_SENTRY_DSN?: string;
+  readonly VITE_WS_HOST?: string;
 }
 
 interface ImportMeta {

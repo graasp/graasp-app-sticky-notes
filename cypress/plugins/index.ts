@@ -29,6 +29,7 @@ module.exports = (on, config) => {
       VITE_SENTRY_ENV: process.env.VITE_SENTRY_ENV,
       VITE_SENTRY_DSN: process.env.VITE_SENTRY_DSN,
       VITE_REFETCH_INTERVAL_SETTING: process.env.VITE_REFETCH_INTERVAL_SETTING,
+      VITE_WS_HOST: process.env.VITE_WS_HOST,
     },
   };
   require('@cypress/code-coverage/task')(on, newConfig);

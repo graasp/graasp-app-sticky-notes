@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
+import Draggable, {
+  DraggableData,
+  DraggableEvent,
+  DraggableEventHandler,
+} from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
@@ -72,7 +76,10 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
 
   const { text: initialText, position, color } = note;
 
-  const { pageX = 0, pageY = 0 } = position;
+  const { pageX: initialPageX = 0, pageY: initialPageY = 0 } = position;
+
+  const [pageX, setPageX] = useState(initialPageX);
+  const [pageY, setPageY] = useState(initialPageY);
 
   const { patchAppData } = useAppDataContext();
   const { postAppAction } = useAppActionContext();
@@ -126,9 +133,14 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSetColor]);
 
-  const eventControl = (event: DraggableEvent): void => {
+  const eventControl: DraggableEventHandler = (
+    event: DraggableEvent,
+    data: DraggableData,
+  ): void => {
     if (event.type === 'mousemove' || event.type === 'touchmove') {
       setIsDragging(true);
+      setPageX(data.x);
+      setPageY(data.y);
     }
     if (event.type === 'mouseup' || event.type === 'touchend') {
       setIsDragging(false);
@@ -136,9 +148,9 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   };
 
   const handleDragEnd = (event: DraggableEvent, data: DraggableData): void => {
-    eventControl(event);
+    eventControl(event, data);
     const { x, y } = data;
-    if (pageX !== x || pageY !== y) {
+    if (initialPageX !== x || initialPageY !== y) {
       const updatedNote = {
         ...note.toJS(),
         position: {
@@ -177,6 +189,17 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteBeingEditedId]);
+
+  // May be redundant. This effect updates the text when the props change
+  useEffect(() => {
+    setText(initialText);
+  }, [initialText]);
+
+  // May be redundant. This effect updates the text when the props change
+  useEffect(() => {
+    setPageX(initialPageX);
+    setPageY(initialPageY);
+  }, [initialPageX, initialPageY]);
 
   const toggleTransform = (): void => {
     if (isTransforming) {
@@ -230,7 +253,7 @@ const Note = ({ note, id, userName, scale }: NoteProps): JSX.Element => {
   return (
     <>
       <Draggable
-        defaultPosition={{ x: pageX, y: pageY }}
+        position={{ x: pageX, y: pageY }}
         disabled={isEditing}
         onStart={(e) => {
           e.stopPropagation();

@@ -79,7 +79,7 @@ describe('Notes and interactions', () => {
         cy.get(dataCyWrapper(NOTE_EDIT_DIALOG)).within(() => {
           cy.get('#quill-dialog').within(() => {
             cy.get('.ql-editor').clear();
-            cy.get('.ql-editor').type(typedContent);
+            cy.get('.ql-editor').type(typedContent, { delay: 100 });
           });
           cy.get(dataCyWrapper(SAVE_DIALOG_CY)).click();
         });

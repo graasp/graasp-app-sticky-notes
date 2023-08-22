@@ -14,6 +14,7 @@ import Modal from '@mui/material/Modal';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
+import pjson from '../../../../package.json';
 import {
   SETTINGS_BUTTON_CY,
   SETTINGS_CLOSE_BTN_CY,
@@ -83,6 +84,9 @@ const Settings = (): JSX.Element => {
       >
         <ModalContainer data-cy={SETTINGS_CY}>
           <Typography variant="h3">{t('Settings')}</Typography>
+          <Typography variant="caption" align="right">
+            Version {pjson.version}
+          </Typography>
           <ImageUpload />
           <BackgroundToggle />
           <DownloadActions />

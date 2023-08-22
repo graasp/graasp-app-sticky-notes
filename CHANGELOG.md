@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v1.0.0...v1.1.0) (2023-08-22)
+
+
+### Features
+
+* realtime sync with websockets ([b21d5b4](https://github.com/graasp/graasp-app-sticky-notes/commit/b21d5b44dec390b2c042647be35477f255c2bf46))
+* **settings:** show app version in settings ([6246f4f](https://github.com/graasp/graasp-app-sticky-notes/commit/6246f4feffeb0824ffdb86c3eaab4c4ce77ee310))
+* **ws:** add websocket supports ([097d23b](https://github.com/graasp/graasp-app-sticky-notes/commit/097d23b15244fe220ac63e27e1915c1e4eab287e))
+
+
+### Bug Fixes
+
+* **ws:** change state management in note to reflect changes in props ([042a720](https://github.com/graasp/graasp-app-sticky-notes/commit/042a72062f504b6871c8dd841c06899e5aae2b6e))
+* **ws:** input WS_HOST with env var ([2019e2b](https://github.com/graasp/graasp-app-sticky-notes/commit/2019e2b2856abbcd04b18390c3a4383a0d15f09f))
+
+
+### Tests
+
+* pass VITE_WS_HOST in tests ([2019e2b](https://github.com/graasp/graasp-app-sticky-notes/commit/2019e2b2856abbcd04b18390c3a4383a0d15f09f))
+* reduce typing speed in e2e test ([a2eed5b](https://github.com/graasp/graasp-app-sticky-notes/commit/a2eed5b4aa10413d362dc0295c9d9d7057654554))
+
 ## [1.0.0](https://github.com/graasp/graasp-app-sticky-notes/compare/v0.9.2...v1.0.0) (2023-06-23)
 
 

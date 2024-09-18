@@ -6888,10 +6888,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.0.5":
-  version: 3.0.5
-  resolution: "dompurify@npm:3.0.5"
-  checksum: 2d9421570c833ce26ce7022955241749b646d41e8bf453f42ede9f22d0e98af482cedb7dfbf8129419eb48b351c1d677a08fc9f1cd91836ce7f6c1807a0676b2
+"dompurify@npm:3.0.11":
+  version: 3.0.11
+  resolution: "dompurify@npm:3.0.11"
+  checksum: aefb86fbaa2cc6acda1a75ea918f69043689cb726f2932e5c1c3c85904255fd145230d66f0a9493ed27d64d035e990f3a767d99d73b1ae7c0b297782be230658
   languageName: node
   linkType: hard
 
@@ -8624,7 +8624,7 @@ __metadata:
     cross-env: 7.0.3
     cypress: ~12.17.3
     cypress-vite: 1.4.2
-    dompurify: 3.0.5
+    dompurify: 3.0.11
     env-cmd: 10.1.0
     eslint: ~8.47.0
     eslint-config-airbnb: ~19.0.4

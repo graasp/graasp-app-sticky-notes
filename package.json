@@ -147,7 +147,7 @@
     "@graasp/sdk": "1.2.0",
     "immutable": "4.3.0"
   },
-  "packageManager": "yarn@3.2.4",
+  "packageManager": "yarn@3.8.6",
   "nyc": {
     "all": true,
     "include": [
